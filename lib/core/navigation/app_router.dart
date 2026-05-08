@@ -9,7 +9,7 @@ import 'package:motrive/features/home0/presentation/cubit/home0_cubit.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: Routes.splash,
+    initialLocation: Routes.home0,
     routes: [
       GoRoute(
         path: Routes.splash,

@@ -1,12 +1,45 @@
+import 'package:hive/hive.dart';
 import 'package:injectable/injectable.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:motrive/core/services/local_keys_service.dart';
 import 'package:motrive/features/home0/sub/add_car_card/data/models/add_car_card_model.dart';
-import 'package:motrive/core/errors/network_exceptions.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-
+// remote data source 
 abstract class BaseAddCarCardRemoteDataSource {
-  Future<AddCarCardModel> getAddCarCard();
+  Future<void> addVehicle(VehicleModel vehicle);
+  Future<List<VehicleModel>> getVehicles();
+  Future<void> deleteVehicle(String id);
+}
+
+
+//local data source
+abstract class VehicleLocalDataSource {
+  Future<void> cacheVehicles(List<VehicleModel> vehicles);
+  List<VehicleModel> getCachedVehicles();
+}
+
+
+@LazySingleton(as: VehicleLocalDataSource)
+class VehicleLocalDataSourceImpl implements VehicleLocalDataSource {
+  final Box box;
+  VehicleLocalDataSourceImpl(this.box);
+  @override
+  Future<void> cacheVehicles(
+    List<VehicleModel> vehicles,
+  ) async {
+    final data = vehicles
+        .map((e) => e.toJson())
+        .toList();
+    await box.put('vehicles', data);
+  }
+
+  @override
+  List<VehicleModel> getCachedVehicles() {
+    final data = box.get('vehicles', defaultValue: []);
+    return List<Map<String, dynamic>>.from(data)
+        .map((e) => VehicleModel.fromJson(e))
+        .toList();
+  }
 }
 
 
@@ -15,19 +48,33 @@ class AddCarCardRemoteDataSource implements BaseAddCarCardRemoteDataSource {
  
   final SupabaseClient _supabase;
   final LocalKeysService _localKeysService;
-  
-  
 
    AddCarCardRemoteDataSource(this._localKeysService, this._supabase);
-
-
-
     @override
-  Future<AddCarCardModel> getAddCarCard() async {
-    try {
-      return AddCarCardModel(id: 1, firstName: "Last Name", lastName: "First Name");
-    } catch (error) {
-     throw FailureExceptions.getException(error);
-    }
+  Future<void> addVehicle(VehicleModel vehicle) async {
+   final data = await _supabase
+        .from('vehicles')
+        .insert(vehicle.toJson());
+  }
+
+  @override
+  Future<List<VehicleModel>> getVehicles() async {
+    final response = await _supabase
+        .from('vehicles')
+        .select()
+        .order('created_at');
+    return response
+        .map<VehicleModel>(
+          (e) => VehicleModel.fromJson(e),
+        )
+        .toList();
+  }
+
+  @override
+  Future<void> deleteVehicle(String id) async {
+   final response = await _supabase
+        .from('vehicles')
+        .delete()
+        .eq('id', id);
   }
 }
