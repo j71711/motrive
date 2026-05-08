@@ -29,6 +29,14 @@ import 'package:motrive/features/home0/sub/add_car_card/domain/repositories/add_
     as _i10;
 import 'package:motrive/features/home0/sub/add_car_card/domain/use_cases/add_car_card_use_case.dart'
     as _i333;
+import 'package:motrive/features/home0/sub/scan_vehicle/data/datasources/scan_vehicle_remote_data_source.dart'
+    as _i718;
+import 'package:motrive/features/home0/sub/scan_vehicle/data/repositories/scan_vehicle_repository_data.dart'
+    as _i761;
+import 'package:motrive/features/home0/sub/scan_vehicle/domain/repositories/scan_vehicle_repository_domain.dart'
+    as _i848;
+import 'package:motrive/features/home0/sub/scan_vehicle/domain/use_cases/scan_vehicle_use_case.dart'
+    as _i1014;
 import 'package:supabase_flutter/supabase_flutter.dart' as _i454;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -43,6 +51,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i333.AddCarUseCase0>(
       () => _i333.AddCarUseCase0(gh<_i10.VehicleLocalDataSource>()),
+    );
+    gh.lazySingleton<_i718.BaseScanVehicleRemoteDataSource>(
+      () => _i718.ScanVehicleRemoteDataSource(
+        gh<_i56.LocalKeysService>(),
+        gh<_i454.SupabaseClient>(),
+      ),
     );
     gh.lazySingleton<_i952.BaseHome0RemoteDataSource>(
       () => _i952.Home0RemoteDataSource(
@@ -59,6 +73,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i827.Home0RepositoryDomain>(
       () => _i248.Home0RepositoryData(gh<_i952.BaseHome0RemoteDataSource>()),
     );
+    gh.lazySingleton<_i848.ScanVehicleRepositoryDomain>(
+      () => _i761.ScanVehicleRepositoryData(
+        gh<_i718.BaseScanVehicleRemoteDataSource>(),
+      ),
+    );
     gh.lazySingleton<_i10.AddCarCardRepositoryDomain>(
       () => _i115.AddCarCardRepositoryData(
         gh<_i106.BaseAddCarCardRemoteDataSource>(),
@@ -69,6 +88,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i333.AddCarCardUseCase>(
       () => _i333.AddCarCardUseCase(gh<_i10.AddCarCardRepositoryDomain>()),
+    );
+    gh.lazySingleton<_i1014.ScanVehicleUseCase>(
+      () => _i1014.ScanVehicleUseCase(gh<_i848.ScanVehicleRepositoryDomain>()),
     );
     return this;
   }

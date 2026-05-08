@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:motrive/features/home0/sub/add_car_card/presentation/cubit/add_car_card_cubit.dart';
 import 'package:motrive/features/home0/sub/add_car_card/presentation/cubit/add_car_card_state.dart';
-
+import 'package:motrive/features/home0/sub/scan_vehicle/presentation/pages/scan_vehicle_feature_widget.dart';
 
 class AddCarCardFeatureWidget extends StatelessWidget {
   const AddCarCardFeatureWidget({super.key});
@@ -56,11 +56,13 @@ class AddCarCardFeatureWidget extends StatelessWidget {
                                     ),
                                     actions: [
                                       TextButton(
-                                        onPressed: () => Navigator.of(context).pop(false),
+                                        onPressed: () =>
+                                            Navigator.of(context).pop(false),
                                         child: const Text('cancel'),
                                       ),
                                       TextButton(
-                                        onPressed: () => Navigator.of(context).pop(true),
+                                        onPressed: () =>
+                                            Navigator.of(context).pop(true),
                                         child: const Text(
                                           'delete',
                                           style: TextStyle(color: Colors.red),
@@ -119,11 +121,23 @@ class AddCarCardFeatureWidget extends StatelessWidget {
                   },
                 ),
               ),
-              IconButton(onPressed: (){
-                // if(State is VehicleLoaded) {
-                // cubit.addVehicle();}
-                // return SizedBox();
-              }, icon: Icon(Icons.add)),
+              IconButton(
+                onPressed: () async {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const ScanVehicleFeatureWidget(),
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.add),
+              ),
+              // IconButton(onPressed: (){
+
+              //   // if(State is VehicleLoaded) {
+              //   // cubit.addVehicle();}
+              //   // return SizedBox();
+              // }, icon: Icon(Icons.add)),
             ],
           );
         },
