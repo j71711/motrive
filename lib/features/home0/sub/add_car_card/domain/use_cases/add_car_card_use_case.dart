@@ -13,29 +13,26 @@ class AddCarCardUseCase {
   Future<void> addVehicle(VehicleEntity vehicle) {
     return _repositoryData.addVehicle(vehicle);
   }
-    Future<void> deleteVehicle(String id) {
-      return _repositoryData.deleteVehicle(id);
-    }
-Future<List<VehicleEntity>> searchVehicles(
-  List<VehicleEntity> vehicles,
-  String query,
-) async {
-  return await vehicles.where((vehicle) {
-    return vehicle.make
-            .toLowerCase()
-            .contains(query.toLowerCase()) ||
-        vehicle.model
-            .toLowerCase()
-            .contains(query.toLowerCase());
-  }).toList();
-}
 
-  Future<Result<List<VehicleEntity>, Failure>>  getVehicles() async {
+  Future<Result<void, Failure>> deleteVehicle(String id) {
+    return _repositoryData.deleteVehicle(id);
+  }
+
+  Future<List<VehicleEntity>> searchVehicles(
+    List<VehicleEntity> vehicles,
+    String query,
+  ) async {
+    return vehicles.where((vehicle) {
+      return vehicle.make.toLowerCase().contains(query.toLowerCase()) ||
+          vehicle.model.toLowerCase().contains(query.toLowerCase());
+    }).toList();
+  }
+
+  Future<Result<List<VehicleEntity>, Failure>> getVehicles() async {
     try {
       final vehicles = await _repositoryData.getVehicles();
-      return vehicles ;
+      return vehicles;
     } catch (e) {
-      print(e);
       rethrow;
     }
   }
@@ -45,13 +42,13 @@ Future<List<VehicleEntity>> searchVehicles(
 class AddCarUseCase0 {
   final VehicleLocalDataSource _repositoryData;
   AddCarUseCase0(this._repositoryData);
-    Future<List<VehicleModel>> getCachedVehicles() async {
-       final vehicles = await _repositoryData.getCachedVehicles();
-      return vehicles ;
-    }
+  Future<List<VehicleModel>> getCachedVehicles() async {
+    final vehicles = _repositoryData.getCachedVehicles();
+    return vehicles;
+  }
+
   Future<List<VehicleModel>> getVehicles() async {
-    final vehicles = await _repositoryData.getCachedVehicles();
+    final vehicles = _repositoryData.getCachedVehicles();
     return vehicles;
   }
 }
-

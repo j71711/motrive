@@ -11,9 +11,7 @@ class ScanVehicleFeatureWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => ScanVehicleCubit(GetIt.I.get()),
-      child:BlocConsumer<
-            ScanVehicleCubit,
-            ScanVehicleState>(
+      child:BlocConsumer< ScanVehicleCubit, ScanVehicleState>(
           listener: (context, state) {
             if (state is ScanVehicleSuccessState) {
               ScaffoldMessenger.of(context)
@@ -27,15 +25,11 @@ class ScanVehicleFeatureWidget extends StatelessWidget {
             }
           },
           builder: (context, state) {
-            final cubit =
-                context.read<ScanVehicleCubit>();
+            final cubit = context.read<ScanVehicleCubit>();
+            switch (state) {
+                case ScanVehicleLoadingState _: return Center(child: const CircularProgressIndicator());
 
-            return Center(
-              child: switch (state) {
-                ScanVehicleLoadingState() =>
-                  const CircularProgressIndicator(),
-
-                  ScanVehicleSuccessState() => Column(
+                  case ScanVehicleSuccessState _: return Column(
                     mainAxisAlignment:
                         MainAxisAlignment.center,
                     children: [
@@ -46,9 +40,9 @@ class ScanVehicleFeatureWidget extends StatelessWidget {
                       ),
                       Text(state.vehicle.vin),
                     ],
-                  ),
+                  );
 
-                ScanVehicleErrorState() => Column(
+                case ScanVehicleErrorState _: return Column(
                     mainAxisAlignment:
                         MainAxisAlignment.center,
                     children: [
@@ -62,22 +56,20 @@ class ScanVehicleFeatureWidget extends StatelessWidget {
                         ),
                       ),
                     ],
-                  ),
+                  );
 
-                _ => ElevatedButton(
+                case _: return 
+                ElevatedButton(
                     onPressed: () {
                       cubit.scanVehicle();
                     },
                     child: const Text(
                       'Scan Registration Card',
                     ),
-                  ),
-              },
-            );
+                  );
+              }
           },
         ),
-      // ),
-    // );
     );
   }
 }

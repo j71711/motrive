@@ -37,8 +37,8 @@ class AddCarCardRepositoryData implements AddCarCardRepositoryDomain{
   @override
   Future<Result<void, Failure>> deleteVehicle(String id) async {
     try{
-     final carInfo =  await remoteDataSource.deleteVehicle(id);
-       return Success(carInfo);
+     await remoteDataSource.deleteVehicle(id);
+       return Success(null);
     }
     catch(error){
       return Error(FailureExceptions.getException(error));
@@ -49,11 +49,9 @@ class AddCarCardRepositoryData implements AddCarCardRepositoryDomain{
   Future<Result<List<VehicleModel>, Failure>> getVehicles() async {
     try{
      final carInfo =  await remoteDataSource.getVehicles();
-    //  await localDataSource.cacheVehicles(carInfo);
        return Success(carInfo);
     }
     catch(error){
-      // return localDataSource.getCachedVehicles();
       return Error(FailureExceptions.getException(error));
     }
   }

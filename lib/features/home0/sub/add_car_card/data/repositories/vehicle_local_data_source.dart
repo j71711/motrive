@@ -1,9 +1,7 @@
-
 import 'package:hive/hive.dart';
 import 'package:motrive/features/home0/sub/add_car_card/data/models/add_car_card_model.dart';
 import 'package:motrive/features/home0/sub/add_car_card/domain/repositories/add_car_card_repository_domain.dart';
 
-// @LazySingleton(as: VehicleLocalDataSource)
 class VehicleLocalDataSourceImpl implements VehicleLocalDataSource {
   final Box box;
 

@@ -24,31 +24,3 @@ extension ScanVehicleModelMapper on ScanVehicleModel {
   }
   }
 
-
-
-// class ScanVehicleModel extends ScanVehicleEntity {
-//    ScanVehicleModel({
-//     required super.vin,
-//     required super.make,
-//     required super.model,
-//     required super.year,
-//   });
-
-//   factory ScanVehicleModel.fromJson(Map<String, dynamic> json) {
-//     return ScanVehicleModel(
-//       vin: json['vin'],
-//       make: json['make'],
-//       model: json['model'],
-//       year: json['year'],
-//     );
-//   }
-
-//   Map<String, dynamic> toJson() {
-//     return {
-//       'vin': vin,
-//       'make': make,
-//       'model': model,
-//       'year': year,
-//     };
-//   }
-// }

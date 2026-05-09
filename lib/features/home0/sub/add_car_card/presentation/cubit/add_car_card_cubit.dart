@@ -31,11 +31,19 @@ final result = await _addCarCardUseCase.getVehicles();
     getAddCarCardMethod();
   }
 
-    Future<void> deleteVehicle(String id) async {
-    await _addCarCardUseCase.deleteVehicle(id);
-    allVehicles.removeWhere((vehicle) => vehicle.id == id);
-    emit(VehicleLoaded(List.from(allVehicles)));
-  }
+
+Future deleteVehicle(String id) async {
+  final result = await _addCarCardUseCase.deleteVehicle(id);
+
+  result.when(
+    (success) async {
+      await getAddCarCardMethod(); 
+    },
+    (error) {
+      emit(VehicleError(error.message));
+    },
+  );
+}
 
   void search(String query) {
     final filtered = allVehicles.where((vehicle) {

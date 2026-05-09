@@ -43,7 +43,7 @@ class AddCarCardFeatureWidget extends StatelessWidget {
                             final vehicle = state.vehicles[index];
                             return Dismissible(
                               key: Key(
-                                vehicle.id?.toString() ?? index.toString(),
+                                vehicle.id.toString(), //?? index.toString()
                               ),
                               direction: DismissDirection.endToStart,
                               confirmDismiss: (direction) async {
@@ -73,7 +73,7 @@ class AddCarCardFeatureWidget extends StatelessWidget {
                                 );
                               },
                               onDismissed: (direction) {
-                                // cubit.deleteVehicle(vehicle.id);
+                                cubit.deleteVehicle(vehicle.id);
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text(
@@ -132,12 +132,6 @@ class AddCarCardFeatureWidget extends StatelessWidget {
                 },
                 icon: const Icon(Icons.add),
               ),
-              // IconButton(onPressed: (){
-
-              //   // if(State is VehicleLoaded) {
-              //   // cubit.addVehicle();}
-              //   // return SizedBox();
-              // }, icon: Icon(Icons.add)),
             ],
           );
         },

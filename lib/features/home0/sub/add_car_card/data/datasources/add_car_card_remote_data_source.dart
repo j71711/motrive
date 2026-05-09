@@ -72,7 +72,8 @@ class AddCarCardRemoteDataSource implements BaseAddCarCardRemoteDataSource {
 
   @override
   Future<void> deleteVehicle(String id) async {
-   final response = await _supabase
+  //  final response =
+    await _supabase
         .from('vehicles')
         .delete()
         .eq('id', id);

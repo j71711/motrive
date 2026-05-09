@@ -7,84 +7,96 @@ import 'package:motrive/features/home0/sub/scan_vehicle/presentation/cubit/scan_
 class ScanVehicleCubit extends Cubit<ScanVehicleState> {
   final ScanVehicleUseCase _scanVehicleUseCase;
 
-  ScanVehicleCubit(this._scanVehicleUseCase) : super(ScanVehicleInitialState());
-
-  Future<void> getScanVehicleMethod(String vin) async {
-    final result = await _scanVehicleUseCase.decodeVin(vin);
-    result.when(
-      (success) {
-        //here is when success result
-      },
-      (whenError) {
-       //here is when error result
-      },
-    );
+  ScanVehicleCubit(this._scanVehicleUseCase) : super(ScanVehicleInitialState()){
+    // scanVehicle();
   }
 
   final picker = ImagePicker();
+Future<void> scanVehicle() async {
+  try {
+    emit(ScanVehicleLoadingState());
 
-  Future<void> scanVehicle() async {
-    try {
-      emit(ScanVehicleLoadingState());
+    final image = await picker.pickImage(
+      source: ImageSource.camera,
+    );
 
-      final image = await picker.pickImage(source: ImageSource.camera);
-
-      if (image == null) {
-        emit(ScanVehicleErrorState(message: 'No image selected'));
-        return;
-      }
-
-      final inputImage = InputImage.fromFilePath(image.path);
-      final textRecognizer = TextRecognizer();
-      final RecognizedText recognizedText = await textRecognizer.processImage(
-        inputImage,
+    if (image == null) {
+      emit(
+        ScanVehicleErrorState(
+          message: 'No image selected',
+        ),
       );
-
-      final text = recognizedText.text;
-
-      // final text = await FlutterTesseractOcr.extractText(
-      //   image.path,
-      //   language: 'eng',
-      //   args: {
-      //     "psm": "4",
-      //     "preserve_interword_spaces": "1",
-      //   },
-      // );
-      // final text =
-      //     await FlutterTesseractOcr.extractText(
-      //   image.path,
-      //   language: 'eng',
-      // );
-
-      final vinRegex = RegExp(r'\b[A-HJ-NPR-Z0-9]{17}\b');
-
-      final match = vinRegex.firstMatch(text);
-
-      if (match == null) {
-        emit(ScanVehicleErrorState(message: 'VIN not found'));
-        return;
-      }
-
-      final vin = match.group(0)!;
-
-      final result = await _scanVehicleUseCase.decodeVin(vin);
-
-      result.when(
-        (success) {
-          emit(ScanVehicleSuccessState(success));
-        },
-        (error) {
-          emit(ScanVehicleErrorState(message: error.message));
-        },
-      );
-    } catch (error) {
-      emit(ScanVehicleErrorState(message: error.toString()));
+      return;
     }
+
+    final inputImage =
+        InputImage.fromFilePath(image.path);
+
+    final textRecognizer = TextRecognizer();
+
+    final RecognizedText recognizedText =
+        await textRecognizer.processImage(
+      inputImage,
+    );
+
+    final text = recognizedText.text;
+
+    await textRecognizer.close();
+
+    final cleanedText = text
+        .replaceAll(' ', '')
+        .replaceAll('\n', '')
+        .toUpperCase();
+
+
+    final vinRegex = RegExp(
+      r'[A-HJ-NPR-Z0-9]{17}',
+    );
+
+    final match =
+        vinRegex.firstMatch(cleanedText);
+
+    if (match == null) {
+      emit(
+        ScanVehicleErrorState(
+          message: 'VIN not found',
+        ),
+      );
+      return;
+    }
+
+    final vin = match.group(0)!;
+
+    final result =
+        await _scanVehicleUseCase.decodeVin(vin);
+
+    result.when(
+      (success) async {
+        emit(
+          ScanVehicleSuccessState(success),
+        );
+         await _scanVehicleUseCase.insertVehicle(success);
+      },
+      (error) {
+        emit(
+          ScanVehicleErrorState(
+            message: error.message,
+          ),
+        );
+      },
+    );
+  } catch (error) {
+    emit(
+      ScanVehicleErrorState(
+        message: error.toString(),
+      ),
+    );
   }
+}
 
-
-
-Future<void> scanVehicle0() async {    try {      emit(ScanVehicleLoadingState());      final image = await picker.pickImage(        source: ImageSource.camera,      );      if (image == null) {        emit(          ScanVehicleErrorState(            message: 'No image selected',          ),        );        return;      }      final inputImage =          InputImage.fromFilePath(        image.path,      );      final textRecognizer =          TextRecognizer();      final RecognizedText recognizedText =          await textRecognizer.processImage(        inputImage,      );      final text = recognizedText.text;      await textRecognizer.close();      final cleanedText = text          .replaceAll(' ', '')          .replaceAll('\n', '')          .toUpperCase();      final vinRegex = RegExp(        r'[A-HJ-NPR-Z0-9]{17}',      );      final match =          vinRegex.firstMatch(cleanedText);      if (match == null) {        emit(          ScanVehicleErrorState(            message: 'VIN not found',          ),        );        return;      }      final vin = match.group(0)!;      await getScanVehicleMethod(vin);    } catch (error) {      emit(        ScanVehicleErrorState(          message: error.toString(),        ),      );    }  }  
+// Future<void> scanVehicle() async {    try {      emit(ScanVehicleLoadingState());      final image = await picker.pickImage(        source: ImageSource.camera,      );      if (image == null) {        emit(          ScanVehicleErrorState(            message: 'No image selected',          ),        );        return;      }      final inputImage =          InputImage.fromFilePath(        image.path,      );      final textRecognizer =          TextRecognizer();      final RecognizedText recognizedText =          await textRecognizer.processImage(        inputImage,      );      final text = recognizedText.text;      await textRecognizer.close();      final cleanedText = text          .replaceAll(' ', '')          .replaceAll('\n', '')          .toUpperCase();      final vinRegex = RegExp(        r'[A-HJ-NPR-Z0-9]{17}',      );      final match =          vinRegex.firstMatch(cleanedText);      if (match == null) {        emit(          ScanVehicleErrorState(            message: 'VIN not found',          ),        );        return;      }      final vin = match.group(0)!;      await (vin);    } catch (error) {      emit(        ScanVehicleErrorState(          message: error.toString(),        ),      );    }  }  
+ 
+  @override
   Future<void> close() {
     //here is when close cubit
     return super.close();

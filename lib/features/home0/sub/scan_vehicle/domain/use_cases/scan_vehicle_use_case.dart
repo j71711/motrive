@@ -11,12 +11,12 @@ class ScanVehicleUseCase {
 
   ScanVehicleUseCase(this._repositoryData);
 
-  //  Future<Result<ScanVehicleEntity, Failure>> getScanVehicle() async {
-  //   return _repositoryData.getScanVehicle();
-  // }
-
   Future<Result<ScanVehicleEntity, Failure>> decodeVin(String vin) async {
     return await _repositoryData.decodeVin(vin);
   }
+
+Future<Result<void, Failure>> insertVehicle(ScanVehicleEntity vehicle) {
+  return _repositoryData.insertVehicle(vehicle);
+}
 }
 

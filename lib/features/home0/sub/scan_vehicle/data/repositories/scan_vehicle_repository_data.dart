@@ -21,20 +21,22 @@ class ScanVehicleRepositoryData implements ScanVehicleRepositoryDomain{
     try {
       final response = await remoteDataSource.decodeVin(vin);
       return Success(response.toEntity());
-    } catch (e) {
+    } catch (error) {
       return Error(
-        FailureExceptions.getException(e),
+        FailureExceptions.getException(error),
       );
     }
   }
-
-// @override
-//   Future<Result<ScanVehicleEntity, Failure>> getScanVehicle() async {
-//     try {
-//       final response = await remoteDataSource.getScanVehicle();
-//       return Success(response.toEntity());
-//     } catch (error) {
-//       return Error(FailureExceptions.getException(error));
-//     }
-//   }
+  
+  @override
+  Future<Result<void, Failure>> insertVehicle(ScanVehicleEntity vehicle) async {
+    try {
+      final response = await remoteDataSource.insertVehicle(vehicle);
+      return Success(response);
+    } catch (error) {
+      return Error(
+        FailureExceptions.getException(error),
+      );
+    }
+  }
 }
