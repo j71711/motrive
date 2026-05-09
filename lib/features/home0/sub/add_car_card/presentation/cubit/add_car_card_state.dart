@@ -1,18 +1,26 @@
+import 'package:equatable/equatable.dart';
 import 'package:motrive/features/home0/sub/add_car_card/domain/entities/add_car_card_entity.dart';
 
-abstract class VehicleState {}
-
-class VehicleInitial extends VehicleState {}
-
-class VehicleLoading extends VehicleState {}
-
-class VehicleLoaded extends VehicleState {
-  final List<VehicleEntity> vehicles;
-  VehicleLoaded(this.vehicles);
+abstract class VehicleState extends Equatable {
+  @override
+  List<Object?> get props => [];
 }
 
-class VehicleError extends VehicleState {
+class VehicleInitialState extends VehicleState {}
+
+class VehicleLoadingState extends VehicleState {}
+
+class VehicleLoadedState extends VehicleState {
+  final List<VehicleEntity> vehicles;
+  VehicleLoadedState(this.vehicles);
+  @override
+  List<Object?> get props => [vehicles];
+}
+
+class VehicleErrorState extends VehicleState {
   final String message;
-  VehicleError(this.message);
+  VehicleErrorState(this.message);
+  @override
+  List<Object?> get props => [message];
 }
 

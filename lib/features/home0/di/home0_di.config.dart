@@ -49,9 +49,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i106.VehicleLocalDataSource>(
       () => _i106.VehicleLocalDataSourceImpl(gh<_i979.Box<dynamic>>()),
     );
-    gh.lazySingleton<_i333.AddCarUseCase0>(
-      () => _i333.AddCarUseCase0(gh<_i10.VehicleLocalDataSource>()),
-    );
     gh.lazySingleton<_i718.BaseScanVehicleRemoteDataSource>(
       () => _i718.ScanVehicleRemoteDataSource(
         gh<_i56.LocalKeysService>(),

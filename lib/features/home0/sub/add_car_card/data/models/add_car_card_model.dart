@@ -1,7 +1,7 @@
 import 'package:motrive/features/home0/sub/add_car_card/domain/entities/add_car_card_entity.dart';
 
 class VehicleModel extends VehicleEntity {
-  VehicleModel({
+  const VehicleModel({
     required super.id,
     required super.userId,
     required super.make,

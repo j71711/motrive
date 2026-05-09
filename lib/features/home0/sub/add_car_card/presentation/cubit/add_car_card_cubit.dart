@@ -6,31 +6,25 @@ import 'package:motrive/features/home0/sub/add_car_card/presentation/cubit/add_c
 class AddCarCardCubit extends Cubit<VehicleState> {
   final AddCarCardUseCase _addCarCardUseCase;
 
-  AddCarCardCubit(this._addCarCardUseCase) : super(VehicleInitial()){
+  AddCarCardCubit(this._addCarCardUseCase) : super(VehicleInitialState()){
     getAddCarCardMethod();
   }
 
   Future<void> getAddCarCardMethod() async { 
-       emit(VehicleLoading());
+       emit(VehicleLoadingState());
 final result = await _addCarCardUseCase.getVehicles();
     result.when(
       (success) {
         allVehicles = success;
-        emit(VehicleLoaded(success));
+        emit(VehicleLoadedState(success));
       },
       (whenError) {
-      emit(VehicleError(whenError.message));
+      emit(VehicleErrorState(whenError.message));
       },
     );  
   }
 
   List<VehicleEntity> allVehicles = [];
-  
-  Future<void> addVehicle(VehicleEntity vehicle) async {
-    await _addCarCardUseCase.addVehicle(vehicle);
-    getAddCarCardMethod();
-  }
-
 
 Future deleteVehicle(String id) async {
   final result = await _addCarCardUseCase.deleteVehicle(id);
@@ -40,7 +34,7 @@ Future deleteVehicle(String id) async {
       await getAddCarCardMethod(); 
     },
     (error) {
-      emit(VehicleError(error.message));
+      emit(VehicleErrorState(error.message));
     },
   );
 }
@@ -55,7 +49,7 @@ Future deleteVehicle(String id) async {
               .contains(query.toLowerCase()) ;
     }).toList();
 
-    emit(VehicleLoaded(filtered));
+    emit(VehicleLoadedState(filtered));
   }
 
   @override

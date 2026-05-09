@@ -34,18 +34,17 @@ class AddCarCardFeatureWidget extends StatelessWidget {
                 child: BlocBuilder<AddCarCardCubit, VehicleState>(
                   builder: (context, state) {
                     switch (state) {
-                      case VehicleLoading _:
+                      case VehicleLoadingState _:
                         return const Center(child: CircularProgressIndicator());
-                      case VehicleLoaded _:
+                      case VehicleLoadedState _:
                         return ListView.builder(
                           itemCount: state.vehicles.length,
                           itemBuilder: (context, index) {
                             final vehicle = state.vehicles[index];
                             return Dismissible(
                               key: Key(
-                                vehicle.id.toString(), //?? index.toString()
+                                vehicle.id.toString(),
                               ),
-                              direction: DismissDirection.endToStart,
                               confirmDismiss: (direction) async {
                                 return await showDialog(
                                   context: context,
@@ -56,13 +55,11 @@ class AddCarCardFeatureWidget extends StatelessWidget {
                                     ),
                                     actions: [
                                       TextButton(
-                                        onPressed: () =>
-                                            Navigator.of(context).pop(false),
+                                        onPressed: () => Navigator.of(context).pop(false),
                                         child: const Text('cancel'),
                                       ),
                                       TextButton(
-                                        onPressed: () =>
-                                            Navigator.of(context).pop(true),
+                                        onPressed: () => Navigator.of(context).pop(true),
                                         child: const Text(
                                           'delete',
                                           style: TextStyle(color: Colors.red),
@@ -114,7 +111,7 @@ class AddCarCardFeatureWidget extends StatelessWidget {
                             );
                           },
                         );
-                      case VehicleError _:
+                      case VehicleErrorState _:
                         return Center(child: Text(state.message));
                     }
                     return const SizedBox();

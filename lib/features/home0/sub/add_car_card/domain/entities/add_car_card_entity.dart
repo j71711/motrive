@@ -1,4 +1,6 @@
-class VehicleEntity {
+import 'package:equatable/equatable.dart';
+
+class VehicleEntity extends Equatable {
   final String userId;
   final String id;
   final String make;
@@ -9,7 +11,7 @@ class VehicleEntity {
   final String? vin;
   final int? currentOdometer;
 
-  VehicleEntity({
+  const VehicleEntity({
     required this.userId,
     required this.id,
     required this.make,
@@ -20,4 +22,7 @@ class VehicleEntity {
      this.vin,
      this.currentOdometer,
   });
+  
+  @override
+  List<Object?> get props => [userId, id, make, model, year, color, licensePlate, vin, currentOdometer];
 }

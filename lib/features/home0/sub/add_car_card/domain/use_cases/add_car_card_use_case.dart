@@ -10,9 +10,6 @@ class AddCarCardUseCase {
   final AddCarCardRepositoryDomain _repositoryData;
 
   AddCarCardUseCase(this._repositoryData);
-  Future<void> addVehicle(VehicleEntity vehicle) {
-    return _repositoryData.addVehicle(vehicle);
-  }
 
   Future<Result<void, Failure>> deleteVehicle(String id) {
     return _repositoryData.deleteVehicle(id);
@@ -38,17 +35,3 @@ class AddCarCardUseCase {
   }
 }
 
-@lazySingleton
-class AddCarUseCase0 {
-  final VehicleLocalDataSource _repositoryData;
-  AddCarUseCase0(this._repositoryData);
-  Future<List<VehicleModel>> getCachedVehicles() async {
-    final vehicles = _repositoryData.getCachedVehicles();
-    return vehicles;
-  }
-
-  Future<List<VehicleModel>> getVehicles() async {
-    final vehicles = _repositoryData.getCachedVehicles();
-    return vehicles;
-  }
-}
