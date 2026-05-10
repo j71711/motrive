@@ -7,10 +7,13 @@ import 'package:motrive/features/auth/presentation/pages/auth_feature_screen.dar
 import 'package:motrive/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:motrive/features/home/presentation/pages/home_feature_screen.dart';
 import 'package:motrive/features/home/presentation/cubit/home_cubit.dart';
+import 'package:motrive/features/profile/presentation/pages/profile_feature_screen.dart';
+import 'package:motrive/features/profile/presentation/cubit/profile_cubit.dart';
+
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: Routes.auth,
+    initialLocation: Routes.profile,
     routes: [
       GoRoute(
         path: Routes.splash,
@@ -27,7 +30,7 @@ class AppRouter {
         ),
       ),
 
-      // GoRoute(
+      // GoRoute(R
       //   path: Routes.loading,
       //   builder: (context, state) => BlocProvider(
       //         create: (context) => LoadingCubit(GetIt.I.get()),
@@ -41,7 +44,15 @@ class AppRouter {
           child: const HomeFeatureScreen(),
         ),
       ),
-    ],
+    
+  GoRoute(
+    path: Routes.profile,
+    builder: (context, state) => BlocProvider(
+          create: (context) => ProfileCubit(GetIt.I.get()),
+          child: const ProfileFeatureScreen(),
+        ),
+  ),
+],
 
     errorBuilder: (context, state) =>
         Scaffold(body: Center(child: Text('Page not found: ${state.uri}'))),
