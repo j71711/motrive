@@ -1,5 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<<<<<<< HEAD
     <uses-permission android:name="android.permission.CAMERA"/>
+=======
+>>>>>>> remotes/origin/main
     <application
         android:label="motrive"
         android:name="${applicationName}"
