@@ -8,8 +8,6 @@ import 'package:motrive/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:motrive/features/home/presentation/pages/home_feature_screen.dart';
 import 'package:motrive/features/home/presentation/cubit/home_cubit.dart';
 
-
-
 class AppRouter {
   static final GoRouter router = GoRouter(
     initialLocation: Routes.auth,
@@ -20,32 +18,30 @@ class AppRouter {
           return Scaffold(body: Center(child: Text("splash screen")));
         }, // SplashScreen
       ),
-    
-  GoRoute(
-    path: Routes.auth,
-    builder: (context, state) => BlocProvider(
+
+      GoRoute(
+        path: Routes.auth,
+        builder: (context, state) => BlocProvider(
           create: (context) => AuthCubit(GetIt.I.get()),
           child: const AuthFeatureScreen(),
         ),
-  ),
+      ),
 
-  // GoRoute(
-  //   path: Routes.loading,
-  //   builder: (context, state) => BlocProvider(
-  //         create: (context) => LoadingCubit(GetIt.I.get()),
-  //         child: const LoadingFeatureScreen(),
-  //       ),
-  // ),
-
-
-  GoRoute(
-    path: Routes.home,
-    builder: (context, state) => BlocProvider(
+      // GoRoute(
+      //   path: Routes.loading,
+      //   builder: (context, state) => BlocProvider(
+      //         create: (context) => LoadingCubit(GetIt.I.get()),
+      //         child: const LoadingFeatureScreen(),
+      //       ),
+      // ),
+      GoRoute(
+        path: Routes.home,
+        builder: (context, state) => BlocProvider(
           create: (context) => HomeCubit(GetIt.I.get()),
           child: const HomeFeatureScreen(),
         ),
-  ),
-],
+      ),
+    ],
 
     errorBuilder: (context, state) =>
         Scaffold(body: Center(child: Text('Page not found: ${state.uri}'))),

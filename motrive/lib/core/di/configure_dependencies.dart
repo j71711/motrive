@@ -14,6 +14,5 @@ Future<void> configureDependencies() async {
   final getIt = GetIt.instance;
   getIt.init();
   configureAuth(getIt);
-
   configureHome(getIt);
 }

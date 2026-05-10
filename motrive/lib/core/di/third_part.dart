@@ -19,7 +19,7 @@ abstract class ThirdPartyConfig {
   FlutterSecureStorage get flutterSecureStorage =>
       FlutterSecureStorage(aOptions: _getAndroidOptions());
   //----------------------------------------------------------------------------
-    @lazySingleton
+  @lazySingleton
   GoogleSignIn get googleSignIn => GoogleSignIn.instance;
 }
 

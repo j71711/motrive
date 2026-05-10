@@ -310,15 +310,19 @@ class FailureExceptions {
     final msg = message.toLowerCase();
 
     if (msg.contains('permission denied')) return const UnauthorizedFailure();
-    if (msg.contains('violates row-level security'))
+    if (msg.contains('violates row-level security')) {
       return const UnauthorizedFailure('Access denied');
-    if (msg.contains('duplicate key'))
+    }
+    if (msg.contains('duplicate key')) {
       return const ValidationFailure('Data already exists');
+    }
     if (msg.contains('not found')) return const NotFoundFailure();
-    if (msg.contains('foreign key'))
+    if (msg.contains('foreign key')) {
       return const ValidationFailure('Invalid reference');
-    if (msg.contains('null value'))
+    }
+    if (msg.contains('null value')) {
       return const ValidationFailure('Required field is missing');
+    }
     if (msg.contains('timeout')) return const TimeoutFailure();
 
     return ServerFailure(message);

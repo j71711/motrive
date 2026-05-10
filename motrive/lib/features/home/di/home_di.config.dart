@@ -10,6 +10,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:get_it/get_it.dart' as _i174;
+import 'package:hive/hive.dart' as _i979;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:motrive/core/services/local_keys_service.dart' as _i56;
 import 'package:motrive/features/home/data/datasources/home_remote_data_source.dart'
@@ -20,6 +21,22 @@ import 'package:motrive/features/home/domain/repositories/home_repository_domain
     as _i445;
 import 'package:motrive/features/home/domain/use_cases/home_use_case.dart'
     as _i463;
+import 'package:motrive/features/home/sub/add_car_card/data/datasources/add_car_card_remote_data_source.dart'
+    as _i737;
+import 'package:motrive/features/home/sub/add_car_card/data/repositories/add_car_repository_data.dart'
+    as _i924;
+import 'package:motrive/features/home/sub/add_car_card/domain/repositories/add_car_card_repository_domain.dart'
+    as _i521;
+import 'package:motrive/features/home/sub/add_car_card/domain/use_cases/add_car_card_use_case.dart'
+    as _i280;
+import 'package:motrive/features/home/sub/scan_vehicle/data/datasources/scan_vehicle_remote_data_source.dart'
+    as _i353;
+import 'package:motrive/features/home/sub/scan_vehicle/data/repositories/scan_vehicle_repository_data.dart'
+    as _i431;
+import 'package:motrive/features/home/sub/scan_vehicle/domain/repositories/scan_vehicle_repository_domain.dart'
+    as _i723;
+import 'package:motrive/features/home/sub/scan_vehicle/domain/use_cases/scan_vehicle_use_case.dart'
+    as _i198;
 import 'package:supabase_flutter/supabase_flutter.dart' as _i454;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -29,11 +46,43 @@ extension GetItInjectableX on _i174.GetIt {
     _i526.EnvironmentFilter? environmentFilter,
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
+    gh.lazySingleton<_i737.VehicleLocalDataSource>(
+      () => _i737.VehicleLocalDataSourceImpl(gh<_i979.Box<dynamic>>()),
+    );
+    gh.lazySingleton<_i353.BaseScanVehicleRemoteDataSource>(
+      () => _i353.ScanVehicleRemoteDataSource(
+        gh<_i56.LocalKeysService>(),
+        gh<_i454.SupabaseClient>(),
+      ),
+    );
+    gh.lazySingleton<_i737.BaseAddCarCardRemoteDataSource>(
+      () => _i737.AddCarCardRemoteDataSource(
+        gh<_i56.LocalKeysService>(),
+        gh<_i454.SupabaseClient>(),
+      ),
+    );
     gh.lazySingleton<_i68.BaseHomeRemoteDataSource>(
       () => _i68.HomeRemoteDataSource(
         gh<_i56.LocalKeysService>(),
         gh<_i454.SupabaseClient>(),
       ),
+    );
+    gh.lazySingleton<_i521.AddCarCardRepositoryDomain>(
+      () => _i924.AddCarCardRepositoryData(
+        gh<_i737.BaseAddCarCardRemoteDataSource>(),
+        gh<_i737.VehicleLocalDataSource>(),
+      ),
+    );
+    gh.lazySingleton<_i723.ScanVehicleRepositoryDomain>(
+      () => _i431.ScanVehicleRepositoryData(
+        gh<_i353.BaseScanVehicleRemoteDataSource>(),
+      ),
+    );
+    gh.lazySingleton<_i198.ScanVehicleUseCase>(
+      () => _i198.ScanVehicleUseCase(gh<_i723.ScanVehicleRepositoryDomain>()),
+    );
+    gh.lazySingleton<_i280.AddCarCardUseCase>(
+      () => _i280.AddCarCardUseCase(gh<_i521.AddCarCardRepositoryDomain>()),
     );
     gh.lazySingleton<_i445.HomeRepositoryDomain>(
       () => _i248.HomeRepositoryData(gh<_i68.BaseHomeRemoteDataSource>()),
