@@ -107,15 +107,15 @@ class AuthRemoteDataSource implements BaseAuthRemoteDataSource {
   }
 
   final newUser = await _supabase
-      .from('users')
-      .insert({
-        'id': authId,
-        'email': email,
-        'full_name': name,
-        'profile': profile,
-      })
-      .select()
-      .single();
+    .from('users')
+    .insert({
+      'id': authId,
+      'email': email,
+      'full_name': name,
+      'profile': profile,
+    })
+    .select()
+    .single();
 
   return newUser;
 }
