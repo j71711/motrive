@@ -78,6 +78,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i10.AddCarCardRepositoryDomain>(
       () => _i115.AddCarCardRepositoryData(
         gh<_i106.BaseAddCarCardRemoteDataSource>(),
+        gh<_i106.VehicleLocalDataSource>(),
       ),
     );
     gh.lazySingleton<_i511.Home0UseCase>(

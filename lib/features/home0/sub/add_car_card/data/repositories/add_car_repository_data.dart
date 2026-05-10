@@ -9,11 +9,16 @@ import 'package:multiple_result/multiple_result.dart';
 @LazySingleton(as: AddCarCardRepositoryDomain)
 class AddCarCardRepositoryData implements AddCarCardRepositoryDomain{
   final BaseAddCarCardRemoteDataSource remoteDataSource;
-  AddCarCardRepositoryData(this.remoteDataSource,);
+  final VehicleLocalDataSource localDataSource;
+  AddCarCardRepositoryData(this.remoteDataSource,this.localDataSource);
   @override
   Future<Result<void, Failure>> deleteVehicle(String id) async {
     try{
      await remoteDataSource.deleteVehicle(id);
+     
+     final vehicles = await remoteDataSource.getVehicles();
+
+      await localDataSource.cacheVehicles(vehicles);
        return Success(null);
     }
     catch(error){
@@ -24,12 +29,23 @@ class AddCarCardRepositoryData implements AddCarCardRepositoryDomain{
   @override
   Future<Result<List<VehicleModel>, Failure>> getVehicles() async {
     try{
-     final carInfo =  await remoteDataSource.getVehicles();
-       return Success(carInfo);
+
+     final vehicles =  await remoteDataSource.getVehicles();
+
+     await localDataSource.cacheVehicles(vehicles);
+
+       return Success(vehicles);
     }
     catch(error){
+
+       final cachedVehicles = localDataSource.getCachedVehicles();
+
+      if (cachedVehicles.isNotEmpty) {
+        return Success(cachedVehicles);
+      }
       return Error(FailureExceptions.getException(error));
     }
+    
   }
 
 }
