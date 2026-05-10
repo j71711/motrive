@@ -54,6 +54,8 @@ class AuthRemoteDataSource implements BaseAuthRemoteDataSource {
       name: googleAccount.displayName ?? 'Name',
       email: googleAccount.email,
       profile: googleAccount.photoUrl,
+      
+
     );
 
     _userService.setUser = AuthModel.fromJson(userInfo).toEntity();
@@ -110,6 +112,7 @@ class AuthRemoteDataSource implements BaseAuthRemoteDataSource {
         'id': authId,
         'email': email,
         'full_name': name,
+        'profile': profile,
       })
       .select()
       .single();
