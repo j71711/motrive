@@ -79,7 +79,6 @@ class AddCarCardFeatureWidget extends StatelessWidget {
                                   ),
                                 );
                               },
-
                               background: Container(
                                 color: Colors.red,
                                 alignment: Alignment.centerRight,

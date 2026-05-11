@@ -29,9 +29,15 @@ class VehicleLocalDataSourceImpl implements VehicleLocalDataSource {
   @override
   List<VehicleModel> getCachedVehicles() {
     final data = box.get('vehicles', defaultValue: []);
-    return List<Map<String, dynamic>>.from(
-      data,
-    ).map((e) => VehicleModel.fromJson(e)).toList();
+    // return
+
+return (data as List)
+    .map(
+      (e) => VehicleModel.fromJson(
+        Map<String, dynamic>.from(e),
+      ),
+    )
+    .toList();
   }
 }
 

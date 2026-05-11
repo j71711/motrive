@@ -10,102 +10,95 @@ class HomeFeatureScreen extends StatelessWidget {
   const HomeFeatureScreen({super.key});
   @override
   Widget build(BuildContext context) {
-      final _ = context.read<HomeCubit>();
+    final _ = context.read<HomeCubit>();
 
     return Scaffold(
       appBar: AppBar(title: const Text('Home Feature Screen')),
-      body: Column(children: [
+      body: Column(
+        children: [
           Center(
-            child:BlocProvider(
-  create: (_) => AddCarCardCubit(GetIt.I.get()),
-  child: BlocBuilder<AddCarCardCubit, VehicleState>(
-    builder: (context, state) {
+            child: BlocProvider(
+              create: (_) => AddCarCardCubit(GetIt.I.get()),
+              child: BlocBuilder<AddCarCardCubit, VehicleState>(
+                builder: (context, state) {
+                  if (state is VehicleLoadingState) {
+                    return const CircularProgressIndicator();
+                  }
 
-      if (state is VehicleLoadingState) {
-        return const CircularProgressIndicator();
-      }
-
-      if (state is VehicleLoadedState) {
-        final vehicle = state.vehicles.first;
-        return GestureDetector(
-          onTap: () {
-            showDialog(
-                  context: context,
-                  builder: (context) {
-                    final screenSize = MediaQuery.of(context).size;
-                    return Center(
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
+                  if (state is VehicleLoadedState) {
+                    final vehicle = state.vehicles.first;
+                    return GestureDetector(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            final screenSize = MediaQuery.of(context).size;
+                            return Center(
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                margin: const EdgeInsets.all(20),
+                                child: Container(
+                                  width: screenSize.width * 0.85,
+                                  height: screenSize.height * 0.60,
+                                  padding: const EdgeInsets.all(16),
+                                  child: const AddCarCardFeatureWidget(),
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(18),
+                        decoration: BoxDecoration(
+                          border: Border.all(),
+                          borderRadius: BorderRadius.circular(24),
                         ),
-                        margin: const EdgeInsets.all(20),
-                        child: Container(
-                          width: screenSize.width * 0.85,
-                          height: screenSize.height * 0.60,
-                          padding: const EdgeInsets.all(16),
-                          child: const AddCarCardFeatureWidget(),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '${vehicle.make} ${vehicle.model}',
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+
+                                Text(
+                                  vehicle.year.toString(),
+                                  style: const TextStyle(),
+                                ),
+                              ],
+                            ),
+
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 14,
+                                vertical: 8,
+                              ),
+                              decoration: BoxDecoration(
+                                border: BoxBorder.all(),
+                                borderRadius: BorderRadius.circular(18),
+                              ),
+                              child: Text('${vehicle.currentOdometer ?? 0} Km'),
+                            ),
+                          ],
                         ),
                       ),
                     );
-                  },
-                );
-          },
-          child: Container(
-            margin: const EdgeInsets.all(16),
-            padding: const EdgeInsets.all(18),
-            decoration: BoxDecoration(
-              border: Border.all(),
-              borderRadius: BorderRadius.circular(24),
-            ),
-            child: Row(
-              mainAxisAlignment:
-                  MainAxisAlignment.spaceBetween,
-              children: [
-          
-                Column(
-                  crossAxisAlignment:
-                      CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${vehicle.make} ${vehicle.model}',
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-          
-                    Text(
-                      vehicle.year.toString(),
-                      style: const TextStyle(
-                      ),
-                    ),
-                  ],
-                ),
-          
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 14,
-                    vertical: 8,
-                  ),
-                  decoration: BoxDecoration(
-                    border: BoxBorder.all(),
-                    borderRadius:
-                        BorderRadius.circular(18),
-                  ),
-                  child: Text(
-                    '${vehicle.currentOdometer ?? 0} Km',
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      }
+                  }
 
-      return const SizedBox();
-    },
-  ),
-)
+                  return const SizedBox();
+                },
+              ),
+            ),
           ),
         ],
       ),
