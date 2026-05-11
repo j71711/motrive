@@ -1,33 +1,46 @@
 import 'package:injectable/injectable.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:motrive/core/services/local_keys_service.dart';
-import 'package:motrive/features/home/sub/sos/data/models/sos_model.dart';
 import 'package:motrive/core/errors/network_exceptions.dart';
-
+import 'package:motrive/core/services/emergency_service.dart';
 
 abstract class BaseSosRemoteDataSource {
-  Future<SosModel> getSos();
+  Future<void> sendSosEmail();
+
+  Future<void> callPolice();
+
+  Future<void> callAmbulance();
 }
 
-
 @LazySingleton(as: BaseSosRemoteDataSource)
-class SosRemoteDataSource implements BaseSosRemoteDataSource {
- 
-  final SupabaseClient _supabase;
-  final LocalKeysService _localKeysService;
-  
-  
+class SosRemoteDataSource
+    implements BaseSosRemoteDataSource {
+  final EmergencyService emergencyService;
 
-   SosRemoteDataSource(this._localKeysService, this._supabase);
+  SosRemoteDataSource(this.emergencyService);
 
-
-
-    @override
-  Future<SosModel> getSos() async {
+  @override
+  Future<void> sendSosEmail() async {
     try {
-      return SosModel(id: 1, firstName: "Last Name", lastName: "First Name");
+      await emergencyService.sendSosEmail();
     } catch (error) {
-     throw FailureExceptions.getException(error);
+      throw FailureExceptions.getException(error);
+    }
+  }
+
+  @override
+  Future<void> callPolice() async {
+    try {
+      await emergencyService.callPolice();
+    } catch (error) {
+      throw FailureExceptions.getException(error);
+    }
+  }
+
+  @override
+  Future<void> callAmbulance() async {
+    try {
+      await emergencyService.callAmbulance();
+    } catch (error) {
+      throw FailureExceptions.getException(error);
     }
   }
 }

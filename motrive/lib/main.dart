@@ -31,6 +31,7 @@ class MainApp extends StatelessWidget {
     return Sizer(
       builder: (context, orientation, screenType) {
         return MaterialApp.router(
+          themeAnimationDuration: Duration.zero,
           routerConfig: AppRouter.router,
           localizationsDelegates: context.localizationDelegates,
           supportedLocales: context.supportedLocales,

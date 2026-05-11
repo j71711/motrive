@@ -20,7 +20,7 @@ class AuthFeatureScreen extends HookWidget {
     final emailController = useTextEditingController();
     final nameController = useTextEditingController();
 
-    final formKey = GlobalKey<FormState>();
+    final formKey = useMemoized(() => GlobalKey<FormState>());
 
     return Scaffold(
       body: BlocConsumer<AuthCubit, AuthState>(
@@ -30,11 +30,9 @@ class AuthFeatureScreen extends HookWidget {
           }
 
           if (state is AuthErrorState) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.message),
-              ),
-            );
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.message)));
           }
 
           if (state is AuthEmailSuccessState) {
@@ -49,10 +47,7 @@ class AuthFeatureScreen extends HookWidget {
                         child: OtpBottomSheetWidget(
                           sentTo: state.email,
                           onSubmit: (otp) {
-                            cubit.emailVerify(
-                              email: state.email,
-                              otp: otp,
-                            );
+                            cubit.emailVerify(email: state.email, otp: otp);
                           },
                           onResend: () {
                             cubit.emailSignIn(
@@ -82,17 +77,9 @@ class AuthFeatureScreen extends HookWidget {
                 color: Theme.of(context).colorScheme.primary,
                 child: Stack(
                   children: [
-                    Positioned(
-                      left: -85,
-                      top: 38,
-                      child: Circle(size: 185),
-                    ),
+                    Positioned(left: -85, top: 38, child: Circle(size: 185)),
 
-                    Positioned(
-                      right: -35,
-                      top: 100,
-                      child: Circle(size: 110),
-                    ),
+                    Positioned(right: -35, top: 100, child: Circle(size: 110)),
 
                     Positioned(
                       right: 100,
@@ -104,7 +91,7 @@ class AuthFeatureScreen extends HookWidget {
                       child: Text(
                         isLogin ? 'Welcome Back' : 'Welcome',
                         style: TextStyle(
-                          color:   Theme.of(context).colorScheme.onPrimary,
+                          color: Theme.of(context).colorScheme.onPrimary,
                           fontSize: 34,
                           fontWeight: FontWeight.bold,
                         ),
@@ -120,7 +107,7 @@ class AuthFeatureScreen extends HookWidget {
                   height: size.height * .69,
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(horizontal: 34),
-                  decoration:  BoxDecoration(
+                  decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.surface,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(38),
@@ -133,22 +120,15 @@ class AuthFeatureScreen extends HookWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(
-                            height: isLogin ? 78 : 52,
-                          ),
+                          SizedBox(height: isLogin ? 78 : 52),
 
                           if (!isLogin) ...[
-                           Padding(
-                              padding: EdgeInsets.only(
-                                left: 6,
-                                bottom: 8,
-                              ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 6, bottom: 8),
                               child: Text(
                                 'Name',
                                 style: TextStyle(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .primary,
+                                  color: Theme.of(context).colorScheme.primary,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -163,17 +143,12 @@ class AuthFeatureScreen extends HookWidget {
                             const SizedBox(height: 18),
                           ],
 
-                           Padding(
-                            padding: EdgeInsets.only(
-                              left: 6,
-                              bottom: 8,
-                            ),
+                          Padding(
+                            padding: EdgeInsets.only(left: 6, bottom: 8),
                             child: Text(
                               'Email',
                               style: TextStyle(
-                                color:  Theme.of(context)
-                                    .colorScheme
-                                    .primary,
+                                color: Theme.of(context).colorScheme.primary,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -197,8 +172,7 @@ class AuthFeatureScreen extends HookWidget {
                                   : () {
                                       if (formKey.currentState!.validate()) {
                                         cubit.emailSignIn(
-                                          email:
-                                              emailController.text.trim(),
+                                          email: emailController.text.trim(),
                                           name: isLogin
                                               ? ''
                                               : nameController.text.trim(),
@@ -207,36 +181,34 @@ class AuthFeatureScreen extends HookWidget {
                                     },
                               style: ElevatedButton.styleFrom(
                                 elevation: 0,
-                                backgroundColor:
-                                     Theme.of(context)
-                                        .colorScheme
-                                        .primary,
+                                backgroundColor: Theme.of(
+                                  context,
+                                ).colorScheme.primary,
                                 shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(12),
+                                  borderRadius: BorderRadius.circular(12),
                                 ),
                               ),
+
                               child: state is AuthLoadingState
-                                  ?  CircularProgressIndicator(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onPrimary,
+                                  ? CircularProgressIndicator(
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.onPrimary,
                                     )
-                                  : Text(
-                                      isLogin
-                                          ? 'Send OTP'
-                                          : 'Sign Up',
-                                      style:  TextStyle(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onPrimary,
+                                  : DefaultTextStyle(
+                                      style: TextStyle(
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.onPrimary,
                                         fontSize: 20,
                                         fontWeight: FontWeight.w500,
+                                      ),
+                                      child: Text(
+                                        isLogin ? 'Send OTP' : 'Sign Up',
                                       ),
                                     ),
                             ),
                           ),
-
                           const SizedBox(height: 24),
 
                           SizedBox(
@@ -249,37 +221,31 @@ class AuthFeatureScreen extends HookWidget {
                                       cubit.googleSignIn();
                                     },
                               style: OutlinedButton.styleFrom(
-                                side:  BorderSide(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .primary,
+                                side: BorderSide(
+                                  color: Theme.of(context).colorScheme.primary,
                                   width: 2.4,
                                 ),
                                 shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(12),
+                                  borderRadius: BorderRadius.circular(12),
                                 ),
                               ),
                               child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   AnyImageView(
-                                    imagePath:
-                                        'assets/images/google.png',
+                                    imagePath: 'assets/images/google.png',
                                     height: 28,
                                     width: 28,
                                   ),
 
                                   const SizedBox(width: 24),
 
-                                   Text(
+                                  Text(
                                     'Login With Google',
                                     style: TextStyle(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .primary,
-
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.primary,
                                       fontSize: 18,
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -289,9 +255,7 @@ class AuthFeatureScreen extends HookWidget {
                             ),
                           ),
 
-                          SizedBox(
-                            height: size.height * .14,
-                          ),
+                          SizedBox(height: size.height * .14),
 
                           Center(
                             child: GestureDetector(
@@ -305,26 +269,23 @@ class AuthFeatureScreen extends HookWidget {
                                       text: isLogin
                                           ? "Don’t Have Account? "
                                           : "Already Have Account? ",
-                                      style:  TextStyle(
-                                        color:  Theme.of(context)
+                                      style: TextStyle(
+                                        color: Theme.of(context)
                                             .colorScheme
                                             .onSurface
                                             .withValues(alpha: .55),
                                         fontSize: 17,
+                                        fontWeight: FontWeight.w400,
                                       ),
                                     ),
-
                                     TextSpan(
-                                      text: isLogin
-                                          ? 'Sign Up'
-                                          : 'Sign In',
-                                      style:  TextStyle(
-                                        color:Theme.of(context)
-                                            .colorScheme
-                                            .primary,
+                                      text: isLogin ? 'Sign Up' : 'Sign In',
+                                      style: TextStyle(
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.primary,
                                         fontSize: 17,
-                                        fontWeight:
-                                            FontWeight.bold,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                   ],
