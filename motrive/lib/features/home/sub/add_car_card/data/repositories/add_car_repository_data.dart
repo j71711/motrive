@@ -15,9 +15,7 @@ class AddCarCardRepositoryData implements AddCarCardRepositoryDomain{
   Future<Result<void, Failure>> deleteVehicle(String id) async {
     try{
      await remoteDataSource.deleteVehicle(id);
-     
      final vehicles = await remoteDataSource.getVehicles();
-
       await localDataSource.cacheVehicles(vehicles);
        return Success(null);
     }
@@ -25,27 +23,33 @@ class AddCarCardRepositoryData implements AddCarCardRepositoryDomain{
       return Error(FailureExceptions.getException(error));
     }
   }
+
+
   
   @override
   Future<Result<List<VehicleModel>, Failure>> getVehicles() async {
-    try{
-
-     final vehicles =  await remoteDataSource.getVehicles();
-
-     await localDataSource.cacheVehicles(vehicles);
-
-       return Success(vehicles);
-    }
-    catch(error){
-
        final cachedVehicles = localDataSource.getCachedVehicles();
-
       if (cachedVehicles.isNotEmpty) {
+        // call method to update cache in background
+        refreshCacheInBackground();
         return Success(cachedVehicles);
       }
+    try{
+     final remoteVehicles =  await remoteDataSource.getVehicles();
+     await localDataSource.cacheVehicles(remoteVehicles);
+       return Success(remoteVehicles);
+    }
+    catch(error){
       return Error(FailureExceptions.getException(error));
     }
-    
+  }
+
+  Future<void> refreshCacheInBackground() async {
+    try {
+      final remoteVehicles = await remoteDataSource.getVehicles();
+      await localDataSource.cacheVehicles(remoteVehicles);
+    } catch (_) {
+    }
   }
 
 }

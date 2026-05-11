@@ -42,9 +42,7 @@ class AddCarCardFeatureWidget extends StatelessWidget {
                           itemBuilder: (context, index) {
                             final vehicle = state.vehicles[index];
                             return Dismissible(
-                              key: Key(
-                                vehicle.id.toString(),
-                              ),
+                              key: Key(vehicle.id.toString()),
                               confirmDismiss: (direction) async {
                                 return await showDialog(
                                   context: context,
@@ -55,11 +53,13 @@ class AddCarCardFeatureWidget extends StatelessWidget {
                                     ),
                                     actions: [
                                       TextButton(
-                                        onPressed: () => Navigator.of(context).pop(false),
+                                        onPressed: () =>
+                                            Navigator.of(context).pop(false),
                                         child: const Text('cancel'),
                                       ),
                                       TextButton(
-                                        onPressed: () => Navigator.of(context).pop(true),
+                                        onPressed: () =>
+                                            Navigator.of(context).pop(true),
                                         child: const Text(
                                           'delete',
                                           style: TextStyle(color: Colors.red),
@@ -79,7 +79,6 @@ class AddCarCardFeatureWidget extends StatelessWidget {
                                   ),
                                 );
                               },
-
                               background: Container(
                                 color: Colors.red,
                                 alignment: Alignment.centerRight,
@@ -91,6 +90,9 @@ class AddCarCardFeatureWidget extends StatelessWidget {
                               ),
 
                               child: ListTile(
+                                onTap: (){
+                                  Navigator.pop(context, vehicle);
+                                },
                                 leading: const Icon(Icons.drive_eta),
                                 trailing: Text(
                                   'Year: ${vehicle.year.toString()}',
@@ -118,16 +120,19 @@ class AddCarCardFeatureWidget extends StatelessWidget {
                   },
                 ),
               ),
-              IconButton(
-                onPressed: () async {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const ScanVehicleFeatureWidget(),
-                    ),
-                  );
-                },
-                icon: const Icon(Icons.add),
+              SizedBox(
+                width: double.infinity,
+                child: FilledButton.icon(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const ScanVehicleFeatureWidget(),
+                      ),
+                    );
+                  },
+                  label: const Text('add Vehicle'),
+                ),
               ),
             ],
           );

@@ -10,7 +10,7 @@ class AddCarCardCubit extends Cubit<VehicleState> {
     getAddCarCardMethod();
   }
 
-  Future<void> getAddCarCardMethod() async { 
+  Future<void> getAddCarCardMethod() async {
        emit(VehicleLoadingState());
 final result = await _addCarCardUseCase.getVehicles();
     result.when(

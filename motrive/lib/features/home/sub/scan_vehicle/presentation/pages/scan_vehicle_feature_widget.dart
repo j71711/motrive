@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:motrive/core/extensions/context_extensions.dart';
 import 'package:motrive/features/home/sub/scan_vehicle/presentation/cubit/scan_vehicle_cubit.dart';
 import 'package:motrive/features/home/sub/scan_vehicle/presentation/cubit/scan_vehicle_state.dart';
@@ -13,13 +14,13 @@ class ScanVehicleFeatureWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => ScanVehicleCubit(GetIt.I.get()),
-      child:  Scaffold(
+      child: Scaffold(
         body: BlocConsumer<ScanVehicleCubit, ScanVehicleState>(
           listener: (context, state) {
             if (state is ScanVehicleSavedState) {
               context.showSnackBar('Vehicle saved successfully');
             }
-        
+
             if (state is ScanVehicleErrorState) {
               context.showSnackBar(state.message);
             }
@@ -37,20 +38,14 @@ class ScanVehicleFeatureWidget extends StatelessWidget {
                     },
                   ),
                 ),
-        
+
                 DraggableScrollableSheet(
                   initialChildSize: 0.55,
                   minChildSize: 0.45,
                   maxChildSize: 0.70,
                   builder: (context, scrollController) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: const BorderRadius.vertical(
-                          top: Radius.circular(32),
-                        ),
-                      ),
-                      child: ListView(
+                    return Scaffold(
+                      body: ListView(
                         controller: scrollController,
                         padding: const EdgeInsets.all(24),
                         children: [
@@ -63,43 +58,51 @@ class ScanVehicleFeatureWidget extends StatelessWidget {
                               ),
                             ),
                           ),
-                          const Gap(24),
-                          Text('Vehicle Information', style: TextStyle(fontSize: 20, fontWeight: .bold),),
+                          const Gap(12),
+                          Text(
+                            'Vehicle Information',
+                            style: TextStyle(fontSize: 20, fontWeight: .bold),
+                          ),
                           const Gap(8),
                           Text(
                             'Review and edit vehicle details before saving.',
                           ),
                           const Gap(32),
-                          TextFormField(
+                          _VehicleField(
                             controller: cubit.vinController,
-                            keyboardType: TextInputType.text,
-                            decoration: InputDecoration(
-                              labelText: 'VIN',
-                              prefixIcon: Icon(
-                                Icons.confirmation_number_outlined,
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(18),
-                              ),
-                            ),
+                            label: 'VIN',
+                            icon: Icons.confirmation_number_outlined,
+                          ),
+                          const Gap(16),
+                          _VehicleField(
+                            controller: cubit.modelController,
+                            label: 'Model',
+                            icon: Icons.car_rental_outlined,
+                          ),
+                          const Gap(16),
+                          _VehicleField(
+                            controller: cubit.yearController,
+                            label: 'Year',
+                            icon: Icons.calendar_month_outlined,
+                            keyboardType: TextInputType.number,
                           ),
                           const Gap(32),
-        
                           if (state is ScanVehicleLoadingState)
                             const Center(child: CircularProgressIndicator()),
-        
-                          if (state is! ScanVehicleLoadingState)
+
+                          if (state is ScanVehicleSuccessState)
                             SizedBox(
                               width: double.infinity,
                               child: FilledButton.icon(
                                 onPressed: () {
-                                  cubit.saveVehicle();
+                                 cubit.saveVehicle();
+                                 context.pop(context);
                                 },
                                 icon: const Icon(Icons.save_outlined),
                                 label: const Text('Save Vehicle'),
                               ),
                             ),
-        
+
                           const Gap(40),
                         ],
                       ),
@@ -111,6 +114,29 @@ class ScanVehicleFeatureWidget extends StatelessWidget {
           },
         ),
       ),
+    );
+  }
+}
+
+class _VehicleField extends StatelessWidget {
+  final TextEditingController controller;
+  final String label;
+  final IconData icon;
+  final TextInputType? keyboardType;
+
+  const _VehicleField({
+    required this.controller,
+    required this.label,
+    required this.icon,
+    this.keyboardType,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: controller,
+      keyboardType: keyboardType,
+      decoration: InputDecoration(labelText: label, prefixIcon: Icon(icon)),
     );
   }
 }
