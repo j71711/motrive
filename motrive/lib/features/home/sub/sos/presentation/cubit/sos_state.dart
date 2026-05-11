@@ -8,12 +8,16 @@ abstract class SosState extends Equatable {
 }
 
 class SosInitialState extends SosState {}
-class SosSuccessState extends SosState {}
+
+class SosLoadingState extends SosState {}
+
+class SosSendEmailSuccessState extends SosState {}
 
 class SosErrorState extends SosState {
   final String message;
+
   const SosErrorState({required this.message});
+
   @override
   List<Object?> get props => [message];
 }
-

@@ -63,6 +63,12 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i454.SupabaseClient>(),
       ),
     );
+    gh.lazySingleton<_i558.BaseSosRemoteDataSource>(
+      () => _i558.SosRemoteDataSource(
+        gh<_i56.LocalKeysService>(),
+        gh<_i454.SupabaseClient>(),
+      ),
+    );
     gh.lazySingleton<_i904.SosRepositoryDomain>(
       () => _i630.SosRepositoryData(gh<_i558.BaseSosRemoteDataSource>()),
     );
