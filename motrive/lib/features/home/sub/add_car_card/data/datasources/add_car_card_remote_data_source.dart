@@ -5,7 +5,7 @@ import 'package:motrive/features/home/sub/add_car_card/data/models/add_car_card_
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 // remote data source
-abstract class BaseAddCarCardRemoteDataSource {
+abstract class BaseAddCarCardRemoteDataSource { 
   Future<List<VehicleModel>> getVehicles();
   Future<void> deleteVehicle(String id);
 }
