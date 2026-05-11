@@ -49,14 +49,13 @@ class AuthRemoteDataSource implements BaseAuthRemoteDataSource {
       accessToken: accessToken,
     );
 
+    final user = _supabase.auth.currentUser;
 
-final user = _supabase.auth.currentUser;
-
-if (user == null) {
-  throw Exception('User not found');
-}
+    if (user == null) {
+      throw Exception('User not found');
+    }
     final userInfo = await insertOrGetUser(
-      authId:user.id,
+      authId: user.id,
       name: googleAccount.displayName ?? 'Name',
       email: googleAccount.email,
       profile: googleAccount.photoUrl,
@@ -98,34 +97,33 @@ if (user == null) {
   Future<void> emailSignIn({required String email, String? name}) async {
     await _supabase.auth.signInWithOtp(email: email, data: {'full_name': name});
   }
-
-  Future<Map<String, dynamic>> insertOrGetUser({
-    required String authId,
-    required String name,
-    required String email,
-    String? profile,
-  }) async {
-
+Future<Map<String, dynamic>> insertOrGetUser({
+  required String authId,
+  required String name,
+  required String email,
+  String? profile,
+}) async {
   final response = await _supabase
-    .from('users')
-    .select()
-    .or('auth_id.eq.$authId,email.eq.$email')
-    .maybeSingle();
+      .from('users')
+      .select()
+      .eq('auth_id', authId)
+      .limit(1)
+      .maybeSingle();
 
-if (response != null) {
-  return response;
-}
-    final newUser = await _supabase
-        .from('users')
-        .insert({
-          'auth_id': authId,
-          'email': email,
-          'full_name': name,
-   
-        })
-        .select()
-        .single();
-
-    return newUser;
+  if (response != null) {
+    return response;
   }
+
+  final newUser = await _supabase
+      .from('users')
+      .insert({
+        'auth_id': authId,
+        'email': email,
+        'full_name': name,
+      })
+      .select()
+      .single();
+
+  return newUser;
+}
 }

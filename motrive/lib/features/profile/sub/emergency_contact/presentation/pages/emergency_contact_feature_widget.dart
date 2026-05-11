@@ -12,6 +12,7 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     final cubit = context.read<EmergencyContactCubit>();
 
     return BlocConsumer<EmergencyContactCubit, EmergencyContactState>(
@@ -155,7 +156,7 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                                                 relation:
                                                     relationController
                                                         .text,
-                                                notifyEmergency: true,
+                                                notifyEmergency: false,
                                               );
 
                                               Navigator.pop(context);
@@ -241,7 +242,7 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                                   email: emailController.text,
                                   relation:
                                       relationController.text,
-                                  notifyEmergency: true,
+                                  notifyEmergency: false,
                                 );
 
                                 Navigator.pop(context);

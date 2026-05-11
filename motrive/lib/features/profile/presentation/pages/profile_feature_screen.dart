@@ -16,7 +16,9 @@ class ProfileFeatureScreen extends StatelessWidget {
         ..getEmergencyContactMethod(),
       child: Scaffold(
         appBar: AppBar(
+
           title: const Text('Profile Feature Screen'),
+         
         ),
         body: BlocBuilder<ProfileCubit, ProfileState>(
           builder: (context, state) {

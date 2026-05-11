@@ -13,7 +13,7 @@ import 'package:motrive/features/profile/presentation/cubit/profile_cubit.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: Routes.profile,
+    initialLocation: Routes.auth ,
     routes: [
       GoRoute(
         path: Routes.splash,
@@ -30,7 +30,7 @@ class AppRouter {
         ),
       ),
 
-      // GoRoute(R
+      // GoRoute(
       //   path: Routes.loading,
       //   builder: (context, state) => BlocProvider(
       //         create: (context) => LoadingCubit(GetIt.I.get()),

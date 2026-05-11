@@ -23,7 +23,7 @@ class OtpBottomSheetWidget extends HookWidget {
     this.pop,
   });
 
-  final resendDuration = 60;
+  final resendDuration = 30;
 
   @override
   Widget build(BuildContext context) {

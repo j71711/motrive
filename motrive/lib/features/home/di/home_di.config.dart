@@ -37,6 +37,14 @@ import 'package:motrive/features/home/sub/scan_vehicle/domain/repositories/scan_
     as _i723;
 import 'package:motrive/features/home/sub/scan_vehicle/domain/use_cases/scan_vehicle_use_case.dart'
     as _i198;
+import 'package:motrive/features/home/sub/sos/data/datasources/sos_remote_data_source.dart'
+    as _i558;
+import 'package:motrive/features/home/sub/sos/data/repositories/sos_repository_data.dart'
+    as _i630;
+import 'package:motrive/features/home/sub/sos/domain/repositories/sos_repository_domain.dart'
+    as _i904;
+import 'package:motrive/features/home/sub/sos/domain/use_cases/sos_use_case.dart'
+    as _i168;
 import 'package:supabase_flutter/supabase_flutter.dart' as _i454;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -54,6 +62,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i56.LocalKeysService>(),
         gh<_i454.SupabaseClient>(),
       ),
+    );
+    gh.lazySingleton<_i904.SosRepositoryDomain>(
+      () => _i630.SosRepositoryData(gh<_i558.BaseSosRemoteDataSource>()),
     );
     gh.lazySingleton<_i737.BaseAddCarCardRemoteDataSource>(
       () => _i737.AddCarCardRemoteDataSource(
@@ -77,6 +88,9 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i431.ScanVehicleRepositoryData(
         gh<_i353.BaseScanVehicleRemoteDataSource>(),
       ),
+    );
+    gh.lazySingleton<_i168.SosUseCase>(
+      () => _i168.SosUseCase(gh<_i904.SosRepositoryDomain>()),
     );
     gh.lazySingleton<_i198.ScanVehicleUseCase>(
       () => _i198.ScanVehicleUseCase(gh<_i723.ScanVehicleRepositoryDomain>()),
