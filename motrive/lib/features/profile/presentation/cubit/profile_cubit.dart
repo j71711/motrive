@@ -5,7 +5,9 @@ import 'package:motrive/features/profile/presentation/cubit/profile_state.dart';
 class ProfileCubit extends Cubit<ProfileState> {
   final ProfileUseCase _profileUseCase;
 
-  ProfileCubit(this._profileUseCase) : super(ProfileInitialState());
+  ProfileCubit(this._profileUseCase) : super(ProfileInitialState()){
+    getProfileMethod() ;
+  }
 
   Future<void> getProfileMethod() async {
     final result = await _profileUseCase.getProfile();

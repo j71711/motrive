@@ -23,7 +23,6 @@ class AuthFeatureScreen extends HookWidget {
     final formKey = GlobalKey<FormState>();
 
     return Scaffold(
-      backgroundColor: Colors.white,
       body: BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is AuthGoogleSuccessState) {
@@ -45,7 +44,6 @@ class AuthFeatureScreen extends HookWidget {
                 builder: (_) => BlocProvider.value(
                   value: cubit,
                   child: Scaffold(
-                    backgroundColor: Colors.white,
                     body: SafeArea(
                       child: SingleChildScrollView(
                         child: OtpBottomSheetWidget(
@@ -81,7 +79,7 @@ class AuthFeatureScreen extends HookWidget {
               Container(
                 height: size.height * .36,
                 width: double.infinity,
-                color: const Color(0xff8A1B8F),
+                color: Theme.of(context).colorScheme.primary,
                 child: Stack(
                   children: [
                     Positioned(
@@ -105,8 +103,8 @@ class AuthFeatureScreen extends HookWidget {
                     Center(
                       child: Text(
                         isLogin ? 'Welcome Back' : 'Welcome',
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color:   Theme.of(context).colorScheme.onPrimary,
                           fontSize: 34,
                           fontWeight: FontWeight.bold,
                         ),
@@ -122,8 +120,8 @@ class AuthFeatureScreen extends HookWidget {
                   height: size.height * .69,
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(horizontal: 34),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
+                  decoration:  BoxDecoration(
+                    color: Theme.of(context).colorScheme.surface,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(38),
                       topRight: Radius.circular(38),
@@ -140,7 +138,7 @@ class AuthFeatureScreen extends HookWidget {
                           ),
 
                           if (!isLogin) ...[
-                            const Padding(
+                           Padding(
                               padding: EdgeInsets.only(
                                 left: 6,
                                 bottom: 8,
@@ -148,7 +146,9 @@ class AuthFeatureScreen extends HookWidget {
                               child: Text(
                                 'Name',
                                 style: TextStyle(
-                                  color: Color(0xff8E1D93),
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .primary,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -163,7 +163,7 @@ class AuthFeatureScreen extends HookWidget {
                             const SizedBox(height: 18),
                           ],
 
-                          const Padding(
+                           Padding(
                             padding: EdgeInsets.only(
                               left: 6,
                               bottom: 8,
@@ -171,7 +171,9 @@ class AuthFeatureScreen extends HookWidget {
                             child: Text(
                               'Email',
                               style: TextStyle(
-                                color: Color(0xff8E1D93),
+                                color:  Theme.of(context)
+                                    .colorScheme
+                                    .primary,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -206,22 +208,28 @@ class AuthFeatureScreen extends HookWidget {
                               style: ElevatedButton.styleFrom(
                                 elevation: 0,
                                 backgroundColor:
-                                    const Color(0xff8A1B8F),
+                                     Theme.of(context)
+                                        .colorScheme
+                                        .primary,
                                 shape: RoundedRectangleBorder(
                                   borderRadius:
                                       BorderRadius.circular(12),
                                 ),
                               ),
                               child: state is AuthLoadingState
-                                  ? const CircularProgressIndicator(
-                                      color: Colors.white,
+                                  ?  CircularProgressIndicator(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onPrimary,
                                     )
                                   : Text(
                                       isLogin
                                           ? 'Send OTP'
                                           : 'Sign Up',
-                                      style: const TextStyle(
-                                        color: Colors.white,
+                                      style:  TextStyle(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary,
                                         fontSize: 20,
                                         fontWeight: FontWeight.w500,
                                       ),
@@ -241,8 +249,10 @@ class AuthFeatureScreen extends HookWidget {
                                       cubit.googleSignIn();
                                     },
                               style: OutlinedButton.styleFrom(
-                                side: const BorderSide(
-                                  color: Color(0xff8A1B8F),
+                                side:  BorderSide(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .primary,
                                   width: 2.4,
                                 ),
                                 shape: RoundedRectangleBorder(
@@ -263,10 +273,13 @@ class AuthFeatureScreen extends HookWidget {
 
                                   const SizedBox(width: 24),
 
-                                  const Text(
+                                   Text(
                                     'Login With Google',
                                     style: TextStyle(
-                                      color: Color(0xff8A1B8F),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary,
+
                                       fontSize: 18,
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -292,8 +305,11 @@ class AuthFeatureScreen extends HookWidget {
                                       text: isLogin
                                           ? "Don’t Have Account? "
                                           : "Already Have Account? ",
-                                      style: const TextStyle(
-                                        color: Color(0xffA9A9A9),
+                                      style:  TextStyle(
+                                        color:  Theme.of(context)
+                                            .colorScheme
+                                            .onSurface
+                                            .withValues(alpha: .55),
                                         fontSize: 17,
                                       ),
                                     ),
@@ -302,8 +318,10 @@ class AuthFeatureScreen extends HookWidget {
                                       text: isLogin
                                           ? 'Sign Up'
                                           : 'Sign In',
-                                      style: const TextStyle(
-                                        color: Color(0xff8A1B8F),
+                                      style:  TextStyle(
+                                        color:Theme.of(context)
+                                            .colorScheme
+                                            .primary,
                                         fontSize: 17,
                                         fontWeight:
                                             FontWeight.bold,
