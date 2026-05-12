@@ -9,15 +9,12 @@ part of 'maintenance_details_model.dart';
 _MaintenanceDetailsModel _$MaintenanceDetailsModelFromJson(
   Map<String, dynamic> json,
 ) => _MaintenanceDetailsModel(
-  id: (json['id'] as num).toInt(),
-  firstName: json['firstName'] as String,
-  lastName: json['lastName'] as String,
+  id: json['id'] as String,
+  parts: (json['parts'] as List<dynamic>)
+      .map((e) => ServicePartInfoModel.fromJson(e as Map<String, dynamic>))
+      .toList(),
 );
 
 Map<String, dynamic> _$MaintenanceDetailsModelToJson(
   _MaintenanceDetailsModel instance,
-) => <String, dynamic>{
-  'id': instance.id,
-  'firstName': instance.firstName,
-  'lastName': instance.lastName,
-};
+) => <String, dynamic>{'id': instance.id, 'parts': instance.parts};

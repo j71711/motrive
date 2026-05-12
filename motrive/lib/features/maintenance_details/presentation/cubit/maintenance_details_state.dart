@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:motrive/features/maintenance_details/domain/entities/maintenance_details_entity.dart';
 
 abstract class MaintenanceDetailsState extends Equatable {
   const MaintenanceDetailsState();
@@ -8,7 +9,21 @@ abstract class MaintenanceDetailsState extends Equatable {
 }
 
 class MaintenanceDetailsInitialState extends MaintenanceDetailsState {}
-class MaintenanceDetailsSuccessState extends MaintenanceDetailsState {}
+
+class MaintenanceDetailsSuccessState extends MaintenanceDetailsState {
+  final MaintenanceDetailsEntity maintenanceDetails;
+  final bool? selectedAll;
+
+  const MaintenanceDetailsSuccessState({
+    required this.maintenanceDetails,
+    this.selectedAll,
+  });
+
+  @override
+  List<Object?> get props => [maintenanceDetails, selectedAll];
+}
+
+class MaintenanceDetailsLoadingState extends MaintenanceDetailsState {}
 
 class MaintenanceDetailsErrorState extends MaintenanceDetailsState {
   final String message;
@@ -16,4 +31,3 @@ class MaintenanceDetailsErrorState extends MaintenanceDetailsState {
   @override
   List<Object?> get props => [message];
 }
-

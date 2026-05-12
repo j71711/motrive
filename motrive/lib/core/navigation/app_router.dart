@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:motrive/core/widgets/nav_bar.dart';
+import 'package:motrive/features/maintenance/domain/entities/service_info_entity.dart';
 import 'routers.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -78,7 +79,7 @@ class AppRouter {
     path: Routes.maintenanceDetails,
     builder: (context, state) => BlocProvider(
           create: (context) => MaintenanceDetailsCubit(GetIt.I.get()),
-          child: const MaintenanceDetailsFeatureScreen(),
+          child: MaintenanceDetailsFeatureScreen(serviceInfo: state.extra as ServiceInfoEntity,),
         ),
   ),
 ],

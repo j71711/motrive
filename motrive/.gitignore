@@ -12,10 +12,7 @@
 .swiftpm/
 migrate_working_dir/
 .env
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/dalal
 
 # IntelliJ related
 *.iml
