@@ -37,32 +37,29 @@ extension ContextExtensions on BuildContext {
         child: widget,
       ),
     );
-  }
-Future<T?> showMyDialog<T>({
-    required String title,
-    String? content,
-    String? confirmButton,
-    String? cancelButton,
-    T? onConfirm,
-    T? onCancel,
-  }) {
-    return showDialog(
-      context: this,
-      builder: (context) => AlertDialog(
-        title: Text(title),
-        content: content != null ? Text(content) : null,
-        actions: [
-          TextButton(
-            onPressed: () => context.pop(onCancel),
-            child: Text(cancelButton ?? 'Cancel'),
-          ),
-          FilledButton(
-            onPressed: () => context.pop(onConfirm),
-            child: Text(confirmButton ?? 'Confirm'),
-          ),
-        ],
-      ),
-    );
-  }
-
-}
+  }Future<T?> showMyDialog<T>({
+  required String title,
+  String? content,
+  String? confirmButton,
+  String? cancelButton,
+  T? onConfirm,
+  T? onCancel,
+}) {
+  return showDialog<T>(
+    context: this,
+    builder: (dialogContext) => AlertDialog(
+      title: Text(title),
+      content: content != null ? Text(content) : null,
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(dialogContext).pop(onCancel),
+          child: Text(cancelButton ?? 'Cancel'),
+        ),
+        FilledButton(
+          onPressed: () => Navigator.of(dialogContext).pop(onConfirm),
+          child: Text(confirmButton ?? 'Confirm'),
+        ),
+      ],
+    ),
+  );
+}}
