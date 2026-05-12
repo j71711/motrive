@@ -4,6 +4,8 @@ import 'package:injectable/injectable.dart';
 import 'package:motrive/features/auth/di/auth_di.dart';
 import 'package:motrive/features/home/di/home_di.dart';
 import 'package:motrive/features/profile/di/profile_di.dart';
+import 'package:motrive/features/maintenance/di/maintenance_di.dart';
+import 'package:motrive/features/maintenance_details/di/maintenance_details_di.dart';
 
 @InjectableInit(
   initializerName: 'init',
@@ -17,4 +19,6 @@ Future<void> configureDependencies() async {
   configureAuth(getIt);
   configureHome(getIt);
     configureProfile(getIt);
+    configureMaintenance(getIt);
+    configureMaintenanceDetails(getIt);
 }

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -8,6 +9,7 @@ import 'failure.dart';
 
 class FailureExceptions {
   static Failure getException(Object error) {
+    log(error.toString());
     return switch (error) {
       DioException e => _handleDio(e),
       AuthException e => _handleAuth(e),
@@ -409,5 +411,3 @@ class FailureExceptions {
     return const NetworkFailure();
   }
 }
-
-

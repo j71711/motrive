@@ -7,4 +7,6 @@ class Routes {
   static const String otp = '/otp';
   static const String home = '/home';
   static const String profile = '/profile';
+  static const String maintenance = '/maintenance';
+  static const String maintenanceDetails = '/maintenanceDetails';
 }
