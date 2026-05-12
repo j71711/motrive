@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sizer/sizer.dart';
 import 'package:motrive/core/widgets/loading_widget.dart';
 
@@ -37,4 +38,31 @@ extension ContextExtensions on BuildContext {
       ),
     );
   }
+Future<T?> showMyDialog<T>({
+    required String title,
+    String? content,
+    String? confirmButton,
+    String? cancelButton,
+    T? onConfirm,
+    T? onCancel,
+  }) {
+    return showDialog(
+      context: this,
+      builder: (context) => AlertDialog(
+        title: Text(title),
+        content: content != null ? Text(content) : null,
+        actions: [
+          TextButton(
+            onPressed: () => context.pop(onCancel),
+            child: Text(cancelButton ?? 'Cancel'),
+          ),
+          FilledButton(
+            onPressed: () => context.pop(onConfirm),
+            child: Text(confirmButton ?? 'Confirm'),
+          ),
+        ],
+      ),
+    );
+  }
+
 }

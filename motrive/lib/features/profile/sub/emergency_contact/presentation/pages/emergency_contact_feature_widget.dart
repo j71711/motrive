@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
+import 'package:motrive/core/extensions/context_extensions.dart';
 import 'package:motrive/features/profile/sub/emergency_contact/presentation/cubit/emergency_contact_cubit.dart';
 import 'package:motrive/features/profile/sub/emergency_contact/presentation/cubit/emergency_contact_state.dart';
 
@@ -65,7 +67,7 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                         ),
                       ),
 
-                      const SizedBox(height: 14),
+                      const Gap( 14),
 
                       ...state.contacts.map(
                         (contact) => Container(
@@ -86,7 +88,7 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
 
-                              const SizedBox(height: 5),
+                              const Gap( 5),
 
                               Text(
                                 contact.email,
@@ -94,7 +96,7 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                                     ?.copyWith(color: Colors.grey.shade600),
                               ),
 
-                              const SizedBox(height: 10),
+                              const Gap( 10),
 
                               Row(
                                 children: [
@@ -145,7 +147,7 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                                     ),
                                   ),
 
-                                  const SizedBox(width: 10),
+                                  const Gap( 10),
 
                                   Expanded(
                                     child: SizedBox(
@@ -275,7 +277,7 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                         color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
-                    const SizedBox(width: 12),
+                    const Gap(12),
                     Text(
                       title,
                       style: Theme.of(context).textTheme.titleLarge?.copyWith(
@@ -285,7 +287,7 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                   ],
                 ),
 
-                const SizedBox(height: 24),
+                const Gap( 24),
 
                 TextField(
                   controller: nameController,
@@ -295,7 +297,7 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                   ),
                 ),
 
-                const SizedBox(height: 14),
+                const Gap(14),
 
                 TextField(
                   controller: emailController,
@@ -305,7 +307,7 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                   ),
                 ),
 
-                const SizedBox(height: 14),
+                const Gap(14),
 
                 TextField(
                   controller: relationController,
@@ -315,7 +317,7 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                   ),
                 ),
 
-                const SizedBox(height: 24),
+                const Gap( 24),
 
                 Row(
                   children: [
@@ -325,7 +327,7 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                         child: const Text('Cancel'),
                       ),
                     ),
-                    const SizedBox(width: 12),
+                    const Gap( 12),
                     Expanded(
                       child: ElevatedButton(
                         onPressed: onPressed,
@@ -342,37 +344,21 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
     );
   }
 }
-
 void _showDeleteConfirmDialog({
   required BuildContext context,
   required String contactName,
   required VoidCallback onDelete,
-}) {
-  showDialog(
-    context: context,
-    builder: (_) {
-      return AlertDialog(
-        title: const Text('Delete Contact'),
-        content: Text('Are you sure you want to delete $contactName?'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: const Text('Cancel'),
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Theme.of(context).colorScheme.error,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-              onDelete();
-            },
-            child: const Text('Delete'),
-          ),
-        ],
-      );
-    },
+}) async {
+  final value = await context.showMyDialog(
+    title: 'Delete Contact',
+    content:
+        'Are you sure you want to delete $contactName?',
+    confirmButton: 'Delete',
+    cancelButton: 'Cancel',
+    onConfirm: true,
   );
+
+  if (value == true) {
+    onDelete();
+  }
 }
