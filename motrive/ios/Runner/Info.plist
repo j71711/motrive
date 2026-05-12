@@ -3,6 +3,8 @@
 <plist version="1.0">
 <dict>
     <key>NSLocationWhenInUseUsageDescription</key>
+    <string>We need your location to send it to your emergency contacts.</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
     <string>We need your location to send it during emergency.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Camera access is needed to scan vehicle registration cards</string>

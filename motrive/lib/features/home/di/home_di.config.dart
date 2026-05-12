@@ -59,10 +59,7 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i737.VehicleLocalDataSourceImpl(gh<_i979.Box<dynamic>>()),
     );
     gh.lazySingleton<_i558.BaseSosRemoteDataSource>(
-      () => _i558.SosRemoteDataSource(
-        gh<_i821.EmergencyService>(),
-        gh<_i454.SupabaseClient>(),
-      ),
+      () => _i558.SosRemoteDataSource(gh<_i821.EmergencyService>()),
     );
     gh.lazySingleton<_i353.BaseScanVehicleRemoteDataSource>(
       () => _i353.ScanVehicleRemoteDataSource(
@@ -96,11 +93,11 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i353.BaseScanVehicleRemoteDataSource>(),
       ),
     );
-    gh.lazySingleton<_i168.SosUseCase>(
-      () => _i168.SosUseCase(gh<_i904.SosRepositoryDomain>()),
-    );
     gh.lazySingleton<_i198.ScanVehicleUseCase>(
       () => _i198.ScanVehicleUseCase(gh<_i723.ScanVehicleRepositoryDomain>()),
+    );
+    gh.lazySingleton<_i168.SosUseCase>(
+      () => _i168.SosUseCase(gh<_i904.SosRepositoryDomain>()),
     );
     gh.lazySingleton<_i280.AddCarCardUseCase>(
       () => _i280.AddCarCardUseCase(gh<_i521.AddCarCardRepositoryDomain>()),

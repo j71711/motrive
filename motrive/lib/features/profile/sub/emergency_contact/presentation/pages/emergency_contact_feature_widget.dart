@@ -12,15 +12,14 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     final cubit = context.read<EmergencyContactCubit>();
 
     return BlocConsumer<EmergencyContactCubit, EmergencyContactState>(
       listener: (context, state) {
         if (state is EmergencyContactErrorState) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message)),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(state.message)));
         }
 
         if (state is EmergencyContactActionSuccessState) {
@@ -31,9 +30,7 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
       },
       builder: (context, state) {
         if (state is EmergencyContactLoadingState) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+          return const Center(child: CircularProgressIndicator());
         }
 
         if (state is EmergencyContactSuccessState) {
@@ -61,12 +58,9 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                         alignment: Alignment.centerLeft,
                         child: Text(
                           'Emergency Contacts',
-                          style: Theme.of(
-                            context,
-                          ).textTheme.titleLarge?.copyWith(
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.primary,
+                          style: Theme.of(context).textTheme.titleLarge
+                              ?.copyWith(
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                         ),
                       ),
@@ -79,33 +73,25 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                           margin: const EdgeInsets.only(bottom: 12),
                           padding: const EdgeInsets.all(14),
                           decoration: BoxDecoration(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .primary
-                                .withValues(alpha: .06),
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.primary.withValues(alpha: .06),
                             borderRadius: BorderRadius.circular(18),
                           ),
                           child: Column(
-                            crossAxisAlignment:
-                                CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 '${contact.name} - ${contact.relation}',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleMedium,
+                                style: Theme.of(context).textTheme.titleMedium,
                               ),
 
                               const SizedBox(height: 5),
 
                               Text(
                                 contact.email,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium
-                                    ?.copyWith(
-                                      color: Colors.grey.shade600,
-                                    ),
+                                style: Theme.of(context).textTheme.bodyMedium
+                                    ?.copyWith(color: Colors.grey.shade600),
                               ),
 
                               const SizedBox(height: 10),
@@ -116,27 +102,21 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                                     child: SizedBox(
                                       height: 38,
                                       child: ElevatedButton(
-                                        style:
-                                            ElevatedButton.styleFrom(
-                                          backgroundColor:
-                                              Theme.of(context)
-                                                  .colorScheme
-                                                  .primary,
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Theme.of(
+                                            context,
+                                          ).colorScheme.primary,
                                           elevation: 0,
-                                          shape:
-                                              RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
                                               12,
                                             ),
                                           ),
                                         ),
                                         onPressed: () {
-                                          nameController.text =
-                                              contact.name;
+                                          nameController.text = contact.name;
 
-                                          emailController.text =
-                                              contact.email;
+                                          emailController.text = contact.email;
 
                                           relationController.text =
                                               contact.relation;
@@ -148,24 +128,19 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                                             onPressed: () {
                                               cubit
                                                   .updateEmergencyContactMethod(
-                                                id: contact.id,
-                                                name:
-                                                    nameController.text,
-                                                email:
-                                                    emailController.text,
-                                                relation:
-                                                    relationController
-                                                        .text,
-                                                notifyEmergency: false,
-                                              );
+                                                    id: contact.id,
+                                                    name: nameController.text,
+                                                    email: emailController.text,
+                                                    relation:
+                                                        relationController.text,
+                                                    notifyEmergency: false,
+                                                  );
 
                                               Navigator.pop(context);
                                             },
                                           );
                                         },
-                                        child: const Text(
-                                          'Edit',
-                                        ),
+                                        child: const Text('Edit'),
                                       ),
                                     ),
                                   ),
@@ -176,30 +151,30 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                                     child: SizedBox(
                                       height: 38,
                                       child: ElevatedButton(
-                                        style:
-                                            ElevatedButton.styleFrom(
-                                          backgroundColor:
-                                              Theme.of(context)
-                                                  .colorScheme
-                                                  .error,
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Theme.of(
+                                            context,
+                                          ).colorScheme.error,
                                           elevation: 0,
-                                          shape:
-                                              RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
                                               12,
                                             ),
                                           ),
                                         ),
                                         onPressed: () {
-                                          cubit
-                                              .deleteEmergencyContactMethod(
-                                            id: contact.id,
+                                          _showDeleteConfirmDialog(
+                                            context: context,
+                                            contactName: contact.name,
+                                            onDelete: () {
+                                              cubit
+                                                  .deleteEmergencyContactMethod(
+                                                    id: contact.id,
+                                                  );
+                                            },
                                           );
                                         },
-                                        child: const Text(
-                                          'Delete',
-                                        ),
+                                        child: const Text('Delete'),
                                       ),
                                     ),
                                   ),
@@ -216,15 +191,13 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                         child: OutlinedButton(
                           style: OutlinedButton.styleFrom(
                             side: BorderSide(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .primary
-                                  .withValues(alpha: .25),
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.primary.withValues(alpha: .25),
                               width: 1.5,
                             ),
                             shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(16),
+                              borderRadius: BorderRadius.circular(16),
                             ),
                           ),
                           onPressed: () {
@@ -240,8 +213,7 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                                 cubit.addEmergencyContactMethod(
                                   name: nameController.text,
                                   email: emailController.text,
-                                  relation:
-                                      relationController.text,
+                                  relation: relationController.text,
                                   notifyEmergency: false,
                                 );
 
@@ -251,13 +223,9 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                           },
                           child: Text(
                             '+ Add Contact',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium
+                            style: Theme.of(context).textTheme.titleMedium
                                 ?.copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .primary,
+                                  color: Theme.of(context).colorScheme.primary,
                                 ),
                           ),
                         ),
@@ -274,103 +242,137 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
       },
     );
   }
-void _showContactDialog({
+
+  void _showContactDialog({
+    required BuildContext context,
+    required String title,
+    required String buttonText,
+    required VoidCallback onPressed,
+  }) {
+    showDialog(
+      context: context,
+      builder: (_) {
+        return Dialog(
+          backgroundColor: Theme.of(context).colorScheme.surface,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(28),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(22),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 22,
+                      backgroundColor: Theme.of(
+                        context,
+                      ).colorScheme.primary.withValues(alpha: .12),
+                      child: Icon(
+                        Icons.contact_emergency_rounded,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Text(
+                      title,
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 24),
+
+                TextField(
+                  controller: nameController,
+                  decoration: const InputDecoration(
+                    hintText: 'Name',
+                    prefixIcon: Icon(Icons.person_outline),
+                  ),
+                ),
+
+                const SizedBox(height: 14),
+
+                TextField(
+                  controller: emailController,
+                  decoration: const InputDecoration(
+                    hintText: 'Email',
+                    prefixIcon: Icon(Icons.email_outlined),
+                  ),
+                ),
+
+                const SizedBox(height: 14),
+
+                TextField(
+                  controller: relationController,
+                  decoration: const InputDecoration(
+                    hintText: 'Relation',
+                    prefixIcon: Icon(Icons.family_restroom_outlined),
+                  ),
+                ),
+
+                const SizedBox(height: 24),
+
+                Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text('Cancel'),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: onPressed,
+                        child: Text(buttonText),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+void _showDeleteConfirmDialog({
   required BuildContext context,
-  required String title,
-  required String buttonText,
-  required VoidCallback onPressed,
+  required String contactName,
+  required VoidCallback onDelete,
 }) {
   showDialog(
     context: context,
     builder: (_) {
-      return Dialog(
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(28),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(22),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  CircleAvatar(
-                    radius: 22,
-                    backgroundColor: Theme.of(context)
-                        .colorScheme
-                        .primary
-                        .withValues(alpha: .12),
-                    child: Icon(
-                      Icons.contact_emergency_rounded,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Text(
-                    title,
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                ],
-              ),
-
-              const SizedBox(height: 24),
-
-              TextField(
-                controller: nameController,
-                decoration: const InputDecoration(
-                  hintText: 'Name',
-                  prefixIcon: Icon(Icons.person_outline),
-                ),
-              ),
-
-              const SizedBox(height: 14),
-
-              TextField(
-                controller: emailController,
-                decoration: const InputDecoration(
-                  hintText: 'Email',
-                  prefixIcon: Icon(Icons.email_outlined),
-                ),
-              ),
-
-              const SizedBox(height: 14),
-
-              TextField(
-                controller: relationController,
-                decoration: const InputDecoration(
-                  hintText: 'Relation',
-                  prefixIcon: Icon(Icons.family_restroom_outlined),
-                ),
-              ),
-
-              const SizedBox(height: 24),
-
-              Row(
-                children: [
-                  Expanded(
-                    child: OutlinedButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: const Text('Cancel'),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: onPressed,
-                      child: Text(buttonText),
-                    ),
-                  ),
-                ],
-              ),
-            ],
+      return AlertDialog(
+        title: const Text('Delete Contact'),
+        content: Text('Are you sure you want to delete $contactName?'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('Cancel'),
           ),
-        ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.error,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+              onDelete();
+            },
+            child: const Text('Delete'),
+          ),
+        ],
       );
     },
   );
-}
 }

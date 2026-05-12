@@ -32,9 +32,21 @@ class EmergencyContactRemoteDataSource
 
   EmergencyContactRemoteDataSource(this._supabase);
 
+  Future<String> _getAppUserId() async {
+    final authId = _supabase.auth.currentUser!.id;
+
+    final appUser = await _supabase
+        .from('users')
+        .select('id')
+        .eq('auth_id', authId)
+        .single();
+
+    return appUser['id'];
+  }
+
   @override
   Future<List<EmergencyContactModel>> getEmergencyContact() async {
-    final userId = _supabase.auth.currentUser!.id;
+    final userId = await _getAppUserId();
 
     final response = await _supabase
         .from('trusted_contacts')
@@ -56,7 +68,7 @@ class EmergencyContactRemoteDataSource
     required String relation,
     required bool notifyEmergency,
   }) async {
-    final userId = _supabase.auth.currentUser!.id;
+    final userId = await _getAppUserId();
 
     await _supabase.from('trusted_contacts').insert({
       'user_id': userId,
