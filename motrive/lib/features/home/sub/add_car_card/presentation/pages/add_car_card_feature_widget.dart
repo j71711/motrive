@@ -31,12 +31,41 @@ class AddCarCardFeatureWidget extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: BlocBuilder<AddCarCardCubit, VehicleState>(
+                child: BlocBuilder<AddCarCardCubit, AddCarCardState>(
                   builder: (context, state) {
                     switch (state) {
-                      case VehicleLoadingState _:
+                      case SearchResultState _:
+                        return ListView.builder(
+                          itemCount: state.results.length,
+                          itemBuilder: (context, index) {
+                            final car = state.results[index];
+
+                            return ListTile(
+                              title: Text(car.make ?? ''),
+                              subtitle: Text(car.model ?? ''),
+                              trailing: Text('${car.year ?? ''}'),
+                            );
+                          },
+                        );
+                      case VehiclesLoadingState _:
                         return const Center(child: CircularProgressIndicator());
-                      case VehicleLoadedState _:
+                      case CarsInfoLoadingState _:
+                        return const Center(child: CircularProgressIndicator());
+                      case CarInfoLoadedState _:
+                        return ListView.builder(
+                          itemCount: state.cars.length,
+                          itemBuilder: (context, index) {
+                            final car = state.cars[index];
+
+                            return ListTile(
+                              leading: const Icon(Icons.drive_eta),
+                              title: Text(car.make ?? ''),
+                              subtitle: Text(car.model ?? ''),
+                              trailing: Text('${car.year ?? ''}'),
+                            );
+                          },
+                        );
+                      case AddCarCardLoadedState _:
                         return ListView.builder(
                           itemCount: state.vehicles.length,
                           itemBuilder: (context, index) {
@@ -70,7 +99,7 @@ class AddCarCardFeatureWidget extends StatelessWidget {
                                 );
                               },
                               onDismissed: (direction) {
-                                cubit.deleteVehicle(vehicle.id);
+                                cubit.deleteVehicle(vehicle.id!);
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text(
@@ -90,7 +119,7 @@ class AddCarCardFeatureWidget extends StatelessWidget {
                               ),
 
                               child: ListTile(
-                                onTap: (){
+                                onTap: () {
                                   Navigator.pop(context, vehicle);
                                 },
                                 leading: const Icon(Icons.drive_eta),
@@ -113,7 +142,7 @@ class AddCarCardFeatureWidget extends StatelessWidget {
                             );
                           },
                         );
-                      case VehicleErrorState _:
+                      case AddCarCardErrorState _:
                         return Center(child: Text(state.message));
                     }
                     return const SizedBox();
@@ -127,9 +156,10 @@ class AddCarCardFeatureWidget extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (_) => const ScanVehicleFeatureWidget(),
+                        builder: (_) => ScanVehicleFeatureWidget(),
                       ),
                     );
+                    cubit.getAddCarCardMethod();
                   },
                   label: const Text('add Vehicle'),
                 ),

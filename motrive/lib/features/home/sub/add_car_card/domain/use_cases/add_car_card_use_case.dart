@@ -14,17 +14,17 @@ class AddCarCardUseCase {
     return _repositoryData.deleteVehicle(id);
   }
 
-  Future<List<VehicleEntity>> searchVehicles(
-    List<VehicleEntity> vehicles,
+  Future<List<AddCarCardEntity>> searchVehicles(
+    List<AddCarCardEntity> vehicles,
     String query,
   ) async {
     return vehicles.where((vehicle) {
-      return vehicle.make.toLowerCase().contains(query.toLowerCase()) ||
-          vehicle.model.toLowerCase().contains(query.toLowerCase());
+      return vehicle.make!.toLowerCase().contains(query.toLowerCase()) ||
+          vehicle.model!.toLowerCase().contains(query.toLowerCase());
     }).toList();
   }
 
-  Future<Result<List<VehicleEntity>, Failure>> getVehicles() async {
+  Future<Result<List<AddCarCardEntity>, Failure>> getVehicles() async {
     try {
       final vehicles = await _repositoryData.getVehicles();
       return vehicles;
@@ -32,5 +32,14 @@ class AddCarCardUseCase {
       rethrow;
     }
   }
+
+  Future<Result<void, Failure>> addVehicle(AddCarCardEntity vehicle) {
+    return _repositoryData.addVehicle(vehicle);
+  }
+
+  Future<Result<List<CarInfoEntity>, Failure>> getCarsInfo() {
+  return _repositoryData.getCarsInfo();
+}
+
 }
 

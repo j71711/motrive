@@ -1,44 +1,36 @@
 import 'package:motrive/features/home/sub/add_car_card/domain/entities/add_car_card_entity.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+part 'add_car_card_model.freezed.dart';
+part 'add_car_card_model.g.dart';
 
-class VehicleModel extends VehicleEntity {
-  const VehicleModel({
-    required super.id,
-    required super.userId,
-    required super.make,
-    required super.model,
-    required super.year,
-     super.color,
-     super.licensePlate,
-     super.vin,
-     super.currentOdometer,
-  });
+@freezed
+//VehicleModel 
+abstract class AddCarCardModel with _$AddCarCardModel {
+  const factory AddCarCardModel({
+    @JsonKey(name: 'user_id')
+  required String userId,
+  required String id,
+  required String make,
+  required String model,
+  required int year,
+   String? color,
+   @JsonKey(name: 'license_plate')
+   String? licensePlate,
+   String? vin,
+   @JsonKey(name: 'current_odometer')
+   int? currentOdometer,
+   @JsonKey(name: 'created_at')
+   DateTime? createdAt, 
+   @JsonKey(name: 'car_info_id')
+   String? carInfoId ,
+  }) = _AddCarCardModel;
 
-  factory VehicleModel.fromJson(Map<String, dynamic> json) {
-    return VehicleModel(
-      userId: json['user_id'],
-      id: json['id'],
-      make: json['make'],
-      model: json['model'],
-      year: json['year'],
-      color: json['color'] ?? '',
-      licensePlate: json['license_plate'] ?? '',
-      vin: json['vin'] ?? '',
-      currentOdometer: json['current_odometer'] ?? 0,
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'user_id': userId,
-      'id': id,
-      'make': make,
-      'model': model,
-      'year': year,
-      'color': color,
-      'license_plate': licensePlate,
-      'vin': vin,
-      'current_odometer': currentOdometer,
-    };
-  }
+  factory AddCarCardModel.fromJson(Map<String, Object?> json) => _$AddCarCardModelFromJson(json);
 }
+
+extension AddCarCardModelMapper on AddCarCardModel {
+  AddCarCardEntity toEntity() {
+    return AddCarCardEntity(vin: vin, make: make, model: model, year: year, id: id, color: color, licensePlate: licensePlate, currentOdometer: currentOdometer, createdAt: createdAt?.toIso8601String(), carInfoId: carInfoId,userId: userId);
+  }
+  }
 

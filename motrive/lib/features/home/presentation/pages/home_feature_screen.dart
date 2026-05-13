@@ -19,14 +19,16 @@ class HomeFeatureScreen extends StatelessWidget {
           Center(
             child: BlocProvider(
               create: (_) => AddCarCardCubit(GetIt.I.get()),
-              child: BlocBuilder<AddCarCardCubit, VehicleState>(
+              child: BlocBuilder<AddCarCardCubit, AddCarCardState>(
                 builder: (context, state) {
-                  if (state is VehicleLoadingState) {
+                  if (state is AddCarCardErrorState) {
+                    return Text("error: ${state.message}");
+                  }
+                  if (state is VehiclesLoadingState || state is CarsInfoLoadingState) {
                     return const CircularProgressIndicator();
                   }
 
-                  if (state is VehicleLoadedState) {
-                    final vehicle = state.vehicles.first;
+                  if (state is AddCarCardLoadedState || state is CarInfoLoadedState) {
                     return GestureDetector(
                       onTap: () {
                         showDialog(
@@ -50,48 +52,63 @@ class HomeFeatureScreen extends StatelessWidget {
                           },
                         );
                       },
-                      child: Container(
-                        margin: const EdgeInsets.all(16),
-                        padding: const EdgeInsets.all(18),
-                        decoration: BoxDecoration(
-                          border: Border.all(),
-                          borderRadius: BorderRadius.circular(24),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  '${vehicle.make} ${vehicle.model}',
-                                  style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-
-                                Text(
-                                  vehicle.year.toString(),
-                                  style: const TextStyle(),
-                                ),
-                              ],
-                            ),
-
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 14,
-                                vertical: 8,
-                              ),
+                      child: state.vehicles.isNotEmpty
+                          ? Container(
+                              margin: const EdgeInsets.all(16),
+                              padding: const EdgeInsets.all(18),
                               decoration: BoxDecoration(
-                                border: BoxBorder.all(),
-                                borderRadius: BorderRadius.circular(18),
+                                border: Border.all(),
+                                borderRadius: BorderRadius.circular(24),
                               ),
-                              child: Text('${vehicle.currentOdometer ?? 0} Km'),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        '${state.vehicles.first.make} ${state.vehicles.first.model}',
+                                        style: const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+
+                                      Text(
+                                        state.vehicles.first.year.toString(),
+                                        style: const TextStyle(),
+                                      ),
+                                    ],
+                                  ),
+
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 14,
+                                      vertical: 8,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      border: BoxBorder.all(),
+                                      borderRadius: BorderRadius.circular(18),
+                                    ),
+                                    child: Text(
+                                      '${state.vehicles.first.currentOdometer ?? 0} Km',
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          : Container(
+                              margin: const EdgeInsets.all(16),
+                              padding: const EdgeInsets.all(20),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(24),
+                                border: Border.all(),
+                              ),
+                              child: const Text("Add your first vehicle car"),
                             ),
-                          ],
-                        ),
-                      ),
                     );
                   }
 
