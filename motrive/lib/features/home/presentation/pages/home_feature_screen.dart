@@ -9,6 +9,7 @@ import 'package:motrive/features/home/sub/add_car_card/presentation/cubit/add_ca
 import 'package:motrive/features/home/sub/add_car_card/presentation/pages/add_car_card_feature_widget.dart';
 import 'package:motrive/features/home/sub/sos/presentation/pages/sos_feature_widget.dart';
 import 'package:motrive/features/profile/sub/emergency_contact/presentation/cubit/emergency_contact_cubit.dart';
+import 'package:motrive/features/sub/maintenance_alert/presentation/pages/maintenance_alert_feature_widget.dart';
 
 class HomeFeatureScreen extends StatelessWidget {
   const HomeFeatureScreen({super.key});
@@ -21,7 +22,14 @@ class HomeFeatureScreen extends StatelessWidget {
       create: (_) =>
           EmergencyContactCubit(GetIt.I.get())..getEmergencyContactMethod(),
       child: Scaffold(
-        appBar: AppBar(title: const Text('Home Feature Screen')),
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text('Home'),
+          leading: IconButton.filled(
+            onPressed: () => context.push(Routes.profile),
+            icon: Icon(Icons.person),
+          ),
+        ),
         body: Column(
           children: [
             Center(
@@ -128,6 +136,7 @@ class HomeFeatureScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             SosFeatureWidget(),
+            MaintenanceAlertFeatureWidget(),
           ],
         ),
       ),

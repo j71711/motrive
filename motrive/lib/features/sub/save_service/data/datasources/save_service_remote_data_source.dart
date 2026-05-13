@@ -51,6 +51,6 @@ class SaveServiceRemoteDataSource implements BaseSaveServiceRemoteDataSource {
 
     await _supabase.from('vehicles').update({
       'current_odometer': maintenanceSaveInfo.odometerAtService,
-    });
+    }).eq('user_id', _userService.currentUser!.id);
   }
 }
