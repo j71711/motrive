@@ -13,7 +13,7 @@ abstract class ServiceInfoModel with _$ServiceInfoModel {
     required int dateIntervalMonths,
     required String severity,
     required String recommendation,
-    bool? done
+    bool? done,
   }) = _ServiceInfoModel;
 
   factory ServiceInfoModel.fromJson(Map<String, Object?> json) =>

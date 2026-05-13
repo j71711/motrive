@@ -14,7 +14,7 @@ class ServiceInfoEntity extends Equatable {
     required this.dateIntervalMonths,
     required this.severity,
     required this.recommendation,
-    this.done = false
+    this.done = false, 
   });
 
   @override
