@@ -36,7 +36,7 @@ class SignOutFeatureWidget extends StatelessWidget {
                     .showMyDialog(
                       title: 'Sign Out',
                       content:
-                          "You're about to sign out if your account\n Are you sure ?",
+                          "You're about to sign out if your account, Are you sure ?",
                       onConfirm: true,
                       confirmButton: 'Sign Out',
                     )

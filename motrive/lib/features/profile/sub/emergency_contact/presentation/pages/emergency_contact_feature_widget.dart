@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
-import 'package:motrive/core/extensions/context_extensions.dart';
 import 'package:motrive/features/profile/sub/emergency_contact/presentation/cubit/emergency_contact_cubit.dart';
 import 'package:motrive/features/profile/sub/emergency_contact/presentation/cubit/emergency_contact_state.dart';
+import 'package:motrive/features/profile/sub/emergency_contact/presentation/pages/show_contact_dialog.dart';
+import 'package:motrive/features/profile/sub/emergency_contact/presentation/pages/show_delete_dialog.dart';
 
 class EmergencyContactFeatureWidget extends StatelessWidget {
   EmergencyContactFeatureWidget({super.key});
@@ -124,10 +124,15 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                                           relationController.text =
                                               contact.relation;
 
-                                          _showContactDialog(
+                                          showContactDialog(
                                             context: context,
                                             title: 'Edit Contact',
                                             buttonText: 'Update',
+                                            nameController: nameController,
+                                            emailController: emailController,
+
+                                            relationController:
+                                                relationController,
                                             onPressed: () {
                                               cubit
                                                   .updateEmergencyContactMethod(
@@ -138,8 +143,6 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                                                         relationController.text,
                                                     notifyEmergency: false,
                                                   );
-
-                                            
                                             },
                                           );
                                         },
@@ -166,7 +169,7 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                                           ),
                                         ),
                                         onPressed: () {
-                                          _showDeleteConfirmDialog(
+                                          showDeleteConfirmDialog(
                                             context: context,
                                             contactName: contact.name,
                                             onDelete: () {
@@ -208,10 +211,13 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                             emailController.clear();
                             relationController.clear();
 
-                            _showContactDialog(
+                            showContactDialog(
                               context: context,
                               title: 'Add Contact',
                               buttonText: 'Add',
+                              nameController: nameController,
+                              emailController: emailController,
+                              relationController: relationController,
                               onPressed: () {
                                 cubit.addEmergencyContactMethod(
                                   name: nameController.text,
@@ -219,11 +225,10 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                                   relation: relationController.text,
                                   notifyEmergency: false,
                                 );
-
-                                Navigator.pop(context);
                               },
                             );
                           },
+
                           child: Text(
                             '+ Add Contact',
                             style: Theme.of(context).textTheme.titleMedium
@@ -244,133 +249,5 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
         return const SizedBox();
       },
     );
-  }
-
-  void _showContactDialog({
-    required BuildContext context,
-    required String title,
-    required String buttonText,
-    required VoidCallback onPressed,
-  }) {
-    showDialog(
-      context: context,
-      builder: (dialogContext) {
-        return Dialog(
-          backgroundColor: Theme.of(dialogContext).colorScheme.surface,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(28),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(22),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 22,
-                      backgroundColor: Theme.of(
-                        dialogContext,
-                      ).colorScheme.primary.withValues(alpha: .12),
-                      child: Icon(
-                        Icons.contact_emergency_rounded,
-                        color: Theme.of(dialogContext).colorScheme.primary,
-                      ),
-                    ),
-                    const Gap(12),
-                    Text(
-                      title,
-                      style: Theme.of(dialogContext).textTheme.titleLarge
-                          ?.copyWith(fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-
-                const Gap(24),
-
-                TextField(
-                  controller: nameController,
-                  decoration: const InputDecoration(
-                    hintText: 'Name',
-                    prefixIcon: Icon(Icons.person_outline),
-                  ),
-                ),
-
-                const Gap(14),
-
-                TextField(
-                  controller: emailController,
-                  decoration: const InputDecoration(
-                    hintText: 'Email',
-                    prefixIcon: Icon(Icons.email_outlined),
-                  ),
-                ),
-
-                const Gap(14),
-
-                TextField(
-                  controller: relationController,
-                  decoration: const InputDecoration(
-                    hintText: 'Relation',
-                    prefixIcon: Icon(Icons.family_restroom_outlined),
-                  ),
-                ),
-
-                const Gap(24),
-
-                Row(
-                  children: [
-                    Expanded(
-                      child: OutlinedButton(
-                        onPressed: () {
-                          if (dialogContext.canPop()) {
-                            dialogContext.pop();
-                          }
-                        },
-                        child: const Text('Cancel'),
-                      ),
-                    ),
-
-                    const Gap(12),
-
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          onPressed();
-
-                          if (Navigator.of(dialogContext).canPop()) {
-                            Navigator.of(dialogContext).pop();
-                          }
-                        },
-                        child: Text(buttonText),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  void _showDeleteConfirmDialog({
-    required BuildContext context,
-    required String contactName,
-    required VoidCallback onDelete,
-  }) async {
-    final value = await context.showMyDialog(
-      title: 'Delete Contact',
-      content: 'Are you sure you want to delete $contactName?',
-      confirmButton: 'Delete',
-      cancelButton: 'Cancel',
-      onConfirm: true,
-    );
-
-    if (value == true) {
-      onDelete();
-    }
   }
 }

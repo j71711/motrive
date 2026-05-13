@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:sizer/sizer.dart';
 import 'package:motrive/core/widgets/loading_widget.dart';
 
@@ -37,7 +36,8 @@ extension ContextExtensions on BuildContext {
         child: widget,
       ),
     );
-  }Future<T?> showMyDialog<T>({
+  }
+  Future<T?> showMyDialog<T>({
   required String title,
   String? content,
   String? confirmButton,
