@@ -8,7 +8,7 @@ part of 'maintenance_model.dart';
 
 _MaintenanceModel _$MaintenanceModelFromJson(Map<String, dynamic> json) =>
     _MaintenanceModel(
-      carInfo: CarInfoModel.fromJson(json['car_info'] as Map<String, dynamic>),
+      vehicle: VehicleModel.fromJson(json['vehicle'] as Map<String, dynamic>),
       services: (json['services'] as List<dynamic>)
           .map((e) => ServiceInfoModel.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -16,6 +16,6 @@ _MaintenanceModel _$MaintenanceModelFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$MaintenanceModelToJson(_MaintenanceModel instance) =>
     <String, dynamic>{
-      'car_info': instance.carInfo,
+      'vehicle': instance.vehicle,
       'services': instance.services,
     };

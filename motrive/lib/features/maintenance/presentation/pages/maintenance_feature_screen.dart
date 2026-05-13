@@ -7,6 +7,7 @@ import 'package:motrive/core/utils/formatters.dart';
 import 'package:motrive/core/widgets/loading_widget.dart';
 import 'package:motrive/features/maintenance/presentation/cubit/maintenance_cubit.dart';
 import 'package:motrive/features/maintenance/presentation/cubit/maintenance_state.dart';
+import 'package:motrive/features/sub/save_service/presentation/pages/save_service_feature_widget.dart';
 
 class MaintenanceFeatureScreen extends StatelessWidget {
   const MaintenanceFeatureScreen({super.key});
@@ -77,8 +78,14 @@ class MaintenanceFeatureScreen extends StatelessWidget {
                                     overflow: .ellipsis,
                                   ),
                             trailing: Checkbox(
-                              value: false,
-                              onChanged: (value) => value,
+                              value:
+                                  state.maintenanceEntity.services[index].done,
+                              onChanged: (value) => SaveServiceFeatureWidget(
+                                vehicle: state.maintenanceEntity.vehicle,
+                                serviceInfo:
+                                    state.maintenanceEntity.services[index],
+                                    onSuccess: () => cubit.getMaintenanceMethod(),
+                              ),
                             ),
                           );
                         },

@@ -50,4 +50,17 @@ class Validators {
     }
     return null;
   }
+
+  static String? validateOdometer(
+    String? value,
+    int odometer, {
+    String? fieldName,
+  }) {
+    if (value == null || value.isEmpty) {
+      return '${fieldName ?? 'This field'} is required';
+    } else if ((int.tryParse(value) ?? 0) < odometer) {
+      return '${fieldName ?? 'This odometer'} is less than the current';
+    }
+    return null;
+  }
 }

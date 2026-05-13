@@ -8,7 +8,6 @@ class ServicePartInfoEntity extends Equatable {
   final String specification;
   final double quantity;
   final String quantityUnit;
-  final bool done;
 
   const ServicePartInfoEntity({
     required this.id,
@@ -18,7 +17,6 @@ class ServicePartInfoEntity extends Equatable {
     required this.specification,
     required this.quantity,
     required this.quantityUnit,
-    this.done = false,
   });
 
   ServicePartInfoEntity copyWith({
@@ -29,7 +27,6 @@ class ServicePartInfoEntity extends Equatable {
     String? specification,
     double? quantity,
     String? quantityUnit,
-    bool? done,
   }) {
     return ServicePartInfoEntity(
       id: id ?? this.id,
@@ -39,7 +36,6 @@ class ServicePartInfoEntity extends Equatable {
       specification: specification ?? this.specification,
       quantity: quantity ?? this.quantity,
       quantityUnit: quantityUnit ?? this.quantityUnit,
-      done: done ?? this.done,
     );
   }
 
@@ -52,6 +48,5 @@ class ServicePartInfoEntity extends Equatable {
     specification,
     quantity,
     quantityUnit,
-    done,
   ];
 }

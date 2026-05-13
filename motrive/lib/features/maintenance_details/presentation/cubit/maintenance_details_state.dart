@@ -23,6 +23,8 @@ class MaintenanceDetailsSuccessState extends MaintenanceDetailsState {
   List<Object?> get props => [maintenanceDetails, selectedAll];
 }
 
+class MaintenanceDetailsSaveSuccessState extends MaintenanceDetailsState {}
+
 class MaintenanceDetailsLoadingState extends MaintenanceDetailsState {}
 
 class MaintenanceDetailsErrorState extends MaintenanceDetailsState {

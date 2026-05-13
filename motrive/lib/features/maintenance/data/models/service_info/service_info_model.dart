@@ -13,6 +13,7 @@ abstract class ServiceInfoModel with _$ServiceInfoModel {
     required int dateIntervalMonths,
     required String severity,
     required String recommendation,
+    bool? done
   }) = _ServiceInfoModel;
 
   factory ServiceInfoModel.fromJson(Map<String, Object?> json) =>
@@ -27,6 +28,7 @@ extension ServiceInfoModelMapper on ServiceInfoModel {
       dateIntervalMonths: dateIntervalMonths,
       severity: severity,
       recommendation: recommendation,
+      done: done ?? false
     );
   }
 }

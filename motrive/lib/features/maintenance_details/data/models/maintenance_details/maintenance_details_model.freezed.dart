@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$MaintenanceDetailsModel {
 
- String get id; List<ServicePartInfoModel> get parts;
+ String get id; VehicleModel get vehicle; List<ServicePartInfoModel> get parts;
 /// Create a copy of MaintenanceDetailsModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $MaintenanceDetailsModelCopyWith<MaintenanceDetailsModel> get copyWith => _$Main
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MaintenanceDetailsModel&&(identical(other.id, id) || other.id == id)&&const DeepCollectionEquality().equals(other.parts, parts));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MaintenanceDetailsModel&&(identical(other.id, id) || other.id == id)&&(identical(other.vehicle, vehicle) || other.vehicle == vehicle)&&const DeepCollectionEquality().equals(other.parts, parts));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,const DeepCollectionEquality().hash(parts));
+int get hashCode => Object.hash(runtimeType,id,vehicle,const DeepCollectionEquality().hash(parts));
 
 @override
 String toString() {
-  return 'MaintenanceDetailsModel(id: $id, parts: $parts)';
+  return 'MaintenanceDetailsModel(id: $id, vehicle: $vehicle, parts: $parts)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $MaintenanceDetailsModelCopyWith<$Res>  {
   factory $MaintenanceDetailsModelCopyWith(MaintenanceDetailsModel value, $Res Function(MaintenanceDetailsModel) _then) = _$MaintenanceDetailsModelCopyWithImpl;
 @useResult
 $Res call({
- String id, List<ServicePartInfoModel> parts
+ String id, VehicleModel vehicle, List<ServicePartInfoModel> parts
 });
 
 
@@ -65,10 +65,11 @@ class _$MaintenanceDetailsModelCopyWithImpl<$Res>
 
 /// Create a copy of MaintenanceDetailsModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? parts = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? vehicle = null,Object? parts = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,parts: null == parts ? _self.parts : parts // ignore: cast_nullable_to_non_nullable
+as String,vehicle: null == vehicle ? _self.vehicle : vehicle // ignore: cast_nullable_to_non_nullable
+as VehicleModel,parts: null == parts ? _self.parts : parts // ignore: cast_nullable_to_non_nullable
 as List<ServicePartInfoModel>,
   ));
 }
@@ -154,10 +155,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  List<ServicePartInfoModel> parts)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  VehicleModel vehicle,  List<ServicePartInfoModel> parts)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _MaintenanceDetailsModel() when $default != null:
-return $default(_that.id,_that.parts);case _:
+return $default(_that.id,_that.vehicle,_that.parts);case _:
   return orElse();
 
 }
@@ -175,10 +176,10 @@ return $default(_that.id,_that.parts);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  List<ServicePartInfoModel> parts)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  VehicleModel vehicle,  List<ServicePartInfoModel> parts)  $default,) {final _that = this;
 switch (_that) {
 case _MaintenanceDetailsModel():
-return $default(_that.id,_that.parts);case _:
+return $default(_that.id,_that.vehicle,_that.parts);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -195,10 +196,10 @@ return $default(_that.id,_that.parts);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  List<ServicePartInfoModel> parts)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  VehicleModel vehicle,  List<ServicePartInfoModel> parts)?  $default,) {final _that = this;
 switch (_that) {
 case _MaintenanceDetailsModel() when $default != null:
-return $default(_that.id,_that.parts);case _:
+return $default(_that.id,_that.vehicle,_that.parts);case _:
   return null;
 
 }
@@ -210,10 +211,11 @@ return $default(_that.id,_that.parts);case _:
 @JsonSerializable()
 
 class _MaintenanceDetailsModel implements MaintenanceDetailsModel {
-  const _MaintenanceDetailsModel({required this.id, required final  List<ServicePartInfoModel> parts}): _parts = parts;
+  const _MaintenanceDetailsModel({required this.id, required this.vehicle, required final  List<ServicePartInfoModel> parts}): _parts = parts;
   factory _MaintenanceDetailsModel.fromJson(Map<String, dynamic> json) => _$MaintenanceDetailsModelFromJson(json);
 
 @override final  String id;
+@override final  VehicleModel vehicle;
  final  List<ServicePartInfoModel> _parts;
 @override List<ServicePartInfoModel> get parts {
   if (_parts is EqualUnmodifiableListView) return _parts;
@@ -235,16 +237,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MaintenanceDetailsModel&&(identical(other.id, id) || other.id == id)&&const DeepCollectionEquality().equals(other._parts, _parts));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MaintenanceDetailsModel&&(identical(other.id, id) || other.id == id)&&(identical(other.vehicle, vehicle) || other.vehicle == vehicle)&&const DeepCollectionEquality().equals(other._parts, _parts));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,const DeepCollectionEquality().hash(_parts));
+int get hashCode => Object.hash(runtimeType,id,vehicle,const DeepCollectionEquality().hash(_parts));
 
 @override
 String toString() {
-  return 'MaintenanceDetailsModel(id: $id, parts: $parts)';
+  return 'MaintenanceDetailsModel(id: $id, vehicle: $vehicle, parts: $parts)';
 }
 
 
@@ -255,7 +257,7 @@ abstract mixin class _$MaintenanceDetailsModelCopyWith<$Res> implements $Mainten
   factory _$MaintenanceDetailsModelCopyWith(_MaintenanceDetailsModel value, $Res Function(_MaintenanceDetailsModel) _then) = __$MaintenanceDetailsModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, List<ServicePartInfoModel> parts
+ String id, VehicleModel vehicle, List<ServicePartInfoModel> parts
 });
 
 
@@ -272,10 +274,11 @@ class __$MaintenanceDetailsModelCopyWithImpl<$Res>
 
 /// Create a copy of MaintenanceDetailsModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? parts = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? vehicle = null,Object? parts = null,}) {
   return _then(_MaintenanceDetailsModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as String,parts: null == parts ? _self._parts : parts // ignore: cast_nullable_to_non_nullable
+as String,vehicle: null == vehicle ? _self.vehicle : vehicle // ignore: cast_nullable_to_non_nullable
+as VehicleModel,parts: null == parts ? _self._parts : parts // ignore: cast_nullable_to_non_nullable
 as List<ServicePartInfoModel>,
   ));
 }

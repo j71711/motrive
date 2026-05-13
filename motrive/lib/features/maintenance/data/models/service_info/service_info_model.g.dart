@@ -13,6 +13,7 @@ _ServiceInfoModel _$ServiceInfoModelFromJson(Map<String, dynamic> json) =>
       dateIntervalMonths: (json['date_interval_months'] as num).toInt(),
       severity: json['severity'] as String,
       recommendation: json['recommendation'] as String,
+      done: json['done'] as bool?,
     );
 
 Map<String, dynamic> _$ServiceInfoModelToJson(_ServiceInfoModel instance) =>
@@ -22,4 +23,5 @@ Map<String, dynamic> _$ServiceInfoModelToJson(_ServiceInfoModel instance) =>
       'date_interval_months': instance.dateIntervalMonths,
       'severity': instance.severity,
       'recommendation': instance.recommendation,
+      'done': instance.done,
     };

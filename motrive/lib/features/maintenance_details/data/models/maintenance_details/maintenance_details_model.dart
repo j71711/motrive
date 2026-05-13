@@ -1,3 +1,4 @@
+import 'package:motrive/features/home/sub/add_car_card/data/models/add_car_card_model.dart';
 import 'package:motrive/features/maintenance_details/data/models/service_part_info/service_part_info_model.dart';
 import 'package:motrive/features/maintenance_details/domain/entities/maintenance_details_entity.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -8,6 +9,7 @@ part 'maintenance_details_model.g.dart';
 abstract class MaintenanceDetailsModel with _$MaintenanceDetailsModel {
   const factory MaintenanceDetailsModel({
     required String id,
+    required VehicleModel vehicle,
     required List<ServicePartInfoModel> parts,
   }) = _MaintenanceDetailsModel;
 
@@ -19,6 +21,7 @@ extension MaintenanceDetailsModelMapper on MaintenanceDetailsModel {
   MaintenanceDetailsEntity toEntity() {
     return MaintenanceDetailsEntity(
       id: id,
+      vehicle: vehicle,
       parts: parts.map((e) => e.toEntity()).toList(),
     );
   }

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:motrive/core/extensions/context_extensions.dart';
 import 'package:motrive/core/utils/formatters.dart';
 import 'package:motrive/core/widgets/loading_widget.dart';
 import 'package:motrive/features/maintenance/domain/entities/service_info_entity.dart';
 import 'package:motrive/features/maintenance_details/presentation/cubit/maintenance_details_cubit.dart';
 import 'package:motrive/features/maintenance_details/presentation/cubit/maintenance_details_state.dart';
+import 'package:motrive/features/sub/save_service/presentation/pages/save_service_feature_widget.dart';
 
 class MaintenanceDetailsFeatureScreen extends StatelessWidget {
   final ServiceInfoEntity serviceInfo;
@@ -19,7 +21,24 @@ class MaintenanceDetailsFeatureScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         actionsPadding: .symmetric(horizontal: 8),
-        actions: [IconButton.filled(onPressed: () {}, icon: Icon(Icons.done))],
+        actions: [
+          BlocBuilder<MaintenanceDetailsCubit, MaintenanceDetailsState>(
+            builder: (context, state) {
+              return IconButton.filled(
+                onPressed: () async {
+                  if (state is MaintenanceDetailsSuccessState) {
+                    SaveServiceFeatureWidget(
+                      serviceInfo: serviceInfo,
+                      vehicle: state.maintenanceDetails.vehicle,
+                      onSuccess: () => context.pop(true),
+                    );
+                  }
+                },
+                icon: Icon(Icons.done),
+              );
+            },
+          ),
+        ],
       ),
       body: BlocListener<MaintenanceDetailsCubit, MaintenanceDetailsState>(
         listener: (context, state) {
@@ -84,12 +103,6 @@ class MaintenanceDetailsFeatureScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                Align(
-                  alignment: .centerEnd,
-                  child: Text(
-                    'Last odometer: ${Formatters.formatOdometer(15125)}',
-                  ),
-                ),
                 BlocBuilder<MaintenanceDetailsCubit, MaintenanceDetailsState>(
                   builder: (context, state) {
                     return switch (state) {
@@ -102,19 +115,11 @@ class MaintenanceDetailsFeatureScreen extends StatelessWidget {
                             : Expanded(
                                 child: Column(
                                   children: [
-                                    Row(
-                                      spacing: 5,
-                                      mainAxisAlignment: .end,
-                                      children: [
-                                        Text('Select all'),
-                                        Checkbox(
-                                          value: state.selectedAll ?? false,
-                                          onChanged: (value) => cubit.selectAll(
-                                            state.maintenanceDetails,
-                                            value ?? false,
-                                          ),
-                                        ),
-                                      ],
+                                    Align(
+                                      alignment: .centerEnd,
+                                      child: Text(
+                                        'Last odometer: ${Formatters.formatOdometer(state.maintenanceDetails.vehicle.currentOdometer ?? 0)}',
+                                      ),
                                     ),
                                     Expanded(
                                       child: ListView.separated(
@@ -123,21 +128,19 @@ class MaintenanceDetailsFeatureScreen extends StatelessWidget {
                                               .maintenanceDetails
                                               .parts[index];
                                           return Card(
-                                            child: CheckboxListTile(
-                                              onChanged: (value) =>
-                                                  cubit.togglePart(
-                                                    state.maintenanceDetails,
-                                                    index,
-                                                    value ?? false,
-                                                  ),
-                                              value: part.done,
-                                              title: Row(
+                                            child: ListTile(
+                                              leading: Icon(
+                                                Icons.car_repair_outlined,
+                                              ),
+                                              title: Text(part.partName),
+                                              trailing: Column(
+                                                spacing: 5,
                                                 mainAxisSize: .min,
-                                                spacing: 10,
                                                 children: [
                                                   Container(
                                                     padding: .symmetric(
                                                       horizontal: 8,
+                                                      vertical: 3,
                                                     ),
                                                     decoration: BoxDecoration(
                                                       borderRadius: .circular(
@@ -156,9 +159,10 @@ class MaintenanceDetailsFeatureScreen extends StatelessWidget {
                                                       ),
                                                     ),
                                                   ),
-                                                  Expanded(
-                                                    child: Text(part.partName),
-                                                  ),
+                                                  if (part.quantity != 0)
+                                                    Text(
+                                                      'Qty: ${part.quantity} ${part.quantityUnit}',
+                                                    ),
                                                 ],
                                               ),
                                               subtitle: Column(
@@ -169,28 +173,13 @@ class MaintenanceDetailsFeatureScreen extends StatelessWidget {
                                                   if (part.specification !=
                                                       'no data')
                                                     Text(part.specification),
-                                                  if (part.quantity != 0)
-                                                    Row(
-                                                      spacing: 10,
-                                                      mainAxisAlignment:
-                                                          .spaceBetween,
-                                                      mainAxisSize: .min,
-                                                      children: [
-                                                        Expanded(
-                                                          child: Text(
-                                                            'Qty: ${part.quantity} ${part.quantityUnit}',
-                                                          ),
-                                                        ),
-                                                        if (part.oemPartNumber !=
-                                                            'no data')
-                                                          Text(
-                                                            'OEM No. ${part.oemPartNumber}',
-                                                          ),
-                                                      ],
+                                                  if (part.oemPartNumber !=
+                                                      'no data')
+                                                    Text(
+                                                      'OEM No. ${part.oemPartNumber}',
                                                     ),
                                                 ],
                                               ),
-                                              checkboxShape: CircleBorder(),
                                             ),
                                           );
                                         },
@@ -203,14 +192,6 @@ class MaintenanceDetailsFeatureScreen extends StatelessWidget {
                                             .maintenanceDetails
                                             .parts
                                             .length,
-                                      ),
-                                    ),
-                                    TextField(
-                                      onTapOutside: (event) =>
-                                          FocusScope.of(context).unfocus(),
-                                      decoration: InputDecoration(
-                                        label: Text('Notes'),
-                                        border: UnderlineInputBorder(),
                                       ),
                                     ),
                                   ],
