@@ -15,11 +15,14 @@ import 'package:motrive/features/maintenance/presentation/pages/maintenance_feat
 import 'package:motrive/features/maintenance/presentation/cubit/maintenance_cubit.dart';
 import 'package:motrive/features/maintenance_details/presentation/pages/maintenance_details_feature_screen.dart';
 import 'package:motrive/features/maintenance_details/presentation/cubit/maintenance_details_cubit.dart';
+import 'package:motrive/features/loading/presentation/pages/loading_feature_screen.dart';
+import 'package:motrive/features/loading/presentation/cubit/loading_cubit.dart';
+
 
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: Routes.home,
+    initialLocation: Routes.loading,
     routes: [
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) =>
@@ -80,6 +83,14 @@ class AppRouter {
     builder: (context, state) => BlocProvider(
           create: (context) => MaintenanceDetailsCubit(GetIt.I.get()),
           child: MaintenanceDetailsFeatureScreen(serviceInfo: state.extra as ServiceInfoEntity,),
+        ),
+  ),
+
+  GoRoute(
+    path: Routes.loading,
+    builder: (context, state) => BlocProvider(
+          create: (context) => LoadingCubit(GetIt.I.get()),
+          child: const LoadingFeatureScreen(),
         ),
   ),
 ],

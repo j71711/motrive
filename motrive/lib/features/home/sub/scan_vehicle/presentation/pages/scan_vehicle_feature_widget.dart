@@ -90,7 +90,8 @@ class ScanVehicleFeatureWidget extends StatelessWidget {
                           if (state is ScanVehicleLoadingState)
                             const Center(child: CircularProgressIndicator()),
 
-                          if (state is ScanVehicleSuccessState)
+                         
+                         
                             SizedBox(
                               width: double.infinity,
                               child: FilledButton.icon(
