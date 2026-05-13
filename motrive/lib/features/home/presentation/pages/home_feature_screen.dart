@@ -7,6 +7,7 @@ import 'package:motrive/features/home/presentation/cubit/home_cubit.dart';
 import 'package:motrive/features/home/sub/add_car_card/presentation/pages/add_car_card_feature_widget.dart';
 import 'package:motrive/features/home/sub/sos/presentation/pages/sos_feature_widget.dart';
 import 'package:motrive/features/profile/sub/emergency_contact/presentation/cubit/emergency_contact_cubit.dart';
+import 'package:motrive/features/sub/maintenance_alert/presentation/pages/maintenance_alert_feature_widget.dart';
 
 class HomeFeatureScreen extends StatelessWidget {
   const HomeFeatureScreen({super.key});
@@ -16,11 +17,16 @@ class HomeFeatureScreen extends StatelessWidget {
     final _ = context.read<HomeCubit>();
 
     return BlocProvider(
-      create: (_) => EmergencyContactCubit(GetIt.I.get())
-        ..getEmergencyContactMethod(),
+      create: (_) =>
+          EmergencyContactCubit(GetIt.I.get())..getEmergencyContactMethod(),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Home Feature Screen'),
+          centerTitle: true,
+          title: const Text('Home'),
+          leading: IconButton.filled(
+            onPressed: () => context.push(Routes.profile),
+            icon: Icon(Icons.person),
+          ),
         ),
         body: Padding(
           padding: const EdgeInsets.all(20),
@@ -55,8 +61,8 @@ class HomeFeatureScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              ElevatedButton(onPressed: (){context.push(Routes.profile);}, child: Text("data")),
-               SosFeatureWidget(),
+              SosFeatureWidget(),
+              MaintenanceAlertFeatureWidget(),
             ],
           ),
         ),

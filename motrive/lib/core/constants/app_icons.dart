@@ -6,5 +6,6 @@ abstract class AppIcons {
   static const String home = '$_iconsPath/home.svg';
   static const String search = '$_iconsPath/search.svg';
   static const String settings = '$_iconsPath/settings.svg';
+  static const String google = '$_iconsPath/google-icon-logo-svgrepo-com.svg';
 }
 

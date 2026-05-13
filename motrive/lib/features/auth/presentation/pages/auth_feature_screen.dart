@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:motrive/core/constants/app_icons.dart';
 import 'package:motrive/core/navigation/routers.dart';
 import 'package:motrive/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:motrive/features/auth/presentation/cubit/auth_state.dart';
@@ -230,7 +231,7 @@ class AuthFeatureScreen extends HookWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   AnyImageView(
-                                    imagePath: 'assets/images/google.png',
+                                    imagePath: AppIcons.google,
                                     height: 28,
                                     width: 28,
                                   ),

@@ -30,7 +30,7 @@ class MaintenanceAlertRemoteDataSource
         .select()
         .eq('user_id', _userService.currentUser!.id);
     final maintenanceLogs = await _supabase
-        .from('table')
+        .from('maintenance_logs')
         .select()
         .eq('vehicle_id', carInfo.first['id']);
     final maintenance = await _supabase
