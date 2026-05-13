@@ -24,15 +24,25 @@ class MaintenanceDetailsFeatureScreen extends StatelessWidget {
         actions: [
           BlocBuilder<MaintenanceDetailsCubit, MaintenanceDetailsState>(
             builder: (context, state) {
+              final vehicle = state is MaintenanceDetailsSuccessState
+                  ? state.maintenanceDetails.vehicle
+                  : null;
               return IconButton.filled(
                 onPressed: () async {
-                  if (state is MaintenanceDetailsSuccessState) {
-                    SaveServiceFeatureWidget(
-                      serviceInfo: serviceInfo,
-                      vehicle: state.maintenanceDetails.vehicle,
-                      onSuccess: () => context.pop(true),
-                    );
+                  if (vehicle == null) {
+                    return;
                   }
+                  await showDialog(
+                    context: context,
+                    builder: (context) => SaveServiceFeatureWidget(
+                      serviceInfo: serviceInfo,
+                      vehicle: vehicle,
+                    ),
+                  ).then((value) {
+                    if (value == true && context.mounted) {
+                      context.pop(true);
+                    }
+                  });
                 },
                 icon: Icon(Icons.done),
               );

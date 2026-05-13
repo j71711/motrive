@@ -10,10 +10,11 @@ class SaveServiceCubit extends Cubit<SaveServiceState> {
   SaveServiceCubit(this._saveServiceUseCase) : super(SaveServiceInitialState());
 
   Future<void> getSaveService({
-   required ServiceInfoEntity serviceInfo,
+    required ServiceInfoEntity serviceInfo,
     required MaintenanceSaveInfo maintenanceSaveInfo,
     required String carId,
   }) async {
+    emit(SaveServiceLoadingState());
     final result = await _saveServiceUseCase.getSaveService(
       serviceInfo,
       maintenanceSaveInfo,

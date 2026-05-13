@@ -10,7 +10,7 @@ _MaintenanceDetailsModel _$MaintenanceDetailsModelFromJson(
   Map<String, dynamic> json,
 ) => _MaintenanceDetailsModel(
   id: json['id'] as String,
-  vehicle: VehicleModel.fromJson(json['vehicle'] as Map<String, dynamic>),
+  vehicle: UserVehicleModel.fromJson(json['vehicle'] as Map<String, dynamic>),
   parts: (json['parts'] as List<dynamic>)
       .map((e) => ServicePartInfoModel.fromJson(e as Map<String, dynamic>))
       .toList(),

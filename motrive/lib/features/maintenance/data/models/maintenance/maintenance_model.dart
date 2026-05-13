@@ -10,7 +10,7 @@ abstract class MaintenanceModel with _$MaintenanceModel {
   // ignore: invalid_annotation_target
   @JsonSerializable(fieldRename: .snake)
   const factory MaintenanceModel({
-    required VehicleModel vehicle,
+    required UserVehicleModel vehicle,
     required List<ServiceInfoModel> services,
   }) = _MaintenanceModel;
 

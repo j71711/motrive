@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
-import 'package:motrive/features/home/sub/add_car_card/data/models/add_car_card_model.dart';
+import 'package:motrive/features/maintenance/domain/entities/vehicle_entity.dart';
 import 'package:motrive/features/maintenance_details/domain/entities/service_part_info_entity.dart';
 
 class MaintenanceDetailsEntity extends Equatable {
   final String id;
-  final VehicleModel vehicle;
+  final UserVehicleEntity vehicle;
   final List<ServicePartInfoEntity> parts;
 
   const MaintenanceDetailsEntity({

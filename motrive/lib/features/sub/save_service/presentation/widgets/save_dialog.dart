@@ -123,7 +123,6 @@ class SaveDialog extends HookWidget {
                         note: notesController.text,
                       );
                       onSave(maintenanceInfo);
-                      context.pop(true);
                     }
                   },
                   child: Text('Save'),

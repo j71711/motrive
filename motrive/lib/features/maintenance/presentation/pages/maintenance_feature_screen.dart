@@ -80,12 +80,21 @@ class MaintenanceFeatureScreen extends StatelessWidget {
                             trailing: Checkbox(
                               value:
                                   state.maintenanceEntity.services[index].done,
-                              onChanged: (value) => SaveServiceFeatureWidget(
-                                vehicle: state.maintenanceEntity.vehicle,
-                                serviceInfo:
-                                    state.maintenanceEntity.services[index],
-                                    onSuccess: () => cubit.getMaintenanceMethod(),
-                              ),
+                              onChanged: (value) async {
+                                await showDialog(
+                                  context: context,
+                                  builder: (context) =>
+                                      SaveServiceFeatureWidget(
+                                        serviceInfo: service,
+                                        vehicle:
+                                            state.maintenanceEntity.vehicle,
+                                      ),
+                                ).then((value) {
+                                  if (value == true && context.mounted) {
+                                    cubit.getMaintenanceMethod();
+                                  }
+                                });
+                              },
                             ),
                           );
                         },

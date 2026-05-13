@@ -6,8 +6,8 @@ part of 'vehicle_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_VehicleModel _$VehicleModelFromJson(Map<String, dynamic> json) =>
-    _VehicleModel(
+_UserVehicleModel _$UserVehicleModelFromJson(Map<String, dynamic> json) =>
+    _UserVehicleModel(
       userId: json['user_id'] as String,
       id: json['id'] as String,
       make: json['make'] as String,
@@ -17,9 +17,10 @@ _VehicleModel _$VehicleModelFromJson(Map<String, dynamic> json) =>
       licensePlate: json['license_plate'] as String?,
       vin: json['vin'] as String?,
       currentOdometer: (json['current_odometer'] as num?)?.toInt(),
+      odometerAtRegistered: (json['odometer_at_registered'] as num?)?.toInt(),
     );
 
-Map<String, dynamic> _$VehicleModelToJson(_VehicleModel instance) =>
+Map<String, dynamic> _$UserVehicleModelToJson(_UserVehicleModel instance) =>
     <String, dynamic>{
       'user_id': instance.userId,
       'id': instance.id,
@@ -30,4 +31,5 @@ Map<String, dynamic> _$VehicleModelToJson(_VehicleModel instance) =>
       'license_plate': instance.licensePlate,
       'vin': instance.vin,
       'current_odometer': instance.currentOdometer,
+      'odometer_at_registered': instance.odometerAtRegistered,
     };

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$MaintenanceModel {
 
- VehicleModel get vehicle; List<ServiceInfoModel> get services;
+ UserVehicleModel get vehicle; List<ServiceInfoModel> get services;
 /// Create a copy of MaintenanceModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,11 +48,11 @@ abstract mixin class $MaintenanceModelCopyWith<$Res>  {
   factory $MaintenanceModelCopyWith(MaintenanceModel value, $Res Function(MaintenanceModel) _then) = _$MaintenanceModelCopyWithImpl;
 @useResult
 $Res call({
- VehicleModel vehicle, List<ServiceInfoModel> services
+ UserVehicleModel vehicle, List<ServiceInfoModel> services
 });
 
 
-$VehicleModelCopyWith<$Res> get vehicle;
+$UserVehicleModelCopyWith<$Res> get vehicle;
 
 }
 /// @nodoc
@@ -68,7 +68,7 @@ class _$MaintenanceModelCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? vehicle = null,Object? services = null,}) {
   return _then(_self.copyWith(
 vehicle: null == vehicle ? _self.vehicle : vehicle // ignore: cast_nullable_to_non_nullable
-as VehicleModel,services: null == services ? _self.services : services // ignore: cast_nullable_to_non_nullable
+as UserVehicleModel,services: null == services ? _self.services : services // ignore: cast_nullable_to_non_nullable
 as List<ServiceInfoModel>,
   ));
 }
@@ -76,9 +76,9 @@ as List<ServiceInfoModel>,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$VehicleModelCopyWith<$Res> get vehicle {
+$UserVehicleModelCopyWith<$Res> get vehicle {
   
-  return $VehicleModelCopyWith<$Res>(_self.vehicle, (value) {
+  return $UserVehicleModelCopyWith<$Res>(_self.vehicle, (value) {
     return _then(_self.copyWith(vehicle: value));
   });
 }
@@ -163,7 +163,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( VehicleModel vehicle,  List<ServiceInfoModel> services)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( UserVehicleModel vehicle,  List<ServiceInfoModel> services)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _MaintenanceModel() when $default != null:
 return $default(_that.vehicle,_that.services);case _:
@@ -184,7 +184,7 @@ return $default(_that.vehicle,_that.services);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( VehicleModel vehicle,  List<ServiceInfoModel> services)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( UserVehicleModel vehicle,  List<ServiceInfoModel> services)  $default,) {final _that = this;
 switch (_that) {
 case _MaintenanceModel():
 return $default(_that.vehicle,_that.services);case _:
@@ -204,7 +204,7 @@ return $default(_that.vehicle,_that.services);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( VehicleModel vehicle,  List<ServiceInfoModel> services)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( UserVehicleModel vehicle,  List<ServiceInfoModel> services)?  $default,) {final _that = this;
 switch (_that) {
 case _MaintenanceModel() when $default != null:
 return $default(_that.vehicle,_that.services);case _:
@@ -222,7 +222,7 @@ class _MaintenanceModel implements MaintenanceModel {
   const _MaintenanceModel({required this.vehicle, required final  List<ServiceInfoModel> services}): _services = services;
   factory _MaintenanceModel.fromJson(Map<String, dynamic> json) => _$MaintenanceModelFromJson(json);
 
-@override final  VehicleModel vehicle;
+@override final  UserVehicleModel vehicle;
  final  List<ServiceInfoModel> _services;
 @override List<ServiceInfoModel> get services {
   if (_services is EqualUnmodifiableListView) return _services;
@@ -264,11 +264,11 @@ abstract mixin class _$MaintenanceModelCopyWith<$Res> implements $MaintenanceMod
   factory _$MaintenanceModelCopyWith(_MaintenanceModel value, $Res Function(_MaintenanceModel) _then) = __$MaintenanceModelCopyWithImpl;
 @override @useResult
 $Res call({
- VehicleModel vehicle, List<ServiceInfoModel> services
+ UserVehicleModel vehicle, List<ServiceInfoModel> services
 });
 
 
-@override $VehicleModelCopyWith<$Res> get vehicle;
+@override $UserVehicleModelCopyWith<$Res> get vehicle;
 
 }
 /// @nodoc
@@ -284,7 +284,7 @@ class __$MaintenanceModelCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? vehicle = null,Object? services = null,}) {
   return _then(_MaintenanceModel(
 vehicle: null == vehicle ? _self.vehicle : vehicle // ignore: cast_nullable_to_non_nullable
-as VehicleModel,services: null == services ? _self._services : services // ignore: cast_nullable_to_non_nullable
+as UserVehicleModel,services: null == services ? _self._services : services // ignore: cast_nullable_to_non_nullable
 as List<ServiceInfoModel>,
   ));
 }
@@ -293,9 +293,9 @@ as List<ServiceInfoModel>,
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
-$VehicleModelCopyWith<$Res> get vehicle {
+$UserVehicleModelCopyWith<$Res> get vehicle {
   
-  return $VehicleModelCopyWith<$Res>(_self.vehicle, (value) {
+  return $UserVehicleModelCopyWith<$Res>(_self.vehicle, (value) {
     return _then(_self.copyWith(vehicle: value));
   });
 }

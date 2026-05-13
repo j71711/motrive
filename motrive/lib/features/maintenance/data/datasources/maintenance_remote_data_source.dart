@@ -25,7 +25,7 @@ class MaintenanceRemoteDataSource implements BaseMaintenanceRemoteDataSource {
     final userCars = await _supabase
         .from('vehicles')
         .select()
-        .eq('user_id', '4fef5d57-eeb4-4bd7-aae0-eaf4dee00b1f');
+        .eq('user_id', _userService.currentUser!.id);
 
     if (userCars.isEmpty) {
       throw Exception('No car found');
@@ -42,7 +42,7 @@ class MaintenanceRemoteDataSource implements BaseMaintenanceRemoteDataSource {
     final doneServices = await _supabase
         .from('maintenance_logs')
         .select()
-        .eq('user_id', '4fef5d57-eeb4-4bd7-aae0-eaf4dee00b1f');
+        .eq('user_id', _userService.currentUser!.id);
 
     carServices = carServices.map((e) {
       Map<String, dynamic> service = e;
