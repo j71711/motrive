@@ -18,26 +18,34 @@ class ScanVehicleRemoteDataSource implements BaseScanVehicleRemoteDataSource {
 
   @override
   Future<ScanVehicleModel> decodeVin(String vin) async {
+    
     final response = await _supabase.functions.invoke(
       'decode-vin',
       body: {'vin': vin},
-      //       headers: {
-      //   'Authorization':
-      //       'Bearer ${Supabase.instance.client.auth.currentSession?.accessToken}',
-      // },
+            headers: {
+        'Authorization':
+            'Bearer ${Supabase.instance.client.auth.currentSession?.accessToken}',
+      },
     );
-    final data = Map<String, dynamic>.from(response.data);
+    if (response.data == null) {
+  throw Exception('No data returned');
+}
+
+final data = Map<String, dynamic>.from(response.data);
     return ScanVehicleModel.fromJson(data);
   }
   
 @override
 Future<void> insertVehicle(ScanVehicleEntity vehicle) async {
+  final userId = _supabase.auth.currentUser?.id;
  await _supabase.from('vehicles').insert({
     'vin': vehicle.vin,
     'make': vehicle.make,
     'model': vehicle.model,
     'year': vehicle.year,
-    'user_id': '94fc1635-d17d-442a-885d-a3c3cd67af0d', 
+    'user_id': userId, 
+    'color': vehicle.color,
+    'license_plate': vehicle.licensePlate,
   });
 }
 }

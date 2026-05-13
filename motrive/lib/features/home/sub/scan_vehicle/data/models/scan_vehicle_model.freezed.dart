@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ScanVehicleModel {
 
- String get vin; String get make; String get model; int get year;
+ String get make; String get model; int get year; String? get color;@JsonKey(name: 'license_plate') String? get licensePlate; String? get vin;@JsonKey(name: 'current_odometer') int? get currentOdometer;@JsonKey(name: 'created_at') DateTime? get createdAt;@JsonKey(name: 'car_info_id') String? get carInfoId;
 /// Create a copy of ScanVehicleModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $ScanVehicleModelCopyWith<ScanVehicleModel> get copyWith => _$ScanVehicleModelCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ScanVehicleModel&&(identical(other.vin, vin) || other.vin == vin)&&(identical(other.make, make) || other.make == make)&&(identical(other.model, model) || other.model == model)&&(identical(other.year, year) || other.year == year));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ScanVehicleModel&&(identical(other.make, make) || other.make == make)&&(identical(other.model, model) || other.model == model)&&(identical(other.year, year) || other.year == year)&&(identical(other.color, color) || other.color == color)&&(identical(other.licensePlate, licensePlate) || other.licensePlate == licensePlate)&&(identical(other.vin, vin) || other.vin == vin)&&(identical(other.currentOdometer, currentOdometer) || other.currentOdometer == currentOdometer)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.carInfoId, carInfoId) || other.carInfoId == carInfoId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,vin,make,model,year);
+int get hashCode => Object.hash(runtimeType,make,model,year,color,licensePlate,vin,currentOdometer,createdAt,carInfoId);
 
 @override
 String toString() {
-  return 'ScanVehicleModel(vin: $vin, make: $make, model: $model, year: $year)';
+  return 'ScanVehicleModel(make: $make, model: $model, year: $year, color: $color, licensePlate: $licensePlate, vin: $vin, currentOdometer: $currentOdometer, createdAt: $createdAt, carInfoId: $carInfoId)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $ScanVehicleModelCopyWith<$Res>  {
   factory $ScanVehicleModelCopyWith(ScanVehicleModel value, $Res Function(ScanVehicleModel) _then) = _$ScanVehicleModelCopyWithImpl;
 @useResult
 $Res call({
- String vin, String make, String model, int year
+ String make, String model, int year, String? color,@JsonKey(name: 'license_plate') String? licensePlate, String? vin,@JsonKey(name: 'current_odometer') int? currentOdometer,@JsonKey(name: 'created_at') DateTime? createdAt,@JsonKey(name: 'car_info_id') String? carInfoId
 });
 
 
@@ -65,13 +65,18 @@ class _$ScanVehicleModelCopyWithImpl<$Res>
 
 /// Create a copy of ScanVehicleModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? vin = null,Object? make = null,Object? model = null,Object? year = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? make = null,Object? model = null,Object? year = null,Object? color = freezed,Object? licensePlate = freezed,Object? vin = freezed,Object? currentOdometer = freezed,Object? createdAt = freezed,Object? carInfoId = freezed,}) {
   return _then(_self.copyWith(
-vin: null == vin ? _self.vin : vin // ignore: cast_nullable_to_non_nullable
-as String,make: null == make ? _self.make : make // ignore: cast_nullable_to_non_nullable
+make: null == make ? _self.make : make // ignore: cast_nullable_to_non_nullable
 as String,model: null == model ? _self.model : model // ignore: cast_nullable_to_non_nullable
 as String,year: null == year ? _self.year : year // ignore: cast_nullable_to_non_nullable
-as int,
+as int,color: freezed == color ? _self.color : color // ignore: cast_nullable_to_non_nullable
+as String?,licensePlate: freezed == licensePlate ? _self.licensePlate : licensePlate // ignore: cast_nullable_to_non_nullable
+as String?,vin: freezed == vin ? _self.vin : vin // ignore: cast_nullable_to_non_nullable
+as String?,currentOdometer: freezed == currentOdometer ? _self.currentOdometer : currentOdometer // ignore: cast_nullable_to_non_nullable
+as int?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,carInfoId: freezed == carInfoId ? _self.carInfoId : carInfoId // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -156,10 +161,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String vin,  String make,  String model,  int year)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String make,  String model,  int year,  String? color, @JsonKey(name: 'license_plate')  String? licensePlate,  String? vin, @JsonKey(name: 'current_odometer')  int? currentOdometer, @JsonKey(name: 'created_at')  DateTime? createdAt, @JsonKey(name: 'car_info_id')  String? carInfoId)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ScanVehicleModel() when $default != null:
-return $default(_that.vin,_that.make,_that.model,_that.year);case _:
+return $default(_that.make,_that.model,_that.year,_that.color,_that.licensePlate,_that.vin,_that.currentOdometer,_that.createdAt,_that.carInfoId);case _:
   return orElse();
 
 }
@@ -177,10 +182,10 @@ return $default(_that.vin,_that.make,_that.model,_that.year);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String vin,  String make,  String model,  int year)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String make,  String model,  int year,  String? color, @JsonKey(name: 'license_plate')  String? licensePlate,  String? vin, @JsonKey(name: 'current_odometer')  int? currentOdometer, @JsonKey(name: 'created_at')  DateTime? createdAt, @JsonKey(name: 'car_info_id')  String? carInfoId)  $default,) {final _that = this;
 switch (_that) {
 case _ScanVehicleModel():
-return $default(_that.vin,_that.make,_that.model,_that.year);case _:
+return $default(_that.make,_that.model,_that.year,_that.color,_that.licensePlate,_that.vin,_that.currentOdometer,_that.createdAt,_that.carInfoId);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -197,10 +202,10 @@ return $default(_that.vin,_that.make,_that.model,_that.year);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String vin,  String make,  String model,  int year)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String make,  String model,  int year,  String? color, @JsonKey(name: 'license_plate')  String? licensePlate,  String? vin, @JsonKey(name: 'current_odometer')  int? currentOdometer, @JsonKey(name: 'created_at')  DateTime? createdAt, @JsonKey(name: 'car_info_id')  String? carInfoId)?  $default,) {final _that = this;
 switch (_that) {
 case _ScanVehicleModel() when $default != null:
-return $default(_that.vin,_that.make,_that.model,_that.year);case _:
+return $default(_that.make,_that.model,_that.year,_that.color,_that.licensePlate,_that.vin,_that.currentOdometer,_that.createdAt,_that.carInfoId);case _:
   return null;
 
 }
@@ -212,13 +217,18 @@ return $default(_that.vin,_that.make,_that.model,_that.year);case _:
 @JsonSerializable()
 
 class _ScanVehicleModel implements ScanVehicleModel {
-  const _ScanVehicleModel({required this.vin, required this.make, required this.model, required this.year});
+  const _ScanVehicleModel({required this.make, required this.model, required this.year, this.color, @JsonKey(name: 'license_plate') this.licensePlate, this.vin, @JsonKey(name: 'current_odometer') this.currentOdometer, @JsonKey(name: 'created_at') this.createdAt, @JsonKey(name: 'car_info_id') this.carInfoId});
   factory _ScanVehicleModel.fromJson(Map<String, dynamic> json) => _$ScanVehicleModelFromJson(json);
 
-@override final  String vin;
 @override final  String make;
 @override final  String model;
 @override final  int year;
+@override final  String? color;
+@override@JsonKey(name: 'license_plate') final  String? licensePlate;
+@override final  String? vin;
+@override@JsonKey(name: 'current_odometer') final  int? currentOdometer;
+@override@JsonKey(name: 'created_at') final  DateTime? createdAt;
+@override@JsonKey(name: 'car_info_id') final  String? carInfoId;
 
 /// Create a copy of ScanVehicleModel
 /// with the given fields replaced by the non-null parameter values.
@@ -233,16 +243,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ScanVehicleModel&&(identical(other.vin, vin) || other.vin == vin)&&(identical(other.make, make) || other.make == make)&&(identical(other.model, model) || other.model == model)&&(identical(other.year, year) || other.year == year));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ScanVehicleModel&&(identical(other.make, make) || other.make == make)&&(identical(other.model, model) || other.model == model)&&(identical(other.year, year) || other.year == year)&&(identical(other.color, color) || other.color == color)&&(identical(other.licensePlate, licensePlate) || other.licensePlate == licensePlate)&&(identical(other.vin, vin) || other.vin == vin)&&(identical(other.currentOdometer, currentOdometer) || other.currentOdometer == currentOdometer)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.carInfoId, carInfoId) || other.carInfoId == carInfoId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,vin,make,model,year);
+int get hashCode => Object.hash(runtimeType,make,model,year,color,licensePlate,vin,currentOdometer,createdAt,carInfoId);
 
 @override
 String toString() {
-  return 'ScanVehicleModel(vin: $vin, make: $make, model: $model, year: $year)';
+  return 'ScanVehicleModel(make: $make, model: $model, year: $year, color: $color, licensePlate: $licensePlate, vin: $vin, currentOdometer: $currentOdometer, createdAt: $createdAt, carInfoId: $carInfoId)';
 }
 
 
@@ -253,7 +263,7 @@ abstract mixin class _$ScanVehicleModelCopyWith<$Res> implements $ScanVehicleMod
   factory _$ScanVehicleModelCopyWith(_ScanVehicleModel value, $Res Function(_ScanVehicleModel) _then) = __$ScanVehicleModelCopyWithImpl;
 @override @useResult
 $Res call({
- String vin, String make, String model, int year
+ String make, String model, int year, String? color,@JsonKey(name: 'license_plate') String? licensePlate, String? vin,@JsonKey(name: 'current_odometer') int? currentOdometer,@JsonKey(name: 'created_at') DateTime? createdAt,@JsonKey(name: 'car_info_id') String? carInfoId
 });
 
 
@@ -270,13 +280,18 @@ class __$ScanVehicleModelCopyWithImpl<$Res>
 
 /// Create a copy of ScanVehicleModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? vin = null,Object? make = null,Object? model = null,Object? year = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? make = null,Object? model = null,Object? year = null,Object? color = freezed,Object? licensePlate = freezed,Object? vin = freezed,Object? currentOdometer = freezed,Object? createdAt = freezed,Object? carInfoId = freezed,}) {
   return _then(_ScanVehicleModel(
-vin: null == vin ? _self.vin : vin // ignore: cast_nullable_to_non_nullable
-as String,make: null == make ? _self.make : make // ignore: cast_nullable_to_non_nullable
+make: null == make ? _self.make : make // ignore: cast_nullable_to_non_nullable
 as String,model: null == model ? _self.model : model // ignore: cast_nullable_to_non_nullable
 as String,year: null == year ? _self.year : year // ignore: cast_nullable_to_non_nullable
-as int,
+as int,color: freezed == color ? _self.color : color // ignore: cast_nullable_to_non_nullable
+as String?,licensePlate: freezed == licensePlate ? _self.licensePlate : licensePlate // ignore: cast_nullable_to_non_nullable
+as String?,vin: freezed == vin ? _self.vin : vin // ignore: cast_nullable_to_non_nullable
+as String?,currentOdometer: freezed == currentOdometer ? _self.currentOdometer : currentOdometer // ignore: cast_nullable_to_non_nullable
+as int?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,carInfoId: freezed == carInfoId ? _self.carInfoId : carInfoId // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

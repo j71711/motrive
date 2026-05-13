@@ -1,26 +1,48 @@
 import 'package:equatable/equatable.dart';
 import 'package:motrive/features/home/sub/add_car_card/domain/entities/add_car_card_entity.dart';
 
-abstract class VehicleState extends Equatable {
+abstract class AddCarCardState extends Equatable {
+  final List<AddCarCardEntity> vehicles;
+  final List<CarInfoEntity> carsInfo;
+  final bool isLoading;
+
+  const AddCarCardState({
+    this.vehicles = const [],
+    this.carsInfo = const [],
+    this.isLoading = false,
+  });
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [vehicles, carsInfo, isLoading];
 }
 
-class VehicleInitialState extends VehicleState {}
-
-class VehicleLoadingState extends VehicleState {}
-
-class VehicleLoadedState extends VehicleState {
-  final List<VehicleEntity> vehicles;
-  VehicleLoadedState(this.vehicles);
+class AddCarCardInitialState extends AddCarCardState {}
+class VehiclesLoadingState extends AddCarCardState {}
+class AddCarCardLoadedState extends AddCarCardState {
+  final List<AddCarCardEntity> vehicles;
+  const AddCarCardLoadedState(this.vehicles);
   @override
   List<Object?> get props => [vehicles];
 }
 
-class VehicleErrorState extends VehicleState {
+class AddCarCardErrorState extends AddCarCardState {
   final String message;
-  VehicleErrorState(this.message);
+  const AddCarCardErrorState(this.message);
   @override
   List<Object?> get props => [message];
 }
 
+class CarsInfoLoadingState extends AddCarCardState {}
+class CarInfoLoadedState extends AddCarCardState {
+  final List<CarInfoEntity> cars;
+  const CarInfoLoadedState(this.cars);
+  @override
+  List<Object?> get props => [cars];
+}
+
+class SearchResultState extends AddCarCardState {
+  final List<BaseCarEntity> results;
+  const SearchResultState(this.results);
+  @override
+  List<Object?> get props => [results];
+}
