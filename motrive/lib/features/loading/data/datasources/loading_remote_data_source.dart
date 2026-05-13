@@ -1,3 +1,4 @@
+
 import 'package:injectable/injectable.dart';
 import 'package:motrive/core/common/auth_model.dart';
 import 'package:motrive/core/errors/network_exceptions.dart';
@@ -20,10 +21,9 @@ class LoadingRemoteDataSource implements BaseLoadingRemoteDataSource {
   Future<LoadingModel> loginStatus() async {
     try {
       if (_supabase.auth.currentUser == null) {
-      
         return LoadingModel(isLogin: false, isUser: false);
       }
-   
+
       if (_supabase.auth.currentUser!.isAnonymous) {
         return LoadingModel(isLogin: true, isUser: false);
       }
@@ -32,12 +32,11 @@ class LoadingRemoteDataSource implements BaseLoadingRemoteDataSource {
           .select()
           .eq('auth_id', _supabase.auth.currentUser!.id)
           .single();
+
       _userService.setUser = AuthModel.fromJson(userInfo).toEntity();
       return LoadingModel(isLogin: true, isUser: true);
     } catch (error) {
       throw FailureExceptions.getException(error);
     }
   }
-
-
 }

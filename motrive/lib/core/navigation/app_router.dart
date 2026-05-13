@@ -18,8 +18,6 @@ import 'package:motrive/features/maintenance_details/presentation/cubit/maintena
 import 'package:motrive/features/loading/presentation/pages/loading_feature_screen.dart';
 import 'package:motrive/features/loading/presentation/cubit/loading_cubit.dart';
 
-
-
 class AppRouter {
   static final GoRouter router = GoRouter(
     initialLocation: Routes.loading,
