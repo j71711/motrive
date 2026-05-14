@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:motrive/core/widgets/loading_widget.dart';
 import 'package:motrive/features/profile/sub/emergency_contact/presentation/cubit/emergency_contact_cubit.dart';
 import 'package:motrive/features/profile/sub/emergency_contact/presentation/cubit/emergency_contact_state.dart';
 import 'package:motrive/features/profile/sub/emergency_contact/presentation/pages/show_contact_dialog.dart';
@@ -33,7 +34,7 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
       },
       builder: (context, state) {
         if (state is EmergencyContactLoadingState) {
-          return const Center(child: CircularProgressIndicator());
+          return const LoadingWidget();
         }
 
         if (state is EmergencyContactSuccessState) {

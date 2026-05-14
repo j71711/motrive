@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:motrive/core/navigation/routers.dart';
 import 'package:motrive/core/utils/formatters.dart';
+import 'package:motrive/core/widgets/fade_animated_container.dart';
 import 'package:motrive/features/sub/maintenance_alert/presentation/cubit/maintenance_alert_cubit.dart';
 import 'package:motrive/features/sub/maintenance_alert/presentation/cubit/maintenance_alert_state.dart';
 import 'package:motrive/features/sub/save_service/presentation/pages/save_service_feature_widget.dart';
@@ -26,13 +27,9 @@ class MaintenanceAlertFeatureWidget extends StatelessWidget {
                   (maintenance?.vehicle.currentOdometer ?? 0);
               return Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: AnimatedCrossFade(
-                  duration: Duration(microseconds: 500),
-                  crossFadeState: maintenance != null
-                      ? .showSecond
-                      : .showFirst,
-                  firstChild: SizedBox.shrink(),
-                  secondChild: Card(
+                child: CustomFadeContainer(
+                  fade: maintenance == null,
+                  widget: Card(
                     color: Colors.transparent,
                     elevation: 0,
                     borderOnForeground: true,

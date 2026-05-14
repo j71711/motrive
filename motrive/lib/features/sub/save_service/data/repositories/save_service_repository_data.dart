@@ -18,7 +18,7 @@ class SaveServiceRepositoryData implements SaveServiceRepositoryDomain {
   Future<Result<void, Failure>> getSaveService(
     ServiceInfoEntity serviceInfo,
     MaintenanceSaveInfo maintenanceSaveInfo,
-    UserVehicleEntity vehicle
+    UserVehicleEntity vehicle,
   ) async {
     try {
       await remoteDataSource.getSaveService(

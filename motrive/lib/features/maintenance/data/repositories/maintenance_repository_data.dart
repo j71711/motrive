@@ -1,5 +1,6 @@
 
 import 'package:injectable/injectable.dart';
+import 'package:motrive/features/maintenance/data/datasources/maintenance_local_data_source.dart';
 import 'package:multiple_result/multiple_result.dart';
 import 'package:motrive/core/errors/network_exceptions.dart';
 import 'package:motrive/core/errors/failure.dart';
@@ -10,17 +11,30 @@ import 'package:motrive/features/maintenance/data/models/maintenance/maintenance
 import 'package:motrive/features/maintenance/domain/repositories/maintenance_repository_domain.dart';
 
 @LazySingleton(as: MaintenanceRepositoryDomain)
-class MaintenanceRepositoryData implements MaintenanceRepositoryDomain{
+class MaintenanceRepositoryData implements MaintenanceRepositoryDomain {
   final BaseMaintenanceRemoteDataSource remoteDataSource;
+  final BaseMaintenanceLocalDataSource localDataSource;
 
+  MaintenanceRepositoryData(this.remoteDataSource, this.localDataSource);
 
-  MaintenanceRepositoryData(this.remoteDataSource);
-
-@override
-  Future<Result<MaintenanceEntity, Failure>> getMaintenance() async {
+  @override
+  Future<Result<MaintenanceEntity, Failure>> getMaintenance({
+    required bool fromRemote,
+  }) async {
     try {
-      final response = await remoteDataSource.getMaintenance();
-      return Success(response.toEntity());
+      if (!fromRemote) {
+        final local = await localDataSource.getMaintenance();
+        if (local != null && local.services.isNotEmpty) {
+          return Success(local.toEntity());
+        }
+      }
+
+      final remote = await remoteDataSource.getMaintenance();
+      await localDataSource.saveMaintenance(remote);
+
+      return Success(remote.toEntity());
+    } on Failure catch (error) {
+      return Error(error);
     } catch (error) {
       return Error(FailureExceptions.getException(error));
     }

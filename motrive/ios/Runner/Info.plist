@@ -3,6 +3,12 @@
 <plist version="1.0">
 <dict>
     <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Needed for parking detection</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>Needed for parking detection</string>
+    <key>NSMotionUsageDescription</key>
+    <string>Needed to detect driving activity</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
     <string>We need your location to send it to your emergency contacts.</string>
     <key>NSLocationWhenInUseUsageDescription</key>
     <string>We need your location to send it during emergency.</string>

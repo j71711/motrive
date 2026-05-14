@@ -45,7 +45,6 @@ class SosFeatureWidget extends StatelessWidget {
                 onPressed: () {
                   showSosOptions(context, sosCubit);
                 },
-                icon: const Icon(Icons.sos_rounded),
                 label: const Text('SOS'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Theme.of(context).colorScheme.error,

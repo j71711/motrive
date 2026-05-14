@@ -15,4 +15,6 @@ abstract class Env {
 
   @EnviedField(varName: 'ios_clientId')
   static final String iosClientId = _Env.iosClientId;
+    @EnviedField(varName: 'android_clientId')
+  static final String androidClientId = _Env.androidClientId;
 }

@@ -12,6 +12,7 @@
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:motrive/core/services/local_keys_service.dart' as _i56;
+import 'package:motrive/core/services/local_notification_service.dart' as _i950;
 import 'package:motrive/core/services/user_services.dart' as _i1013;
 import 'package:motrive/features/sub/maintenance_alert/data/datasources/maintenance_alert_remote_data_source.dart'
     as _i394;
@@ -35,6 +36,7 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i56.LocalKeysService>(),
         gh<_i454.SupabaseClient>(),
         gh<_i1013.UserService>(),
+        gh<_i950.LocalNotificationService>(),
       ),
     );
     gh.lazySingleton<_i1046.MaintenanceAlertRepositoryDomain>(

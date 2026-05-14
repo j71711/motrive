@@ -11,7 +11,9 @@ class MaintenanceUseCase {
 
   MaintenanceUseCase(this._repositoryData);
 
-   Future<Result<MaintenanceEntity, Failure>> getMaintenance() async {
-    return _repositoryData.getMaintenance();
+   Future<Result<MaintenanceEntity, Failure>> getMaintenance({
+    required bool fromRemote,
+  }) async {
+    return _repositoryData.getMaintenance(fromRemote: fromRemote);
   }
 }

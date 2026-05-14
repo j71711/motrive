@@ -88,7 +88,7 @@ class LocalNotificationService {
     await _show(
       id: 1,
       title: '👋 Welcome, $name!',
-      body: 'SafeCarHer is ready. Add your vehicle to get started.',
+      body: 'Motrive is ready. Add your vehicle to get started.',
       android: _vehicleChannel,
     );
   }
