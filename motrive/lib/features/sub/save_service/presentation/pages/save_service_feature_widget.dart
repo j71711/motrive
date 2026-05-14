@@ -43,7 +43,7 @@ class SaveServiceFeatureWidget extends StatelessWidget {
                   lastOdometer: vehicle!.currentOdometer ?? 0,
                   onSave: (info) {
                     cubit.getSaveService(
-                      carId: vehicle!.id,
+                      vehicle: vehicle!,
                       serviceInfo: serviceInfo,
                       maintenanceSaveInfo: info,
                     );

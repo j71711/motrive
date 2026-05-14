@@ -4,6 +4,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:motrive/core/config/env.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 Future<void> setup() async {
   //----------------------------------------------------------------------------
@@ -28,18 +30,20 @@ Future<void> setup() async {
   //----------------------------------------------------------------------------
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
-  print('starting notification');
-  final s = await flutterLocalNotificationsPlugin.initialize(
+  await flutterLocalNotificationsPlugin.initialize(
     settings: InitializationSettings(
       android: const AndroidInitializationSettings('@mipmap/ic_launcher'),
       iOS: const DarwinInitializationSettings(),
       macOS: const DarwinInitializationSettings(),
     ),
   );
-  print(s);
   flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
         AndroidFlutterLocalNotificationsPlugin
       >()
       ?.requestNotificationsPermission();
+  
+  // Required for scheduled notifications
+  tz.initializeTimeZones();
+  tz.setLocalLocation(tz.getLocation('Asia/Riyadh')); // ← set your timezone
 }

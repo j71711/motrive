@@ -1,5 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:motrive/features/maintenance/domain/entities/service_info_entity.dart';
+import 'package:motrive/features/maintenance/domain/entities/vehicle_entity.dart';
 import 'package:motrive/features/maintenance_details/domain/entities/maintenance_save_info.dart';
 import 'package:multiple_result/multiple_result.dart';
 import 'package:motrive/core/errors/network_exceptions.dart';
@@ -17,13 +18,13 @@ class SaveServiceRepositoryData implements SaveServiceRepositoryDomain {
   Future<Result<void, Failure>> getSaveService(
     ServiceInfoEntity serviceInfo,
     MaintenanceSaveInfo maintenanceSaveInfo,
-    String carId,
+    UserVehicleEntity vehicle
   ) async {
     try {
       await remoteDataSource.getSaveService(
         serviceInfo,
         maintenanceSaveInfo,
-        carId,
+        vehicle,
       );
       return Success(null);
     } on Failure catch (error) {
