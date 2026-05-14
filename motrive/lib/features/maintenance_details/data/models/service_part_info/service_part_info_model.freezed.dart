@@ -15,8 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ServicePartInfoModel {
 
-// ignore: invalid_annotation_target
-@JsonSerializable(fieldRename: .snake) String get id; String get partName; String get oemPartNumber; String get action; String get specification; int get quantity; String get quantityUnit;
+ String get id; String get partName; String get oemPartNumber; String get action; String get specification; double get quantity; String get quantityUnit;
 /// Create a copy of ServicePartInfoModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -49,7 +48,7 @@ abstract mixin class $ServicePartInfoModelCopyWith<$Res>  {
   factory $ServicePartInfoModelCopyWith(ServicePartInfoModel value, $Res Function(ServicePartInfoModel) _then) = _$ServicePartInfoModelCopyWithImpl;
 @useResult
 $Res call({
-@JsonSerializable(fieldRename: .snake) String id, String partName, String oemPartNumber, String action, String specification, int quantity, String quantityUnit
+ String id, String partName, String oemPartNumber, String action, String specification, double quantity, String quantityUnit
 });
 
 
@@ -74,7 +73,7 @@ as String,oemPartNumber: null == oemPartNumber ? _self.oemPartNumber : oemPartNu
 as String,action: null == action ? _self.action : action // ignore: cast_nullable_to_non_nullable
 as String,specification: null == specification ? _self.specification : specification // ignore: cast_nullable_to_non_nullable
 as String,quantity: null == quantity ? _self.quantity : quantity // ignore: cast_nullable_to_non_nullable
-as int,quantityUnit: null == quantityUnit ? _self.quantityUnit : quantityUnit // ignore: cast_nullable_to_non_nullable
+as double,quantityUnit: null == quantityUnit ? _self.quantityUnit : quantityUnit // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -160,7 +159,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonSerializable(fieldRename: .snake)  String id,  String partName,  String oemPartNumber,  String action,  String specification,  int quantity,  String quantityUnit)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String partName,  String oemPartNumber,  String action,  String specification,  double quantity,  String quantityUnit)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ServicePartInfoModel() when $default != null:
 return $default(_that.id,_that.partName,_that.oemPartNumber,_that.action,_that.specification,_that.quantity,_that.quantityUnit);case _:
@@ -181,7 +180,7 @@ return $default(_that.id,_that.partName,_that.oemPartNumber,_that.action,_that.s
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonSerializable(fieldRename: .snake)  String id,  String partName,  String oemPartNumber,  String action,  String specification,  int quantity,  String quantityUnit)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String partName,  String oemPartNumber,  String action,  String specification,  double quantity,  String quantityUnit)  $default,) {final _that = this;
 switch (_that) {
 case _ServicePartInfoModel():
 return $default(_that.id,_that.partName,_that.oemPartNumber,_that.action,_that.specification,_that.quantity,_that.quantityUnit);case _:
@@ -201,7 +200,7 @@ return $default(_that.id,_that.partName,_that.oemPartNumber,_that.action,_that.s
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonSerializable(fieldRename: .snake)  String id,  String partName,  String oemPartNumber,  String action,  String specification,  int quantity,  String quantityUnit)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String partName,  String oemPartNumber,  String action,  String specification,  double quantity,  String quantityUnit)?  $default,) {final _that = this;
 switch (_that) {
 case _ServicePartInfoModel() when $default != null:
 return $default(_that.id,_that.partName,_that.oemPartNumber,_that.action,_that.specification,_that.quantity,_that.quantityUnit);case _:
@@ -213,19 +212,18 @@ return $default(_that.id,_that.partName,_that.oemPartNumber,_that.action,_that.s
 }
 
 /// @nodoc
-@JsonSerializable()
 
+@JsonSerializable(fieldRename: .snake)
 class _ServicePartInfoModel implements ServicePartInfoModel {
-  const _ServicePartInfoModel({@JsonSerializable(fieldRename: .snake) required this.id, required this.partName, required this.oemPartNumber, required this.action, required this.specification, required this.quantity, required this.quantityUnit});
+  const _ServicePartInfoModel({required this.id, required this.partName, required this.oemPartNumber, required this.action, required this.specification, required this.quantity, required this.quantityUnit});
   factory _ServicePartInfoModel.fromJson(Map<String, dynamic> json) => _$ServicePartInfoModelFromJson(json);
 
-// ignore: invalid_annotation_target
-@override@JsonSerializable(fieldRename: .snake) final  String id;
+@override final  String id;
 @override final  String partName;
 @override final  String oemPartNumber;
 @override final  String action;
 @override final  String specification;
-@override final  int quantity;
+@override final  double quantity;
 @override final  String quantityUnit;
 
 /// Create a copy of ServicePartInfoModel
@@ -261,7 +259,7 @@ abstract mixin class _$ServicePartInfoModelCopyWith<$Res> implements $ServicePar
   factory _$ServicePartInfoModelCopyWith(_ServicePartInfoModel value, $Res Function(_ServicePartInfoModel) _then) = __$ServicePartInfoModelCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonSerializable(fieldRename: .snake) String id, String partName, String oemPartNumber, String action, String specification, int quantity, String quantityUnit
+ String id, String partName, String oemPartNumber, String action, String specification, double quantity, String quantityUnit
 });
 
 
@@ -286,7 +284,7 @@ as String,oemPartNumber: null == oemPartNumber ? _self.oemPartNumber : oemPartNu
 as String,action: null == action ? _self.action : action // ignore: cast_nullable_to_non_nullable
 as String,specification: null == specification ? _self.specification : specification // ignore: cast_nullable_to_non_nullable
 as String,quantity: null == quantity ? _self.quantity : quantity // ignore: cast_nullable_to_non_nullable
-as int,quantityUnit: null == quantityUnit ? _self.quantityUnit : quantityUnit // ignore: cast_nullable_to_non_nullable
+as double,quantityUnit: null == quantityUnit ? _self.quantityUnit : quantityUnit // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }

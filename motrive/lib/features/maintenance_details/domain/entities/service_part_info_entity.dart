@@ -6,7 +6,7 @@ class ServicePartInfoEntity extends Equatable {
   final String oemPartNumber;
   final String action;
   final String specification;
-  final int quantity;
+  final double quantity;
   final String quantityUnit;
 
   const ServicePartInfoEntity({
@@ -18,6 +18,26 @@ class ServicePartInfoEntity extends Equatable {
     required this.quantity,
     required this.quantityUnit,
   });
+
+  ServicePartInfoEntity copyWith({
+    String? id,
+    String? partName,
+    String? oemPartNumber,
+    String? action,
+    String? specification,
+    double? quantity,
+    String? quantityUnit,
+  }) {
+    return ServicePartInfoEntity(
+      id: id ?? this.id,
+      partName: partName ?? this.partName,
+      oemPartNumber: oemPartNumber ?? this.oemPartNumber,
+      action: action ?? this.action,
+      specification: specification ?? this.specification,
+      quantity: quantity ?? this.quantity,
+      quantityUnit: quantityUnit ?? this.quantityUnit,
+    );
+  }
 
   @override
   List<Object?> get props => [

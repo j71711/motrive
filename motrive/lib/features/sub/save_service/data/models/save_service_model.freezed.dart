@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'maintenance_details_model.dart';
+part of 'save_service_model.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,22 +13,22 @@ part of 'maintenance_details_model.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$MaintenanceDetailsModel {
+mixin _$SaveServiceModel {
 
  int get id; String get firstName; String get lastName;
-/// Create a copy of MaintenanceDetailsModel
+/// Create a copy of SaveServiceModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$MaintenanceDetailsModelCopyWith<MaintenanceDetailsModel> get copyWith => _$MaintenanceDetailsModelCopyWithImpl<MaintenanceDetailsModel>(this as MaintenanceDetailsModel, _$identity);
+$SaveServiceModelCopyWith<SaveServiceModel> get copyWith => _$SaveServiceModelCopyWithImpl<SaveServiceModel>(this as SaveServiceModel, _$identity);
 
-  /// Serializes this MaintenanceDetailsModel to a JSON map.
+  /// Serializes this SaveServiceModel to a JSON map.
   Map<String, dynamic> toJson();
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MaintenanceDetailsModel&&(identical(other.id, id) || other.id == id)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SaveServiceModel&&(identical(other.id, id) || other.id == id)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -37,15 +37,15 @@ int get hashCode => Object.hash(runtimeType,id,firstName,lastName);
 
 @override
 String toString() {
-  return 'MaintenanceDetailsModel(id: $id, firstName: $firstName, lastName: $lastName)';
+  return 'SaveServiceModel(id: $id, firstName: $firstName, lastName: $lastName)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $MaintenanceDetailsModelCopyWith<$Res>  {
-  factory $MaintenanceDetailsModelCopyWith(MaintenanceDetailsModel value, $Res Function(MaintenanceDetailsModel) _then) = _$MaintenanceDetailsModelCopyWithImpl;
+abstract mixin class $SaveServiceModelCopyWith<$Res>  {
+  factory $SaveServiceModelCopyWith(SaveServiceModel value, $Res Function(SaveServiceModel) _then) = _$SaveServiceModelCopyWithImpl;
 @useResult
 $Res call({
  int id, String firstName, String lastName
@@ -56,14 +56,14 @@ $Res call({
 
 }
 /// @nodoc
-class _$MaintenanceDetailsModelCopyWithImpl<$Res>
-    implements $MaintenanceDetailsModelCopyWith<$Res> {
-  _$MaintenanceDetailsModelCopyWithImpl(this._self, this._then);
+class _$SaveServiceModelCopyWithImpl<$Res>
+    implements $SaveServiceModelCopyWith<$Res> {
+  _$SaveServiceModelCopyWithImpl(this._self, this._then);
 
-  final MaintenanceDetailsModel _self;
-  final $Res Function(MaintenanceDetailsModel) _then;
+  final SaveServiceModel _self;
+  final $Res Function(SaveServiceModel) _then;
 
-/// Create a copy of MaintenanceDetailsModel
+/// Create a copy of SaveServiceModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? firstName = null,Object? lastName = null,}) {
   return _then(_self.copyWith(
@@ -77,8 +77,8 @@ as String,
 }
 
 
-/// Adds pattern-matching-related methods to [MaintenanceDetailsModel].
-extension MaintenanceDetailsModelPatterns on MaintenanceDetailsModel {
+/// Adds pattern-matching-related methods to [SaveServiceModel].
+extension SaveServiceModelPatterns on SaveServiceModel {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -91,10 +91,10 @@ extension MaintenanceDetailsModelPatterns on MaintenanceDetailsModel {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _MaintenanceDetailsModel value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _SaveServiceModel value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _MaintenanceDetailsModel() when $default != null:
+case _SaveServiceModel() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -113,10 +113,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _MaintenanceDetailsModel value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _SaveServiceModel value)  $default,){
 final _that = this;
 switch (_that) {
-case _MaintenanceDetailsModel():
+case _SaveServiceModel():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -134,10 +134,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _MaintenanceDetailsModel value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _SaveServiceModel value)?  $default,){
 final _that = this;
 switch (_that) {
-case _MaintenanceDetailsModel() when $default != null:
+case _SaveServiceModel() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -157,7 +157,7 @@ return $default(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String firstName,  String lastName)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _MaintenanceDetailsModel() when $default != null:
+case _SaveServiceModel() when $default != null:
 return $default(_that.id,_that.firstName,_that.lastName);case _:
   return orElse();
 
@@ -178,7 +178,7 @@ return $default(_that.id,_that.firstName,_that.lastName);case _:
 
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String firstName,  String lastName)  $default,) {final _that = this;
 switch (_that) {
-case _MaintenanceDetailsModel():
+case _SaveServiceModel():
 return $default(_that.id,_that.firstName,_that.lastName);case _:
   throw StateError('Unexpected subclass');
 
@@ -198,7 +198,7 @@ return $default(_that.id,_that.firstName,_that.lastName);case _:
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String firstName,  String lastName)?  $default,) {final _that = this;
 switch (_that) {
-case _MaintenanceDetailsModel() when $default != null:
+case _SaveServiceModel() when $default != null:
 return $default(_that.id,_that.firstName,_that.lastName);case _:
   return null;
 
@@ -210,28 +210,28 @@ return $default(_that.id,_that.firstName,_that.lastName);case _:
 /// @nodoc
 @JsonSerializable()
 
-class _MaintenanceDetailsModel implements MaintenanceDetailsModel {
-  const _MaintenanceDetailsModel({required this.id, required this.firstName, required this.lastName});
-  factory _MaintenanceDetailsModel.fromJson(Map<String, dynamic> json) => _$MaintenanceDetailsModelFromJson(json);
+class _SaveServiceModel implements SaveServiceModel {
+  const _SaveServiceModel({required this.id, required this.firstName, required this.lastName});
+  factory _SaveServiceModel.fromJson(Map<String, dynamic> json) => _$SaveServiceModelFromJson(json);
 
 @override final  int id;
 @override final  String firstName;
 @override final  String lastName;
 
-/// Create a copy of MaintenanceDetailsModel
+/// Create a copy of SaveServiceModel
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$MaintenanceDetailsModelCopyWith<_MaintenanceDetailsModel> get copyWith => __$MaintenanceDetailsModelCopyWithImpl<_MaintenanceDetailsModel>(this, _$identity);
+_$SaveServiceModelCopyWith<_SaveServiceModel> get copyWith => __$SaveServiceModelCopyWithImpl<_SaveServiceModel>(this, _$identity);
 
 @override
 Map<String, dynamic> toJson() {
-  return _$MaintenanceDetailsModelToJson(this, );
+  return _$SaveServiceModelToJson(this, );
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MaintenanceDetailsModel&&(identical(other.id, id) || other.id == id)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SaveServiceModel&&(identical(other.id, id) || other.id == id)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -240,15 +240,15 @@ int get hashCode => Object.hash(runtimeType,id,firstName,lastName);
 
 @override
 String toString() {
-  return 'MaintenanceDetailsModel(id: $id, firstName: $firstName, lastName: $lastName)';
+  return 'SaveServiceModel(id: $id, firstName: $firstName, lastName: $lastName)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$MaintenanceDetailsModelCopyWith<$Res> implements $MaintenanceDetailsModelCopyWith<$Res> {
-  factory _$MaintenanceDetailsModelCopyWith(_MaintenanceDetailsModel value, $Res Function(_MaintenanceDetailsModel) _then) = __$MaintenanceDetailsModelCopyWithImpl;
+abstract mixin class _$SaveServiceModelCopyWith<$Res> implements $SaveServiceModelCopyWith<$Res> {
+  factory _$SaveServiceModelCopyWith(_SaveServiceModel value, $Res Function(_SaveServiceModel) _then) = __$SaveServiceModelCopyWithImpl;
 @override @useResult
 $Res call({
  int id, String firstName, String lastName
@@ -259,17 +259,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$MaintenanceDetailsModelCopyWithImpl<$Res>
-    implements _$MaintenanceDetailsModelCopyWith<$Res> {
-  __$MaintenanceDetailsModelCopyWithImpl(this._self, this._then);
+class __$SaveServiceModelCopyWithImpl<$Res>
+    implements _$SaveServiceModelCopyWith<$Res> {
+  __$SaveServiceModelCopyWithImpl(this._self, this._then);
 
-  final _MaintenanceDetailsModel _self;
-  final $Res Function(_MaintenanceDetailsModel) _then;
+  final _SaveServiceModel _self;
+  final $Res Function(_SaveServiceModel) _then;
 
-/// Create a copy of MaintenanceDetailsModel
+/// Create a copy of SaveServiceModel
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? firstName = null,Object? lastName = null,}) {
-  return _then(_MaintenanceDetailsModel(
+  return _then(_SaveServiceModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
 as String,lastName: null == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable

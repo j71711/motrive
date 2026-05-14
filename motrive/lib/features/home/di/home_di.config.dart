@@ -14,6 +14,7 @@ import 'package:hive/hive.dart' as _i979;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:motrive/core/services/emergency_service.dart' as _i821;
 import 'package:motrive/core/services/local_keys_service.dart' as _i56;
+import 'package:motrive/core/services/user_services.dart' as _i1013;
 import 'package:motrive/features/home/data/datasources/home_remote_data_source.dart'
     as _i68;
 import 'package:motrive/features/home/data/repositories/home_repository_data.dart'
@@ -55,17 +56,26 @@ extension GetItInjectableX on _i174.GetIt {
     _i526.EnvironmentFilter? environmentFilter,
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
+    gh.lazySingleton<_i353.BaseScanVehicleRemoteDataSource>(
+      () => _i353.ScanVehicleRemoteDataSource(
+        gh<_i56.LocalKeysService>(),
+        gh<_i454.SupabaseClient>(),
+        gh<_i1013.UserService>(),
+      ),
+    );
+    gh.lazySingleton<_i723.ScanVehicleRepositoryDomain>(
+      () => _i431.ScanVehicleRepositoryData(
+        gh<_i353.BaseScanVehicleRemoteDataSource>(),
+      ),
+    );
     gh.lazySingleton<_i737.VehicleLocalDataSource>(
       () => _i737.VehicleLocalDataSourceImpl(gh<_i979.Box<dynamic>>()),
     );
     gh.lazySingleton<_i558.BaseSosRemoteDataSource>(
       () => _i558.SosRemoteDataSource(gh<_i821.EmergencyService>()),
     );
-    gh.lazySingleton<_i353.BaseScanVehicleRemoteDataSource>(
-      () => _i353.ScanVehicleRemoteDataSource(
-        gh<_i56.LocalKeysService>(),
-        gh<_i454.SupabaseClient>(),
-      ),
+    gh.lazySingleton<_i198.ScanVehicleUseCase>(
+      () => _i198.ScanVehicleUseCase(gh<_i723.ScanVehicleRepositoryDomain>()),
     );
     gh.lazySingleton<_i904.SosRepositoryDomain>(
       () => _i630.SosRepositoryData(gh<_i558.BaseSosRemoteDataSource>()),
@@ -87,14 +97,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i737.BaseAddCarCardRemoteDataSource>(),
         gh<_i737.VehicleLocalDataSource>(),
       ),
-    );
-    gh.lazySingleton<_i723.ScanVehicleRepositoryDomain>(
-      () => _i431.ScanVehicleRepositoryData(
-        gh<_i353.BaseScanVehicleRemoteDataSource>(),
-      ),
-    );
-    gh.lazySingleton<_i198.ScanVehicleUseCase>(
-      () => _i198.ScanVehicleUseCase(gh<_i723.ScanVehicleRepositoryDomain>()),
     );
     gh.lazySingleton<_i168.SosUseCase>(
       () => _i168.SosUseCase(gh<_i904.SosRepositoryDomain>()),

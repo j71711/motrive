@@ -14,7 +14,9 @@ class CameraSectionWidget extends HookWidget {
     useEffect(() {
       Future<void> initCamera() async {
         final cameras = await availableCameras();
-        final backCamera = cameras.first;
+        final backCamera = cameras.firstWhere(
+          (camera) => camera.lensDirection == CameraLensDirection.back,
+        );
         final cameraController = CameraController(
           backCamera,
           ResolutionPreset.high,
@@ -41,7 +43,6 @@ class CameraSectionWidget extends HookWidget {
     if (isLoading.value || controller.value == null) {
       return const Center(child: CircularProgressIndicator());
     }
-
     return Stack(
       fit: StackFit.expand,
       children: [

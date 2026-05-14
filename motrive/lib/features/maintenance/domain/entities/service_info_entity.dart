@@ -6,6 +6,7 @@ class ServiceInfoEntity extends Equatable {
   final int dateIntervalMonths;
   final String severity;
   final String recommendation;
+  final bool done;
 
   const ServiceInfoEntity({
     required this.id,
@@ -13,6 +14,7 @@ class ServiceInfoEntity extends Equatable {
     required this.dateIntervalMonths,
     required this.severity,
     required this.recommendation,
+    this.done = false, 
   });
 
   @override
@@ -22,5 +24,6 @@ class ServiceInfoEntity extends Equatable {
     dateIntervalMonths,
     severity,
     recommendation,
+    done,
   ];
 }

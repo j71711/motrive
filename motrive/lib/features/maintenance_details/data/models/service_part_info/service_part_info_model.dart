@@ -5,15 +5,15 @@ part 'service_part_info_model.g.dart';
 
 @freezed
 abstract class ServicePartInfoModel with _$ServicePartInfoModel {
-  const factory ServicePartInfoModel({
-    // ignore: invalid_annotation_target
+   // ignore: invalid_annotation_target
   @JsonSerializable(fieldRename: .snake)
+  const factory ServicePartInfoModel({
     required String id,
     required String partName,
     required String oemPartNumber,
     required String action,
     required String specification,
-    required int quantity,
+    required double quantity,
     required String quantityUnit,
   }) = _ServicePartInfoModel;
 

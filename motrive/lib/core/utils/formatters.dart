@@ -36,4 +36,9 @@ class Formatters {
     if (bytes < 1048576) return '${(bytes / 1024).toStringAsFixed(2)} KB';
     return '${(bytes / 1048576).toStringAsFixed(2)} MB';
   }
+
+  static String formatOdometer(int odometer) {
+    final formatter = NumberFormat('#,##0');
+    return '${formatter.format(odometer)} Km';
+  }
 }

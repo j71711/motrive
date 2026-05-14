@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ServiceInfoModel {
 
- String get id; int get serviceOdometer; int get dateIntervalMonths; String get severity; String get recommendation;
+ String get id; int get serviceOdometer; int get dateIntervalMonths; String get severity; String get recommendation; bool? get done;
 /// Create a copy of ServiceInfoModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $ServiceInfoModelCopyWith<ServiceInfoModel> get copyWith => _$ServiceInfoModelCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ServiceInfoModel&&(identical(other.id, id) || other.id == id)&&(identical(other.serviceOdometer, serviceOdometer) || other.serviceOdometer == serviceOdometer)&&(identical(other.dateIntervalMonths, dateIntervalMonths) || other.dateIntervalMonths == dateIntervalMonths)&&(identical(other.severity, severity) || other.severity == severity)&&(identical(other.recommendation, recommendation) || other.recommendation == recommendation));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ServiceInfoModel&&(identical(other.id, id) || other.id == id)&&(identical(other.serviceOdometer, serviceOdometer) || other.serviceOdometer == serviceOdometer)&&(identical(other.dateIntervalMonths, dateIntervalMonths) || other.dateIntervalMonths == dateIntervalMonths)&&(identical(other.severity, severity) || other.severity == severity)&&(identical(other.recommendation, recommendation) || other.recommendation == recommendation)&&(identical(other.done, done) || other.done == done));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,serviceOdometer,dateIntervalMonths,severity,recommendation);
+int get hashCode => Object.hash(runtimeType,id,serviceOdometer,dateIntervalMonths,severity,recommendation,done);
 
 @override
 String toString() {
-  return 'ServiceInfoModel(id: $id, serviceOdometer: $serviceOdometer, dateIntervalMonths: $dateIntervalMonths, severity: $severity, recommendation: $recommendation)';
+  return 'ServiceInfoModel(id: $id, serviceOdometer: $serviceOdometer, dateIntervalMonths: $dateIntervalMonths, severity: $severity, recommendation: $recommendation, done: $done)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $ServiceInfoModelCopyWith<$Res>  {
   factory $ServiceInfoModelCopyWith(ServiceInfoModel value, $Res Function(ServiceInfoModel) _then) = _$ServiceInfoModelCopyWithImpl;
 @useResult
 $Res call({
- String id, int serviceOdometer, int dateIntervalMonths, String severity, String recommendation
+ String id, int serviceOdometer, int dateIntervalMonths, String severity, String recommendation, bool? done
 });
 
 
@@ -65,14 +65,15 @@ class _$ServiceInfoModelCopyWithImpl<$Res>
 
 /// Create a copy of ServiceInfoModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? serviceOdometer = null,Object? dateIntervalMonths = null,Object? severity = null,Object? recommendation = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? serviceOdometer = null,Object? dateIntervalMonths = null,Object? severity = null,Object? recommendation = null,Object? done = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,serviceOdometer: null == serviceOdometer ? _self.serviceOdometer : serviceOdometer // ignore: cast_nullable_to_non_nullable
 as int,dateIntervalMonths: null == dateIntervalMonths ? _self.dateIntervalMonths : dateIntervalMonths // ignore: cast_nullable_to_non_nullable
 as int,severity: null == severity ? _self.severity : severity // ignore: cast_nullable_to_non_nullable
 as String,recommendation: null == recommendation ? _self.recommendation : recommendation // ignore: cast_nullable_to_non_nullable
-as String,
+as String,done: freezed == done ? _self.done : done // ignore: cast_nullable_to_non_nullable
+as bool?,
   ));
 }
 
@@ -157,10 +158,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  int serviceOdometer,  int dateIntervalMonths,  String severity,  String recommendation)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  int serviceOdometer,  int dateIntervalMonths,  String severity,  String recommendation,  bool? done)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ServiceInfoModel() when $default != null:
-return $default(_that.id,_that.serviceOdometer,_that.dateIntervalMonths,_that.severity,_that.recommendation);case _:
+return $default(_that.id,_that.serviceOdometer,_that.dateIntervalMonths,_that.severity,_that.recommendation,_that.done);case _:
   return orElse();
 
 }
@@ -178,10 +179,10 @@ return $default(_that.id,_that.serviceOdometer,_that.dateIntervalMonths,_that.se
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  int serviceOdometer,  int dateIntervalMonths,  String severity,  String recommendation)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  int serviceOdometer,  int dateIntervalMonths,  String severity,  String recommendation,  bool? done)  $default,) {final _that = this;
 switch (_that) {
 case _ServiceInfoModel():
-return $default(_that.id,_that.serviceOdometer,_that.dateIntervalMonths,_that.severity,_that.recommendation);case _:
+return $default(_that.id,_that.serviceOdometer,_that.dateIntervalMonths,_that.severity,_that.recommendation,_that.done);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -198,10 +199,10 @@ return $default(_that.id,_that.serviceOdometer,_that.dateIntervalMonths,_that.se
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  int serviceOdometer,  int dateIntervalMonths,  String severity,  String recommendation)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  int serviceOdometer,  int dateIntervalMonths,  String severity,  String recommendation,  bool? done)?  $default,) {final _that = this;
 switch (_that) {
 case _ServiceInfoModel() when $default != null:
-return $default(_that.id,_that.serviceOdometer,_that.dateIntervalMonths,_that.severity,_that.recommendation);case _:
+return $default(_that.id,_that.serviceOdometer,_that.dateIntervalMonths,_that.severity,_that.recommendation,_that.done);case _:
   return null;
 
 }
@@ -213,7 +214,7 @@ return $default(_that.id,_that.serviceOdometer,_that.dateIntervalMonths,_that.se
 
 @JsonSerializable(fieldRename: .snake)
 class _ServiceInfoModel implements ServiceInfoModel {
-  const _ServiceInfoModel({required this.id, required this.serviceOdometer, required this.dateIntervalMonths, required this.severity, required this.recommendation});
+  const _ServiceInfoModel({required this.id, required this.serviceOdometer, required this.dateIntervalMonths, required this.severity, required this.recommendation, this.done});
   factory _ServiceInfoModel.fromJson(Map<String, dynamic> json) => _$ServiceInfoModelFromJson(json);
 
 @override final  String id;
@@ -221,6 +222,7 @@ class _ServiceInfoModel implements ServiceInfoModel {
 @override final  int dateIntervalMonths;
 @override final  String severity;
 @override final  String recommendation;
+@override final  bool? done;
 
 /// Create a copy of ServiceInfoModel
 /// with the given fields replaced by the non-null parameter values.
@@ -235,16 +237,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ServiceInfoModel&&(identical(other.id, id) || other.id == id)&&(identical(other.serviceOdometer, serviceOdometer) || other.serviceOdometer == serviceOdometer)&&(identical(other.dateIntervalMonths, dateIntervalMonths) || other.dateIntervalMonths == dateIntervalMonths)&&(identical(other.severity, severity) || other.severity == severity)&&(identical(other.recommendation, recommendation) || other.recommendation == recommendation));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ServiceInfoModel&&(identical(other.id, id) || other.id == id)&&(identical(other.serviceOdometer, serviceOdometer) || other.serviceOdometer == serviceOdometer)&&(identical(other.dateIntervalMonths, dateIntervalMonths) || other.dateIntervalMonths == dateIntervalMonths)&&(identical(other.severity, severity) || other.severity == severity)&&(identical(other.recommendation, recommendation) || other.recommendation == recommendation)&&(identical(other.done, done) || other.done == done));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,serviceOdometer,dateIntervalMonths,severity,recommendation);
+int get hashCode => Object.hash(runtimeType,id,serviceOdometer,dateIntervalMonths,severity,recommendation,done);
 
 @override
 String toString() {
-  return 'ServiceInfoModel(id: $id, serviceOdometer: $serviceOdometer, dateIntervalMonths: $dateIntervalMonths, severity: $severity, recommendation: $recommendation)';
+  return 'ServiceInfoModel(id: $id, serviceOdometer: $serviceOdometer, dateIntervalMonths: $dateIntervalMonths, severity: $severity, recommendation: $recommendation, done: $done)';
 }
 
 
@@ -255,7 +257,7 @@ abstract mixin class _$ServiceInfoModelCopyWith<$Res> implements $ServiceInfoMod
   factory _$ServiceInfoModelCopyWith(_ServiceInfoModel value, $Res Function(_ServiceInfoModel) _then) = __$ServiceInfoModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id, int serviceOdometer, int dateIntervalMonths, String severity, String recommendation
+ String id, int serviceOdometer, int dateIntervalMonths, String severity, String recommendation, bool? done
 });
 
 
@@ -272,14 +274,15 @@ class __$ServiceInfoModelCopyWithImpl<$Res>
 
 /// Create a copy of ServiceInfoModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? serviceOdometer = null,Object? dateIntervalMonths = null,Object? severity = null,Object? recommendation = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? serviceOdometer = null,Object? dateIntervalMonths = null,Object? severity = null,Object? recommendation = null,Object? done = freezed,}) {
   return _then(_ServiceInfoModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,serviceOdometer: null == serviceOdometer ? _self.serviceOdometer : serviceOdometer // ignore: cast_nullable_to_non_nullable
 as int,dateIntervalMonths: null == dateIntervalMonths ? _self.dateIntervalMonths : dateIntervalMonths // ignore: cast_nullable_to_non_nullable
 as int,severity: null == severity ? _self.severity : severity // ignore: cast_nullable_to_non_nullable
 as String,recommendation: null == recommendation ? _self.recommendation : recommendation // ignore: cast_nullable_to_non_nullable
-as String,
+as String,done: freezed == done ? _self.done : done // ignore: cast_nullable_to_non_nullable
+as bool?,
   ));
 }
 

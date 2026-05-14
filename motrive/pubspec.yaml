@@ -45,6 +45,8 @@ dependencies:
   url_launcher: ^6.3.2
   geolocator: ^14.0.2
   slide_to_act: ^2.0.2
+  activity_recognition_flutter: ^6.0.0
+  google_maps_flutter: ^2.17.0
 
 
 dev_dependencies:

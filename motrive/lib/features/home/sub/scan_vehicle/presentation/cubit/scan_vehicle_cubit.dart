@@ -15,6 +15,8 @@ class ScanVehicleCubit extends Cubit<ScanVehicleState> {
   final TextEditingController modelController = TextEditingController();
   final TextEditingController yearController = TextEditingController();
   final TextEditingController vinController = TextEditingController();
+  final TextEditingController licensePlateController = TextEditingController();
+  final TextEditingController colorController = TextEditingController();
 
   final picker = ImagePicker();
 
@@ -22,15 +24,11 @@ class ScanVehicleCubit extends Cubit<ScanVehicleState> {
     try {
       emit(ScanVehicleLoadingState());
 
-      final inputImage =
-          InputImage.fromFilePath(imagePath);
+      final inputImage = InputImage.fromFilePath(imagePath);
 
       final textRecognizer = TextRecognizer();
 
-      final recognizedText =
-          await textRecognizer.processImage(
-        inputImage,
-      );
+      final recognizedText = await textRecognizer.processImage(inputImage);
 
       await textRecognizer.close();
 
@@ -41,148 +39,96 @@ class ScanVehicleCubit extends Cubit<ScanVehicleState> {
           .replaceAll("\n", "")
           .toUpperCase();
 
-      final vinRegex = RegExp(
-        r'[A-HJ-NPR-Z0-9]{17}',
-      );
+      final vinRegex = RegExp(r'[A-HJ-NPR-Z0-9]{17}');
 
-      final match =
-          vinRegex.firstMatch(cleanedText);
+      final match = vinRegex.firstMatch(cleanedText);
 
       if (match == null) {
-        emit(
-          const ScanVehicleErrorState(
-            message: "VIN not found",
-          ),
-        );
+        emit(const ScanVehicleErrorState(message: "VIN not found"));
 
         return;
       }
 
       final vin = match.group(0)!;
 
-      final result =
-          await _scanVehicleUseCase.decodeVin(
-        vin,
-      );
+      final result = await _scanVehicleUseCase.decodeVin(vin);
 
       result.when(
         (vehicle) {
-          vinController.text = vehicle.vin;
-          makeController.text = vehicle.make;
-          modelController.text = vehicle.model;
-          yearController.text =
-              vehicle.year.toString();
-
-          emit(
-            ScanVehicleSuccessState(vehicle),
-          );
+          vinController.text = vehicle.vin!;
+          makeController.text = vehicle.make!;
+          modelController.text = vehicle.model!;
+          yearController.text = vehicle.year.toString();
+          colorController.text = vehicle.color ?? '';
+          licensePlateController.text = vehicle.licensePlate ?? '';
+          emit(ScanVehicleSuccessState(vehicle));
         },
         (error) {
-          emit(
-            ScanVehicleErrorState(
-              message: error.message,
-            ),
-          );
+          emit(ScanVehicleErrorState(message: error.message));
         },
       );
     } catch (e) {
-      emit(
-        ScanVehicleErrorState(
-          message: e.toString(),
-        ),
-      );
+      emit(ScanVehicleErrorState(message: e.toString()));
     }
   }
 
+  Future<void> scanVehicle() async {
+    try {
+      emit(ScanVehicleLoadingState());
+      final image = await picker.pickImage(source: ImageSource.camera);
+      if (image == null) {
+        emit(ScanVehicleErrorState(message: 'No image selected'));
+        return;
+      }
 
-Future<void> scanVehicle() async {
-  try {
-    emit(ScanVehicleLoadingState());
-
-    final image = await picker.pickImage(
-      source: ImageSource.camera,
-    );
-
-    if (image == null) {
-      emit(
-        ScanVehicleErrorState(
-          message: 'No image selected',
-        ),
+      final inputImage = InputImage.fromFilePath(image.path);
+      final textRecognizer = TextRecognizer();
+      final RecognizedText recognizedText = await textRecognizer.processImage(
+        inputImage,
       );
-      return;
-    }
 
-    final inputImage = InputImage.fromFilePath(image.path);
+      final text = recognizedText.text;
 
-    final textRecognizer = TextRecognizer();
+      await textRecognizer.close();
 
-    final RecognizedText recognizedText =
-        await textRecognizer.processImage(
-      inputImage,
-    );
+      final cleanedText = text
+          .replaceAll(' ', '')
+          .replaceAll('\n', '')
+          .toUpperCase();
 
-    final text = recognizedText.text;
+      final vinRegex = RegExp(r'[A-HJ-NPR-Z0-9]{17}');
 
-    await textRecognizer.close();
+      final match = vinRegex.firstMatch(cleanedText);
 
-    final cleanedText = text
-        .replaceAll(' ', '')
-        .replaceAll('\n', '')
-        .toUpperCase();
+      if (match == null) {
+        emit(ScanVehicleErrorState(message: 'VIN not found'));
+        return;
+      }
 
+      final vin = match.group(0)!;
 
-    final vinRegex = RegExp(
-      r'[A-HJ-NPR-Z0-9]{17}',
-    );
+      final result = await _scanVehicleUseCase.decodeVin(vin);
 
-    final match =
-        vinRegex.firstMatch(cleanedText);
-
-    if (match == null) {
-      emit(
-        ScanVehicleErrorState(
-          message: 'VIN not found',
-        ),
+      result.when(
+        (success) async {
+          emit(ScanVehicleSuccessState(success));
+          await _scanVehicleUseCase.insertVehicle(success);
+        },
+        (error) {
+          emit(ScanVehicleErrorState(message: error.message));
+        },
       );
-      return;
+    } catch (error) {
+      emit(ScanVehicleErrorState(message: error.toString()));
     }
-
-    final vin = match.group(0)!;
-
-    final result =
-        await _scanVehicleUseCase.decodeVin(vin);
-
-    result.when(
-      (success) async {
-        emit(
-          ScanVehicleSuccessState(success),
-        );
-         await _scanVehicleUseCase.insertVehicle(success);
-      },
-      (error) {
-        emit(
-          ScanVehicleErrorState(
-            message: error.message,
-          ),
-        );
-      },
-    );
-  } catch (error) {
-    emit(
-      ScanVehicleErrorState(
-        message: error.toString(),
-      ),
-    );
   }
-}
 
   ScanVehicleEntity get editedVehicle => ScanVehicleEntity(
-        make: makeController.text,
-        model: modelController.text,
-        year: int.tryParse(yearController.text) ?? 0,
-        vin: vinController.text,
-      );
-
+    make: makeController.text,
+    model: modelController.text,
+    year: int.tryParse(yearController.text) ?? 0,
+    vin: vinController.text,
+  );
   @override
   Future<void> close() {
     makeController.dispose();
@@ -192,17 +138,15 @@ Future<void> scanVehicle() async {
     return super.close();
   }
 
-Future<void> processScannedText(String text) async {
+  Future<void> processScannedText(String text) async {
     emit(ScanVehicleLoadingState());
-
     final result = await _scanVehicleUseCase.decodeVin(text);
-
     result.when(
       (vehicle) {
-        makeController.text = vehicle.make;
-        modelController.text = vehicle.model;
+        makeController.text = vehicle.make!;
+        modelController.text = vehicle.model!;
         yearController.text = vehicle.year.toString();
-        vinController.text = vehicle.vin;
+        vinController.text = vehicle.vin!;
 
         emit(ScanVehicleSuccessState(vehicle));
       },
@@ -219,7 +163,6 @@ Future<void> processScannedText(String text) async {
       year: int.tryParse(yearController.text) ?? 0,
       vin: vinController.text,
     );
-
     final result = await _scanVehicleUseCase.insertVehicle(vehicle);
 
     result.when(
@@ -231,8 +174,4 @@ Future<void> processScannedText(String text) async {
       },
     );
   }
-
 }
-
-
-

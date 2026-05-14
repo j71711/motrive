@@ -8,4 +8,6 @@ class Routes {
   static const String maintenance = '/maintenance';
   static const String maintenanceDetails = '/maintenanceDetails';
   static const String loading = '/loading';
+  static const String loction = '/loction';
+  static const String parking = '/parking';
 }

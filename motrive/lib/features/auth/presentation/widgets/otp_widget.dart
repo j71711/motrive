@@ -4,11 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:motrive/core/extensions/context_extensions.dart';
+import 'package:motrive/core/widgets/loading_widget.dart';
 import 'package:motrive/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:motrive/features/auth/presentation/cubit/auth_state.dart';
 import 'package:pinput/pinput.dart';
 import 'package:sizer/sizer.dart';
-
 
 class OtpBottomSheetWidget extends HookWidget {
   final Function(String otp)? onSubmit;
@@ -62,38 +62,42 @@ class OtpBottomSheetWidget extends HookWidget {
         color: Theme.of(context).colorScheme.onSurface,
         fontWeight: FontWeight.w600,
       ),
-     decoration: BoxDecoration(
-    color: Theme.of(context).colorScheme.surface,
-    border: Border.all(
-      color: Theme.of(
-        context,
-      ).colorScheme.primary.withValues(alpha: .20),
-    ),
-    borderRadius: BorderRadius.circular(20),
-  ),
-);
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
+        border: Border.all(
+          color: Theme.of(context).colorScheme.primary.withValues(alpha: .20),
+        ),
+        borderRadius: BorderRadius.circular(20),
+      ),
+    );
 
     final focusedPinTheme = defaultPinTheme.copyDecorationWith(
-      border: Border.all(
-    color: Theme.of(context).colorScheme.primary,
-  ),
+      border: Border.all(color: Theme.of(context).colorScheme.primary),
       borderRadius: BorderRadius.circular(20),
     );
 
     final submittedPinTheme = defaultPinTheme.copyWith(
       decoration: defaultPinTheme.decoration?.copyWith(
-         color: Theme.of(
-      context,
-    ).colorScheme.primary.withValues(alpha: .08),
-
+        color: Theme.of(context).colorScheme.primary.withValues(alpha: .08),
       ),
     );
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
-        if (state is AuthGoogleSuccessState) {
-          context.pop();
+        context.hideLoading();
+
+        if (state is AuthLoadingState) {
+          context.showLoading();
         }
+
+        if (state is AuthGoogleSuccessState) {
+          context.hideLoading();
+          if (Navigator.of(context).canPop()) {
+  Navigator.of(context).pop();
+}
+        }
+
         if (state is AuthErrorState) {
+          context.hideLoading();
           context.showSnackBar(state.message, isError: true);
         }
       },

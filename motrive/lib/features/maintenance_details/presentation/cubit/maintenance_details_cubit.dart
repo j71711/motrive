@@ -5,16 +5,19 @@ import 'package:motrive/features/maintenance_details/presentation/cubit/maintena
 class MaintenanceDetailsCubit extends Cubit<MaintenanceDetailsState> {
   final MaintenanceDetailsUseCase _maintenanceDetailsUseCase;
 
-  MaintenanceDetailsCubit(this._maintenanceDetailsUseCase) : super(MaintenanceDetailsInitialState());
+  MaintenanceDetailsCubit(this._maintenanceDetailsUseCase)
+    : super(MaintenanceDetailsInitialState());
 
-  Future<void> getMaintenanceDetailsMethod() async {
-    final result = await _maintenanceDetailsUseCase.getMaintenanceDetails();
+  Future<void> getMaintenanceDetailsMethod(String serviceId) async {
+    final result = await _maintenanceDetailsUseCase.getMaintenanceDetails(
+      serviceId,
+    );
     result.when(
       (success) {
-        //here is when success result
+        emit(MaintenanceDetailsSuccessState(maintenanceDetails: success));
       },
       (whenError) {
-       //here is when error result
+        emit(MaintenanceDetailsErrorState(message: whenError.message));
       },
     );
   }

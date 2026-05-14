@@ -1,8 +1,5 @@
-import 'dart:developer';
-
 import 'package:injectable/injectable.dart';
 import 'package:motrive/core/services/user_services.dart';
-import 'package:motrive/features/maintenance/data/models/car_info/car_info_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:motrive/core/services/local_keys_service.dart';
 import 'package:motrive/features/maintenance/data/models/maintenance/maintenance_model.dart';
@@ -28,7 +25,7 @@ class MaintenanceRemoteDataSource implements BaseMaintenanceRemoteDataSource {
     final userCars = await _supabase
         .from('vehicles')
         .select()
-        .eq('user_id', '4fef5d57-eeb4-4bd7-aae0-eaf4dee00b1f');
+        .eq('user_id', _userService.currentUser!.id);
 
     if (userCars.isEmpty) {
       throw Exception('No car found');
@@ -36,20 +33,30 @@ class MaintenanceRemoteDataSource implements BaseMaintenanceRemoteDataSource {
       throw Exception('No maintenance found');
     }
 
-    final carInfo = await _supabase
-        .from('cars_info')
-        .select()
-        .eq('id', userCars.first['car_info_id'])
-        .maybeSingle();
-
-    final car = CarInfoModel.fromJson(carInfo!);
-
-    final carServices = await _supabase
+    List<Map<String, dynamic>> carServices = await _supabase
         .from('services_info')
         .select()
-        .eq('car_id', car.id)
+        .eq('car_id', userCars.first['car_info_id'])
         .order('service_odometer');
 
-    return MaintenanceModel.fromJson({'car_info' : carInfo, 'services': carServices});
+    final doneServices = await _supabase
+        .from('maintenance_logs')
+        .select()
+        .eq('user_id', _userService.currentUser!.id);
+
+    carServices = carServices.map((e) {
+      Map<String, dynamic> service = e;
+      doneServices.map((done) {
+        if (done['service_id'] == service['id']) {
+          service.addAll({'done': true});
+        }
+      }).toList();
+      return service;
+    }).toList();
+
+    return MaintenanceModel.fromJson({
+      'vehicle': userCars.first,
+      'services': carServices,
+    });
   }
 }

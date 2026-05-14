@@ -10,22 +10,22 @@ _ServicePartInfoModel _$ServicePartInfoModelFromJson(
   Map<String, dynamic> json,
 ) => _ServicePartInfoModel(
   id: json['id'] as String,
-  partName: json['partName'] as String,
-  oemPartNumber: json['oemPartNumber'] as String,
+  partName: json['part_name'] as String,
+  oemPartNumber: json['oem_part_number'] as String,
   action: json['action'] as String,
   specification: json['specification'] as String,
-  quantity: (json['quantity'] as num).toInt(),
-  quantityUnit: json['quantityUnit'] as String,
+  quantity: (json['quantity'] as num).toDouble(),
+  quantityUnit: json['quantity_unit'] as String,
 );
 
 Map<String, dynamic> _$ServicePartInfoModelToJson(
   _ServicePartInfoModel instance,
 ) => <String, dynamic>{
   'id': instance.id,
-  'partName': instance.partName,
-  'oemPartNumber': instance.oemPartNumber,
+  'part_name': instance.partName,
+  'oem_part_number': instance.oemPartNumber,
   'action': instance.action,
   'specification': instance.specification,
   'quantity': instance.quantity,
-  'quantityUnit': instance.quantityUnit,
+  'quantity_unit': instance.quantityUnit,
 };
