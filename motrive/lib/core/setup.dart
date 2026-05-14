@@ -1,3 +1,4 @@
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -13,18 +14,32 @@ Future<void> setup() async {
   await Hive.openBox('vehicles_box');
   //----------------------------------------------------------------------------
 
-    // await Future.wait([
-    //   Hive.openBox('vehicles_box'),
-    //   Hive.openBox('maintenance_box'),
-    //   Hive.openBox('settings_box'),
-    // ]);
+  // await Future.wait([
+  //   Hive.openBox('vehicles_box'),
+  //   Hive.openBox('maintenance_box'),
+  //   Hive.openBox('settings_box'),
+  // ]);
   await Supabase.initialize(url: Env.urlSupabase, anonKey: Env.keySupabase);
   //----------------------------------------------------------------------------
-  //----------------------------------------------------------------------------
-
   await GoogleSignIn.instance.initialize(
-  clientId: Env.iosClientId,
-  serverClientId: Env.webClientId,
-);
+    clientId: Env.iosClientId,
+    serverClientId: Env.webClientId,
+  );
+  //----------------------------------------------------------------------------
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+  print('starting notification');
+  final s = await flutterLocalNotificationsPlugin.initialize(
+    settings: InitializationSettings(
+      android: const AndroidInitializationSettings('@mipmap/ic_launcher'),
+      iOS: const DarwinInitializationSettings(),
+      macOS: const DarwinInitializationSettings(),
+    ),
+  );
+  print(s);
+  flutterLocalNotificationsPlugin
+      .resolvePlatformSpecificImplementation<
+        AndroidFlutterLocalNotificationsPlugin
+      >()
+      ?.requestNotificationsPermission();
 }
-

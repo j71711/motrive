@@ -45,6 +45,7 @@ dependencies:
   url_launcher: ^6.3.2
   geolocator: ^14.0.2
   slide_to_act: ^2.0.2
+  flutter_local_notifications: ^21.0.0
 
 
 dev_dependencies:

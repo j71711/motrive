@@ -14,13 +14,14 @@ class AddCarCardFeatureWidget extends StatelessWidget {
       child: Builder(
         builder: (context) {
           final cubit = context.read<AddCarCardCubit>();
+          cubit.getCarsInfo();
           return Column(
             crossAxisAlignment: .center,
             mainAxisAlignment: .start,
             children: [
               Padding(
                 padding: const EdgeInsets.all(16),
-                child: TextField( 
+                child: TextField(
                   onChanged: (value) {
                     cubit.search(value);
                   },
