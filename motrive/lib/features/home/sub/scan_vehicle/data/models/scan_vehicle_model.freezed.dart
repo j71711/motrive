@@ -15,10 +15,6 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ScanVehicleModel {
 
-//   @JsonKey(name: 'user_id')
-// required String userId,
-// required String id,
-
  String get make; String get model; int get year; String? get color;@JsonKey(name: 'license_plate') String? get licensePlate; String? get vin;@JsonKey(name: 'current_odometer') int? get currentOdometer;@JsonKey(name: 'created_at') DateTime? get createdAt;@JsonKey(name: 'car_info_id') String? get carInfoId;
 /// Create a copy of ScanVehicleModel
 /// with the given fields replaced by the non-null parameter values.
@@ -223,10 +219,6 @@ return $default(_that.make,_that.model,_that.year,_that.color,_that.licensePlate
 class _ScanVehicleModel implements ScanVehicleModel {
   const _ScanVehicleModel({required this.make, required this.model, required this.year, this.color, @JsonKey(name: 'license_plate') this.licensePlate, this.vin, @JsonKey(name: 'current_odometer') this.currentOdometer, @JsonKey(name: 'created_at') this.createdAt, @JsonKey(name: 'car_info_id') this.carInfoId});
   factory _ScanVehicleModel.fromJson(Map<String, dynamic> json) => _$ScanVehicleModelFromJson(json);
-
-//   @JsonKey(name: 'user_id')
-// required String userId,
-// required String id,
 
 @override final  String make;
 @override final  String model;

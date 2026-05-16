@@ -37,9 +37,7 @@ extension ContextExtensions on BuildContext {
       ),
     );
   }
-<<<<<<< HEAD
-}
-=======
+
   Future<T?> showMyDialog<T>({
   required String title,
   String? content,
@@ -65,5 +63,5 @@ extension ContextExtensions on BuildContext {
       ],
     ),
   );
-}}
->>>>>>> main
+}
+}

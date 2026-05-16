@@ -2,22 +2,16 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
     <key>NSLocationWhenInUseUsageDescription</key>
     <string>We need your location to send it to your emergency contacts.</string>
     <key>NSLocationWhenInUseUsageDescription</key>
     <string>We need your location to send it during emergency.</string>
->>>>>>> main
+
 	<key>NSCameraUsageDescription</key>
 	<string>Camera access is needed to scan vehicle registration cards</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
-<<<<<<< HEAD
-=======
-=======
->>>>>>> main
+
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>GIDClientID</key>
@@ -32,10 +26,7 @@
         </array>
     </dict>
 </array>
-<<<<<<< HEAD
->>>>>>> remotes/origin/main
-=======
->>>>>>> main
+
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>

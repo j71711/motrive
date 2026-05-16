@@ -12,7 +12,7 @@ class AddCarCardCubit extends Cubit<AddCarCardState> {
 
     // getAddCarCardMethod();
 
-    getCarsInfo();
+    // getCarsInfo();
   }
   Future<void> addVehicleMethod(
   AddCarCardEntity vehicle,

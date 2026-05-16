@@ -1,5 +1,4 @@
 import 'package:envied/envied.dart';
-
 part 'env.g.dart';
 
 @Envied(path: '.env', obfuscate: true)
@@ -15,10 +14,8 @@ abstract class Env {
 
   @EnviedField(varName: 'ios_clientId')
   static final String iosClientId = _Env.iosClientId;
-<<<<<<< HEAD
+
+  //   @EnviedField(varName: 'android_clientId')
+  // static final String androidClientId = _Env.androidClientId;
 }
-=======
-    @EnviedField(varName: 'android_clientId')
-  static final String androidClientId = _Env.androidClientId;
-}
->>>>>>> main
+

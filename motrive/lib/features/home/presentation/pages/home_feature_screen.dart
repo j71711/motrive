@@ -3,15 +3,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:motrive/core/constants/app_colors.dart';
 import 'package:motrive/core/navigation/routers.dart';
 import 'package:motrive/features/home/presentation/cubit/home_cubit.dart';
 import 'package:motrive/features/home/sub/add_car_card/presentation/cubit/add_car_card_cubit.dart';
 import 'package:motrive/features/home/sub/add_car_card/presentation/cubit/add_car_card_state.dart';
 import 'package:motrive/features/home/sub/add_car_card/presentation/pages/add_car_card_feature_widget.dart';
+import 'package:motrive/features/home/sub/add_expense/presentation/pages/add_expense_feature_widget.dart';
 import 'package:motrive/features/home/sub/chat_bot/presentation/pages/chat_bot_feature_widget.dart';
 import 'package:motrive/features/home/sub/sos/presentation/pages/sos_feature_widget.dart';
 import 'package:motrive/features/profile/sub/emergency_contact/presentation/cubit/emergency_contact_cubit.dart';
 import 'package:motrive/features/sub/maintenance_alert/presentation/pages/maintenance_alert_feature_widget.dart';
+import 'package:sizer/sizer.dart';
 
 class HomeFeatureScreen extends StatelessWidget {
   const HomeFeatureScreen({super.key});
@@ -139,27 +142,33 @@ class HomeFeatureScreen extends StatelessWidget {
             const SizedBox(height: 20),
             SosFeatureWidget(),
             MaintenanceAlertFeatureWidget(),
-            InkWell(
-              child: GridView.count(
-                shrinkWrap: true, // مهم للسماح للـ Grid بالتواجد داخل ScrollView
-                crossAxisCount: 2, // عدد الأعمدة
-                crossAxisSpacing: 12, // المسافة الأفقية
-                mainAxisSpacing: 12, // المسافة الرأسية
-                childAspectRatio: 2.5, // للتحكم في عرض وطول البطاقة لتشبه الصورة
-                children: [
-                  buildMenuItem
-                  (Icons.build, 'Maintenance'),
-                  buildMenuItem
-                  (Icons.location_on, 'save location'),
-                  buildMenuItem
-                  (Icons.notifications, 'notification'),
-                  buildMenuItem
-                  (Icons.settings, 'Add Expense'),
-                ],
-              ),
+            GridView.count(
+              shrinkWrap: true,
+              crossAxisCount: 2,
+              crossAxisSpacing: 12,
+              mainAxisSpacing: 12,
+              childAspectRatio: 2.5,
+              children: [
+                buildMenuItem(Icons.build, 'Maintenance', () {}),
+                buildMenuItem(Icons.location_on, 'Save location', () {}),
+                buildMenuItem(Icons.notifications, 'Notification', () {}),
+                buildMenuItem(Icons.money, 'Add Expense', () {
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true, 
+                    backgroundColor: AppColors.background, 
+                    elevation: 0,
+                    builder: (context) => SizedBox(
+                      height: 70.sh,
+                      child: const AddExpenseFeatureWidget()),
+                  );
+                  // Navigator.push(context, showModalBottomSheet(builder: (context) =>const AddExpenseFeatureWidget(), context: context,),);
+                }),
+              ],
             ),
+            Gap(16),
             FloatingActionButton(
-              onPressed: () { 
+              onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -167,52 +176,47 @@ class HomeFeatureScreen extends StatelessWidget {
                   ),
                 );
               },
-              child: Icon(Icons.message_outlined, size: 40,),
+              child: Icon(Icons.message_outlined, size: 32),
             ),
-              Gap(16),
           ],
         ),
-        
       ),
     );
   }
-  Widget buildMenuItem(IconData icon, String label) {
-  return Container(
-    padding: EdgeInsets.symmetric(horizontal: 12),
-    decoration: BoxDecoration(
-      border: Border.all(),
-      // color: AppColors.background, 
-      borderRadius: BorderRadius.circular(15), 
-    ),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Container(
-          padding: EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            // color: Colors.grey[200],
-            shape: BoxShape.circle,
-          ),
-          child: Icon(
-            icon,
-            // color: Color(0xFF4A148C), 
-            size: 20,
-          ),
-        ),
-        SizedBox(width: 12), 
-        Expanded(
-          child: Text(
-            label,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-              // color: Colors.black87,
-            ),
-          ),
-        ),
-      ],
-    ),
-  );
-}
 
+  Widget buildMenuItem(IconData icon, String label, VoidCallback onTap) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(15),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          decoration: BoxDecoration(
+            border: Border.all(),
+            borderRadius: BorderRadius.circular(15),
+          ),
+
+          child: Row(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(),
+                ),
+                child: Icon(icon, size: 32, color: AppColors.secondary),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  label,
+                  style: const TextStyle(fontSize: 16, fontWeight: .bold),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }

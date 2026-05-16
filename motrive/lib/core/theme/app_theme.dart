@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:motrive/core/constants/app_colors.dart';
 import 'app_text_theme.dart';
 
 abstract class AppTheme {

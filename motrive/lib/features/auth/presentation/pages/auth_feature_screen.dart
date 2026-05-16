@@ -289,12 +289,7 @@ class AuthFeatureScreen extends HookWidget {
                               ),
                             ),
                           ),
-
-<<<<<<< HEAD
-                          const SizedBox(height: 30),
-=======
                           const Gap(30),
->>>>>>> main
                         ],
                       ),
                     ),
@@ -307,8 +302,4 @@ class AuthFeatureScreen extends HookWidget {
       ),
     );
   }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> main
