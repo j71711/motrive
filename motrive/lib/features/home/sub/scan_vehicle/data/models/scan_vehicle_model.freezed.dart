@@ -18,6 +18,7 @@ mixin _$ScanVehicleModel {
 //   @JsonKey(name: 'user_id')
 // required String userId,
 // required String id,
+
  String get make; String get model; int get year; String? get color;@JsonKey(name: 'license_plate') String? get licensePlate; String? get vin;@JsonKey(name: 'current_odometer') int? get currentOdometer;@JsonKey(name: 'created_at') DateTime? get createdAt;@JsonKey(name: 'car_info_id') String? get carInfoId;
 /// Create a copy of ScanVehicleModel
 /// with the given fields replaced by the non-null parameter values.
@@ -226,6 +227,7 @@ class _ScanVehicleModel implements ScanVehicleModel {
 //   @JsonKey(name: 'user_id')
 // required String userId,
 // required String id,
+
 @override final  String make;
 @override final  String model;
 @override final  int year;

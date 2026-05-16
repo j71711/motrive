@@ -27,10 +27,7 @@ class CustomTextField extends StatelessWidget {
     return ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 400),
       child: Padding(
-        padding: const EdgeInsets.only(
-          top: 18,
-          bottom: 12,
-        ),
+        padding: const EdgeInsets.only(top: 18, bottom: 12),
         child: Stack(
           clipBehavior: Clip.none,
           children: [
@@ -47,42 +44,43 @@ class CustomTextField extends StatelessWidget {
               decoration: InputDecoration(
                 hintText: 'Enter your $label',
                 hintStyle: TextStyle(
-                  color: Colors.grey.shade500,
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.onSurface.withValues(alpha: .5),
                   fontSize: 15,
                 ),
                 filled: true,
-                fillColor: Colors.white,
+                fillColor: Theme.of(context).colorScheme.surface,
                 contentPadding: const EdgeInsets.symmetric(
                   horizontal: 20,
                   vertical: 22,
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(18),
-                  borderSide: const BorderSide(
-                    color: Color(0xffD7A7D9),
+                  borderSide: BorderSide(
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.primary.withValues(alpha: .35),
                     width: 2,
                   ),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(18),
-                  borderSide: const BorderSide(
-                    color: Color(0xff8E1D93),
+                  borderSide: BorderSide(
+                    color: Theme.of(context).colorScheme.primary,
                     width: 2.6,
                   ),
                 ),
                 errorBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(18),
-                  borderSide: const BorderSide(
-                    color: Colors.red,
+                  borderSide: BorderSide(
+                    color: Theme.of(context).colorScheme.error,
                     width: 2,
                   ),
                 ),
                 focusedErrorBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(18),
-                  borderSide: const BorderSide(
-                    color: Colors.red,
-                    width: 2.6,
-                  ),
+                  borderSide: BorderSide(color: Theme.of(context).colorScheme.error, width: 2.6),
                 ),
               ),
             ),
@@ -97,17 +95,17 @@ class CustomTextField extends StatelessWidget {
                     vertical: 4,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color:Theme.of(context).colorScheme.surface,
                     borderRadius: BorderRadius.circular(30),
                     border: Border.all(
-                      color: const Color(0xff8E1D93),
+                      color:Theme.of(context).colorScheme.primary,
                       width: 2,
                     ),
                   ),
                   child: Text(
                     label,
-                    style: const TextStyle(
-                      color: Color(0xff8E1D93),
+                    style:  TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.w700,
                       fontSize: 14,
                     ),

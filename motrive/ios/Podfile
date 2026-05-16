@@ -1,11 +1,23 @@
 # Uncomment this line to define a global platform for your project
 <<<<<<< HEAD
+<<<<<<< HEAD
 # platform :ios, '15.0'
 =======
 # platform :ios, '13.0'
 >>>>>>> remotes/origin/main
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
+=======
+
+platform :ios, '15.5'
+
+# Add language package you need to use
+# pod 'GoogleMLKit/TextRecognitionChinese', '~> 9.0.0'
+# pod 'GoogleMLKit/TextRecognitionDevanagari', '~> 9.0.0'
+# pod 'GoogleMLKit/TextRecognitionJapanese', '~> 9.0.0'
+# pod 'GoogleMLKit/TextRecognitionKorean', '~> 9.0.0'
+# CocoaPods analytics sends network stats synchronously affecting ٍflutter build latency.
+>>>>>>> main
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
 
 project 'Runner', {

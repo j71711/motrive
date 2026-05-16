@@ -1,5 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.CAMERA"/>
+<<<<<<< HEAD
+=======
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION"/>
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+<uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
+
+>>>>>>> main
     <application
         android:label="motrive"
         android:name="${applicationName}"
@@ -30,8 +38,20 @@
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data
             android:name="flutterEmbedding"
+<<<<<<< HEAD
             android:value="2" />
     </application>
+=======
+            android:value="2"
+            />
+             <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="AIzaSyBt4gNdEkOQmv4--y9_f2_UgwAmTheTjdY"
+        />
+    </application>
+   
+
+>>>>>>> main
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and
          https://developer.android.com/reference/android/content/Intent#ACTION_PROCESS_TEXT.

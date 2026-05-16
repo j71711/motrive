@@ -11,7 +11,8 @@ class Circle extends StatelessWidget {
       height: size,
       width: size,
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: .08),
+        color: Theme.of(context).colorScheme.onSurface
+            .withValues(alpha: .08),
         shape: BoxShape.circle,
       ),
     );

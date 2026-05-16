@@ -12,6 +12,9 @@
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:hive/hive.dart' as _i979;
 import 'package:injectable/injectable.dart' as _i526;
+
+import 'package:motrive/core/services/emergency_service.dart' as _i821;
+
 import 'package:motrive/core/services/local_keys_service.dart' as _i56;
 import 'package:motrive/features/home/data/datasources/home_remote_data_source.dart'
     as _i68;
@@ -29,6 +32,15 @@ import 'package:motrive/features/home/sub/add_car_card/domain/repositories/add_c
     as _i521;
 import 'package:motrive/features/home/sub/add_car_card/domain/use_cases/add_car_card_use_case.dart'
     as _i280;
+import 'package:motrive/features/home/sub/chat_bot/data/datasources/chat_bot_remote_data_source.dart'
+    as _i279;
+import 'package:motrive/features/home/sub/chat_bot/data/repositories/chat_bot_repository_data.dart'
+    as _i810;
+import 'package:motrive/features/home/sub/chat_bot/domain/repositories/chat_bot_repository_domain.dart'
+    as _i641;
+import 'package:motrive/features/home/sub/chat_bot/domain/use_cases/chat_bot_use_case.dart'
+    as _i403;
+
 import 'package:motrive/features/home/sub/scan_vehicle/data/datasources/scan_vehicle_remote_data_source.dart'
     as _i353;
 import 'package:motrive/features/home/sub/scan_vehicle/data/repositories/scan_vehicle_repository_data.dart'
@@ -37,6 +49,14 @@ import 'package:motrive/features/home/sub/scan_vehicle/domain/repositories/scan_
     as _i723;
 import 'package:motrive/features/home/sub/scan_vehicle/domain/use_cases/scan_vehicle_use_case.dart'
     as _i198;
+import 'package:motrive/features/home/sub/sos/data/datasources/sos_remote_data_source.dart'
+    as _i558;
+import 'package:motrive/features/home/sub/sos/data/repositories/sos_repository_data.dart'
+    as _i630;
+import 'package:motrive/features/home/sub/sos/domain/repositories/sos_repository_domain.dart'
+    as _i904;
+import 'package:motrive/features/home/sub/sos/domain/use_cases/sos_use_case.dart'
+    as _i168;
 import 'package:supabase_flutter/supabase_flutter.dart' as _i454;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -49,11 +69,31 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i737.VehicleLocalDataSource>(
       () => _i737.VehicleLocalDataSourceImpl(gh<_i979.Box<dynamic>>()),
     );
+
+    gh.lazySingleton<_i558.BaseSosRemoteDataSource>(
+      () => _i558.SosRemoteDataSource(gh<_i821.EmergencyService>()),
+    );
     gh.lazySingleton<_i353.BaseScanVehicleRemoteDataSource>(
       () => _i353.ScanVehicleRemoteDataSource(
         gh<_i56.LocalKeysService>(),
         gh<_i454.SupabaseClient>(),
       ),
+    );
+    gh.lazySingleton<_i279.BaseChatBotRemoteDataSource>(
+      () => _i279.ChatBotRemoteDataSource(
+        gh<_i56.LocalKeysService>(),
+        gh<_i454.SupabaseClient>(),
+      ),
+    );
+    gh.lazySingleton<_i641.ChatBotRepositoryDomain>(
+      () =>
+          _i810.ChatBotRepositoryData(gh<_i279.BaseChatBotRemoteDataSource>()),
+    );
+    gh.lazySingleton<_i403.ChatBotUseCase>(
+      () => _i403.ChatBotUseCase(gh<_i641.ChatBotRepositoryDomain>()),
+    );
+    gh.lazySingleton<_i904.SosRepositoryDomain>(
+      () => _i630.SosRepositoryData(gh<_i558.BaseSosRemoteDataSource>()),
     );
     gh.lazySingleton<_i737.BaseAddCarCardRemoteDataSource>(
       () => _i737.AddCarCardRemoteDataSource(
@@ -80,6 +120,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i198.ScanVehicleUseCase>(
       () => _i198.ScanVehicleUseCase(gh<_i723.ScanVehicleRepositoryDomain>()),
+    );
+    gh.lazySingleton<_i168.SosUseCase>(
+      () => _i168.SosUseCase(gh<_i904.SosRepositoryDomain>()),
     );
     gh.lazySingleton<_i280.AddCarCardUseCase>(
       () => _i280.AddCarCardUseCase(gh<_i521.AddCarCardRepositoryDomain>()),

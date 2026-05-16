@@ -16,12 +16,7 @@ class HomeRemoteDataSource implements BaseHomeRemoteDataSource {
   final SupabaseClient _supabase;
   final LocalKeysService _localKeysService;
   
-  
-
    HomeRemoteDataSource(this._localKeysService, this._supabase);
-
-
-
     @override
   Future<HomeModel> getHome() async {
     try {

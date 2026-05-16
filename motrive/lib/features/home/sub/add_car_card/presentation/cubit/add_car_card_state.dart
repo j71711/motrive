@@ -19,6 +19,7 @@ abstract class AddCarCardState extends Equatable {
 class AddCarCardInitialState extends AddCarCardState {}
 class VehiclesLoadingState extends AddCarCardState {}
 class AddCarCardLoadedState extends AddCarCardState {
+  @override
   final List<AddCarCardEntity> vehicles;
   const AddCarCardLoadedState(this.vehicles);
   @override

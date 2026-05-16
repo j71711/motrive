@@ -7,7 +7,11 @@ class AddCarCardCubit extends Cubit<AddCarCardState> {
   final AddCarCardUseCase _addCarCardUseCase;
 
   AddCarCardCubit(this._addCarCardUseCase) : super(AddCarCardInitialState()){
+
     getAddCarCardMethod();
+
+    // getAddCarCardMethod();
+
     getCarsInfo();
   }
   Future<void> addVehicleMethod(
