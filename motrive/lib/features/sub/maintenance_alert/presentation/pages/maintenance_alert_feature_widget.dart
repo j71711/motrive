@@ -20,8 +20,9 @@ class MaintenanceAlertFeatureWidget extends StatelessWidget {
           final cubit = context.read<MaintenanceAlertCubit>();
           return BlocBuilder<MaintenanceAlertCubit, MaintenanceAlertState>(
             builder: (context, state) {
-              final currentState = state is MaintenanceAlertSuccessState;
-              final maintenance = currentState ? state.maintenance : null;
+              final maintenance = state is MaintenanceAlertSuccessState
+                  ? state.maintenance
+                  : null;
               final status =
                   (maintenance?.services[0].serviceOdometer ?? 0) <
                   (maintenance?.vehicle.currentOdometer ?? 0);

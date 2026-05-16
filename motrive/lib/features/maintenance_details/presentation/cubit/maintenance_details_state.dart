@@ -12,15 +12,13 @@ class MaintenanceDetailsInitialState extends MaintenanceDetailsState {}
 
 class MaintenanceDetailsSuccessState extends MaintenanceDetailsState {
   final MaintenanceDetailsEntity maintenanceDetails;
-  final bool? selectedAll;
 
   const MaintenanceDetailsSuccessState({
     required this.maintenanceDetails,
-    this.selectedAll,
   });
 
   @override
-  List<Object?> get props => [maintenanceDetails, selectedAll];
+  List<Object?> get props => [maintenanceDetails];
 }
 
 class MaintenanceDetailsSaveSuccessState extends MaintenanceDetailsState {}

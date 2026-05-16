@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:motrive/core/extensions/context_extensions.dart';
 import 'package:motrive/core/utils/formatters.dart';
-import 'package:motrive/core/widgets/loading_widget.dart';
 import 'package:motrive/features/maintenance/domain/entities/service_info_entity.dart';
 import 'package:motrive/features/maintenance_details/presentation/cubit/maintenance_details_cubit.dart';
 import 'package:motrive/features/maintenance_details/presentation/cubit/maintenance_details_state.dart';
+import 'package:motrive/features/maintenance_details/presentation/widgets/part_card.dart';
+import 'package:motrive/features/maintenance_details/presentation/widgets/service_info_card.dart';
 import 'package:motrive/features/sub/save_service/presentation/pages/save_service_feature_widget.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class MaintenanceDetailsFeatureScreen extends StatelessWidget {
   final ServiceInfoEntity serviceInfo;
@@ -24,19 +25,16 @@ class MaintenanceDetailsFeatureScreen extends StatelessWidget {
         actions: [
           BlocBuilder<MaintenanceDetailsCubit, MaintenanceDetailsState>(
             builder: (context, state) {
-              final vehicle = state is MaintenanceDetailsSuccessState
-                  ? state.maintenanceDetails.vehicle
-                  : null;
               return IconButton.filled(
                 onPressed: () async {
-                  if (vehicle == null) {
+                  if (state is! MaintenanceDetailsSuccessState) {
                     return;
                   }
                   await showDialog(
                     context: context,
                     builder: (context) => SaveServiceFeatureWidget(
                       serviceInfo: serviceInfo,
-                      vehicle: vehicle,
+                      vehicle: state.maintenanceDetails.vehicle,
                     ),
                   ).then((value) {
                     if (value == true && context.mounted) {
@@ -62,65 +60,15 @@ class MaintenanceDetailsFeatureScreen extends StatelessWidget {
             child: Column(
               spacing: 5,
               children: [
-                Card(
-                  clipBehavior: .antiAlias,
-                  child: Padding(
-                    padding: const .all(8.0),
-                    child: Column(
-                      crossAxisAlignment: .start,
-                      mainAxisAlignment: .spaceEvenly,
-                      children: [
-                        Row(
-                          mainAxisAlignment: .spaceBetween,
-                          children: [
-                            Text(
-                              'Service Odometer: ${Formatters.formatOdometer(serviceInfo.serviceOdometer)}',
-                              style: Theme.of(context).textTheme.titleLarge,
-                            ),
-                            Container(
-                              padding: .symmetric(horizontal: 8, vertical: 3),
-                              decoration: BoxDecoration(
-                                borderRadius: .circular(16),
-                                color: serviceInfo.severity == 'critical'
-                                    ? Colors.orangeAccent
-                                    : Colors.green,
-                              ),
-                              child: Text(
-                                serviceInfo.severity,
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Text(
-                          'Date Interval: ${serviceInfo.dateIntervalMonths} months',
-                          softWrap: true,
-                        ),
-                        Gap(10),
-                        if (serviceInfo.recommendation != 'no data')
-                          Column(
-                            spacing: 5,
-                            crossAxisAlignment: .start,
-                            children: [
-                              Text(
-                                'Recommendations:',
-                                style: Theme.of(context).textTheme.titleLarge,
-                              ),
-                              Text(serviceInfo.recommendation, softWrap: true),
-                            ],
-                          ),
-                      ],
-                    ),
-                  ),
-                ),
+                ServiceInfoCard(serviceInfo: serviceInfo),
                 BlocBuilder<MaintenanceDetailsCubit, MaintenanceDetailsState>(
                   builder: (context, state) {
-                    return switch (state) {
-                      MaintenanceDetailsErrorState _ => Center(
-                        child: Text('No services available'),
-                      ),
-                      MaintenanceDetailsSuccessState _ =>
-                        state.maintenanceDetails.parts.isEmpty
+                    switch (state) {
+                      case MaintenanceDetailsErrorState _:
+                        return Center(child: Text('No services available'));
+                      case MaintenanceDetailsSuccessState _:
+                        final parts = state.maintenanceDetails.parts;
+                        return parts.isEmpty
                             ? Center(child: Text('No services available'))
                             : Expanded(
                                 child: Column(
@@ -133,82 +81,30 @@ class MaintenanceDetailsFeatureScreen extends StatelessWidget {
                                     ),
                                     Expanded(
                                       child: ListView.separated(
-                                        itemBuilder: (context, index) {
-                                          final part = state
-                                              .maintenanceDetails
-                                              .parts[index];
-                                          return Card(
-                                            child: ListTile(
-                                              leading: Icon(
-                                                Icons.car_repair_outlined,
-                                              ),
-                                              title: Text(part.partName),
-                                              trailing: Column(
-                                                spacing: 5,
-                                                mainAxisSize: .min,
-                                                children: [
-                                                  Container(
-                                                    padding: .symmetric(
-                                                      horizontal: 8,
-                                                      vertical: 3,
-                                                    ),
-                                                    decoration: BoxDecoration(
-                                                      borderRadius: .circular(
-                                                        16,
-                                                      ),
-                                                      color:
-                                                          part.action ==
-                                                              'replace'
-                                                          ? Colors.orangeAccent
-                                                          : Colors.green,
-                                                    ),
-                                                    child: Text(
-                                                      part.action,
-                                                      style: TextStyle(
-                                                        color: Colors.white,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  if (part.quantity != 0)
-                                                    Text(
-                                                      'Qty: ${part.quantity} ${part.quantityUnit}',
-                                                    ),
-                                                ],
-                                              ),
-                                              subtitle: Column(
-                                                spacing: 5,
-                                                mainAxisSize: .min,
-                                                crossAxisAlignment: .start,
-                                                children: [
-                                                  if (part.specification !=
-                                                      'no data')
-                                                    Text(part.specification),
-                                                  if (part.oemPartNumber !=
-                                                      'no data')
-                                                    Text(
-                                                      'OEM No. ${part.oemPartNumber}',
-                                                    ),
-                                                ],
-                                              ),
-                                            ),
-                                          );
-                                        },
+                                        itemBuilder: (context, index) =>
+                                            PartCard(part: parts[index]),
                                         separatorBuilder: (context, index) =>
                                             Divider(
                                               color: Colors.transparent,
                                               height: 5,
                                             ),
-                                        itemCount: state
-                                            .maintenanceDetails
-                                            .parts
-                                            .length,
+                                        itemCount: parts.length,
                                       ),
                                     ),
                                   ],
                                 ),
-                              ),
-                      _ => LoadingWidget(),
-                    };
+                              );
+                    }
+                    return Expanded(
+                      child: Skeletonizer(
+                        child: ListView.separated(
+                          itemBuilder: (context, index) => PartCard(),
+                          separatorBuilder: (context, index) =>
+                              Divider(color: Colors.transparent, height: 5),
+                          itemCount: 5,
+                        ),
+                      ),
+                    );
                   },
                 ),
               ],

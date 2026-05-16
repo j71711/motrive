@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:injectable/injectable.dart';
 import 'package:timezone/timezone.dart' as tz;
-import 'package:timezone/data/latest.dart' as tz;
+//import 'package:timezone/data/latest.dart' as tz;
 
 @lazySingleton
 class LocalNotificationService {
@@ -608,7 +608,6 @@ class LocalNotificationService {
       RepeatInterval.weekly => const Duration(days: 7),
       RepeatInterval.monthly => const Duration(days: 30),
       RepeatInterval.yearly => const Duration(days: 365),
-      _ => const Duration(days: 1),
     };
   }
 

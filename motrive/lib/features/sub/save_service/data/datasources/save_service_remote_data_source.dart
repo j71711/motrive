@@ -5,7 +5,6 @@ import 'package:motrive/features/maintenance/domain/entities/service_info_entity
 import 'package:motrive/features/maintenance/domain/entities/vehicle_entity.dart';
 import 'package:motrive/features/maintenance_details/domain/entities/maintenance_save_info.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:motrive/core/services/local_keys_service.dart';
 
 abstract class BaseSaveServiceRemoteDataSource {
   Future<void> getSaveService(
@@ -18,12 +17,10 @@ abstract class BaseSaveServiceRemoteDataSource {
 @LazySingleton(as: BaseSaveServiceRemoteDataSource)
 class SaveServiceRemoteDataSource implements BaseSaveServiceRemoteDataSource {
   final SupabaseClient _supabase;
-  final LocalKeysService _localKeysService;
   final UserService _userService;
   final LocalNotificationService _localNotificationService;
 
   SaveServiceRemoteDataSource(
-    this._localKeysService,
     this._supabase,
     this._userService,
     this._localNotificationService,

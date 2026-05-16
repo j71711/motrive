@@ -5,7 +5,6 @@ import 'package:motrive/features/maintenance/data/models/maintenance/maintenance
 import 'package:motrive/features/maintenance/data/models/service_info/service_info_model.dart';
 import 'package:motrive/features/maintenance/data/models/vehicle/vehicle_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:motrive/core/services/local_keys_service.dart';
 
 abstract class BaseMaintenanceAlertRemoteDataSource {
   Future<MaintenanceModel?> getMaintenanceAlert();
@@ -15,12 +14,10 @@ abstract class BaseMaintenanceAlertRemoteDataSource {
 class MaintenanceAlertRemoteDataSource
     implements BaseMaintenanceAlertRemoteDataSource {
   final SupabaseClient _supabase;
-  final LocalKeysService _localKeysService;
   final UserService _userService;
   final LocalNotificationService _localNotificationService;
 
   MaintenanceAlertRemoteDataSource(
-    this._localKeysService,
     this._supabase,
     this._userService,
     this._localNotificationService,
