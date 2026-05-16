@@ -14,9 +14,9 @@ abstract class ParkingModel with _$ParkingModel {
     @JsonKey(name: 'vehicle_id')
     String? vehicleId,
 
-    required double latitude,
+ required double latitudes,
 
-    required double longitude,
+required double longitude,
 
     String? address,
 
@@ -43,7 +43,7 @@ extension ParkingModelMapper on ParkingModel {
       id: id,
       userId: userId,
       vehicleId: vehicleId,
-      latitude: latitude,
+  latitudes: latitudes,
       longitude: longitude,
       address: address,
       notes: notes,

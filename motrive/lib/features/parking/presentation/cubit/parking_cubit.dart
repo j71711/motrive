@@ -5,111 +5,73 @@ import 'package:motrive/features/parking/presentation/cubit/parking_state.dart';
 class ParkingCubit extends Cubit<ParkingState> {
   final ParkingUseCase _parkingUseCase;
 
-  ParkingCubit(this._parkingUseCase) : super(ParkingInitialState());
+  ParkingCubit(this._parkingUseCase) : super(ParkingInitialState()) {
+    getParkingMethod();
+    startAutoParkingMethod();
+  }
 
   Future<void> getParkingMethod() async {
     emit(ParkingLoadingState());
 
-    final result =
-        await _parkingUseCase.getParking();
+    final result = await _parkingUseCase.getParking();
 
     result.when(
       (success) {
-        emit(
-          ParkingSuccessState(
-            parking: success,
-          ),
-        );
+        emit(ParkingSuccessState(parking: success));
       },
       (whenError) {
-        emit(
-          ParkingErrorState(
-            message: whenError.message,
-          ),
-        );
+        emit(ParkingErrorState(message: whenError.message));
       },
     );
   }
 
-  Future<void>
-  saveParkingLocationMethod() async {
+  Future<void> saveParkingLocationMethod() async {
     emit(ParkingLoadingState());
 
-    final result =
-        await _parkingUseCase
-            .saveParkingLocation();
+    final result = await _parkingUseCase.saveParkingLocation();
 
     result.when(
       (success) async {
         emit(
-          const ParkingActionSuccessState(
-            message:
-                'Parking location saved',
-          ),
+          const ParkingActionSuccessState(message: 'Parking location saved'),
         );
 
         await getParkingMethod();
       },
       (whenError) {
-        emit(
-          ParkingErrorState(
-            message: whenError.message,
-          ),
-        );
+        emit(ParkingErrorState(message: whenError.message));
       },
     );
   }
 
-  Future<void>
-  startAutoParkingMethod() async {
-    final result =
-        await _parkingUseCase
-            .startAutoParking();
+  Future<void> startAutoParkingMethod() async {
+    final result = await _parkingUseCase.startAutoParking();
 
     result.when(
       (success) {
-        emit(
-          const ParkingActionSuccessState(
-            message:
-                'Auto parking started',
-          ),
-        );
+        emit(const ParkingActionSuccessState(message: 'Auto parking started'));
       },
       (whenError) {
-        emit(
-          ParkingErrorState(
-            message: whenError.message,
-          ),
-        );
+        emit(ParkingErrorState(message: whenError.message));
       },
     );
   }
 
-  Future<void>
-  manualSaveParkingMethod() async {
+  Future<void> manualSaveParkingMethod() async {
     emit(ParkingLoadingState());
 
-    final result =
-        await _parkingUseCase
-            .manualSaveParking();
+    final result = await _parkingUseCase.manualSaveParking();
 
     result.when(
       (success) async {
         emit(
-          const ParkingActionSuccessState(
-            message:
-                'Parking saved manually',
-          ),
+          const ParkingActionSuccessState(message: 'Parking saved manually'),
         );
 
         await getParkingMethod();
       },
       (whenError) {
-        emit(
-          ParkingErrorState(
-            message: whenError.message,
-          ),
-        );
+        emit(ParkingErrorState(message: whenError.message));
       },
     );
   }

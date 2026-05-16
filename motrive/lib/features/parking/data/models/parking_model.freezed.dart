@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ParkingModel {
 
- String get id;@JsonKey(name: 'user_id') String get userId;@JsonKey(name: 'vehicle_id') String? get vehicleId; double get latitude; double get longitude; String? get address; String? get notes;@JsonKey(name: 'detection_method') String get detectionMethod;@JsonKey(name: 'is_active') bool get isActive;@JsonKey(name: 'parked_at') String get parkedAt;
+ String get id;@JsonKey(name: 'user_id') String get userId;@JsonKey(name: 'vehicle_id') String? get vehicleId; double get latitudes; double get longitude; String? get address; String? get notes;@JsonKey(name: 'detection_method') String get detectionMethod;@JsonKey(name: 'is_active') bool get isActive;@JsonKey(name: 'parked_at') String get parkedAt;
 /// Create a copy of ParkingModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $ParkingModelCopyWith<ParkingModel> get copyWith => _$ParkingModelCopyWithImpl<P
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ParkingModel&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.vehicleId, vehicleId) || other.vehicleId == vehicleId)&&(identical(other.latitude, latitude) || other.latitude == latitude)&&(identical(other.longitude, longitude) || other.longitude == longitude)&&(identical(other.address, address) || other.address == address)&&(identical(other.notes, notes) || other.notes == notes)&&(identical(other.detectionMethod, detectionMethod) || other.detectionMethod == detectionMethod)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.parkedAt, parkedAt) || other.parkedAt == parkedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ParkingModel&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.vehicleId, vehicleId) || other.vehicleId == vehicleId)&&(identical(other.latitudes, latitudes) || other.latitudes == latitudes)&&(identical(other.longitude, longitude) || other.longitude == longitude)&&(identical(other.address, address) || other.address == address)&&(identical(other.notes, notes) || other.notes == notes)&&(identical(other.detectionMethod, detectionMethod) || other.detectionMethod == detectionMethod)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.parkedAt, parkedAt) || other.parkedAt == parkedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,userId,vehicleId,latitude,longitude,address,notes,detectionMethod,isActive,parkedAt);
+int get hashCode => Object.hash(runtimeType,id,userId,vehicleId,latitudes,longitude,address,notes,detectionMethod,isActive,parkedAt);
 
 @override
 String toString() {
-  return 'ParkingModel(id: $id, userId: $userId, vehicleId: $vehicleId, latitude: $latitude, longitude: $longitude, address: $address, notes: $notes, detectionMethod: $detectionMethod, isActive: $isActive, parkedAt: $parkedAt)';
+  return 'ParkingModel(id: $id, userId: $userId, vehicleId: $vehicleId, latitudes: $latitudes, longitude: $longitude, address: $address, notes: $notes, detectionMethod: $detectionMethod, isActive: $isActive, parkedAt: $parkedAt)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $ParkingModelCopyWith<$Res>  {
   factory $ParkingModelCopyWith(ParkingModel value, $Res Function(ParkingModel) _then) = _$ParkingModelCopyWithImpl;
 @useResult
 $Res call({
- String id,@JsonKey(name: 'user_id') String userId,@JsonKey(name: 'vehicle_id') String? vehicleId, double latitude, double longitude, String? address, String? notes,@JsonKey(name: 'detection_method') String detectionMethod,@JsonKey(name: 'is_active') bool isActive,@JsonKey(name: 'parked_at') String parkedAt
+ String id,@JsonKey(name: 'user_id') String userId,@JsonKey(name: 'vehicle_id') String? vehicleId, double latitudes, double longitude, String? address, String? notes,@JsonKey(name: 'detection_method') String detectionMethod,@JsonKey(name: 'is_active') bool isActive,@JsonKey(name: 'parked_at') String parkedAt
 });
 
 
@@ -65,12 +65,12 @@ class _$ParkingModelCopyWithImpl<$Res>
 
 /// Create a copy of ParkingModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? userId = null,Object? vehicleId = freezed,Object? latitude = null,Object? longitude = null,Object? address = freezed,Object? notes = freezed,Object? detectionMethod = null,Object? isActive = null,Object? parkedAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? userId = null,Object? vehicleId = freezed,Object? latitudes = null,Object? longitude = null,Object? address = freezed,Object? notes = freezed,Object? detectionMethod = null,Object? isActive = null,Object? parkedAt = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,vehicleId: freezed == vehicleId ? _self.vehicleId : vehicleId // ignore: cast_nullable_to_non_nullable
-as String?,latitude: null == latitude ? _self.latitude : latitude // ignore: cast_nullable_to_non_nullable
+as String?,latitudes: null == latitudes ? _self.latitudes : latitudes // ignore: cast_nullable_to_non_nullable
 as double,longitude: null == longitude ? _self.longitude : longitude // ignore: cast_nullable_to_non_nullable
 as double,address: freezed == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
 as String?,notes: freezed == notes ? _self.notes : notes // ignore: cast_nullable_to_non_nullable
@@ -162,10 +162,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'user_id')  String userId, @JsonKey(name: 'vehicle_id')  String? vehicleId,  double latitude,  double longitude,  String? address,  String? notes, @JsonKey(name: 'detection_method')  String detectionMethod, @JsonKey(name: 'is_active')  bool isActive, @JsonKey(name: 'parked_at')  String parkedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'user_id')  String userId, @JsonKey(name: 'vehicle_id')  String? vehicleId,  double latitudes,  double longitude,  String? address,  String? notes, @JsonKey(name: 'detection_method')  String detectionMethod, @JsonKey(name: 'is_active')  bool isActive, @JsonKey(name: 'parked_at')  String parkedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ParkingModel() when $default != null:
-return $default(_that.id,_that.userId,_that.vehicleId,_that.latitude,_that.longitude,_that.address,_that.notes,_that.detectionMethod,_that.isActive,_that.parkedAt);case _:
+return $default(_that.id,_that.userId,_that.vehicleId,_that.latitudes,_that.longitude,_that.address,_that.notes,_that.detectionMethod,_that.isActive,_that.parkedAt);case _:
   return orElse();
 
 }
@@ -183,10 +183,10 @@ return $default(_that.id,_that.userId,_that.vehicleId,_that.latitude,_that.longi
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'user_id')  String userId, @JsonKey(name: 'vehicle_id')  String? vehicleId,  double latitude,  double longitude,  String? address,  String? notes, @JsonKey(name: 'detection_method')  String detectionMethod, @JsonKey(name: 'is_active')  bool isActive, @JsonKey(name: 'parked_at')  String parkedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'user_id')  String userId, @JsonKey(name: 'vehicle_id')  String? vehicleId,  double latitudes,  double longitude,  String? address,  String? notes, @JsonKey(name: 'detection_method')  String detectionMethod, @JsonKey(name: 'is_active')  bool isActive, @JsonKey(name: 'parked_at')  String parkedAt)  $default,) {final _that = this;
 switch (_that) {
 case _ParkingModel():
-return $default(_that.id,_that.userId,_that.vehicleId,_that.latitude,_that.longitude,_that.address,_that.notes,_that.detectionMethod,_that.isActive,_that.parkedAt);case _:
+return $default(_that.id,_that.userId,_that.vehicleId,_that.latitudes,_that.longitude,_that.address,_that.notes,_that.detectionMethod,_that.isActive,_that.parkedAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -203,10 +203,10 @@ return $default(_that.id,_that.userId,_that.vehicleId,_that.latitude,_that.longi
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id, @JsonKey(name: 'user_id')  String userId, @JsonKey(name: 'vehicle_id')  String? vehicleId,  double latitude,  double longitude,  String? address,  String? notes, @JsonKey(name: 'detection_method')  String detectionMethod, @JsonKey(name: 'is_active')  bool isActive, @JsonKey(name: 'parked_at')  String parkedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id, @JsonKey(name: 'user_id')  String userId, @JsonKey(name: 'vehicle_id')  String? vehicleId,  double latitudes,  double longitude,  String? address,  String? notes, @JsonKey(name: 'detection_method')  String detectionMethod, @JsonKey(name: 'is_active')  bool isActive, @JsonKey(name: 'parked_at')  String parkedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _ParkingModel() when $default != null:
-return $default(_that.id,_that.userId,_that.vehicleId,_that.latitude,_that.longitude,_that.address,_that.notes,_that.detectionMethod,_that.isActive,_that.parkedAt);case _:
+return $default(_that.id,_that.userId,_that.vehicleId,_that.latitudes,_that.longitude,_that.address,_that.notes,_that.detectionMethod,_that.isActive,_that.parkedAt);case _:
   return null;
 
 }
@@ -218,13 +218,13 @@ return $default(_that.id,_that.userId,_that.vehicleId,_that.latitude,_that.longi
 @JsonSerializable()
 
 class _ParkingModel implements ParkingModel {
-  const _ParkingModel({required this.id, @JsonKey(name: 'user_id') required this.userId, @JsonKey(name: 'vehicle_id') this.vehicleId, required this.latitude, required this.longitude, this.address, this.notes, @JsonKey(name: 'detection_method') required this.detectionMethod, @JsonKey(name: 'is_active') required this.isActive, @JsonKey(name: 'parked_at') required this.parkedAt});
+  const _ParkingModel({required this.id, @JsonKey(name: 'user_id') required this.userId, @JsonKey(name: 'vehicle_id') this.vehicleId, required this.latitudes, required this.longitude, this.address, this.notes, @JsonKey(name: 'detection_method') required this.detectionMethod, @JsonKey(name: 'is_active') required this.isActive, @JsonKey(name: 'parked_at') required this.parkedAt});
   factory _ParkingModel.fromJson(Map<String, dynamic> json) => _$ParkingModelFromJson(json);
 
 @override final  String id;
 @override@JsonKey(name: 'user_id') final  String userId;
 @override@JsonKey(name: 'vehicle_id') final  String? vehicleId;
-@override final  double latitude;
+@override final  double latitudes;
 @override final  double longitude;
 @override final  String? address;
 @override final  String? notes;
@@ -245,16 +245,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ParkingModel&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.vehicleId, vehicleId) || other.vehicleId == vehicleId)&&(identical(other.latitude, latitude) || other.latitude == latitude)&&(identical(other.longitude, longitude) || other.longitude == longitude)&&(identical(other.address, address) || other.address == address)&&(identical(other.notes, notes) || other.notes == notes)&&(identical(other.detectionMethod, detectionMethod) || other.detectionMethod == detectionMethod)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.parkedAt, parkedAt) || other.parkedAt == parkedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ParkingModel&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.vehicleId, vehicleId) || other.vehicleId == vehicleId)&&(identical(other.latitudes, latitudes) || other.latitudes == latitudes)&&(identical(other.longitude, longitude) || other.longitude == longitude)&&(identical(other.address, address) || other.address == address)&&(identical(other.notes, notes) || other.notes == notes)&&(identical(other.detectionMethod, detectionMethod) || other.detectionMethod == detectionMethod)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.parkedAt, parkedAt) || other.parkedAt == parkedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,userId,vehicleId,latitude,longitude,address,notes,detectionMethod,isActive,parkedAt);
+int get hashCode => Object.hash(runtimeType,id,userId,vehicleId,latitudes,longitude,address,notes,detectionMethod,isActive,parkedAt);
 
 @override
 String toString() {
-  return 'ParkingModel(id: $id, userId: $userId, vehicleId: $vehicleId, latitude: $latitude, longitude: $longitude, address: $address, notes: $notes, detectionMethod: $detectionMethod, isActive: $isActive, parkedAt: $parkedAt)';
+  return 'ParkingModel(id: $id, userId: $userId, vehicleId: $vehicleId, latitudes: $latitudes, longitude: $longitude, address: $address, notes: $notes, detectionMethod: $detectionMethod, isActive: $isActive, parkedAt: $parkedAt)';
 }
 
 
@@ -265,7 +265,7 @@ abstract mixin class _$ParkingModelCopyWith<$Res> implements $ParkingModelCopyWi
   factory _$ParkingModelCopyWith(_ParkingModel value, $Res Function(_ParkingModel) _then) = __$ParkingModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id,@JsonKey(name: 'user_id') String userId,@JsonKey(name: 'vehicle_id') String? vehicleId, double latitude, double longitude, String? address, String? notes,@JsonKey(name: 'detection_method') String detectionMethod,@JsonKey(name: 'is_active') bool isActive,@JsonKey(name: 'parked_at') String parkedAt
+ String id,@JsonKey(name: 'user_id') String userId,@JsonKey(name: 'vehicle_id') String? vehicleId, double latitudes, double longitude, String? address, String? notes,@JsonKey(name: 'detection_method') String detectionMethod,@JsonKey(name: 'is_active') bool isActive,@JsonKey(name: 'parked_at') String parkedAt
 });
 
 
@@ -282,12 +282,12 @@ class __$ParkingModelCopyWithImpl<$Res>
 
 /// Create a copy of ParkingModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? userId = null,Object? vehicleId = freezed,Object? latitude = null,Object? longitude = null,Object? address = freezed,Object? notes = freezed,Object? detectionMethod = null,Object? isActive = null,Object? parkedAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? userId = null,Object? vehicleId = freezed,Object? latitudes = null,Object? longitude = null,Object? address = freezed,Object? notes = freezed,Object? detectionMethod = null,Object? isActive = null,Object? parkedAt = null,}) {
   return _then(_ParkingModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,vehicleId: freezed == vehicleId ? _self.vehicleId : vehicleId // ignore: cast_nullable_to_non_nullable
-as String?,latitude: null == latitude ? _self.latitude : latitude // ignore: cast_nullable_to_non_nullable
+as String?,latitudes: null == latitudes ? _self.latitudes : latitudes // ignore: cast_nullable_to_non_nullable
 as double,longitude: null == longitude ? _self.longitude : longitude // ignore: cast_nullable_to_non_nullable
 as double,address: freezed == address ? _self.address : address // ignore: cast_nullable_to_non_nullable
 as String?,notes: freezed == notes ? _self.notes : notes // ignore: cast_nullable_to_non_nullable

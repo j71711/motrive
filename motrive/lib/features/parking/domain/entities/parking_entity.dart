@@ -7,9 +7,9 @@ class ParkingEntity extends Equatable {
 
   final String? vehicleId;
 
-  final double latitude;
+ final double latitudes;
 
-  final double longitude;
+final double longitude;
 
   final String? address;
 
@@ -25,7 +25,7 @@ class ParkingEntity extends Equatable {
     required this.id,
     required this.userId,
     this.vehicleId,
-    required this.latitude,
+    required this.latitudes,
     required this.longitude,
     this.address,
     this.notes,
@@ -39,7 +39,7 @@ class ParkingEntity extends Equatable {
     id,
     userId,
     vehicleId,
-    latitude,
+    latitudes,
     longitude,
     address,
     notes,
