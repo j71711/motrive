@@ -19,8 +19,6 @@ import 'package:motrive/features/loading/presentation/pages/loading_feature_scre
 import 'package:motrive/features/loading/presentation/cubit/loading_cubit.dart';
 import 'package:motrive/features/parking/presentation/pages/parking_feature_screen.dart';
 import 'package:motrive/features/parking/presentation/cubit/parking_cubit.dart';
-import 'package:motrive/features/add_vehicle/presentation/pages/add_vehicle_feature_screen.dart';
-import 'package:motrive/features/add_vehicle/presentation/cubit/add_vehicle_cubit.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
@@ -97,14 +95,6 @@ class AppRouter {
         builder: (context, state) => BlocProvider(
           create: (context) => LoadingCubit(GetIt.I.get()),
           child: const LoadingFeatureScreen(),
-        ),
-      ),
-
-      GoRoute(
-        path: Routes.addVehicle,
-        builder: (context, state) => BlocProvider(
-          create: (context) => AddVehicleCubit(GetIt.I.get()),
-          child: const AddVehicleFeatureScreen(),
         ),
       ),
 

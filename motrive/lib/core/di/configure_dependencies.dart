@@ -11,7 +11,6 @@ import 'package:motrive/features/loading/di/loading_di.dart';
 import 'package:motrive/features/parking/di/parking_di.dart';
 import 'package:motrive/features/sub/maintenance_alert/di/maintenance_alert_di.dart';
 import 'package:motrive/features/sub/vehicle_card/di/vehicle_card_di.dart';
-import 'package:motrive/features/add_vehicle/di/add_vehicle_di.dart';
 
 @InjectableInit(
   initializerName: 'init',
@@ -32,5 +31,4 @@ Future<void> configureDependencies() async {
   configureParking(getIt);
   configureMaintenanceAlertSub(getIt);
   configureVehicleCardSub(getIt);
-  configureAddVehicle(getIt);
 }

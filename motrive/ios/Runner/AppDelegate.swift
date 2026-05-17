@@ -21,7 +21,7 @@ import GoogleMaps
     }
     GeneratedPluginRegistrant.register(with: engineBridge.pluginRegistry)
 
-    GMSServices.provideAPIKey("YOUR_GOOGLE_MAPS_API_KEY")
+    GMSServices.provideAPIKey(" AIzaSyBt4gNdEkOQmv4--y9_f2_UgwAmTheTjdY")
 
     GeneratedPluginRegistrant.register(with: self)
 
