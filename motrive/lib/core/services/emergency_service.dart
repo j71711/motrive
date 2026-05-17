@@ -62,5 +62,6 @@ class EmergencyService {
     return Geolocator.getCurrentPosition(
       desiredAccuracy: LocationAccuracy.high,
     );
+    
   }
 }
