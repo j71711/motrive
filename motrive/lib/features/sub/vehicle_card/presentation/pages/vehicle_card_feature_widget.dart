@@ -10,48 +10,50 @@ import 'package:skeletonizer/skeletonizer.dart';
 
 class VehicleCardFeatureWidget extends StatelessWidget {
   const VehicleCardFeatureWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => VehicleCardCubit(GetIt.I.get()),
+      create: (_) => VehicleCardCubit(GetIt.I.get())..getVehicleCardMethod(),
       child: Builder(
         builder: (context) {
           final cubit = context.read<VehicleCardCubit>();
+
           return BlocBuilder<VehicleCardCubit, VehicleCardState>(
             builder: (context, state) {
               switch (state) {
                 case VehicleCardInitialState _:
-                  return Skeletonizer(
+                  return const Skeletonizer(
                     child: VehicleCardWidget(isExpanded: false),
                   );
+
                 case VehicleCardSuccessState _:
                   return InkWell(
-                    onTap: () => cubit.expandInfo(
-                      vehicle: state.vehicle,
-                      isExpanded: !state.isExpanded,
-                    ),
+                    borderRadius: BorderRadius.circular(34),
+                    onTap: () {
+                      cubit.expandInfo(
+                        vehicle: state.vehicle,
+                        isExpanded: !state.isExpanded,
+                      );
+                    },
                     child: VehicleCardWidget(
                       vehicle: state.vehicle,
                       isExpanded: state.isExpanded,
                     ),
                   );
+
                 default:
                   return InkWell(
-                    onTap: () async =>
-                        await context.push(Routes.addVehicle).then((value) {
-                          if (value == true) {
-                            cubit.getVehicleCardMethod();
-                          }
-                        }),
-                    child: Container(
-                      margin: const EdgeInsets.all(16),
-                      padding: const EdgeInsets.all(20),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(24),
-                        border: Border.all(),
-                      ),
-                      child: const Text("Add your first vehicle car"),
+                    borderRadius: BorderRadius.circular(34),
+                    onTap: () async {
+                      final value = await context.push(Routes.addVehicle);
+
+                      if (value == true) {
+                        cubit.getVehicleCardMethod();
+                      }
+                    },
+                    child: const VehicleCardWidget(
+                      isExpanded: false,
                     ),
                   );
               }
