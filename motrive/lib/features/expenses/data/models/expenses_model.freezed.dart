@@ -13,9 +13,9 @@ part of 'expenses_model.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$ExpensesModel {
+mixin _$ExpensesModel implements DiagnosticableTreeMixin {
 
- int get id; String get firstName; String get lastName;
+ String get id; String get category;@JsonKey(fromJson: toDouble) double? get cost;@JsonKey(name: 'expense_date') DateTime? get expenseDate;@JsonKey(name: 'odometer_at_expense', fromJson: toInt) int get odometer; String? get notes;
 /// Create a copy of ExpensesModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,19 +25,25 @@ $ExpensesModelCopyWith<ExpensesModel> get copyWith => _$ExpensesModelCopyWithImp
   /// Serializes this ExpensesModel to a JSON map.
   Map<String, dynamic> toJson();
 
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'ExpensesModel'))
+    ..add(DiagnosticsProperty('id', id))..add(DiagnosticsProperty('category', category))..add(DiagnosticsProperty('cost', cost))..add(DiagnosticsProperty('expenseDate', expenseDate))..add(DiagnosticsProperty('odometer', odometer))..add(DiagnosticsProperty('notes', notes));
+}
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ExpensesModel&&(identical(other.id, id) || other.id == id)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ExpensesModel&&(identical(other.id, id) || other.id == id)&&(identical(other.category, category) || other.category == category)&&(identical(other.cost, cost) || other.cost == cost)&&(identical(other.expenseDate, expenseDate) || other.expenseDate == expenseDate)&&(identical(other.odometer, odometer) || other.odometer == odometer)&&(identical(other.notes, notes) || other.notes == notes));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,firstName,lastName);
+int get hashCode => Object.hash(runtimeType,id,category,cost,expenseDate,odometer,notes);
 
 @override
-String toString() {
-  return 'ExpensesModel(id: $id, firstName: $firstName, lastName: $lastName)';
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+  return 'ExpensesModel(id: $id, category: $category, cost: $cost, expenseDate: $expenseDate, odometer: $odometer, notes: $notes)';
 }
 
 
@@ -48,7 +54,7 @@ abstract mixin class $ExpensesModelCopyWith<$Res>  {
   factory $ExpensesModelCopyWith(ExpensesModel value, $Res Function(ExpensesModel) _then) = _$ExpensesModelCopyWithImpl;
 @useResult
 $Res call({
- int id, String firstName, String lastName
+ String id, String category,@JsonKey(fromJson: toDouble) double? cost,@JsonKey(name: 'expense_date') DateTime? expenseDate,@JsonKey(name: 'odometer_at_expense', fromJson: toInt) int odometer, String? notes
 });
 
 
@@ -65,12 +71,15 @@ class _$ExpensesModelCopyWithImpl<$Res>
 
 /// Create a copy of ExpensesModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? firstName = null,Object? lastName = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? category = null,Object? cost = freezed,Object? expenseDate = freezed,Object? odometer = null,Object? notes = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
-as String,lastName: null == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
-as String,
+as String,category: null == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
+as String,cost: freezed == cost ? _self.cost : cost // ignore: cast_nullable_to_non_nullable
+as double?,expenseDate: freezed == expenseDate ? _self.expenseDate : expenseDate // ignore: cast_nullable_to_non_nullable
+as DateTime?,odometer: null == odometer ? _self.odometer : odometer // ignore: cast_nullable_to_non_nullable
+as int,notes: freezed == notes ? _self.notes : notes // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 
@@ -155,10 +164,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String firstName,  String lastName)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String category, @JsonKey(fromJson: toDouble)  double? cost, @JsonKey(name: 'expense_date')  DateTime? expenseDate, @JsonKey(name: 'odometer_at_expense', fromJson: toInt)  int odometer,  String? notes)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _ExpensesModel() when $default != null:
-return $default(_that.id,_that.firstName,_that.lastName);case _:
+return $default(_that.id,_that.category,_that.cost,_that.expenseDate,_that.odometer,_that.notes);case _:
   return orElse();
 
 }
@@ -176,10 +185,10 @@ return $default(_that.id,_that.firstName,_that.lastName);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String firstName,  String lastName)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String category, @JsonKey(fromJson: toDouble)  double? cost, @JsonKey(name: 'expense_date')  DateTime? expenseDate, @JsonKey(name: 'odometer_at_expense', fromJson: toInt)  int odometer,  String? notes)  $default,) {final _that = this;
 switch (_that) {
 case _ExpensesModel():
-return $default(_that.id,_that.firstName,_that.lastName);case _:
+return $default(_that.id,_that.category,_that.cost,_that.expenseDate,_that.odometer,_that.notes);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -196,10 +205,10 @@ return $default(_that.id,_that.firstName,_that.lastName);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String firstName,  String lastName)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String category, @JsonKey(fromJson: toDouble)  double? cost, @JsonKey(name: 'expense_date')  DateTime? expenseDate, @JsonKey(name: 'odometer_at_expense', fromJson: toInt)  int odometer,  String? notes)?  $default,) {final _that = this;
 switch (_that) {
 case _ExpensesModel() when $default != null:
-return $default(_that.id,_that.firstName,_that.lastName);case _:
+return $default(_that.id,_that.category,_that.cost,_that.expenseDate,_that.odometer,_that.notes);case _:
   return null;
 
 }
@@ -210,13 +219,16 @@ return $default(_that.id,_that.firstName,_that.lastName);case _:
 /// @nodoc
 @JsonSerializable()
 
-class _ExpensesModel implements ExpensesModel {
-  const _ExpensesModel({required this.id, required this.firstName, required this.lastName});
+class _ExpensesModel with DiagnosticableTreeMixin implements ExpensesModel {
+  const _ExpensesModel({required this.id, required this.category, @JsonKey(fromJson: toDouble) this.cost, @JsonKey(name: 'expense_date') this.expenseDate, @JsonKey(name: 'odometer_at_expense', fromJson: toInt) required this.odometer, this.notes});
   factory _ExpensesModel.fromJson(Map<String, dynamic> json) => _$ExpensesModelFromJson(json);
 
-@override final  int id;
-@override final  String firstName;
-@override final  String lastName;
+@override final  String id;
+@override final  String category;
+@override@JsonKey(fromJson: toDouble) final  double? cost;
+@override@JsonKey(name: 'expense_date') final  DateTime? expenseDate;
+@override@JsonKey(name: 'odometer_at_expense', fromJson: toInt) final  int odometer;
+@override final  String? notes;
 
 /// Create a copy of ExpensesModel
 /// with the given fields replaced by the non-null parameter values.
@@ -228,19 +240,25 @@ _$ExpensesModelCopyWith<_ExpensesModel> get copyWith => __$ExpensesModelCopyWith
 Map<String, dynamic> toJson() {
   return _$ExpensesModelToJson(this, );
 }
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', 'ExpensesModel'))
+    ..add(DiagnosticsProperty('id', id))..add(DiagnosticsProperty('category', category))..add(DiagnosticsProperty('cost', cost))..add(DiagnosticsProperty('expenseDate', expenseDate))..add(DiagnosticsProperty('odometer', odometer))..add(DiagnosticsProperty('notes', notes));
+}
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ExpensesModel&&(identical(other.id, id) || other.id == id)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ExpensesModel&&(identical(other.id, id) || other.id == id)&&(identical(other.category, category) || other.category == category)&&(identical(other.cost, cost) || other.cost == cost)&&(identical(other.expenseDate, expenseDate) || other.expenseDate == expenseDate)&&(identical(other.odometer, odometer) || other.odometer == odometer)&&(identical(other.notes, notes) || other.notes == notes));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,firstName,lastName);
+int get hashCode => Object.hash(runtimeType,id,category,cost,expenseDate,odometer,notes);
 
 @override
-String toString() {
-  return 'ExpensesModel(id: $id, firstName: $firstName, lastName: $lastName)';
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+  return 'ExpensesModel(id: $id, category: $category, cost: $cost, expenseDate: $expenseDate, odometer: $odometer, notes: $notes)';
 }
 
 
@@ -251,7 +269,7 @@ abstract mixin class _$ExpensesModelCopyWith<$Res> implements $ExpensesModelCopy
   factory _$ExpensesModelCopyWith(_ExpensesModel value, $Res Function(_ExpensesModel) _then) = __$ExpensesModelCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String firstName, String lastName
+ String id, String category,@JsonKey(fromJson: toDouble) double? cost,@JsonKey(name: 'expense_date') DateTime? expenseDate,@JsonKey(name: 'odometer_at_expense', fromJson: toInt) int odometer, String? notes
 });
 
 
@@ -268,12 +286,15 @@ class __$ExpensesModelCopyWithImpl<$Res>
 
 /// Create a copy of ExpensesModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? firstName = null,Object? lastName = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? category = null,Object? cost = freezed,Object? expenseDate = freezed,Object? odometer = null,Object? notes = freezed,}) {
   return _then(_ExpensesModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
-as String,lastName: null == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
-as String,
+as String,category: null == category ? _self.category : category // ignore: cast_nullable_to_non_nullable
+as String,cost: freezed == cost ? _self.cost : cost // ignore: cast_nullable_to_non_nullable
+as double?,expenseDate: freezed == expenseDate ? _self.expenseDate : expenseDate // ignore: cast_nullable_to_non_nullable
+as DateTime?,odometer: null == odometer ? _self.odometer : odometer // ignore: cast_nullable_to_non_nullable
+as int,notes: freezed == notes ? _self.notes : notes // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

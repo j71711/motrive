@@ -8,14 +8,22 @@ part of 'expenses_model.dart';
 
 _ExpensesModel _$ExpensesModelFromJson(Map<String, dynamic> json) =>
     _ExpensesModel(
-      id: (json['id'] as num).toInt(),
-      firstName: json['firstName'] as String,
-      lastName: json['lastName'] as String,
+      id: json['id'] as String,
+      category: json['category'] as String,
+      cost: toDouble(json['cost']),
+      expenseDate: json['expense_date'] == null
+          ? null
+          : DateTime.parse(json['expense_date'] as String),
+      odometer: toInt(json['odometer_at_expense']),
+      notes: json['notes'] as String?,
     );
 
 Map<String, dynamic> _$ExpensesModelToJson(_ExpensesModel instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'firstName': instance.firstName,
-      'lastName': instance.lastName,
+      'category': instance.category,
+      'cost': instance.cost,
+      'expense_date': instance.expenseDate?.toIso8601String(),
+      'odometer_at_expense': instance.odometer,
+      'notes': instance.notes,
     };
