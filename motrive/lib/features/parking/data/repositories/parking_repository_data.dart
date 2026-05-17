@@ -42,7 +42,7 @@ final ParkingService parkingService;
   saveParkingLocation() async {
     try {
       await remoteDataSource
-          .saveParkingLocation();
+          .saveParkingLocation(detectionMethod: '');
 
       return const Success(null);
     } catch (error) {

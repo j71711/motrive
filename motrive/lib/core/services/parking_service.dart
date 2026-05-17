@@ -19,18 +19,24 @@ class ParkingService {
     subscription = ActivityRecognition()
         .activityStream()
         .listen((activityData) async {
-      print(activityData.type);
+      //! print(activityData.type);
+    final wasInCar = lastActivity == ActivityType.inVehicle;
+     final nowStoppedOrWalking =
+          activityData.type == ActivityType.still ||
+          activityData.type == ActivityType.walking ||
+          activityData.type == ActivityType.onFoot;
 
-      if (lastActivity == ActivityType.inVehicle &&
-          activityData.type == ActivityType.still &&
-          alreadySaved == false) {
+      if (wasInCar && nowStoppedOrWalking && alreadySaved == false) {
         alreadySaved = true;
 
+        await Future.delayed(const Duration(minutes: 2));
         await Future.delayed(
           const Duration(minutes: 2),
         );
 
-        await remoteDataSource.saveParkingLocation();
+        await remoteDataSource.saveParkingLocation(
+          detectionMethod: 'activity_recognition',
+        );
       }
 
       if (activityData.type == ActivityType.inVehicle) {
@@ -41,10 +47,14 @@ class ParkingService {
     });
   }
   Future<void> manualSaveParking() async {
-    await remoteDataSource.saveParkingLocation();
+    await remoteDataSource.saveParkingLocation(
+          detectionMethod: 'manual',
+    );
   }
 
   void dispose() {
     subscription?.cancel();
   }
 }
+
+
