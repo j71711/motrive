@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -72,18 +73,26 @@ class MaintenanceFeatureScreen extends StatelessWidget {
                             cubit.getMaintenanceMethod(fromRemote: true),
                       ),
                     );
+                  case MaintenanceDataProcessState _:
+                    return Expanded(
+                      child: Column(
+                        mainAxisAlignment: .center,
+                        spacing: 10,
+                        children: [LoadingWidget(), Text(state.status ?? '')],
+                      ),
+                    );
                   case MaintenanceSuccessState _:
                     final vehicle = state.maintenanceEntity.vehicle;
                     final services = state.services;
-                    final nextMaintenance = services.firstWhere(
+                    final nextMaintenance = services.lastWhereOrNull(
                       (element) =>
-                          element.serviceOdometer -
-                              (vehicle.currentOdometer ?? 0) <
-                          2000,
+                          element.serviceOdometer >
+                              (vehicle.currentOdometer ?? 0) &&
+                          !element.done,
                     );
                     final double progress =
                         (vehicle.currentOdometer ?? 0) /
-                        nextMaintenance.serviceOdometer;
+                        (nextMaintenance?.serviceOdometer ?? 1);
 
                     return services.isEmpty
                         ? Center(child: Text('No services'))
@@ -94,7 +103,7 @@ class MaintenanceFeatureScreen extends StatelessWidget {
                                   vehicle: vehicle,
                                   progress: progress,
                                   nextMaintenance:
-                                      nextMaintenance.serviceOdometer,
+                                      nextMaintenance?.serviceOdometer,
                                 ),
                                 if (!(state.allDisplayed ?? false))
                                   state.loadingMore ?? false

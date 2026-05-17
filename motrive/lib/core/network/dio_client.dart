@@ -9,9 +9,9 @@ class DioClient {
   DioClient() {
     _dio = Dio(
       BaseOptions(
-        baseUrl: ApiEndpoints.baseUrl,
-        connectTimeout: const Duration(seconds: 30),
-        receiveTimeout: const Duration(seconds: 30),
+        //baseUrl: ApiEndpoints.baseUrl,
+        connectTimeout: const Duration(seconds: 45),
+        receiveTimeout: const Duration(seconds: 45),
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -38,8 +38,8 @@ class DioClient {
 
   Dio get dio => _dio;
 
-  Future<Response> get(String path, {Map<String, dynamic>? queryParameters}) {
-    return _dio.get(path, queryParameters: queryParameters);
+  Future<Response> get(String path, {Map<String, dynamic>? queryParameters, dynamic data}) {
+    return _dio.get(path, queryParameters: queryParameters,data: data);
   }
 
   Future<Response> post(String path, {dynamic data}) {

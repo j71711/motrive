@@ -12,6 +12,7 @@
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:hive_flutter/adapters.dart' as _i744;
 import 'package:injectable/injectable.dart' as _i526;
+import 'package:motrive/core/network/dio_client.dart' as _i363;
 import 'package:motrive/core/services/user_services.dart' as _i1013;
 import 'package:motrive/features/maintenance/data/datasources/maintenance_local_data_source.dart'
     as _i920;
@@ -39,6 +40,7 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i951.MaintenanceRemoteDataSource(
         gh<_i454.SupabaseClient>(),
         gh<_i1013.UserService>(),
+        gh<_i363.DioClient>(),
       ),
     );
     gh.lazySingleton<_i774.MaintenanceRepositoryDomain>(

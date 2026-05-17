@@ -24,7 +24,7 @@ class VehicleCardFeatureWidget extends StatelessWidget {
                   return Skeletonizer(
                     child: VehicleCardWidget(isExpanded: false),
                   );
-                /* case VehicleCardSuccessState _:
+                case VehicleCardSuccessState _:
                   return InkWell(
                     onTap: () => cubit.expandInfo(
                       vehicle: state.vehicle,
@@ -34,7 +34,7 @@ class VehicleCardFeatureWidget extends StatelessWidget {
                       vehicle: state.vehicle,
                       isExpanded: state.isExpanded,
                     ),
-                  ); */
+                  );
                 default:
                   return InkWell(
                     onTap: () async =>

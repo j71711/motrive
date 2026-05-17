@@ -16,11 +16,6 @@ class VehicleCardRemoteDataSource implements BaseVehicleCardRemoteDataSource {
 
   @override
   Future<UserVehicleModel> getVehicleCard() async {
-    final response = await _supabase
-        .from('vehicles')
-        .select()
-        .eq('user_id', _userService.currentUser!.id)
-        .order('created_at');
-    return UserVehicleModel.fromJson(response.first);
+    return _userService.currentVehicle!;
   }
 }

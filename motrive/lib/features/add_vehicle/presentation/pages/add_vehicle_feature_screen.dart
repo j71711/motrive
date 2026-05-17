@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:motrive/core/extensions/context_extensions.dart';
 import 'package:motrive/core/utils/validators.dart';
 import 'package:motrive/features/add_vehicle/presentation/cubit/add_vehicle_cubit.dart';
 import 'package:motrive/features/add_vehicle/presentation/cubit/add_vehicle_state.dart';
@@ -67,18 +68,52 @@ class AddVehicleFeatureScreen extends HookWidget {
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        dialog((vehicle) {
-          makeController.text = vehicle.make;
-          modelController.text = vehicle.model;
-          yearController.text = vehicle.year.toString();
-          carInfoId = vehicle.id;
-        }, context);
+        if (vehicle == null) {
+          dialog((vehicle) {
+            makeController.text = vehicle.make;
+            modelController.text = vehicle.model;
+            yearController.text = vehicle.year.toString();
+            carInfoId = vehicle.id;
+          }, context);
+        }
       });
       return () {};
     }, []);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('AddVehicle Feature Screen')),
+      appBar: AppBar(
+        title: const Text('Vehicle Info'),
+        actions: [
+          if (vehicle != null)
+            IconButton(
+              onPressed: () async =>
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      content: Text(
+                        'You are about to delete you car permanently!',
+                      ),
+                      title: Text('Car Deletion'),
+                      actions: [
+                        TextButton(
+                          onPressed: () => context.pop(),
+                          child: Text('Cancel'),
+                        ),
+                        FilledButton(
+                          onPressed: () => context.pop(true),
+                          child: Text('Delete'),
+                        ),
+                      ],
+                    ),
+                  ).then((value) {
+                    if (value == true) {
+                      cubit.deleteVehicle(vehicle!);
+                    }
+                  }),
+              icon: Icon(Icons.delete_outline_outlined),
+            ),
+        ],
+      ),
       body: BlocConsumer<AddVehicleCubit, AddVehicleState>(
         listener: (context, state) async {
           if (state is AddVehicleInitialState) {
@@ -181,6 +216,7 @@ class AddVehicleFeatureScreen extends HookWidget {
                           VehicleField(
                             controller: makeController,
                             label: 'Make',
+                            readOnly: vehicle != null,
                             validator: Validators.validateRequired,
                             icon: Icons.car_rental_outlined,
                           ),
@@ -189,6 +225,7 @@ class AddVehicleFeatureScreen extends HookWidget {
                           VehicleField(
                             controller: modelController,
                             label: 'Model',
+                            readOnly: vehicle != null,
                             validator: Validators.validateRequired,
                             icon: Icons.car_rental_outlined,
                           ),
@@ -197,6 +234,7 @@ class AddVehicleFeatureScreen extends HookWidget {
                           VehicleField(
                             controller: yearController,
                             label: 'Year',
+                            readOnly: vehicle != null,
                             icon: Icons.calendar_month_outlined,
                             validator: Validators.validateRequired,
                             keyboardType: TextInputType.number,
@@ -234,7 +272,7 @@ class AddVehicleFeatureScreen extends HookWidget {
                                 if (formKey.currentState!.validate()) {
                                   final UserVehicleEntity
                                   newVehicle = UserVehicleEntity(
-                                    carInfoId: carInfoId,
+                                    carInfoId: vehicle?.carInfoId ?? carInfoId,
                                     make: makeController.text,
                                     model: modelController.text,
                                     year:
@@ -242,10 +280,19 @@ class AddVehicleFeatureScreen extends HookWidget {
                                     color: colorController.text,
                                     licensePlate: licensePlateController.text,
                                     vin: vinController.text,
+                                    id: vehicle?.id,
+                                    currentOdometer:
+                                        int.tryParse(odometerController.text) ??
+                                        0,
                                   );
                                   vehicle == null
                                       ? cubit.getAddVehicleMethod(newVehicle)
-                                      : cubit.updateVehicle(newVehicle);
+                                      : vehicle != newVehicle
+                                      ? cubit.updateVehicle(newVehicle)
+                                      : context.showSnackBar(
+                                          'No data changes',
+                                          isError: true,
+                                        );
                                 }
                               },
                               icon: const Icon(Icons.save_outlined),

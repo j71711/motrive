@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:motrive/core/navigation/routers.dart';
 import 'package:motrive/core/widgets/fade_animated_container.dart';
 import 'package:motrive/features/maintenance/domain/entities/vehicle_entity.dart';
 
@@ -66,7 +68,11 @@ class VehicleCardWidget extends StatelessWidget {
                     Text('Vin: ${vehicle?.vin ?? ''}'),
                   ],
                 ),
-                IconButton(onPressed: () {}, icon: Icon(Icons.edit)),
+                IconButton(
+                  onPressed: () =>
+                      context.push(Routes.addVehicle, extra: vehicle),
+                  icon: Icon(Icons.edit),
+                ),
               ],
             ),
           ),

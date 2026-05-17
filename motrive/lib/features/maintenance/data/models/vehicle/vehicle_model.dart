@@ -37,7 +37,8 @@ extension UserVehicleModelMapper on UserVehicleModel {
       currentOdometer: currentOdometer,
       licensePlate: licensePlate,
       vin: vin,
-      odometerAtRegistered: odometerAtRegistered
+      odometerAtRegistered: odometerAtRegistered,
+      carInfoId: carInfoId
     );
   }
 }
