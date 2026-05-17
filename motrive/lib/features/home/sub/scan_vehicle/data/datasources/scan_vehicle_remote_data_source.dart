@@ -42,13 +42,12 @@ class ScanVehicleRemoteDataSource implements BaseScanVehicleRemoteDataSource {
 
   @override
   Future<void> insertVehicle(ScanVehicleEntity vehicle) async {
-    final userId = _supabase.auth.currentUser?.id;
     await _supabase.from('vehicles').insert({
       'vin': vehicle.vin,
       'make': vehicle.make,
       'model': vehicle.model,
       'year': vehicle.year,
-      'user_id': userId,
+      'user_id': _userService.currentUser!.id,
       'color': vehicle.color,
       'license_plate': vehicle.licensePlate,
     });

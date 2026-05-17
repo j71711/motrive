@@ -18,6 +18,7 @@ _UserVehicleModel _$UserVehicleModelFromJson(Map<String, dynamic> json) =>
       vin: json['vin'] as String?,
       currentOdometer: (json['current_odometer'] as num?)?.toInt(),
       odometerAtRegistered: (json['odometer_at_registered'] as num?)?.toInt(),
+      carInfoId: json['car_info_id'] as String?,
     );
 
 Map<String, dynamic> _$UserVehicleModelToJson(_UserVehicleModel instance) =>
@@ -32,4 +33,5 @@ Map<String, dynamic> _$UserVehicleModelToJson(_UserVehicleModel instance) =>
       'vin': instance.vin,
       'current_odometer': instance.currentOdometer,
       'odometer_at_registered': instance.odometerAtRegistered,
+      'car_info_id': instance.carInfoId,
     };

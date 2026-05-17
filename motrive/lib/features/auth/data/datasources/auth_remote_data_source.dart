@@ -1,8 +1,8 @@
-
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
 import 'package:motrive/core/common/auth_model.dart';
 import 'package:motrive/core/services/user_services.dart';
+import 'package:motrive/features/maintenance/data/models/vehicle/vehicle_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'package:motrive/core/errors/network_exceptions.dart';
@@ -113,6 +113,14 @@ class AuthRemoteDataSource implements BaseAuthRemoteDataSource {
         .maybeSingle();
 
     if (response != null) {
+      final vehicle = await _supabase
+          .from('vehicles')
+          .select()
+          .eq('user_id', response['id'])
+          .maybeSingle();
+      if (vehicle != null) {
+        _userService.setVehicle = UserVehicleModel.fromJson(vehicle);
+      }
       return response;
     }
 

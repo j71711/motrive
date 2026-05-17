@@ -1,11 +1,16 @@
-import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:motrive/core/common/auth_entity.dart';
+import 'package:motrive/features/maintenance/data/models/vehicle/vehicle_model.dart';
 
 @lazySingleton
 class UserService {
-  final ValueNotifier<AuthEntity?> _authEntity = ValueNotifier(null);
-  AuthEntity? get currentUser => _authEntity.value;
-  set setUser(AuthEntity newUser) => _authEntity.value = newUser;
-  void signOut() => _authEntity.value = null;
+  AuthEntity? _authEntity;
+  UserVehicleModel? _userVehicle;
+
+  AuthEntity? get currentUser => _authEntity;
+  set setUser(AuthEntity newUser) => _authEntity = newUser;
+  void signOut() => _authEntity = null;
+
+  UserVehicleModel? get currentVehicle => _userVehicle;
+  set setVehicle(UserVehicleModel newVehicle) => _userVehicle = newVehicle;
 }

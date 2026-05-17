@@ -17,7 +17,8 @@ abstract class UserVehicleModel with _$UserVehicleModel {
     String? licensePlate,
     String? vin,
     int? currentOdometer,
-    int? odometerAtRegistered
+    int? odometerAtRegistered,
+    String? carInfoId
   }) = _UserVehicleModel;
 
   factory UserVehicleModel.fromJson(Map<String, Object?> json) =>

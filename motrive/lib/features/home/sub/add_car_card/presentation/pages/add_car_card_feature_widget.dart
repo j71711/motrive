@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:motrive/features/home/sub/add_car_card/presentation/cubit/add_car_card_cubit.dart';
 import 'package:motrive/features/home/sub/add_car_card/presentation/cubit/add_car_card_state.dart';
 import 'package:motrive/features/home/sub/scan_vehicle/presentation/pages/scan_vehicle_feature_widget.dart';
@@ -42,6 +43,7 @@ class AddCarCardFeatureWidget extends StatelessWidget {
                             final car = state.results[index];
 
                             return ListTile(
+                              onTap: () => context.pop(car),
                               title: Text(car.make ?? ''),
                               subtitle: Text(car.model ?? ''),
                               trailing: Text('${car.year ?? ''}'),
@@ -59,6 +61,7 @@ class AddCarCardFeatureWidget extends StatelessWidget {
                             final car = state.cars[index];
 
                             return ListTile(
+                              onTap: () => context.pop(car),
                               leading: const Icon(Icons.drive_eta),
                               title: Text(car.make ?? ''),
                               subtitle: Text(car.model ?? ''),
@@ -120,9 +123,7 @@ class AddCarCardFeatureWidget extends StatelessWidget {
                               ),
 
                               child: ListTile(
-                                onTap: () {
-                                  Navigator.pop(context, vehicle);
-                                },
+                                onTap: () => context.pop(vehicle),
                                 leading: const Icon(Icons.drive_eta),
                                 trailing: Text(
                                   'Year: ${vehicle.year.toString()}',

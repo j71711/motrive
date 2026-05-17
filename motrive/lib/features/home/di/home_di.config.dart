@@ -56,6 +56,9 @@ extension GetItInjectableX on _i174.GetIt {
     _i526.EnvironmentFilter? environmentFilter,
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
+    gh.lazySingleton<_i737.BaseAddCarCardRemoteDataSource>(
+      () => _i737.AddCarCardRemoteDataSource(gh<_i454.SupabaseClient>()),
+    );
     gh.lazySingleton<_i353.BaseScanVehicleRemoteDataSource>(
       () => _i353.ScanVehicleRemoteDataSource(
         gh<_i56.LocalKeysService>(),
@@ -79,12 +82,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i904.SosRepositoryDomain>(
       () => _i630.SosRepositoryData(gh<_i558.BaseSosRemoteDataSource>()),
-    );
-    gh.lazySingleton<_i737.BaseAddCarCardRemoteDataSource>(
-      () => _i737.AddCarCardRemoteDataSource(
-        gh<_i56.LocalKeysService>(),
-        gh<_i454.SupabaseClient>(),
-      ),
     );
     gh.lazySingleton<_i68.BaseHomeRemoteDataSource>(
       () => _i68.HomeRemoteDataSource(
