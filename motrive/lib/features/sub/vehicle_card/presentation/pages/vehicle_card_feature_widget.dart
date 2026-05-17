@@ -21,9 +21,20 @@ class VehicleCardFeatureWidget extends StatelessWidget {
             builder: (context, state) {
               switch (state) {
                 case VehicleCardInitialState _:
-                  return Skeletonizer(child: VehicleCardWidget());
-                case VehicleCardSuccessState _:
-                  return VehicleCardWidget(vehicle: state.vehicle);
+                  return Skeletonizer(
+                    child: VehicleCardWidget(isExpanded: false),
+                  );
+                /* case VehicleCardSuccessState _:
+                  return InkWell(
+                    onTap: () => cubit.expandInfo(
+                      vehicle: state.vehicle,
+                      isExpanded: !state.isExpanded,
+                    ),
+                    child: VehicleCardWidget(
+                      vehicle: state.vehicle,
+                      isExpanded: state.isExpanded,
+                    ),
+                  ); */
                 default:
                   return InkWell(
                     onTap: () async =>

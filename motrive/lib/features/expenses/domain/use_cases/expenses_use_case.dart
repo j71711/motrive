@@ -4,7 +4,6 @@ import 'package:motrive/core/errors/failure.dart';
 import 'package:motrive/features/expenses/domain/entities/expenses_entity.dart';
 import 'package:motrive/features/expenses/domain/repositories/expenses_repository_domain.dart';
 
-
 @lazySingleton
 class ExpensesUseCase {
   final ExpensesRepositoryDomain _repositoryData;

@@ -17,7 +17,10 @@ class NavBar extends StatelessWidget {
             icon: Icon(Icons.car_repair),
             label: 'Maintenance',
           ),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.attach_money),
+            label: 'Expenses',
+          ),
           BottomNavigationBarItem(
             icon: Icon(Icons.location_city),
             label: 'location',

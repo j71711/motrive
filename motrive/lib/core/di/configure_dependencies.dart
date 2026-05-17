@@ -1,7 +1,9 @@
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:motrive/core/di/configure_dependencies.config.dart';
+import 'package:motrive/features/add_vehicle/di/add_vehicle_di.dart';
 import 'package:motrive/features/auth/di/auth_di.dart';
+import 'package:motrive/features/expenses/di/expenses_di.dart';
 import 'package:motrive/features/home/di/home_di.dart';
 import 'package:motrive/features/profile/di/profile_di.dart';
 import 'package:motrive/features/maintenance/di/maintenance_di.dart';
@@ -31,4 +33,6 @@ Future<void> configureDependencies() async {
   configureParking(getIt);
   configureMaintenanceAlertSub(getIt);
   configureVehicleCardSub(getIt);
+  configureAddVehicle(getIt);
+  configureExpenses(getIt);
 }
