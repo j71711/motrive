@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:motrive/core/extensions/context_extensions.dart';
-import 'package:motrive/core/widgets/loading_widget.dart';
 import 'package:motrive/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:motrive/features/auth/presentation/cubit/auth_state.dart';
 import 'package:pinput/pinput.dart';

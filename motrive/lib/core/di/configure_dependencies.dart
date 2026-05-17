@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:motrive/core/di/configure_dependencies.config.dart';
 import 'package:injectable/injectable.dart';
+import 'package:motrive/core/di/configure_dependencies.config.dart';
 import 'package:motrive/features/auth/di/auth_di.dart';
 import 'package:motrive/features/home/di/home_di.dart';
 import 'package:motrive/features/profile/di/profile_di.dart';
@@ -31,6 +31,6 @@ Future<void> configureDependencies() async {
   configureLoading(getIt);
   configureParking(getIt);
   configureMaintenanceAlertSub(getIt);
-    configureVehicleCardSub(getIt);
-    configureAddVehicle(getIt);
+  configureVehicleCardSub(getIt);
+  configureAddVehicle(getIt);
 }

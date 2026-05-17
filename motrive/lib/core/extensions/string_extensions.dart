@@ -35,7 +35,7 @@ extension StringExtensions on String {
   }
 
   /// Validate if string contains only numbers
-  bool get isNumeric => RegExp(r'^d+$').hasMatch(this);
+  bool get isNumeric => RegExp(r'^\d+$').hasMatch(this);
 
   /// Validate if string contains only letters
   bool get isAlphabetic => RegExp(r'^[A-Za-z]+$').hasMatch(this);

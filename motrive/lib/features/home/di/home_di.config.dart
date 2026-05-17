@@ -31,6 +31,22 @@ import 'package:motrive/features/home/sub/add_car_card/domain/repositories/add_c
     as _i521;
 import 'package:motrive/features/home/sub/add_car_card/domain/use_cases/add_car_card_use_case.dart'
     as _i280;
+import 'package:motrive/features/home/sub/add_expense/data/datasources/add_expense_remote_data_source.dart'
+    as _i921;
+import 'package:motrive/features/home/sub/add_expense/data/repositories/add_expense_repository_data.dart'
+    as _i391;
+import 'package:motrive/features/home/sub/add_expense/domain/repositories/add_expense_repository_domain.dart'
+    as _i963;
+import 'package:motrive/features/home/sub/add_expense/domain/use_cases/add_expense_use_case.dart'
+    as _i1057;
+import 'package:motrive/features/home/sub/chat_bot/data/datasources/chat_bot_remote_data_source.dart'
+    as _i279;
+import 'package:motrive/features/home/sub/chat_bot/data/repositories/chat_bot_repository_data.dart'
+    as _i810;
+import 'package:motrive/features/home/sub/chat_bot/domain/repositories/chat_bot_repository_domain.dart'
+    as _i641;
+import 'package:motrive/features/home/sub/chat_bot/domain/use_cases/chat_bot_use_case.dart'
+    as _i403;
 import 'package:motrive/features/home/sub/scan_vehicle/data/datasources/scan_vehicle_remote_data_source.dart'
     as _i353;
 import 'package:motrive/features/home/sub/scan_vehicle/data/repositories/scan_vehicle_repository_data.dart'
@@ -80,6 +96,25 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i198.ScanVehicleUseCase>(
       () => _i198.ScanVehicleUseCase(gh<_i723.ScanVehicleRepositoryDomain>()),
     );
+    gh.lazySingleton<_i279.BaseChatBotRemoteDataSource>(
+      () => _i279.ChatBotRemoteDataSource(
+        gh<_i56.LocalKeysService>(),
+        gh<_i454.SupabaseClient>(),
+      ),
+    );
+    gh.lazySingleton<_i921.BaseAddExpenseRemoteDataSource>(
+      () => _i921.AddExpenseRemoteDataSource(
+        gh<_i56.LocalKeysService>(),
+        gh<_i454.SupabaseClient>(),
+      ),
+    );
+    gh.lazySingleton<_i641.ChatBotRepositoryDomain>(
+      () =>
+          _i810.ChatBotRepositoryData(gh<_i279.BaseChatBotRemoteDataSource>()),
+    );
+    gh.lazySingleton<_i403.ChatBotUseCase>(
+      () => _i403.ChatBotUseCase(gh<_i641.ChatBotRepositoryDomain>()),
+    );
     gh.lazySingleton<_i904.SosRepositoryDomain>(
       () => _i630.SosRepositoryData(gh<_i558.BaseSosRemoteDataSource>()),
     );
@@ -89,11 +124,20 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i454.SupabaseClient>(),
       ),
     );
+    gh.lazySingleton<_i963.AddExpenseRepositoryDomain>(
+      () => _i391.AddExpenseRepositoryData(
+        gh<_i921.BaseAddExpenseRemoteDataSource>(),
+        gh<_i737.VehicleLocalDataSource>(),
+      ),
+    );
     gh.lazySingleton<_i521.AddCarCardRepositoryDomain>(
       () => _i924.AddCarCardRepositoryData(
         gh<_i737.BaseAddCarCardRemoteDataSource>(),
         gh<_i737.VehicleLocalDataSource>(),
       ),
+    );
+    gh.lazySingleton<_i1057.AddExpenseUseCase>(
+      () => _i1057.AddExpenseUseCase(gh<_i963.AddExpenseRepositoryDomain>()),
     );
     gh.lazySingleton<_i168.SosUseCase>(
       () => _i168.SosUseCase(gh<_i904.SosRepositoryDomain>()),

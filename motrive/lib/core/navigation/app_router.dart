@@ -22,7 +22,6 @@ import 'package:motrive/features/parking/presentation/cubit/parking_cubit.dart';
 import 'package:motrive/features/add_vehicle/presentation/pages/add_vehicle_feature_screen.dart';
 import 'package:motrive/features/add_vehicle/presentation/cubit/add_vehicle_cubit.dart';
 
-
 class AppRouter {
   static final GoRouter router = GoRouter(
     initialLocation: Routes.loading,
@@ -94,41 +93,31 @@ class AppRouter {
       ),
 
       GoRoute(
-        path: Routes.maintenanceDetails,
-        builder: (context, state) => BlocProvider(
-          create: (context) => MaintenanceDetailsCubit(GetIt.I.get()),
-          child: MaintenanceDetailsFeatureScreen(
-            serviceInfo: state.extra as ServiceInfoEntity,
-          ),
-        ),
-      ),
-
-      GoRoute(
-        path: Routes.maintenanceDetails,
-        builder: (context, state) => BlocProvider(
-          create: (context) => MaintenanceDetailsCubit(GetIt.I.get()),
-          child: MaintenanceDetailsFeatureScreen(
-            serviceInfo: state.extra as ServiceInfoEntity,
-          ),
-        ),
-      ),
-
-      GoRoute(
         path: Routes.loading,
         builder: (context, state) => BlocProvider(
           create: (context) => LoadingCubit(GetIt.I.get()),
           child: const LoadingFeatureScreen(),
         ),
       ),
-    
-  GoRoute(
-    path: Routes.addVehicle,
-    builder: (context, state) => BlocProvider(
+
+      GoRoute(
+        path: Routes.addVehicle,
+        builder: (context, state) => BlocProvider(
           create: (context) => AddVehicleCubit(GetIt.I.get()),
           child: const AddVehicleFeatureScreen(),
         ),
-  ),
-],
+      ),
+
+      GoRoute(
+        path: Routes.maintenanceDetails,
+        builder: (context, state) => BlocProvider(
+          create: (context) => MaintenanceDetailsCubit(GetIt.I.get()),
+          child: MaintenanceDetailsFeatureScreen(
+            serviceInfo: state.extra as ServiceInfoEntity,
+          ),
+        ),
+      ),
+    ],
 
     errorBuilder: (context, state) =>
         Scaffold(body: Center(child: Text('Page not found: ${state.uri}'))),

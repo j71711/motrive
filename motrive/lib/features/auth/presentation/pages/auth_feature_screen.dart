@@ -160,7 +160,6 @@ class AuthFeatureScreen extends HookWidget {
                             controller: emailController,
                             textInputType: TextInputType.emailAddress,
                           ),
-
                           SizedBox(
                             height: 56,
                             width: double.infinity,
@@ -291,7 +290,6 @@ class AuthFeatureScreen extends HookWidget {
                               ),
                             ),
                           ),
-
                           const Gap(30),
                         ],
                       ),
