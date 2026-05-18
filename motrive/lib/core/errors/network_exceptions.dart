@@ -3,12 +3,14 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'failure.dart';
 
 class FailureExceptions {
   static Failure getException(Object error) {
+     Sentry.captureException(error);
     log(error.toString());
     return switch (error) {
       DioException e => _handleDio(e),
