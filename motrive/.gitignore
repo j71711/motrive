@@ -12,6 +12,7 @@
 .swiftpm/
 migrate_working_dir/
 .env
+sentry-wizard.exe
 
 
 # IntelliJ related
