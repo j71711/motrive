@@ -21,7 +21,7 @@ class HomeFeatureScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<HomeCubit>();
+  final  _ =  context.read<HomeCubit>();
 
 
     return Scaffold(
