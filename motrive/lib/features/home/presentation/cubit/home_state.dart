@@ -8,9 +8,7 @@ abstract class HomeState extends Equatable {
 }
 
 class HomeInitialState extends HomeState {}
-class HomeSuccessState extends HomeState {
-  get homeEntity => null;
-}
+class HomeSuccessState extends HomeState {}
 
 class HomeErrorState extends HomeState {
   final String message;

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:glass_kit/glass_kit.dart';
 
 Widget buildGlassCard({
   required BuildContext context,
@@ -11,22 +10,16 @@ Widget buildGlassCard({
   return InkWell(
     onTap: onTap,
     borderRadius: BorderRadius.circular(26),
-    child: GlassContainer.frostedGlass(
+    child: Container(
       height: 135,
-      borderRadius: BorderRadius.circular(26),
-      blur: 10,
-      borderWidth: 1,
-      borderColor: Theme.of(context).colorScheme.primary.withValues(alpha: .14),
-      shadowColor: Theme.of(context).colorScheme.primary.withValues(alpha: .08),
-      gradient: LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: [
-          Theme.of(context).colorScheme.surface.withValues(alpha: .85),
-          Theme.of(context).colorScheme.surface.withValues(alpha: .45),
-        ],
+   
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
+        borderRadius: BorderRadius.circular(26),
+        border: Border.all(
+          color: Theme.of(context).colorScheme.primary.withValues(alpha: .08),
+        ),
       ),
-      padding: const EdgeInsets.all(14),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

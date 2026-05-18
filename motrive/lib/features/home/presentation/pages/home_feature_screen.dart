@@ -29,45 +29,38 @@ class HomeFeatureScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).colorScheme.primary,
         shape: const CircleBorder(),
-
         onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => const ChatBotFeatureWidget()),
           );
         },
-
         child: Icon(
           Icons.chat_bubble_outline_rounded,
           color: Theme.of(context).colorScheme.surface,
           size: 30,
         ),
       ),
-
       body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
               height: 410,
               width: double.infinity,
-
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(38),
                   bottomRight: Radius.circular(38),
                 ),
-
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-
                   colors: [
                     Theme.of(context).colorScheme.primary,
                     Theme.of(context).colorScheme.secondary,
                   ],
                 ),
               ),
-
               child: Stack(
                 children: [
                   const Positioned(
@@ -75,93 +68,69 @@ class HomeFeatureScreen extends StatelessWidget {
                     left: -60,
                     child: Circle(size: 180, opacity: .12),
                   ),
-
                   const Positioned(
                     top: 70,
                     right: -45,
                     child: Circle(size: 140, opacity: .12),
                   ),
-
                   SafeArea(
                     child: Padding(
-                      padding: const EdgeInsets.all(32.0),
+                      padding: const EdgeInsets.all(8),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                      
                         children: [
                           const Gap(8),
-                      
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      
                             children: [
                               GlassContainer.clearGlass(
                                 height: 54,
                                 width: 54,
-                                                    
                                 borderRadius: BorderRadius.circular(100),
-                                                    
                                 child: IconButton(
                                   onPressed: () {
                                     context.push(Routes.profile);
                                   },
-                                                    
                                   icon: Icon(
                                     Icons.person_outline_rounded,
-                                                    
                                     color: Theme.of(
                                       context,
                                     ).colorScheme.surface,
                                   ),
                                 ),
                               ),
-                      
                               GlassContainer.clearGlass(
                                 height: 54,
                                 width: 54,
-                                                    
                                 borderRadius: BorderRadius.circular(100),
-                                                    
                                 child: Icon(
                                   Icons.notifications_none_rounded,
-                                                    
                                   color: Theme.of(context).colorScheme.surface,
                                 ),
                               ),
                             ],
                           ),
-                      
                           const Gap(8),
-                      
                           Text(
-                            'Welcome ',
-                      
+                            'Welcome',
                             style: TextStyle(
                               color: Theme.of(context).colorScheme.surface,
-                      
-                              fontSize: 30,
+                              fontSize: 24,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                      
                           const Gap(8),
-                      
                           Text(
                             'Manage your car easily',
-                      
                             style: TextStyle(
                               color: Theme.of(
                                 context,
                               ).colorScheme.surface.withValues(alpha: .85),
-                      
-                              fontSize: 17,
-                              fontWeight: FontWeight.normal,
+                              fontSize: 12,
                             ),
                           ),
-                      
-                        
-                      
-                          VehicleCardFeatureWidget(),
+
+                          const VehicleCardFeatureWidget(),
                         ],
                       ),
                     ),
@@ -170,89 +139,65 @@ class HomeFeatureScreen extends StatelessWidget {
               ),
             ),
 
-            const Gap(30),
-
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-
                 children: [
+                  const Gap(16),
+
                   sectionTitle(context, 'Emergency'),
 
-                  const Gap(14),
-
+                  const Gap(16),
                   const SosFeatureWidget(),
 
-                  const Gap(30),
-
+                  const Gap(16),
+                  const Gap(16),
                   sectionTitle(context, 'Quick Access'),
-
-                  const Gap(18),
 
                   GridView.count(
                     shrinkWrap: true,
-
                     physics: const NeverScrollableScrollPhysics(),
-
                     crossAxisCount: 2,
-
                     crossAxisSpacing: 16,
                     mainAxisSpacing: 16,
-
-                    childAspectRatio: 1.15,
-
+                    childAspectRatio: 1.45,
                     children: [
                       buildGlassCard(
                         context: context,
-
                         icon: Icons.build_rounded,
-
                         title: 'Maintenance',
-
                         onTap: () {
                           showModalBottomSheet(
                             context: context,
-
                             isScrollControlled: true,
-
                             backgroundColor: Theme.of(
                               context,
                             ).colorScheme.surface,
-
                             shape: const RoundedRectangleBorder(
                               borderRadius: BorderRadius.vertical(
                                 top: Radius.circular(28),
                               ),
                             ),
-
                             builder: (_) {
                               return const Padding(
                                 padding: EdgeInsets.all(16),
-
                                 child: MaintenanceAlertFeatureWidget(),
                               );
                             },
                           );
                         },
                       ),
-
                       buildGlassCard(
                         context: context,
-
                         icon: Icons.location_on_outlined,
-
                         title: 'Save Location',
-
                         onTap: () async {
                           await ParkingCubit(
                             GetIt.I.get(),
                           ).manualSaveParkingMethod();
 
-                          if (!context.mounted) {
-                            return;
-                          }
+                          if (!context.mounted) return;
 
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
@@ -261,38 +206,25 @@ class HomeFeatureScreen extends StatelessWidget {
                           );
                         },
                       ),
-
                       buildGlassCard(
                         context: context,
-
                         icon: Icons.notifications_none_rounded,
-
                         title: 'Notification',
-
                         onTap: () {},
                       ),
-
                       buildGlassCard(
                         context: context,
-
                         icon: Icons.attach_money_rounded,
-
                         title: 'Expenses',
-
                         onTap: () {
                           showModalBottomSheet(
                             context: context,
-
                             isScrollControlled: true,
-
                             backgroundColor: AppColors.background,
-
                             elevation: 0,
-
                             builder: (_) {
                               return SizedBox(
                                 height: 70.sh,
-
                                 child: const AddExpenseFeatureWidget(),
                               );
                             },
@@ -301,6 +233,8 @@ class HomeFeatureScreen extends StatelessWidget {
                       ),
                     ],
                   ),
+
+                  const Gap(100),
                 ],
               ),
             ),
