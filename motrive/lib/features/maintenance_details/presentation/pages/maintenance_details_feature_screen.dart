@@ -25,25 +25,37 @@ class MaintenanceDetailsFeatureScreen extends StatelessWidget {
         actions: [
           BlocBuilder<MaintenanceDetailsCubit, MaintenanceDetailsState>(
             builder: (context, state) {
-              return IconButton.filled(
-                onPressed: () async {
-                  if (state is! MaintenanceDetailsSuccessState) {
-                    return;
-                  }
-                  await showDialog(
-                    context: context,
-                    builder: (context) => SaveServiceFeatureWidget(
-                      serviceInfo: serviceInfo,
-                      vehicle: state.maintenanceDetails.vehicle,
-                    ),
-                  ).then((value) {
-                    if (value == true && context.mounted) {
-                      context.pop(true);
+              if (!serviceInfo.done) {
+                return IconButton.filled(
+                  onPressed: () async {
+                    if (state is! MaintenanceDetailsSuccessState) {
+                      return;
                     }
-                  });
-                },
-                icon: Icon(Icons.done),
-              );
+                    await showDialog(
+                      context: context,
+                      builder: (context) => SaveServiceFeatureWidget(
+                        serviceInfo: serviceInfo,
+                        vehicle: state.maintenanceDetails.vehicle,
+                      ),
+                    ).then((value) {
+                      if (value == true && context.mounted) {
+                        context.pop(true);
+                      }
+                    });
+                  },
+                  icon: Icon(Icons.done),
+                );
+              } else {
+                return Container(
+                  padding: .all(8),
+                  decoration: BoxDecoration(
+                    borderRadius: .circular(18),
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+
+                  child: Text('Done'),
+                );
+              }
             },
           ),
         ],
