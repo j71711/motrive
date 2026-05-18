@@ -15,7 +15,6 @@ import flutter_local_notifications
       GeneratedPluginRegistrant.register(with: registry)
     }
 
-    GMSServices.provideAPIKey("AIzaSyBt4gNdEkOQmv4--y9_f2_UgwAmTheTjdY")
 
     GeneratedPluginRegistrant.register(with: self)
 
