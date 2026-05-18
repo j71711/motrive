@@ -176,17 +176,8 @@ class AddVehicleFeatureScreen extends HookWidget {
                               ),
                             ),
                           ),
-                          const Gap(12),
-                          Text(
-                            'Vehicle Information',
-                            style: TextStyle(fontSize: 20, fontWeight: .bold),
-                          ),
+                        
                           const Gap(8),
-                          Text(
-                            'Review and edit vehicle details before saving.',
-                          ),
-
-                          const Gap(32),
                           VehicleField(
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,

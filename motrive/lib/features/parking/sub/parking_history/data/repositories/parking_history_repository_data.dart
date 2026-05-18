@@ -25,4 +25,5 @@ class ParkingHistoryRepositoryData implements ParkingHistoryRepositoryDomain {
       return Error(FailureExceptions.getException(error));
     }
   }
+  
 }

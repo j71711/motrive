@@ -10,51 +10,59 @@ import 'package:skeletonizer/skeletonizer.dart';
 
 class VehicleCardFeatureWidget extends StatelessWidget {
   const VehicleCardFeatureWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => VehicleCardCubit(GetIt.I.get()),
+      create: (_) => VehicleCardCubit(GetIt.I.get())..getVehicleCardMethod(),
       child: Builder(
         builder: (context) {
           final cubit = context.read<VehicleCardCubit>();
+
           return BlocBuilder<VehicleCardCubit, VehicleCardState>(
             builder: (context, state) {
+              Widget child;
+
               switch (state) {
                 case VehicleCardInitialState _:
-                  return Skeletonizer(
+                  child = const Skeletonizer(
+                    enabled: true,
                     child: VehicleCardWidget(isExpanded: false),
                   );
+                  break;
+
                 case VehicleCardSuccessState _:
-                  return InkWell(
-                    onTap: () => cubit.expandInfo(
+                  child = VehicleCardWidget(
+                    vehicle: state.vehicle,
+                    isExpanded: state.isExpanded,
+                  );
+                  break;
+
+                default:
+                  child = const VehicleCardWidget(isExpanded: false);
+              }
+
+              return InkWell(
+                borderRadius: BorderRadius.circular(28),
+                onTap: () async {
+                  if (state is VehicleCardSuccessState) {
+                    cubit.expandInfo(
                       vehicle: state.vehicle,
                       isExpanded: !state.isExpanded,
-                    ),
-                    child: VehicleCardWidget(
-                      vehicle: state.vehicle,
-                      isExpanded: state.isExpanded,
-                    ),
-                  );
-                default:
-                  return InkWell(
-                    onTap: () async =>
-                        await context.push(Routes.addVehicle).then((value) {
-                          if (value == true) {
-                            cubit.getVehicleCardMethod();
-                          }
-                        }),
-                    child: Container(
-                      margin: const EdgeInsets.all(16),
-                      padding: const EdgeInsets.all(20),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(24),
-                        border: Border.all(),
-                      ),
-                      child: const Text("Add your first vehicle car"),
-                    ),
-                  );
-              }
+                    );
+                  } else {
+                    final value = await context.push(Routes.addVehicle);
+
+                    if (value == true) {
+                      cubit.getVehicleCardMethod();
+                    }
+                  }
+                },
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(28),
+                  child: child,
+                ),
+              );
             },
           );
         },

@@ -8,7 +8,7 @@ import 'package:motrive/core/constants/app_icons.dart';
 import 'package:motrive/core/navigation/routers.dart';
 import 'package:motrive/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:motrive/features/auth/presentation/cubit/auth_state.dart';
-import 'package:motrive/features/auth/presentation/widgets/cirle_widget.dart';
+import 'package:motrive/core/widgets/cirle_widget.dart';
 import 'package:motrive/features/auth/presentation/widgets/otp_widget.dart';
 import 'package:motrive/features/auth/presentation/widgets/textfileild.dart';
 
@@ -79,14 +79,14 @@ class AuthFeatureScreen extends HookWidget {
                 color: Theme.of(context).colorScheme.primary,
                 child: Stack(
                   children: [
-                    Positioned(left: -85, top: 38, child: Circle(size: 185)),
+                    Positioned(left: -85, top: 38, child: Circle(size: 185, opacity: .04,)),
 
-                    Positioned(right: -35, top: 100, child: Circle(size: 110)),
+                    Positioned(right: -35, top: 100, child: Circle(size: 110, opacity: .4,)),
 
                     Positioned(
                       right: 100,
                       bottom: -40,
-                      child: Circle(size: 125),
+                      child: Circle(size: 125, opacity: .4,),
                     ),
 
                     Center(
