@@ -1,31 +1,25 @@
 import 'package:flutter/material.dart';
 
-Widget sectionTitle(
-  BuildContext context,
-  String title,
-) {
-  return Row(
-    children: [
-      Container(
-        height: 28,
-        width: 6,
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary,
-          borderRadius: BorderRadius.circular(100),
-        ),
-      ),
+class SectionTitle extends StatelessWidget {
+  final String title;
 
-      const SizedBox(width: 10),
+  const SectionTitle({super.key, 
+    required this.title,
+  });
 
-      Text(
-        title,
-        style: TextStyle(
-          fontSize: 26,
-          fontWeight: FontWeight.bold,
-          letterSpacing: -.5,
-          color: Theme.of(context).colorScheme.onSurface,
-        ),
-      ),
-    ],
-  );
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Text(
+      title,
+      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+            color: colorScheme.onSurface,
+            fontSize: 18,
+            fontWeight: FontWeight.w800,
+            height: 1.1,
+            letterSpacing: -.3,
+          ),
+    );
+  }
 }

@@ -21,42 +21,48 @@ class VehicleCardFeatureWidget extends StatelessWidget {
 
           return BlocBuilder<VehicleCardCubit, VehicleCardState>(
             builder: (context, state) {
+              Widget child;
+
               switch (state) {
                 case VehicleCardInitialState _:
-                  return const Skeletonizer(
+                  child = const Skeletonizer(
+                    enabled: true,
                     child: VehicleCardWidget(isExpanded: false),
                   );
+                  break;
 
                 case VehicleCardSuccessState _:
-                  return InkWell(
-                    borderRadius: BorderRadius.circular(34),
-                    onTap: () {
-                      cubit.expandInfo(
-                        vehicle: state.vehicle,
-                        isExpanded: !state.isExpanded,
-                      );
-                    },
-                    child: VehicleCardWidget(
-                      vehicle: state.vehicle,
-                      isExpanded: state.isExpanded,
-                    ),
+                  child = VehicleCardWidget(
+                    vehicle: state.vehicle,
+                    isExpanded: state.isExpanded,
                   );
+                  break;
 
                 default:
-                  return InkWell(
-                    borderRadius: BorderRadius.circular(34),
-                    onTap: () async {
-                      final value = await context.push(Routes.addVehicle);
-
-                      if (value == true) {
-                        cubit.getVehicleCardMethod();
-                      }
-                    },
-                    child: const VehicleCardWidget(
-                      isExpanded: false,
-                    ),
-                  );
+                  child = const VehicleCardWidget(isExpanded: false);
               }
+
+              return InkWell(
+                borderRadius: BorderRadius.circular(28),
+                onTap: () async {
+                  if (state is VehicleCardSuccessState) {
+                    cubit.expandInfo(
+                      vehicle: state.vehicle,
+                      isExpanded: !state.isExpanded,
+                    );
+                  } else {
+                    final value = await context.push(Routes.addVehicle);
+
+                    if (value == true) {
+                      cubit.getVehicleCardMethod();
+                    }
+                  }
+                },
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(28),
+                  child: child,
+                ),
+              );
             },
           );
         },

@@ -31,7 +31,7 @@ class ScanVehicleFeatureWidget extends HookWidget {
               context.showLoading();
             }
             if (state is ScanVehicleErrorState) {
-              context.showSnackBar(state.message);
+              context.showSnackBar(state.message, isError: true);
             }
           },
           builder: (context, state) {

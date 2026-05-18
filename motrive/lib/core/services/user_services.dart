@@ -12,5 +12,5 @@ class UserService {
   void signOut() => _authEntity = null;
 
   UserVehicleModel? get currentVehicle => _userVehicle;
-  set setVehicle(UserVehicleModel newVehicle) => _userVehicle = newVehicle;
+  set setVehicle(UserVehicleModel? newVehicle) => _userVehicle = newVehicle;
 }

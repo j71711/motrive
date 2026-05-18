@@ -10,6 +10,7 @@ class VehicleField extends StatelessWidget {
   final TextInputType? keyboardType;
   final AutovalidateMode? autovalidateMode;
   final int? maxLength;
+  final bool? readOnly;
 
   const VehicleField({
     super.key,
@@ -20,7 +21,7 @@ class VehicleField extends StatelessWidget {
     this.validator,
     this.autovalidateMode,
     this.maxLength,
-    this.suffix,
+    this.suffix, this.readOnly,
   });
 
   @override
@@ -31,6 +32,7 @@ class VehicleField extends StatelessWidget {
       keyboardType: keyboardType,
       validator: validator,
       maxLength: maxLength,
+      readOnly: readOnly ?? false,
       onTapOutside: (event) => FocusScope.of(context).unfocus(),
       inputFormatters: [LengthLimitingTextInputFormatter(maxLength)],
       decoration: InputDecoration(
