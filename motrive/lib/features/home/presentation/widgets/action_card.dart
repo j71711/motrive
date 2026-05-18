@@ -8,8 +8,7 @@ class ActionCard extends StatelessWidget {
   final Color iconColor;
   final VoidCallback onTap;
 
-  const ActionCard({
-    super.key,
+  const ActionCard({super.key, 
     required this.title,
     required this.subtitle,
     required this.icon,
@@ -19,66 +18,57 @@ class ActionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+ 
 
     return Material(
-      color: colorScheme.surfaceContainerHighest,
+      color: Theme.of(context).colorScheme.surfaceContainerHighest,
       borderRadius: BorderRadius.circular(28),
       child: InkWell(
         borderRadius: BorderRadius.circular(28),
         onTap: onTap,
         child: Container(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(18),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(28),
             border: Border.all(
-              color: colorScheme.outline.withValues(alpha: .06),
+              color: Theme.of(context).colorScheme.outline.withValues(alpha: .06),
             ),
           ),
-          child: Row(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                height: 52,
-                width: 52,
+                height: 54,
+                width: 54,
                 decoration: BoxDecoration(
                   color: iconColor.withValues(alpha: .12),
-                  borderRadius: BorderRadius.circular(18),
+                  borderRadius: BorderRadius.circular(20),
                 ),
-                child: Icon(icon, color: iconColor, size: 27),
+                child: Icon(icon, color: iconColor, size: 28),
               ),
 
-              const Gap(12),
+              const Spacer(),
 
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                            color: colorScheme.onSurface,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w700,
-                            letterSpacing: -.2,
-                            height: 1.1,
-                          ),
-                    ),
-                    const Gap(5),
-                    Text(
-                      subtitle,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: colorScheme.onSurface.withValues(alpha: .55),
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: -.2,
-                          ),
-                    ),
-                  ],
+              Text(
+                title,
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurface,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: -.2,
+                  height: 1.1,
+                ),
+              ),
+
+              const Gap(4),
+
+              Text(
+                subtitle,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurface.withValues(alpha: .55),
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: -.2,
                 ),
               ),
             ],

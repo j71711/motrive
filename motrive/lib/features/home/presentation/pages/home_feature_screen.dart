@@ -177,7 +177,7 @@ class HomeFeatureScreen extends StatelessWidget {
                   crossAxisCount: 2,
                   mainAxisSpacing: 14,
                   crossAxisSpacing: 14,
-                  childAspectRatio: 2,
+                  childAspectRatio: 1,
                 ),
                 children: [
                   ActionCard(
@@ -252,8 +252,8 @@ class HomeFeatureScreen extends StatelessWidget {
                   ),
 
                   ActionCard(
-                    title: 'Alerts',
-                    subtitle: 'Notifications',
+                    title: 'Notifications',
+                    subtitle: 'custom',
                     icon: Icons.notifications_active_rounded,
                     iconColor: Theme.of(context).colorScheme.error,
                     onTap: () {},
