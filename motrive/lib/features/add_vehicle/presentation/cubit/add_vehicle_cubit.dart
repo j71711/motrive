@@ -21,7 +21,19 @@ class AddVehicleCubit extends Cubit<AddVehicleState> {
   }
 
   Future<void> updateVehicle(UserVehicleEntity vehicle) async {
-    final result = await _addVehicleUseCase.getAddVehicle(vehicle);
+    final result = await _addVehicleUseCase.updateVehicle(vehicle);
+    result.when(
+      (success) {
+        emit(AddVehicleSuccessState());
+      },
+      (whenError) {
+        emit(AddVehicleErrorState(message: whenError.message));
+      },
+    );
+  }
+
+  Future<void> deleteVehicle(UserVehicleEntity vehicle) async {
+    final result = await _addVehicleUseCase.deleteVehicle(vehicle);
     result.when(
       (success) {
         emit(AddVehicleSuccessState());

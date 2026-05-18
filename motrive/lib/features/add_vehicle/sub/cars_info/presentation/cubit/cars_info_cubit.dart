@@ -7,12 +7,13 @@ class CarsInfoCubit extends Cubit<CarsInfoState> {
   final CarsInfoUseCase _carsInfoUseCase;
 
   CarsInfoCubit(this._carsInfoUseCase) : super(CarsInfoInitialState()) {
-  getCarsInfoMethod();
+    getCarsInfoMethod();
   }
 
   List<CarsInfoEntity> carsInfo = [];
 
   Future<void> getCarsInfoMethod() async {
+    emit(CarsInfoLoadingState());
     final result = await _carsInfoUseCase.getCarsInfo();
     result.when(
       (success) {

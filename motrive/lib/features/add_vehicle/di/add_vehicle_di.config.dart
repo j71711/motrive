@@ -11,8 +11,11 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:hive/hive.dart' as _i979;
+import 'package:hive_flutter/hive_flutter.dart' as _i986;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:motrive/core/services/user_services.dart' as _i1013;
+import 'package:motrive/features/add_vehicle/data/datasources/add_vehicle_local_data_source.dart'
+    as _i245;
 import 'package:motrive/features/add_vehicle/data/datasources/add_vehicle_remote_data_source.dart'
     as _i297;
 import 'package:motrive/features/add_vehicle/data/repositories/add_vehicle_repository_data.dart'
@@ -57,6 +60,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i25.BaseAddCarCardRemoteDataSource>(
       () => _i25.AddCarCardRemoteDataSource(gh<_i454.SupabaseClient>()),
     );
+    gh.lazySingleton<_i245.BaseAddVehicleLocalDataSource>(
+      () => _i245.AddVehicleLocalDataSource(gh<_i986.Box<dynamic>>()),
+    );
     gh.lazySingleton<_i699.BaseCarsInfoRemoteDataSource>(
       () => _i699.CarsInfoRemoteDataSource(gh<_i454.SupabaseClient>()),
     );
@@ -75,10 +81,19 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i1013.UserService>(),
       ),
     );
+    gh.lazySingleton<_i386.AddVehicleRepositoryDomain>(
+      () => _i923.AddVehicleRepositoryData(
+        gh<_i297.BaseAddVehicleRemoteDataSource>(),
+        gh<_i245.BaseAddVehicleLocalDataSource>(),
+      ),
+    );
     gh.lazySingleton<_i513.CarsInfoRepositoryDomain>(
       () => _i897.CarsInfoRepositoryData(
         gh<_i699.BaseCarsInfoRemoteDataSource>(),
       ),
+    );
+    gh.lazySingleton<_i589.AddVehicleUseCase>(
+      () => _i589.AddVehicleUseCase(gh<_i386.AddVehicleRepositoryDomain>()),
     );
     gh.lazySingleton<_i376.AddCarCardRepositoryDomain>(
       () => _i36.AddCarCardRepositoryData(
@@ -99,14 +114,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i177.CarsInfoUseCase>(
       () => _i177.CarsInfoUseCase(gh<_i513.CarsInfoRepositoryDomain>()),
-    );
-    gh.lazySingleton<_i386.AddVehicleRepositoryDomain>(
-      () => _i923.AddVehicleRepositoryData(
-        gh<_i297.BaseAddVehicleRemoteDataSource>(),
-      ),
-    );
-    gh.lazySingleton<_i589.AddVehicleUseCase>(
-      () => _i589.AddVehicleUseCase(gh<_i386.AddVehicleRepositoryDomain>()),
     );
     return this;
   }
