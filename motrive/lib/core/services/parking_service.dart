@@ -16,45 +16,43 @@ class ParkingService {
   StreamSubscription<ActivityEvent>? subscription;
 
   void startTracking() {
-    subscription = ActivityRecognition()
-        .activityStream()
-        .listen((activityData) async {
-      //! print(activityData.type);
-    final wasInCar = lastActivity == ActivityType.inVehicle;
-     final nowStoppedOrWalking =
-          activityData.type == ActivityType.still ||
-          activityData.type == ActivityType.walking ||
-          activityData.type == ActivityType.onFoot;
+    subscription = ActivityRecognition().activityStream().listen(
+      (activityData) async {
+        //! print(activityData.type);
+        final wasInCar = lastActivity == ActivityType.inVehicle;
+        final nowStoppedOrWalking =
+            activityData.type == ActivityType.still ||
+            activityData.type == ActivityType.walking ||
+            activityData.type == ActivityType.onFoot;
 
-      if (wasInCar && nowStoppedOrWalking && alreadySaved == false) {
-        alreadySaved = true;
+        if (wasInCar && nowStoppedOrWalking && alreadySaved == false) {
+          alreadySaved = true;
 
-        await Future.delayed(const Duration(minutes: 2));
-        await Future.delayed(
-          const Duration(minutes: 2),
-        );
+          await Future.delayed(const Duration(minutes: 2));
+          await Future.delayed(const Duration(minutes: 2));
 
-        await remoteDataSource.saveParkingLocation(
-          detectionMethod: 'activity_recognition',
-        );
-      }
+          await remoteDataSource.saveParkingLocation(
+            detectionMethod: 'activity_recognition',
+          );
+        }
 
-      if (activityData.type == ActivityType.inVehicle) {
-        alreadySaved = false;
-      }
+        if (activityData.type == ActivityType.inVehicle) {
+          alreadySaved = false;
+        }
 
-      lastActivity = activityData.type;
-    });
-  }
-  Future<void> manualSaveParking() async {
-    await remoteDataSource.saveParkingLocation(
-          detectionMethod: 'manual',
+        lastActivity = activityData.type;
+      },
+      onError: (error) {
+        print('Activity recognition not available: $error');
+      },
     );
+  }
+
+  Future<void> manualSaveParking() async {
+    await remoteDataSource.saveParkingLocation(detectionMethod: 'manual');
   }
 
   void dispose() {
     subscription?.cancel();
   }
 }
-
-
