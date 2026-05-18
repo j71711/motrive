@@ -21,8 +21,12 @@ extension ContextExtensions on BuildContext {
     LoadingWidgetOverlay().hide();
   }
 
-  void showBottomSheet({required Widget widget, double? height, Color? color}) {
-    showModalBottomSheet(
+  Future<T?> showBottomSheet<T>({
+    required Widget widget,
+    double? height,
+    Color? color,
+  }) async {
+    return await showModalBottomSheet(
       context: this,
       useSafeArea: true,
       showDragHandle: true,

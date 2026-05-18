@@ -91,7 +91,7 @@ class AddVehicleFeatureScreen extends HookWidget {
                     context: context,
                     builder: (context) => AlertDialog(
                       content: Text(
-                        'You are about to delete you car permanently!',
+                        'You are about to delete your car permanently!',
                       ),
                       title: Text('Car Deletion'),
                       actions: [

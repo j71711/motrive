@@ -24,6 +24,9 @@ import 'package:motrive/features/loading/presentation/pages/loading_feature_scre
 import 'package:motrive/features/loading/presentation/cubit/loading_cubit.dart';
 import 'package:motrive/features/parking/presentation/pages/parking_feature_screen.dart';
 import 'package:motrive/features/parking/presentation/cubit/parking_cubit.dart';
+import 'package:motrive/features/reminders/presentation/pages/reminders_feature_screen.dart';
+import 'package:motrive/features/reminders/presentation/cubit/reminders_cubit.dart';
+
 
 class AppRouter {
   static final GoRouter router = GoRouter(
@@ -130,7 +133,15 @@ class AppRouter {
           ),
         ),
       ),
-    ],
+    
+  GoRoute(
+    path: Routes.reminders,
+    builder: (context, state) => BlocProvider(
+          create: (context) => RemindersCubit(GetIt.I.get()),
+          child: const RemindersFeatureScreen(),
+        ),
+  ),
+],
 
     errorBuilder: (context, state) =>
         Scaffold(body: Center(child: Text('Page not found: ${state.uri}'))),

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:motrive/core/extensions/context_extensions.dart';
 import 'package:motrive/core/navigation/routers.dart';
 import 'package:motrive/features/home/presentation/cubit/home_cubit.dart';
 import 'package:motrive/features/home/presentation/widgets/circle_Button.dart';
@@ -12,6 +13,7 @@ import 'package:motrive/features/home/sub/add_expense/presentation/pages/add_exp
 import 'package:motrive/features/home/sub/chat_bot/presentation/pages/chat_bot_feature_widget.dart';
 import 'package:motrive/features/home/sub/sos/presentation/pages/sos_feature_widget.dart';
 import 'package:motrive/features/parking/presentation/cubit/parking_cubit.dart';
+import 'package:motrive/features/sub/add_reminder/presentation/pages/add_reminder_feature_widget.dart';
 import 'package:motrive/features/sub/maintenance_alert/presentation/pages/maintenance_alert_feature_widget.dart';
 import 'package:motrive/features/sub/vehicle_card/presentation/pages/vehicle_card_feature_widget.dart';
 import 'package:sizer/sizer.dart';
@@ -21,12 +23,9 @@ class HomeFeatureScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  final  _ =  context.read<HomeCubit>();
-
+    final _ = context.read<HomeCubit>();
 
     return Scaffold(
-   
-
       floatingActionButton: FloatingActionButton(
         elevation: 0,
         backgroundColor: Theme.of(context).colorScheme.primary,
@@ -60,7 +59,7 @@ class HomeFeatureScreen extends StatelessWidget {
                   const Spacer(),
                   CircleButton(
                     icon: Icons.notifications_none_rounded,
-                    onTap: () {},
+                    onTap: () => context.push(Routes.reminders),
                   ),
                 ],
               ),
@@ -99,7 +98,7 @@ class HomeFeatureScreen extends StatelessWidget {
                   vertical: 20,
                 ),
                 decoration: BoxDecoration(
-                  color:  Color(0xff111827),
+                  color: Color(0xff111827),
                   borderRadius: BorderRadius.circular(34),
                 ),
                 child: Column(
@@ -110,12 +109,12 @@ class HomeFeatureScreen extends StatelessWidget {
                           height: 54,
                           width: 54,
                           decoration: BoxDecoration(
-                            color:  Color(0xff111827),
+                            color: Color(0xff111827),
                             borderRadius: BorderRadius.circular(18),
                           ),
                           child: Icon(
                             Icons.directions_car_filled_rounded,
-                            color:Colors.white,
+                            color: Colors.white,
                             size: 26,
                           ),
                         ),
@@ -250,13 +249,14 @@ class HomeFeatureScreen extends StatelessWidget {
                       );
                     },
                   ),
-
                   ActionCard(
                     title: 'Notifications',
                     subtitle: 'custom',
                     icon: Icons.notifications_active_rounded,
                     iconColor: Theme.of(context).colorScheme.error,
-                    onTap: () {},
+                    onTap: () async => context.showBottomSheet(
+                      widget: AddReminderFeatureWidget(),
+                    ),
                   ),
                 ],
               ),
