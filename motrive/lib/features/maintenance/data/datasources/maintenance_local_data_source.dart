@@ -32,27 +32,6 @@ class MaintenanceLocalDataSource implements BaseMaintenanceLocalDataSource {
         .map((e) => toStringMap(e))
         .toList();
 
-    /* final rawLogs = await _box.get(HiveBoxes.maintenanceLogs, defaultValue: []);
-    final doneServices = (rawLogs as List)
-        .map((e) => toStringMap(e))
-        .toList(); */
-
-    /* final carServicesWithLogs = carServices.map((service) {
-
-      final merged = Map<String, dynamic>.from(service);
-
-      final isDone = doneServices.any(
-        (done) => done[MaintenanceLogKeys.serviceId] == merged[ServiceInfoKeys.id],
-      );
-
-      if (isDone) {
-        merged['done'] = true;
-      }
-
-      return merged;
-    }).toList(); */
-
-
     return MaintenanceModel.fromJson({
       'vehicle': userCars.first,
       'services': carServices,
