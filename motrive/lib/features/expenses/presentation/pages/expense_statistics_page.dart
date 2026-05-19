@@ -17,6 +17,7 @@ class ExpenseStatisticsPage extends StatelessWidget {
     required this.selectedCategory,
   });
  
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<ExpensesCubit, ExpensesState>(
       builder: (context, state) {
