@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -29,7 +30,7 @@ class ParkingHistoryFeatureWidget extends StatelessWidget {
 
               if (state is ParkingHistorySuccessState) {
                 if (state.parkings.isEmpty) {
-                  return const Center(child: Text('No parking history yet'));
+                  return Center(child: Text('no_parking_history_yet'.tr()));
                 }
 
                 return Padding(
@@ -38,7 +39,7 @@ class ParkingHistoryFeatureWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Parking History',
+                        'parking_history'.tr(),
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.onSurface,
                           fontSize: 24,
@@ -58,7 +59,7 @@ class ParkingHistoryFeatureWidget extends StatelessWidget {
 
                             final isManual =
                                 parking.detectionMethod.toLowerCase() ==
-                                    'manual';
+                                'manual';
 
                             return InkWell(
                               borderRadius: BorderRadius.circular(20),
@@ -74,9 +75,7 @@ class ParkingHistoryFeatureWidget extends StatelessWidget {
                                   color: Theme.of(context).colorScheme.surface,
                                   borderRadius: BorderRadius.circular(20),
                                   border: Border.all(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .primary
+                                    color: Theme.of(context).colorScheme.primary
                                         .withValues(alpha: .12),
                                   ),
                                 ),
@@ -93,16 +92,17 @@ class ParkingHistoryFeatureWidget extends StatelessWidget {
                                                 .colorScheme
                                                 .primary
                                                 .withValues(alpha: .12),
-                                            borderRadius:
-                                                BorderRadius.circular(14),
+                                            borderRadius: BorderRadius.circular(
+                                              14,
+                                            ),
                                           ),
                                           child: Icon(
                                             isManual
                                                 ? Icons.touch_app_rounded
                                                 : Icons.auto_awesome_rounded,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
+                                            color: Theme.of(
+                                              context,
+                                            ).colorScheme.primary,
                                           ),
                                         ),
 
@@ -111,13 +111,13 @@ class ParkingHistoryFeatureWidget extends StatelessWidget {
                                         Expanded(
                                           child: Text(
                                             parking.address ??
-                                                'Unknown location',
+                                                'unknown_location'.tr(),
                                             maxLines: 2,
                                             overflow: TextOverflow.ellipsis,
                                             style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .onSurface,
+                                              color: Theme.of(
+                                                context,
+                                              ).colorScheme.onSurface,
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold,
                                             ),
@@ -126,9 +126,9 @@ class ParkingHistoryFeatureWidget extends StatelessWidget {
 
                                         Icon(
                                           Icons.open_in_new_rounded,
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .primary,
+                                          color: Theme.of(
+                                            context,
+                                          ).colorScheme.primary,
                                         ),
                                       ],
                                     ),
@@ -150,13 +150,14 @@ class ParkingHistoryFeatureWidget extends StatelessWidget {
                                                 : Colors.green.withValues(
                                                     alpha: .15,
                                                   ),
-                                            borderRadius:
-                                                BorderRadius.circular(100),
+                                            borderRadius: BorderRadius.circular(
+                                              100,
+                                            ),
                                           ),
                                           child: Text(
                                             isManual
-                                                ? 'Manual parking'
-                                                : 'Auto parking',
+                                                ? 'manual_parking'.tr()
+                                                : 'auto_parking'.tr(),
                                             style: TextStyle(
                                               color: isManual
                                                   ? Colors.orange

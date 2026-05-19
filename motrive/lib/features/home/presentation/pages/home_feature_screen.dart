@@ -19,7 +19,6 @@ import 'package:motrive/features/parking/presentation/cubit/parking_cubit.dart';
 import 'package:motrive/features/sub/add_reminder/presentation/pages/add_reminder_feature_widget.dart';
 import 'package:motrive/features/sub/maintenance_alert/presentation/pages/maintenance_alert_feature_widget.dart';
 import 'package:motrive/features/sub/vehicle_card/presentation/pages/vehicle_card_feature_widget.dart';
-import 'package:sizer/sizer.dart';
 
 class HomeFeatureScreen extends StatelessWidget {
   const HomeFeatureScreen({super.key});
@@ -215,21 +214,8 @@ class HomeFeatureScreen extends StatelessWidget {
                     icon: Icons.payments_rounded,
                     iconColor: Theme.of(context).colorScheme.tertiary,
                     onTap: () {
-                      showModalBottomSheet(
-                        context: context,
-                        isScrollControlled: true,
-                        backgroundColor: Theme.of(context).colorScheme.surface,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.vertical(
-                            top: Radius.circular(28),
-                          ),
-                        ),
-                        builder: (_) {
-                          return SizedBox(
-                            height: 70.sh,
-                            child: const AddExpenseFeatureWidget(),
-                          );
-                        },
+                      context.showBottomSheet(
+                        widget: const AddExpenseFeatureWidget(),
                       );
                     },
                   ),

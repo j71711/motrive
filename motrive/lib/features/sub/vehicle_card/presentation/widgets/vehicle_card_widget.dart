@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:motrive/core/navigation/routers.dart';
@@ -30,7 +31,7 @@ class VehicleCardWidget extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        'Add your car to start the journey',
+                       'add_your_car_to_start_the_journey'.tr(),
                         style: Theme.of(context).textTheme.titleMedium
                             ?.copyWith(
                               color: Color.fromARGB(
@@ -153,7 +154,7 @@ class VehicleCardWidget extends StatelessWidget {
                         ),
                       ),
                       child: Text(
-                        '${vehicle?.currentOdometer} Km',
+                        '${vehicle?.currentOdometer} ${'km'.tr()}',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: Color.fromARGB(
                             255,
@@ -178,7 +179,7 @@ class VehicleCardWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Color: ${vehicle?.color ?? ''}',
+                          '${'color'.tr()}: ${vehicle?.color ?? ''}',
                             style: Theme.of(context).textTheme.bodySmall
                                 ?.copyWith(
                                   color: Color.fromARGB(
@@ -191,7 +192,7 @@ class VehicleCardWidget extends StatelessWidget {
                           ),
 
                           Text(
-                            'License Plate: ${vehicle?.licensePlate ?? ''}',
+                         '${'license_plate'.tr()}: ${vehicle?.licensePlate ?? ''}',
                             style: Theme.of(context).textTheme.bodySmall
                                 ?.copyWith(
                                   color: Color.fromARGB(
@@ -204,7 +205,7 @@ class VehicleCardWidget extends StatelessWidget {
                           ),
 
                           Text(
-                            'Vin: ${vehicle?.vin ?? ''}',
+                           '${'vin'.tr()}: ${vehicle?.vin ?? ''}',
                             style: Theme.of(context).textTheme.bodySmall
                                 ?.copyWith(
                                   color: Color.fromARGB(

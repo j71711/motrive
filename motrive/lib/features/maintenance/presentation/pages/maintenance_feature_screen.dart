@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -23,7 +24,7 @@ class MaintenanceFeatureScreen extends StatelessWidget {
     final cubit = context.read<MaintenanceCubit>();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('My Maintenance'), centerTitle: true),
+      appBar: AppBar(title: Text('my_maintenance'.tr()), centerTitle: true),
       body: BlocListener<MaintenanceCubit, MaintenanceState>(
         listener: (context, state) {
           if (state is MaintenanceErrorState) {
@@ -96,7 +97,7 @@ class MaintenanceFeatureScreen extends StatelessWidget {
                         (nextMaintenance?.serviceOdometer ?? 1);
 
                     return services.isEmpty
-                        ? Center(child: Text('No services'))
+                        ? Center(child: Text('no_services'.tr()))
                         : Expanded(
                             child: Column(
                               children: [
@@ -115,7 +116,7 @@ class MaintenanceFeatureScreen extends StatelessWidget {
                                             alignment: Alignment.centerRight,
 
                                             child: SizedBox(
-                                              width: 40.w,
+                                              width: 55.w,
                                               height: 8.w,
 
                                               child: ElevatedButton(
@@ -131,8 +132,8 @@ class MaintenanceFeatureScreen extends StatelessWidget {
                                                 onPressed: () =>
                                                     cubit.loadingUpcoming(),
 
-                                                child: const Text(
-                                                  'Future Maintenance',
+                                                child: Text(
+                                                  'future_maintenance'.tr(),
                                                   style: TextStyle(
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.w600,

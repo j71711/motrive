@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:motrive/core/theme/app_settings_state.dart';
+import 'package:motrive/features/profile/presentation/widgets/agreement_screen.dart';
 import 'package:motrive/features/profile/presentation/widgets/divder.dart';
 import 'package:motrive/features/profile/presentation/widgets/toggle_widget.dart';
 import 'package:motrive/features/profile/sub/emergency_contact/presentation/cubit/emergency_contact_cubit.dart';
@@ -29,7 +30,7 @@ class ProfileFeatureScreen extends StatelessWidget {
         titleSpacing: 20,
 
         title: Text(
-         'settings'.tr(),
+          'settings'.tr(),
           style: TextStyle(
             fontSize: 34,
             fontWeight: FontWeight.bold,
@@ -185,9 +186,7 @@ class ProfileFeatureScreen extends StatelessWidget {
                           ? 'dark_mode'.tr()
                           : 'light_mode'.tr(),
 
-                      trailing:
-                      
-                      CustomToggle(
+                      trailing: CustomToggle(
                         value: Theme.of(context).brightness == Brightness.dark,
 
                         activeIcon: Icons.dark_mode_rounded,
@@ -198,7 +197,7 @@ class ProfileFeatureScreen extends StatelessWidget {
                             value ? ThemeMode.dark : ThemeMode.light,
                           );
                         },
-                      ), 
+                      ),
                     ),
 
                     divider(context),
@@ -252,7 +251,12 @@ class ProfileFeatureScreen extends StatelessWidget {
                       icon: Icons.assignment_returned_outlined,
                       title: 'agreement'.tr(),
                       subtitle: 'agreed_upon_terms'.tr(),
-                      onTap: () {},
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AgreementScreen(),
+                        ),
+                      ),
                     ),
 
                     divider(context),

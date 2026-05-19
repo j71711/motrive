@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -36,7 +37,7 @@ class SaveDialog extends HookWidget {
             TextFormField(
               controller: serviceDateController,
               decoration: InputDecoration(
-                label: Text('Service Date'),
+               label: Text('service_date'.tr()),
                 suffixIcon: IconButton(
                   onPressed: () async {
                     await showDialog(
@@ -67,7 +68,7 @@ class SaveDialog extends HookWidget {
             ),
             TextFormField(
               controller: odometerController,
-              decoration: InputDecoration(label: Text('Odometer At Service')),
+              decoration: InputDecoration(label: Text('odometer_at_service'.tr())),
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               validator: (value) =>
                   Validators.validateOdometer(value, lastOdometer),
@@ -77,12 +78,12 @@ class SaveDialog extends HookWidget {
             Align(
               alignment: .centerEnd,
               child: Text(
-                'Last odometer: ${Formatters.formatOdometer(lastOdometer)}',
+                '${'last_odometer'.tr()}: ${Formatters.formatOdometer(lastOdometer)}',
               ),
             ),
             TextFormField(
               controller: costController,
-              decoration: InputDecoration(label: Text('Cost')),
+              decoration: InputDecoration(label: Text('cost'.tr()),),
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               validator: Validators.validateRequired,
               onTapOutside: (event) =>
@@ -91,14 +92,14 @@ class SaveDialog extends HookWidget {
             TextFormField(
               controller: providerController,
               decoration: InputDecoration(
-                label: Text('Provider Name (Optional)'),
+              label: Text('provider_name_optional'.tr()),
               ),
               onTapOutside: (event) =>
                   FocusManager.instance.primaryFocus?.unfocus(),
             ),
             TextFormField(
               controller: notesController,
-              decoration: InputDecoration(label: Text('Notes (Optional)')),
+              decoration: InputDecoration(label: Text('notes_optional'.tr()),),
               onTapOutside: (event) =>
                   FocusManager.instance.primaryFocus?.unfocus(),
             ),
@@ -107,7 +108,7 @@ class SaveDialog extends HookWidget {
               children: [
                 TextButton(
                   onPressed: () => context.pop(),
-                  child: Text('Cancel'),
+                  child: Text('cancel'.tr()),
                 ),
                 FilledButton(
                   onPressed: () {
@@ -123,7 +124,8 @@ class SaveDialog extends HookWidget {
                       onSave(maintenanceInfo);
                     }
                   },
-                  child: Text('Save'),
+
+                  child: Text('save'.tr()),
                 ),
               ],
             ),

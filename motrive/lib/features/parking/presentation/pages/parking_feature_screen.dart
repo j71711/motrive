@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -48,12 +49,12 @@ class ParkingFeatureScreen extends StatelessWidget {
                   myLocationButtonEnabled: true,
                   markers: {
                     Marker(
-                      markerId: const MarkerId('parking_location'),
+                      markerId:  MarkerId('parking_location'.tr(),),
                       position: LatLng(
                         state.parking.latitudes,
                         state.parking.longitude,
                       ),
-                      infoWindow: const InfoWindow(title: 'Your parked car'),
+                      infoWindow: InfoWindow(title: 'your_parked_car'.tr()),
                     ),
                   },
                 ),
@@ -100,9 +101,9 @@ class ParkingFeatureScreen extends StatelessWidget {
                             ],
                           ),
                           child: Align(
-                            alignment: Alignment.centerLeft,
+                            alignment: Alignment.center,
                             child: Text(
-                              'Parking Location',
+                             'parking_location'.tr(),
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w900,
@@ -197,7 +198,7 @@ class ParkingFeatureScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                state.parking.address ?? 'Unknown location',
+                               state.parking.address ?? 'unknown_location'.tr(),
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
@@ -236,7 +237,7 @@ class ParkingFeatureScreen extends StatelessWidget {
                       cubit.manualSaveParkingMethod();
                     },
                     icon: const Icon(Icons.my_location_rounded),
-                    label: const Text('Save Current Parking'),
+                 label: Text('save_current_parking'.tr()),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.black,
                       foregroundColor: Colors.white,

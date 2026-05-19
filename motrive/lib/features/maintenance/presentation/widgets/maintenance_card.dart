@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:motrive/core/utils/formatters.dart';
 import 'package:motrive/features/maintenance/domain/entities/service_info_entity.dart';
@@ -28,9 +29,12 @@ class MaintenanceCard extends StatelessWidget {
     return ListTile(
       onTap: onTab,
       title: Text(Formatters.formatOdometer(service?.serviceOdometer ?? 0)),
-      subtitle: (service?.recommendation ?? '') == 'no data'
+      subtitle: (service?.recommendation ?? '') == 'no_data'
           ? null
-          : Text(service?.recommendation ?? '', overflow: .ellipsis),
+          : Text(
+              (service?.recommendation ?? ''),
+              overflow: TextOverflow.ellipsis,
+            ),
       trailing: hasCheckBox
           ? Checkbox(
               shape: CircleBorder(),
