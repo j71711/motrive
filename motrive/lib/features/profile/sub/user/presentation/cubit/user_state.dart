@@ -23,6 +23,7 @@ class UserSuccessState extends UserState {
   List<Object?> get props => [user];
 }
 
+
 class UserErrorState extends UserState {
   final String message;
 

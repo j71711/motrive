@@ -1,4 +1,5 @@
 {
+  "home":"Home",
   "settings": "Settings",
   "profile": "Profile",
   "personal_information": "Personal Information",
@@ -60,7 +61,6 @@
   "everything_looks_ready": "Everything looks ready",
   "emergency": "Emergency",
   "quick_actions": "Quick Actions",
-  "location": "Location",
   "save_parking": "Save parking",
   "parking_location_saved": "Parking location saved",
   "expenses": "Expenses",
@@ -84,6 +84,7 @@
   "color": "Color",
   "license_plate": "License Plate",
   "vin": "VIN",
+   "location": "Parking Location",
   "your_parked_car": "Your parked car",
   "parking_location": "Parking Location",
   "unknown_location": "Unknown location",
@@ -174,5 +175,8 @@
   "brother":"Brother",
   "sister":"Sister",
   "friend":"Friend",
-  "sibling":"Sibling"
+  "sibling":"Sibling",
+  "no_parking_location": "No Parking Location",
+  "save_parking_description": "Save your parking location to quickly find your car later.",
+  "save_parking_location": "Save Parking Location"
 }

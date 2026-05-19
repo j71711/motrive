@@ -1,4 +1,5 @@
 {
+  "home":"الصفحة الرائسية",
   "settings": "الإعدادات",
   "profile": "الملف الشخصي",
   "personal_information": "المعلومات الشخصية",
@@ -174,5 +175,8 @@
   "brother":"أخ",
   "sister":"أخت",
   "friend":"صديق",
-  "sibling":"قريب"
+  "sibling":"قريب",
+  "no_parking_location": "لا يوجد موقع موقف",
+  "save_parking_description": "احفظ موقع سيارتك للوصول إليها لاحقًا بسهولة.",
+  "save_parking_location": "حفظ موقع الوقوف"
 }

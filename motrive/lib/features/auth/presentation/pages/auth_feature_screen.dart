@@ -86,19 +86,19 @@ class AuthFeatureScreen extends HookWidget {
                     Positioned(
                       left: -85,
                       top: 38,
-                      child: Circle(size: 185, opacity: .04),
+                      child: Circle(size: 185, opacity: .1),
                     ),
 
                     Positioned(
                       right: -35,
                       top: 100,
-                      child: Circle(size: 110, opacity: .4),
+                      child: Circle(size: 110, opacity: .1),
                     ),
 
                     Positioned(
                       right: 100,
                       bottom: -40,
-                      child: Circle(size: 125, opacity: .4),
+                      child: Circle(size: 125, opacity: .1),
                     ),
                     Positioned(
                       top: 55,

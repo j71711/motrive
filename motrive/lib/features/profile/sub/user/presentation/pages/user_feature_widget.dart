@@ -43,17 +43,17 @@ class UserFeatureWidget extends StatelessWidget {
                     ),
                     child: Column(
                       children: [
-                        CircleAvatar(
-                          radius: 42,
-                          backgroundColor: Theme.of(
-                            context,
-                          ).colorScheme.primary.withValues(alpha: .1),
-                          child: Icon(
-                            Icons.person_rounded,
-                            size: 44,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                        ),
+                        // CircleAvatar(
+                        //   radius: 42,
+                        //   backgroundColor: Theme.of(
+                        //     context,
+                        //   ).colorScheme.primary.withValues(alpha: .1),
+                        //   child: Icon(
+                        //     Icons.person_rounded,
+                        //     size: 44,
+                        //     color: Theme.of(context).colorScheme.primary,
+                        //   ),
+                        // ),
                         const Gap(14),
                         Text(
                          user.fullName ?? 'no_name'.tr(),
