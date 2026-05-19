@@ -1,8 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
-import 'package:motrive/core/theme/theme_cubit.dart';
+import 'package:motrive/core/theme/app_settings_state.dart';
 import 'package:motrive/features/profile/presentation/widgets/divder.dart';
 import 'package:motrive/features/profile/presentation/widgets/toggle_widget.dart';
 import 'package:motrive/features/profile/sub/emergency_contact/presentation/cubit/emergency_contact_cubit.dart';
@@ -28,7 +29,7 @@ class ProfileFeatureScreen extends StatelessWidget {
         titleSpacing: 20,
 
         title: Text(
-          'Settings',
+         'settings'.tr(),
           style: TextStyle(
             fontSize: 34,
             fontWeight: FontWeight.bold,
@@ -184,15 +185,20 @@ class ProfileFeatureScreen extends StatelessWidget {
                           ? 'Dark Mode'
                           : 'Light Mode',
 
-                      trailing: ThemeToggle(
-                        isDark: Theme.of(context).brightness == Brightness.dark,
+                      trailing:
+                      
+                      CustomToggle(
+                        value: Theme.of(context).brightness == Brightness.dark,
+
+                        activeIcon: Icons.dark_mode_rounded,
+                        inactiveIcon: Icons.light_mode_rounded,
 
                         onChanged: (value) {
                           context.read<ThemeCubit>().changeTheme(
                             value ? ThemeMode.dark : ThemeMode.light,
                           );
                         },
-                      ),
+                      ), 
                     ),
 
                     divider(context),
@@ -202,10 +208,42 @@ class ProfileFeatureScreen extends StatelessWidget {
                       context,
                       icon: Icons.language_rounded,
                       title: 'Language',
-                      subtitle: 'English',
-                      onTap: () {},
-                    ),
 
+                      subtitle:
+                          context
+                                  .watch<ThemeCubit>()
+                                  .state
+                                  .locale
+                                  .languageCode ==
+                              'ar'
+                          ? 'Arabic'
+                          : 'English',
+
+                      trailing: CustomToggle(
+                        value:
+                            context
+                                .watch<ThemeCubit>()
+                                .state
+                                .locale
+                                .languageCode ==
+                            'ar',
+
+                        activeIcon: Icons.language_rounded,
+                        inactiveIcon: Icons.translate_rounded,
+
+                        onChanged: (value) async {
+                          final locale = Locale(value ? 'ar' : 'en');
+
+                          await context.read<ThemeCubit>().changeLanguage(
+                            locale,
+                          );
+
+                          if (context.mounted) {
+                            context.setLocale(locale);
+                          }
+                        },
+                      ),
+                    ),
                     divider(context),
 
                     /// AGREEMENT
