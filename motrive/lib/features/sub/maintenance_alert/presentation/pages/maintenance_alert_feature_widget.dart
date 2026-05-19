@@ -73,24 +73,7 @@ class MaintenanceAlertFeatureWidget extends StatelessWidget {
                   subtitle: 'Alerts Will Appear Here',
                   icon: Icons.done,
                   iconColor: Theme.of(context).colorScheme.primary,
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      isScrollControlled: true,
-                      backgroundColor: Theme.of(context).colorScheme.surface,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(28),
-                        ),
-                      ),
-                      builder: (_) {
-                        return const Padding(
-                          padding: EdgeInsets.all(18),
-                          child: MaintenanceAlertFeatureWidget(),
-                        );
-                      },
-                    );
-                  },
+                  onTap: () {},
                 ),
               );
             },

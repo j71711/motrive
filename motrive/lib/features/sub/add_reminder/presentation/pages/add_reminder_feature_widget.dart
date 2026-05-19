@@ -29,7 +29,7 @@ class AddReminderFeatureWidget extends HookWidget {
       text: reminder?.triggerOdometer.toString(),
     );
     final dateController = useTextEditingController(
-      text: Formatters.formatDate(DateTime.now()),
+      text: Formatters.formatDate(DateTime.now().add(Duration(days: 1))),
     );
     final notesController = useTextEditingController(text: reminder?.notes);
 
@@ -133,7 +133,9 @@ class AddReminderFeatureWidget extends HookWidget {
                                       builder: (context) => Dialog(
                                         child: FittedBox(
                                           child: DatePickerDialog(
-                                            firstDate: DateTime.now(),
+                                            firstDate: DateTime.now().add(
+                                              Duration(days: 1),
+                                            ),
                                             lastDate: DateTime(2045),
                                           ),
                                         ),
