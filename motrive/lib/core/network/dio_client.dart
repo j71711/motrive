@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
-import 'api_endpoints.dart';
 
 @lazySingleton
 class DioClient {
@@ -9,7 +8,6 @@ class DioClient {
   DioClient() {
     _dio = Dio(
       BaseOptions(
-        //baseUrl: ApiEndpoints.baseUrl,
         connectTimeout: const Duration(seconds: 45),
         receiveTimeout: const Duration(seconds: 45),
         headers: {

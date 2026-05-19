@@ -443,6 +443,7 @@ class LocalNotificationService {
     required String carName,
     required String title,
     required DateTime firstFireDate,
+    int? repeatCount
   }) async {
     if (firstFireDate.isBefore(DateTime.now())) return;
 
@@ -452,6 +453,28 @@ class LocalNotificationService {
       body: '$carName — $title monthly check.',
       scheduledDate: firstFireDate,
       repeatInterval: RepeatInterval.monthly, // ← uses monthly repeat
+      repeatCount: repeatCount,
+      android: _reminderChannel,
+    );
+  }
+
+  /// Schedule a repeating monthly reminder (e.g. check fluid levels).
+  Future<void> scheduleYearlyReminder({
+    required int id,
+    required String carName,
+    required String title,
+    required DateTime firstFireDate,
+    int? repeatCount
+  }) async {
+    if (firstFireDate.isBefore(DateTime.now())) return;
+
+    await _scheduleRepeating(
+      id: 2800 + id,
+      title: '📆 $title',
+      body: '$carName — $title yearly reminder.',
+      scheduledDate: firstFireDate,
+      repeatInterval: RepeatInterval.yearly, // ← uses monthly repeat
+      repeatCount: repeatCount,
       android: _reminderChannel,
     );
   }
@@ -582,6 +605,7 @@ class LocalNotificationService {
     required String body,
     required DateTime scheduledDate,
     required RepeatInterval repeatInterval,
+    int? repeatCount,
     required AndroidNotificationDetails android,
   }) async {
     await _plugin
@@ -589,7 +613,10 @@ class LocalNotificationService {
           id: id,
           title: title,
           body: body,
-          repeatDurationInterval: _repeatIntervalToDuration(repeatInterval),
+          repeatDurationInterval: _repeatIntervalToDuration(
+            repeatInterval,
+            count: repeatCount,
+          ),
           notificationDetails: NotificationDetails(
             android: android,
             iOS: _iosDetails,
@@ -600,14 +627,14 @@ class LocalNotificationService {
   }
 
   /// Map RepeatInterval enum to Duration for periodicallyShowWithDuration.
-  Duration _repeatIntervalToDuration(RepeatInterval interval) {
+  Duration _repeatIntervalToDuration(RepeatInterval interval, {int? count}) {
     return switch (interval) {
-      RepeatInterval.everyMinute => const Duration(minutes: 1),
-      RepeatInterval.hourly => const Duration(hours: 1),
-      RepeatInterval.daily => const Duration(days: 1),
-      RepeatInterval.weekly => const Duration(days: 7),
-      RepeatInterval.monthly => const Duration(days: 30),
-      RepeatInterval.yearly => const Duration(days: 365),
+      RepeatInterval.everyMinute => Duration(minutes: count ?? 1),
+      RepeatInterval.hourly => Duration(hours: count ?? 1),
+      RepeatInterval.daily => Duration(days: count ?? 1),
+      RepeatInterval.weekly => Duration(days: count ?? 7),
+      RepeatInterval.monthly => Duration(days: count ?? 30),
+      RepeatInterval.yearly => Duration(days: count ?? 365),
     };
   }
 

@@ -38,8 +38,41 @@ class AddReminderRemoteDataSource implements BaseAddReminderRemoteDataSource {
       'recurrence_value': newReminder.recurrenceValue,
     });
     if (newReminder.isRecurring) {
+      if (newReminder.triggerType == 'Odometer') {
+      } else {
+        Future<void> call;
+        switch (newReminder.recurrenceUnit) {
+          case 'day':
+            call = _localNotificationService.scheduleCustomReminder(
+              id: 10,
+              carName: _userService.currentVehicle!.model,
+              title: newReminder.title,
+              scheduledDate: newReminder.triggerDate!,
+              advanceDays: newReminder.recurrenceValue!,
+            );
+          case 'month':
+            call = _localNotificationService.scheduleMonthlyReminder(
+              id: 10,
+              carName: _userService.currentVehicle!.model,
+              title: newReminder.title,
+              firstFireDate: newReminder.triggerDate!,
+              repeatCount: newReminder.recurrenceValue,
+            );
+          case 'year':
+            call = _localNotificationService.scheduleYearlyReminder(
+              id: 10,
+              carName: _userService.currentVehicle!.model,
+              title: newReminder.title,
+              firstFireDate: newReminder.triggerDate!,
+              repeatCount: newReminder.recurrenceValue,
+            );
+          default:
+            call = Future<void>(() {});
+        }
+        await call;
+      }
     } else {
-      if (newReminder.triggerType == 'odometer') {
+      if (newReminder.triggerType == 'Odometer') {
         await _localNotificationService.customReminderOdometerNotification(
           title: newReminder.title,
           carName: _userService.currentVehicle!.model,
@@ -59,6 +92,6 @@ class AddReminderRemoteDataSource implements BaseAddReminderRemoteDataSource {
 
   @override
   Future<void> deleteReminder(String reminderId) async {
-   await _supabase.from('custom_reminders').delete().eq('id', reminderId);
+    await _supabase.from('custom_reminders').delete().eq('id', reminderId);
   }
 }
