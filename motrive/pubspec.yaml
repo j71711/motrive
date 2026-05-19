@@ -55,6 +55,8 @@ dependencies:
   geocoding: ^4.0.0
   glass_kit: ^4.0.2
   collection: ^1.19.1
+  lottie: ^3.3.3
+  flutter_launcher_icons: ^0.14.4
 
 
 dev_dependencies:
@@ -79,3 +81,10 @@ sentry:
   upload_source_maps: true
   project: flutter
   org: motrive
+
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/icons/app_icon.jpg"
+  remove_alpha_ios: true

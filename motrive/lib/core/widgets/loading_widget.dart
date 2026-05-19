@@ -1,3 +1,4 @@
+import 'package:lottie/lottie.dart';
 import 'package:motrive/core/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -56,21 +57,36 @@ class LoadingWidgetOverlay {
 //--
 
 class LoadingWidget extends StatelessWidget {
-  const LoadingWidget({super.key, this.size = 50});
+
+  const LoadingWidget({super.key, this.size = 400});
+
   final double? size;
+
   @override
   Widget build(BuildContext context) {
+    final lottieColor = Theme.of(context).brightness == Brightness.dark
+        ? Colors.white
+        : Colors.black;
+
     return Center(
-      child: LoadingAnimationWidget.discreteCircle(
-        // leftDotColor: const Color(0xFF1A1A3F),
-        // rightDotColor: const Color(0xFFEA3799),
-        secondRingColor: AppColors.secondary,
-        thirdRingColor: AppColors.surface,
-        color: AppColors.surface,
-        size: size ?? 50,
+      child: Lottie.asset(
+        'assets/icons/carr.json',
+        width: size,
+        height: size,
+        fit: BoxFit.contain,
+        delegates: LottieDelegates(
+          values: [
+            ValueDelegate.color(
+              const ['**'],
+              value: lottieColor,
+            ),
+            ValueDelegate.strokeColor(
+              const ['**'],
+              value: lottieColor,
+            ),
+          ],
+        ),
       ),
     );
   }
 }
-
-
