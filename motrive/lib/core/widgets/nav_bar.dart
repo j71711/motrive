@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -12,18 +13,18 @@ class NavBar extends StatelessWidget {
         currentIndex: navigationShell.currentIndex,
         onTap: (value) => navigationShell.goBranch(value),
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'.tr()),
           BottomNavigationBarItem(
             icon: Icon(Icons.car_repair),
-            label: 'Maintenance',
+            label: 'maintenance'.tr(),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.attach_money),
-            label: 'Expenses',
+            label: 'expenses'.tr(),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.location_city),
-            label: 'location',
+            label: 'location'.tr(),
           ),
         ],
       ),
