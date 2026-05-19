@@ -7,6 +7,8 @@ enum StateLoadUser { local, remote }
 
 enum AuthStatus { authenticated, unauthenticated, unknown }
 
+enum ReminderUnit { day, month, year }
+
 enum LanguagesEnum {
   ar,
   en;

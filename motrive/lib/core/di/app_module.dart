@@ -5,6 +5,5 @@ import 'package:injectable/injectable.dart';
 abstract class AppModule {
 
   @lazySingleton
-  Box get vehiclesBox =>
-      Hive.box('vehicles_box');
+  Box get vehiclesBox => Hive.box('vehicles_box');
 }

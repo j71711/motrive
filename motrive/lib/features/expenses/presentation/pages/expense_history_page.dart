@@ -3,6 +3,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:motrive/core/widgets/timeline_widget.dart';
 import 'package:motrive/features/expenses/domain/entities/expenses_entity.dart';
 import 'package:motrive/features/expenses/presentation/cubit/expenses_cubit.dart';
 import 'package:motrive/features/expenses/presentation/cubit/expenses_state.dart';
@@ -16,7 +17,7 @@ class ExpenseHistoryPage extends StatelessWidget {
     required this.expenses,
   });
 
-
+/*
   @override
   Widget build(BuildContext context) {
 
@@ -182,8 +183,7 @@ class ExpenseHistoryPage extends StatelessWidget {
                                   20,
                                 ),
 
-                                color:
-                                    Colors.white,
+                                color: Colors.white,
 
                                 boxShadow: [
 
@@ -326,7 +326,306 @@ class ExpenseHistoryPage extends StatelessWidget {
         );
       },
     );
+  }*/
+
+
+
+
+
+  @override
+  Widget build(BuildContext context) {
+
+    if (expenses.isEmpty) {
+
+      return const Center(
+        child: Text('No Expenses Found'),
+      );
+    }
+
+    return BlocConsumer<
+        ExpensesCubit,
+        ExpensesState>(
+
+      listener: (context, state) {
+
+        if (state is AddExpenseErrorState) {
+
+          ScaffoldMessenger.of(context)
+              .showSnackBar(
+
+            SnackBar(
+              content: Text(state.message),
+            ),
+          );
+        }
+      },
+
+      builder: (context, state) {
+
+        final isLoading =
+            state is AddExpensesLoadingState;
+
+        return Stack(
+
+          children: [
+
+            TimelineWidget(
+
+              /// REFRESH
+              onRefresh: () async {
+
+                await context
+                    .read<ExpensesCubit>()
+                    .getExpensesMethod(
+                      '9ebf96bd-fc6a-42c6-9a42-f9bebfa59b1c',
+                    );
+              },
+
+              itemCount: expenses.length,
+
+              /// SOLID OR DASHED
+              dashedOrSolid: (index) {
+
+                return index.isEven;
+              },
+
+              /// INDICATOR
+              indicatorBuilder:
+                  (context, index) {
+
+                final item = expenses[index];
+
+                return CircleAvatar(
+
+                  radius: 18,
+
+                  child: Icon(
+                    getExpenseIcon(
+                      item.category,
+                    ),
+                  ),
+                );
+              },
+
+              /// DATE
+              oppositeContentsBuilder:
+                  (context, index) {
+
+                final item = expenses[index];
+
+                return Padding(
+
+                  padding:
+                      const EdgeInsets.only(
+                    top: 16,
+                  ),
+
+                  child: Text(
+
+                    DateFormat(
+                      'dd MMM',
+                    ).format(
+                      item.expenseDate!,
+                    ),
+                  ),
+                );
+              },
+
+              /// CARD
+              contentsBuilder:
+                  (context, index) {
+
+                final item = expenses[index];
+
+                return Padding(
+
+                  padding:
+                      const EdgeInsets.only(
+                    bottom: 20,
+                  ),
+
+                  child: Slidable(
+
+                    endActionPane: ActionPane(
+
+                      motion:
+                          const StretchMotion(),
+
+                      children: [
+
+                        /// EDIT
+                        SlidableAction(
+
+                          backgroundColor:
+                              Colors.blue,
+
+                          onPressed: (_) {
+
+                            showEditExpenseBottomSheet(
+                              context,
+                              item,
+                            );
+                          },
+
+                          icon: Icons.edit,
+                        ),
+
+                        /// DELETE
+                        SlidableAction(
+
+                          backgroundColor:
+                              Colors.red,
+
+                          onPressed: (_) {
+
+                            showDeleteDialog(
+                              context,
+                              item.id,
+                            );
+                          },
+
+                          icon: Icons.delete,
+                        ),
+                      ],
+                    ),
+
+                    child: Container(
+
+                      padding:
+                          const EdgeInsets.all(
+                        16,
+                      ),
+
+                      decoration: BoxDecoration(
+
+                        borderRadius:
+                            BorderRadius.circular(
+                          20,
+                        ),
+
+                        color: Colors.white,
+
+                        boxShadow: [
+
+                          BoxShadow(
+                            blurRadius: 8,
+                            color:
+                                Colors.black12,
+                          ),
+                        ],
+                      ),
+
+                      child: Column(
+
+                        crossAxisAlignment:
+                            CrossAxisAlignment
+                                .start,
+
+                        children: [
+
+                          /// CATEGORY
+                          Text(
+
+                            item.category,
+
+                            style:
+                                const TextStyle(
+                              fontSize: 18,
+                              fontWeight:
+                                  FontWeight.bold,
+                            ),
+                          ),
+
+                          const SizedBox(
+                            height: 12,
+                          ),
+
+                          /// COST
+                          Text(
+                            '${item.cost} SAR',
+                          ),
+
+                          const SizedBox(
+                            height: 8,
+                          ),
+
+                          /// KM
+                          Text(
+                            '${item.odometer} KM',
+                          ),
+
+                          /// NOTES
+                          if (item.notes !=
+                                  null &&
+                              item.notes!
+                                  .isNotEmpty)
+
+                            Padding(
+
+                              padding:
+                                  const EdgeInsets
+                                      .only(
+                                top: 8,
+                              ),
+
+                              child: Text(
+                                item.notes!,
+                              ),
+                            ),
+
+                          const SizedBox(
+                            height: 12,
+                          ),
+
+                          /// DETAILS
+                          Align(
+
+                            alignment:
+                                Alignment
+                                    .centerRight,
+
+                            child: TextButton(
+
+                              onPressed: () {
+
+                                showExpenseDetailsBottomSheet(
+                                  context,
+                                  item,
+                                );
+                              },
+
+                              child:
+                                  const Text(
+                                'Details',
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+
+            /// LOADING
+            if (isLoading)
+
+              Container(
+
+                color: Colors.black26,
+
+                child: const Center(
+                  child:
+                      CircularProgressIndicator(),
+                ),
+              ),
+          ],
+        );
+      },
+    );
   }
+
 
 
   BarChartGroupData barItem(
@@ -481,7 +780,7 @@ void showEditExpenseBottomSheet(
               children: [
 
                 DropdownButtonFormField(
-                  value: category,
+                  initialValue: category,
 
                   items: [
                     'Fuel',
@@ -505,9 +804,7 @@ void showEditExpenseBottomSheet(
                 ),
 
                 TextField(
-                  controller:
-                      amountController,
-
+                  controller: amountController,
                   decoration:
                       const InputDecoration(
                     labelText: 'Amount',
@@ -587,7 +884,6 @@ void showExpenseDetailsBottomSheet(
   BuildContext context,
   ExpensesEntity expense,
 ) {
-
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
@@ -595,11 +891,8 @@ void showExpenseDetailsBottomSheet(
 
       return Container(
         padding: const EdgeInsets.all(20),
-
         decoration: const BoxDecoration(
-
           color: Colors.white,
-
           borderRadius: BorderRadius.vertical(
             top: Radius.circular(24),
           ),
@@ -642,21 +935,15 @@ void showExpenseDetailsBottomSheet(
               ListTile(
                 leading:
                     const Icon(Icons.payments),
-
                 title: const Text('Amount'),
-
                 trailing: Text(
                   '${expense.cost} SAR',
                 ),
               ),
 
               ListTile(
-
-                leading:
-                    const Icon(Icons.speed),
-
+                leading: const Icon(Icons.speed),
                 title: const Text('Odometer'),
-
                 trailing: Text(
                   '${expense.odometer} KM',
                 ),
@@ -664,11 +951,8 @@ void showExpenseDetailsBottomSheet(
 
               ListTile(
 
-                leading:
-                    const Icon(Icons.calendar_month),
-
+                leading: const Icon(Icons.calendar_month),
                 title: const Text('Date'),
-
                 trailing: Text(
                   DateFormat(
                     'dd MMM yyyy',
@@ -682,14 +966,9 @@ void showExpenseDetailsBottomSheet(
                   expense.notes!.isNotEmpty)
 
                 ListTile(
-
-                  leading:
-                      const Icon(Icons.notes),
-
+                  leading: const Icon(Icons.notes),
                   title: const Text('Notes'),
-
-                  subtitle:
-                      Text(expense.notes!),
+                  subtitle: Text(expense.notes!),
                 ),
 
               const SizedBox(height: 20),

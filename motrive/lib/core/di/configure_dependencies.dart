@@ -12,6 +12,8 @@ import 'package:motrive/features/loading/di/loading_di.dart';
 import 'package:motrive/features/parking/di/parking_di.dart';
 import 'package:motrive/features/sub/maintenance_alert/di/maintenance_alert_di.dart';
 import 'package:motrive/features/sub/vehicle_card/di/vehicle_card_di.dart';
+import 'package:motrive/features/reminders/di/reminders_di.dart';
+import 'package:motrive/features/sub/add_reminder/di/add_reminder_di.dart';
 
 @InjectableInit(
   initializerName: 'init',
@@ -33,4 +35,6 @@ Future<void> configureDependencies() async {
   configureMaintenanceAlertSub(getIt);
   configureVehicleCardSub(getIt);
   configureExpenses(getIt);
+  configureReminders(getIt);
+  configureAddReminderSub(getIt);
 }

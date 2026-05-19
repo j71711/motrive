@@ -1,6 +1,6 @@
-
 import 'package:injectable/injectable.dart';
 import 'package:motrive/features/maintenance/data/datasources/maintenance_local_data_source.dart';
+import 'package:motrive/features/maintenance/domain/entities/vehicle_entity.dart';
 import 'package:multiple_result/multiple_result.dart';
 import 'package:motrive/core/errors/network_exceptions.dart';
 import 'package:motrive/core/errors/failure.dart';
@@ -38,5 +38,17 @@ class MaintenanceRepositoryData implements MaintenanceRepositoryDomain {
     } catch (error) {
       return Error(FailureExceptions.getException(error));
     }
+  }
+
+  @override
+  Stream<Result<String, Failure>> processData(UserVehicleEntity vehicle) {
+    final status = remoteDataSource.processData(vehicle);
+    return status
+        .map<Result<String, Failure>>((event) {
+          return Success(event);
+        })
+        .handleError((error) {
+          return Error(FailureExceptions.getException(error));
+        });
   }
 }

@@ -3,7 +3,6 @@
 <plist version="1.0">
 <dict>
     <key>NSLocationWhenInUseUsageDescription</key>
-<<<<<<< HEAD
     <string>Needed for parking detection</string>
     <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
     <string>Needed for parking detection</string>
@@ -13,20 +12,10 @@
     <string>We need your location to send it to your emergency contacts.</string>
     <key>NSLocationWhenInUseUsageDescription</key>
     <string>We need your location to send it during emergency.</string>
-=======
-    <string>We need your location to send it to your emergency contacts.</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>We need your location to send it during emergency.</string>
-
->>>>>>> origin/dalal
 	<key>NSCameraUsageDescription</key>
 	<string>Camera access is needed to scan vehicle registration cards</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/dalal
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>GIDClientID</key>
@@ -41,10 +30,6 @@
         </array>
     </dict>
 </array>
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/dalal
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>

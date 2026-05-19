@@ -21,8 +21,4 @@ class LoadingCubit extends Cubit<LoadingState> {
     );
   }
 
-  @override
-  Future<void> close() {
-    return super.close();
-  }
 }

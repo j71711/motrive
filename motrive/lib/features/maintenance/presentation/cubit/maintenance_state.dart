@@ -20,14 +20,29 @@ class MaintenanceSuccessState extends MaintenanceState {
   const MaintenanceSuccessState({
     required this.maintenanceEntity,
     required this.services,
-    this.allDisplayed, this.loadingMore,
+    this.allDisplayed,
+    this.loadingMore,
   });
 
   @override
-  List<Object?> get props => [maintenanceEntity, services, allDisplayed, loadingMore];
+  List<Object?> get props => [
+    maintenanceEntity,
+    services,
+    allDisplayed,
+    loadingMore,
+  ];
 }
 
 class MaintenanceLoadingState extends MaintenanceState {}
+
+class MaintenanceDataProcessState extends MaintenanceState {
+  final String? status;
+
+  const MaintenanceDataProcessState({required this.status});
+
+  @override
+  List<Object?> get props => [status];
+}
 
 class MaintenanceErrorState extends MaintenanceState {
   final String message;

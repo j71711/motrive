@@ -20,7 +20,7 @@ class ExpensesSuccessState extends ExpensesState {
     required this.stats,
     List<ExpensesEntity>? filteredExpenses,
     this.selectedCategory = 'All',
-  }) : this.filteredExpenses = filteredExpenses ?? expenses; // هذا السطر يضمن عدم وجود قائمة فارغة
+  }) : filteredExpenses = filteredExpenses ?? expenses; // هذا السطر يضمن عدم وجود قائمة فارغة
   
   // this.filteredExpenses = filteredExpenses ?? expenses;
   @override

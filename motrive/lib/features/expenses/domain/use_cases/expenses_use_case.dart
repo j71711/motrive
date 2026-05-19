@@ -6,7 +6,6 @@ import 'package:motrive/features/home/sub/add_expense/domain/entities/add_expens
 import 'package:multiple_result/multiple_result.dart';
 import 'package:injectable/injectable.dart';
 
-
 @lazySingleton
 class ExpensesUseCase {
   final ExpensesRepositoryDomain _repositoryData;

@@ -21,29 +21,42 @@ class MaintenanceDetailsFeatureScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+     
         actionsPadding: .symmetric(horizontal: 8),
         actions: [
           BlocBuilder<MaintenanceDetailsCubit, MaintenanceDetailsState>(
             builder: (context, state) {
-              return IconButton.filled(
-                onPressed: () async {
-                  if (state is! MaintenanceDetailsSuccessState) {
-                    return;
-                  }
-                  await showDialog(
-                    context: context,
-                    builder: (context) => SaveServiceFeatureWidget(
-                      serviceInfo: serviceInfo,
-                      vehicle: state.maintenanceDetails.vehicle,
-                    ),
-                  ).then((value) {
-                    if (value == true && context.mounted) {
-                      context.pop(true);
+              if (!serviceInfo.done) {
+                return IconButton.filled(
+                  onPressed: () async {
+                    if (state is! MaintenanceDetailsSuccessState) {
+                      return;
                     }
-                  });
-                },
-                icon: Icon(Icons.done),
-              );
+                    await showDialog(
+                      context: context,
+                      builder: (context) => SaveServiceFeatureWidget(
+                        serviceInfo: serviceInfo,
+                        vehicle: state.maintenanceDetails.vehicle,
+                      ),
+                    ).then((value) {
+                      if (value == true && context.mounted) {
+                        context.pop(true);
+                      }
+                    });
+                  },
+                  icon: Icon(Icons.done,color: Theme.of(context).colorScheme.onSecondary),
+                );
+              } else {
+                return Container(
+                  padding: .all(8),
+                  decoration: BoxDecoration(
+                    borderRadius: .circular(18),
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+
+                  child: Text('Done'),
+                );
+              }
             },
           ),
         ],
@@ -54,63 +67,97 @@ class MaintenanceDetailsFeatureScreen extends StatelessWidget {
             context.showSnackBar(state.message, isError: true);
           }
         },
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              spacing: 5,
-              children: [
-                ServiceInfoCard(serviceInfo: serviceInfo),
-                BlocBuilder<MaintenanceDetailsCubit, MaintenanceDetailsState>(
-                  builder: (context, state) {
-                    switch (state) {
-                      case MaintenanceDetailsErrorState _:
-                        return Center(child: Text('No services available'));
-                      case MaintenanceDetailsSuccessState _:
-                        final parts = state.maintenanceDetails.parts;
-                        return parts.isEmpty
-                            ? Center(child: Text('No services available'))
-                            : Expanded(
-                                child: Column(
-                                  children: [
-                                    Align(
-                                      alignment: .centerEnd,
-                                      child: Text(
-                                        'Last odometer: ${Formatters.formatOdometer(state.maintenanceDetails.vehicle.currentOdometer ?? 0)}',
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: ListView.separated(
-                                        itemBuilder: (context, index) =>
-                                            PartCard(part: parts[index]),
-                                        separatorBuilder: (context, index) =>
-                                            Divider(
-                                              color: Colors.transparent,
-                                              height: 5,
-                                            ),
-                                        itemCount: parts.length,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                    }
-                    return Expanded(
-                      child: Skeletonizer(
-                        child: ListView.separated(
-                          itemBuilder: (context, index) => PartCard(),
-                          separatorBuilder: (context, index) =>
-                              Divider(color: Colors.transparent, height: 5),
-                          itemCount: 5,
+    child: SafeArea(
+  child: Padding(
+    padding: const EdgeInsets.all(16),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ServiceInfoCard(serviceInfo: serviceInfo),
+
+        const SizedBox(height: 16),
+
+        BlocBuilder<MaintenanceDetailsCubit, MaintenanceDetailsState>(
+          builder: (context, state) {
+            switch (state) {
+              case MaintenanceDetailsErrorState _:
+                return const Expanded(
+                  child: Center(
+                    child: Text('No services available'),
+                  ),
+                );
+
+              case MaintenanceDetailsSuccessState _:
+                final parts = state.maintenanceDetails.parts;
+
+                if (parts.isEmpty) {
+                  return const Expanded(
+                    child: Center(
+                      child: Text('No services available'),
+                    ),
+                  );
+                }
+
+                return Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 14,
+                            vertical: 8,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .primary
+                                .withValues(alpha: .08),
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: Text(
+                            'Last odometer: ${Formatters.formatOdometer(state.maintenanceDetails.vehicle.currentOdometer ?? 0)}',
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
                         ),
                       ),
-                    );
-                  },
+
+                      const SizedBox(height: 14),
+
+                      Expanded(
+                        child: ListView.separated(
+                          itemBuilder: (context, index) =>
+                              PartCard(part: parts[index]),
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(height: 10),
+                          itemCount: parts.length,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+            }
+
+            return Expanded(
+              child: Skeletonizer(
+                child: ListView.separated(
+                  itemBuilder: (context, index) => PartCard(),
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(height: 10),
+                  itemCount: 5,
                 ),
-              ],
-            ),
-          ),
+              ),
+            );
+          },
         ),
+      ],
+    ),
+  ),
+),
       ),
     );
   }

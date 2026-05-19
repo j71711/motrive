@@ -12,11 +12,15 @@ class VehicleCardInitialState extends VehicleCardState {}
 
 class VehicleCardSuccessState extends VehicleCardState {
   final UserVehicleEntity vehicle;
+  final bool isExpanded;
 
-  const VehicleCardSuccessState({required this.vehicle});
+  const VehicleCardSuccessState({
+    required this.vehicle,
+    required this.isExpanded,
+  });
 
   @override
-  List<Object?> get props => [vehicle];
+  List<Object?> get props => [vehicle, isExpanded];
 }
 
 class VehicleCardErrorState extends VehicleCardState {

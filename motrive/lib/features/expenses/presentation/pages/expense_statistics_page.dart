@@ -16,6 +16,7 @@ class ExpenseStatisticsPage extends StatelessWidget {
     required this.selectedCategory,
   });
  
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<ExpensesCubit, ExpensesState>(
       builder: (context, state) {
@@ -37,7 +38,7 @@ class ExpenseStatisticsPage extends StatelessWidget {
                     children: [
                       Expanded(
                         child: DropdownButtonFormField<String>(
-                          value: state.selectedCategory, 
+                          initialValue: state.selectedCategory, 
                           items: const [
 
                             DropdownMenuItem(value: 'All', child: Text('All')),

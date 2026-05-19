@@ -95,8 +95,4 @@ class EmergencyContactCubit extends Cubit<EmergencyContactState> {
     );
   }
 
-  @override
-  Future<void> close() {
-    return super.close();
-  }
 }

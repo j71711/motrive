@@ -1,8 +1,7 @@
 import UIKit
-// This is required for calling FlutterLocalNotificationsPlugin.setPluginRegistrantCallback method.
-import flutter_local_notifications
 import Flutter
 import GoogleMaps
+import flutter_local_notifications
 
 @main
 @objc class AppDelegate: FlutterAppDelegate {
@@ -10,18 +9,14 @@ import GoogleMaps
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
-    UNUserNotificationCenter.current().delegate = self as? UNUserNotificationCenterDelegate
-    return super.application(application, didFinishLaunchingWithOptions: launchOptions)
-  }
+     GMSServices.provideAPIKey(" AIzaSyBt4gNdEkOQmv4--y9_f2_UgwAmTheTjdY")
 
-  func didInitializeImplicitFlutterEngine(_ engineBridge: FlutterImplicitEngineBridge) {
-    // This is required to make any communication available in the action isolate.
-    FlutterLocalNotificationsPlugin.setPluginRegistrantCallback { (registry) in
-        GeneratedPluginRegistrant.register(with: registry)
+    UNUserNotificationCenter.current().delegate = self
+
+    FlutterLocalNotificationsPlugin.setPluginRegistrantCallback { registry in
+      GeneratedPluginRegistrant.register(with: registry)
     }
-    GeneratedPluginRegistrant.register(with: engineBridge.pluginRegistry)
 
-    GMSServices.provideAPIKey("YOUR_GOOGLE_MAPS_API_KEY")
 
     GeneratedPluginRegistrant.register(with: self)
 

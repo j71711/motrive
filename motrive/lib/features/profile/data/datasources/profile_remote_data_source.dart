@@ -1,33 +1,36 @@
 import 'package:injectable/injectable.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:motrive/core/services/local_keys_service.dart';
+import 'package:motrive/core/services/user_services.dart';
 import 'package:motrive/features/profile/data/models/profile_model.dart';
-import 'package:motrive/core/errors/network_exceptions.dart';
-
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class BaseProfileRemoteDataSource {
   Future<ProfileModel> getProfile();
 }
 
-
 @LazySingleton(as: BaseProfileRemoteDataSource)
 class ProfileRemoteDataSource implements BaseProfileRemoteDataSource {
- 
   final SupabaseClient _supabase;
-  final LocalKeysService _localKeysService;
-  
-  
+  final UserService _userService;
 
-   ProfileRemoteDataSource(this._localKeysService, this._supabase);
+  ProfileRemoteDataSource(
+    this._supabase,
+    this._userService,
+  );
 
-
-
-    @override
+  @override
   Future<ProfileModel> getProfile() async {
-    try {
-      return ProfileModel(id: 1, firstName: "Last Name", lastName: "First Name");
-    } catch (error) {
-     throw FailureExceptions.getException(error);
+    final authId = _userService.currentUser?.id;
+
+    if (authId == null) {
+      throw Exception('User not logged in');
     }
+
+    final response = await _supabase
+        .from('users')
+        .select()
+        .eq('auth_id', authId)
+        .single();
+
+    return ProfileModel.fromJson(response);
   }
 }

@@ -1,9 +1,12 @@
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:motrive/core/widgets/nav_bar.dart';
+import 'package:motrive/features/add_vehicle/presentation/cubit/add_vehicle_cubit.dart';
+import 'package:motrive/features/add_vehicle/presentation/pages/add_vehicle_feature_screen.dart';
 import 'package:motrive/features/expenses/presentation/cubit/expenses_cubit.dart';
 import 'package:motrive/features/expenses/presentation/pages/expenses_feature_screen.dart';
 import 'package:motrive/features/maintenance/domain/entities/service_info_entity.dart';
+import 'package:motrive/features/maintenance/domain/entities/vehicle_entity.dart';
 import 'routers.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,6 +24,8 @@ import 'package:motrive/features/loading/presentation/pages/loading_feature_scre
 import 'package:motrive/features/loading/presentation/cubit/loading_cubit.dart';
 import 'package:motrive/features/parking/presentation/pages/parking_feature_screen.dart';
 import 'package:motrive/features/parking/presentation/cubit/parking_cubit.dart';
+import 'package:motrive/features/reminders/presentation/pages/reminders_feature_screen.dart';
+import 'package:motrive/features/reminders/presentation/cubit/reminders_cubit.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
@@ -55,10 +60,10 @@ class AppRouter {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: Routes.profile,
+                path: Routes.expenses,
                 builder: (context, state) => BlocProvider(
-                  create: (context) => ProfileCubit(GetIt.I.get()),
-                  child: const ProfileFeatureScreen(),
+                  create: (context) => ExpensesCubit(GetIt.I.get()),
+                  child: const ExpensesFeatureScreen(),
                 ),
               ),
             ],
@@ -77,6 +82,14 @@ class AppRouter {
           ),
         ],
       ),
+      GoRoute(
+        path: Routes.profile,
+        builder: (context, state) => BlocProvider(
+          create: (context) => ProfileCubit(GetIt.I.get()),
+          child: const ProfileFeatureScreen(),
+        ),
+      ),
+
       GoRoute(
         path: Routes.splash,
         builder: (context, state) {
@@ -99,6 +112,17 @@ class AppRouter {
       ),
 
       GoRoute(
+        path: Routes.addVehicle,
+        builder: (context, state) => BlocProvider(
+          create: (context) => AddVehicleCubit(GetIt.I.get()),
+          child: AddVehicleFeatureScreen(
+            vehicle: state.extra as UserVehicleEntity?,
+          ),
+        ),
+      ),
+
+      GoRoute(
+
         path: Routes.loading,
         builder: (context, state) => BlocProvider(
           create: (context) => LoadingCubit(GetIt.I.get()),
@@ -115,7 +139,15 @@ class AppRouter {
           ),
         ),
       ),
-    ],
+    
+  GoRoute(
+    path: Routes.reminders,
+    builder: (context, state) => BlocProvider(
+          create: (context) => RemindersCubit(GetIt.I.get()),
+          child: const RemindersFeatureScreen(),
+        ),
+  ),
+],
 
     errorBuilder: (context, state) =>
         Scaffold(body: Center(child: Text('Page not found: ${state.uri}'))),

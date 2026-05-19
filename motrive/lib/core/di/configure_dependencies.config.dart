@@ -25,6 +25,7 @@ import '../network/dio_client.dart' as _i667;
 import '../services/emergency_service.dart' as _i214;
 import '../services/local_keys_service.dart' as _i945;
 import '../services/local_notification_service.dart' as _i762;
+import '../services/map_launcher_service.dart' as _i592;
 import '../services/parking_service.dart' as _i1041;
 import '../services/user_services.dart' as _i898;
 import 'app_module.dart' as _i460;
@@ -53,6 +54,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i667.DioClient>(() => _i667.DioClient());
     gh.lazySingleton<_i214.EmergencyService>(() => _i214.EmergencyService());
+    gh.lazySingleton<_i592.MapLauncherService>(
+      () => _i592.MapLauncherService(),
+    );
     gh.lazySingleton<_i898.UserService>(() => _i898.UserService());
     gh.lazySingleton<_i1041.ParkingService>(
       () => _i1041.ParkingService(gh<_i851.BaseParkingRemoteDataSource>()),

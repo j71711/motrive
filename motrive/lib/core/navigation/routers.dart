@@ -12,4 +12,5 @@ class Routes {
   static const String parking = '/parking';
   static const String addVehicle = '/addVehicle';
   static const String expenses = '/expenses';
+  static const String reminders = '/reminders';
 }
