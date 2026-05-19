@@ -199,6 +199,10 @@ class HomeFeatureScreen extends StatelessWidget {
 
                       if (!context.mounted) return;
 
+                      context.go(Routes.parking, extra: true);
+
+                      if (!context.mounted) return;
+
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text('parking_location_saved'.tr()),

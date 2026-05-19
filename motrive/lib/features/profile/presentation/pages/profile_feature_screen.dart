@@ -206,7 +206,7 @@ class ProfileFeatureScreen extends StatelessWidget {
                     settingsTile(
                       context,
                       icon: Icons.language_rounded,
-                      title:  "language".tr(),
+                      title: "language".tr(),
 
                       subtitle:
                           context

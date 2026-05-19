@@ -12,6 +12,7 @@ class ParkingService {
   ActivityType? lastActivity;
 
   bool alreadySaved = false;
+  Function()? onParkingSaved;
 
   StreamSubscription<ActivityEvent>? subscription;
 
@@ -34,6 +35,7 @@ class ParkingService {
           await remoteDataSource.saveParkingLocation(
             detectionMethod: 'activity_recognition',
           );
+          onParkingSaved?.call();
         }
 
         if (activityData.type == ActivityType.inVehicle) {
