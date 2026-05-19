@@ -350,14 +350,17 @@ class ParkingFeatureScreen extends StatelessWidget {
                 ),
               ],
 
-              if (state is ParkingLoadingState)
-                Container(
-                  color: Colors.black.withValues(alpha: .35),
 
-                  child: const Center(
-                    child: LoadingWidget(),
-                  ),
-                ),
+      if (state is ParkingLoadingState)
+        Positioned.fill(
+          child: Container(
+            color: const Color.fromARGB(0, 255, 255, 255).withValues(alpha: 7),
+
+            child: const Center(
+              child: LoadingWidget(),
+            ),
+          ),
+        ),
             ],
           );
         },
