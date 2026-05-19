@@ -18,25 +18,36 @@ class ParkingFeatureScreen extends StatelessWidget {
     return Scaffold(
       body: BlocConsumer<ParkingCubit, ParkingState>(
         listener: (context, state) {
-          if (state is ParkingErrorState) {
+          if (state is ParkingErrorState &&
+              !state.message.contains('No parking location found')) {
             ScaffoldMessenger.of(
               context,
-            ).showSnackBar(SnackBar(content: Text(state.message)));
+            ).showSnackBar(
+              SnackBar(
+                content: Text(state.message),
+              ),
+            );
           }
 
           if (state is ParkingActionSuccessState) {
             ScaffoldMessenger.of(
               context,
-            ).showSnackBar(SnackBar(content: Text(state.message)));
+            ).showSnackBar(
+              SnackBar(
+                content: Text(state.message),
+              ),
+            );
+
             cubit.getParkingMethod();
           }
         },
+
         builder: (context, state) {
           final hasParking = state is ParkingSuccessState;
 
           return Stack(
             children: [
-              if (hasParking)
+              if (hasParking) ...[
                 GoogleMap(
                   initialCameraPosition: CameraPosition(
                     target: LatLng(
@@ -45,53 +56,44 @@ class ParkingFeatureScreen extends StatelessWidget {
                     ),
                     zoom: 16,
                   ),
+
                   myLocationEnabled: true,
                   myLocationButtonEnabled: true,
+
                   markers: {
                     Marker(
-                      markerId:  MarkerId('parking_location'.tr(),),
+                      markerId: MarkerId(
+                        'parking_location'.tr(),
+                      ),
+
                       position: LatLng(
                         state.parking.latitudes,
                         state.parking.longitude,
                       ),
-                      infoWindow: InfoWindow(title: 'your_parked_car'.tr()),
+
+                      infoWindow: InfoWindow(
+                        title: 'your_parked_car'.tr(),
+                      ),
                     ),
                   },
                 ),
 
-              SafeArea(
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Row(
-                    children: [
-                      Container(
-                        height: 54,
-                        width: 54,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.surface,
-                          borderRadius: BorderRadius.circular(18),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withValues(alpha: .12),
-                              blurRadius: 18,
-                              offset: const Offset(0, 8),
-                            ),
-                          ],
-                        ),
-                        child: Icon(
-                          Icons.local_parking_rounded,
-                          color: Theme.of(context).colorScheme.primary,
-                          size: 30,
-                        ),
-                      ),
-                      const Gap(12),
-                      Expanded(
-                        child: Container(
+                SafeArea(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Row(
+                      children: [
+                        Container(
                           height: 54,
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          width: 54,
+
                           decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.surface,
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.surface,
+
                             borderRadius: BorderRadius.circular(18),
+
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.black.withValues(alpha: .12),
@@ -100,125 +102,106 @@ class ParkingFeatureScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          child: Align(
+
+                          child: Icon(
+                            Icons.local_parking_rounded,
+                            color: Theme.of(context).colorScheme.primary,
+                            size: 30,
+                          ),
+                        ),
+
+                        const Gap(12),
+
+                        Expanded(
+                          child: Container(
+                            height: 54,
+
                             alignment: Alignment.center,
+
+                            decoration: BoxDecoration(
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.surface,
+
+                              borderRadius: BorderRadius.circular(18),
+
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withValues(alpha: .12),
+                                  blurRadius: 18,
+                                  offset: const Offset(0, 8),
+                                ),
+                              ],
+                            ),
+
                             child: Text(
-                             'parking_location'.tr(),
+                              'parking_location'.tr(),
+
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.w900,
-                                color: Theme.of(context).colorScheme.onSurface,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const Gap(12),
-                      Container(
-                        height: 54,
-                        width: 54,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.surface,
-                          borderRadius: BorderRadius.circular(18),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withValues(alpha: .12),
-                              blurRadius: 18,
-                              offset: const Offset(0, 8),
-                            ),
-                          ],
-                        ),
-                        child: IconButton(
-                          onPressed: () {
-                            showModalBottomSheet(
-                              context: context,
-                              isScrollControlled: true,
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(28),
-                                ),
-                              ),
-                              builder: (_) {
-                                return SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height * .82,
-                                  child: const ParkingHistoryFeatureWidget(),
-                                );
-                              },
-                            );
-                          },
-                          icon: Icon(
-                            Icons.history_rounded,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
 
-              if (hasParking)
-                Positioned(
-                  left: 20,
-                  right: 20,
-                  top: 160,
-                  child: Container(
-                    padding: const EdgeInsets.all(18),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.surface,
-                      borderRadius: BorderRadius.circular(24),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: .16),
-                          blurRadius: 22,
-                          offset: const Offset(0, 10),
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onSurface,
+                              ),
+                            ),
+                          ),
                         ),
-                      ],
-                    ),
-                    child: Row(
-                      children: [
+
+                        const Gap(12),
+
                         Container(
-                          height: 50,
-                          width: 50,
+                          height: 54,
+                          width: 54,
+
                           decoration: BoxDecoration(
                             color: Theme.of(
                               context,
-                            ).colorScheme.primary.withValues(alpha: .12),
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(
-                            Icons.directions_car_rounded,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                        ),
-                        const Gap(12),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                               state.parking.address ?? 'unknown_location'.tr(),
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              const Gap(5),
-                              Text(
-                                state.parking.parkedAt,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  color: Theme.of(
-                                    context,
-                                  ).colorScheme.onSurface.withValues(alpha: .6),
-                                  fontSize: 13,
-                                ),
+                            ).colorScheme.surface,
+
+                            borderRadius: BorderRadius.circular(18),
+
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withValues(alpha: .12),
+                                blurRadius: 18,
+                                offset: const Offset(0, 8),
                               ),
                             ],
+                          ),
+
+                          child: IconButton(
+                            onPressed: () {
+                              showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(28),
+                                  ),
+                                ),
+
+                                builder: (_) {
+                                  return SizedBox(
+                                    height:
+                                        MediaQuery.of(context).size.height *
+                                        .82,
+
+                                    child:
+                                        const ParkingHistoryFeatureWidget(),
+                                  );
+                                },
+                              );
+                            },
+
+                            icon: Icon(
+                              Icons.history_rounded,
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.primary,
+                            ),
                           ),
                         ),
                       ],
@@ -226,38 +209,154 @@ class ParkingFeatureScreen extends StatelessWidget {
                   ),
                 ),
 
-              Positioned(
-                left: 20,
-                right: 20,
-                bottom: 80,
-                child: SizedBox(
-                  height: 62,
-                  child: ElevatedButton.icon(
-                    onPressed: () {
-                      cubit.manualSaveParkingMethod();
-                    },
-                    icon: const Icon(Icons.my_location_rounded),
-                 label: Text('save_current_parking'.tr()),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,
-                      foregroundColor: Colors.white,
-                      elevation: 8,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(22),
+                Positioned(
+                  left: 20,
+                  right: 20,
+                  bottom: 24,
+
+                  child: SizedBox(
+                    height: 62,
+
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        cubit.manualSaveParkingMethod();
+                      },
+
+                      icon: const Icon(
+                        Icons.my_location_rounded,
                       ),
-                      textStyle: const TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
+
+                      label: Text(
+                        'save_current_parking'.tr(),
+                      ),
+
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.black,
+                        foregroundColor: Colors.white,
+                        elevation: 8,
+
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(22),
+                        ),
+
+                        textStyle: const TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
+              ] else ...[
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 32),
+
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+
+                      children: [
+                        Container(
+                          height: 120,
+                          width: 120,
+
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.primary.withValues(alpha: .08),
+                          ),
+
+                          child: Icon(
+                            Icons.local_parking_rounded,
+                            size: 60,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
+
+                        const Gap(24),
+
+                        Text(
+                        'no_parking_location'.tr(),
+
+                          textAlign: TextAlign.center,
+
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w900,
+
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.onSurface,
+                          ),
+                        ),
+
+                        const Gap(10),
+
+                        Text(
+                          'save_parking_description'.tr(),
+
+                          textAlign: TextAlign.center,
+
+                          style: TextStyle(
+                            fontSize: 15,
+                            height: 1.5,
+
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.onSurface.withValues(alpha: .6),
+                          ),
+                        ),
+
+                        const Gap(28),
+
+                        SizedBox(
+                          width: double.infinity,
+                          height: 58,
+
+                          child: ElevatedButton.icon(
+                            onPressed: () {
+                              cubit.manualSaveParkingMethod();
+                            },
+
+                            icon: const Icon(
+                              Icons.my_location_rounded,
+                            ),
+
+                            label:  Text(
+                             'save_parking_location'.tr(),
+                            ),
+
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.black,
+                              foregroundColor: Colors.white,
+                              elevation: 8,
+
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(22),
+                              ),
+
+                              textStyle: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
 
               if (state is ParkingLoadingState)
                 Container(
                   color: Colors.black.withValues(alpha: .35),
-                  child: const Center(child: LoadingWidget()),
+
+                  child: const Center(
+                    child: LoadingWidget(),
+                  ),
                 ),
             ],
           );

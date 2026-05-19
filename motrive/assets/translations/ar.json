@@ -160,5 +160,8 @@
   "car_assistant": "مساعد السيارة",
   "ask_me_anything_about_your_car":
       "اسألني أي شيء عن سيارتك",
-  "type_your_message": "اكتب رسالتك..."
+  "type_your_message": "اكتب رسالتك...",
+  "no_parking_location": "لا يوجد موقع موقف",
+  "save_parking_description": "احفظ موقع سيارتك للوصول إليها لاحقًا بسهولة.",
+  "save_parking_location": "حفظ موقع الوقوف"
 }

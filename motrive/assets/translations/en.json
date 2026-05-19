@@ -160,5 +160,8 @@
   "car_assistant": "Car Assistant",
   "ask_me_anything_about_your_car":
       "Ask me anything about your car",
-  "type_your_message": "Type your message..."
+  "type_your_message": "Type your message...",
+  "no_parking_location": "No Parking Location",
+  "save_parking_description": "Save your parking location to quickly find your car later.",
+  "save_parking_location": "Save Parking Location"
 }
