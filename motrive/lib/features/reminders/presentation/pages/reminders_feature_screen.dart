@@ -19,11 +19,11 @@ class RemindersFeatureScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-          title: Text('reminders'.tr()),
+        title: Text('reminders'.tr()),
         actions: [
           IconButton(
             onPressed: () async => context
-                .showBottomSheet(widget: AddReminderFeatureWidget())
+                .showBottomSheet(widget: const AddReminderFeatureWidget())
                 .then((value) {
                   if (value == true) {
                     cubit.getRemindersMethod();

@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import 'package:motrive/core/constants/app_icons.dart';
 import 'package:motrive/core/navigation/routers.dart';
 import 'package:motrive/core/theme/app_settings_state.dart';
+import 'package:motrive/core/utils/validators.dart';
 import 'package:motrive/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:motrive/features/auth/presentation/cubit/auth_state.dart';
 import 'package:motrive/core/widgets/cirle_widget.dart';
@@ -179,6 +180,9 @@ class AuthFeatureScreen extends HookWidget {
                             CustomTextField(
                               label: 'name'.tr(),
                               controller: nameController,
+                              validator: isLogin
+                                  ? null
+                                  : Validators.validateFullName,
                             ),
                           ],
 
@@ -198,6 +202,7 @@ class AuthFeatureScreen extends HookWidget {
                             label: 'email'.tr(),
                             controller: emailController,
                             textInputType: TextInputType.emailAddress,
+                            validator: Validators.validateEmail,
                           ),
                           SizedBox(
                             height: 56,

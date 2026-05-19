@@ -9,14 +9,13 @@ import 'package:motrive/features/profile/sub/emergency_contact/presentation/page
 import 'package:motrive/features/profile/sub/emergency_contact/presentation/pages/show_delete_dialog.dart';
 
 class EmergencyContactFeatureWidget extends StatelessWidget {
-  EmergencyContactFeatureWidget({super.key});
-
-  final nameController = TextEditingController();
-  final emailController = TextEditingController();
-  final relationController = TextEditingController();
+  const EmergencyContactFeatureWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final nameController = TextEditingController();
+    final emailController = TextEditingController();
+    String relation = '';
     final cubit = context.read<EmergencyContactCubit>();
 
     return BlocConsumer<EmergencyContactCubit, EmergencyContactState>(
@@ -30,7 +29,7 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
         if (state is EmergencyContactActionSuccessState) {
           nameController.clear();
           emailController.clear();
-          relationController.clear();
+          relation = '';
         }
       },
       builder: (context, state) {
@@ -87,7 +86,7 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                '${contact.name} - ${contact.relation}',
+                                '${contact.name} - ${contact.relation.toLowerCase().tr()}',
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
 
@@ -123,8 +122,7 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
 
                                           emailController.text = contact.email;
 
-                                          relationController.text =
-                                              contact.relation;
+                                          relation = contact.relation;
 
                                           showContactDialog(
                                             context: context,
@@ -132,17 +130,14 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                                             buttonText: "update".tr(),
                                             nameController: nameController,
                                             emailController: emailController,
-
-                                            relationController:
-                                                relationController,
-                                            onPressed: () {
+                                            relation: relation,
+                                            onPressed: (relation) {
                                               cubit
                                                   .updateEmergencyContactMethod(
                                                     id: contact.id,
                                                     name: nameController.text,
                                                     email: emailController.text,
-                                                    relation:
-                                                        relationController.text,
+                                                    relation: relation,
                                                     notifyEmergency: false,
                                                   );
                                             },
@@ -211,7 +206,7 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                           onPressed: () {
                             nameController.clear();
                             emailController.clear();
-                            relationController.clear();
+                            relation = '';
 
                             showContactDialog(
                               context: context,
@@ -219,12 +214,12 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                               buttonText: 'add'.tr(),
                               nameController: nameController,
                               emailController: emailController,
-                              relationController: relationController,
-                              onPressed: () {
+                              relation: relation,
+                              onPressed: (relation) {
                                 cubit.addEmergencyContactMethod(
                                   name: nameController.text,
                                   email: emailController.text,
-                                  relation: relationController.text,
+                                  relation: relation,
                                   notifyEmergency: false,
                                 );
                               },

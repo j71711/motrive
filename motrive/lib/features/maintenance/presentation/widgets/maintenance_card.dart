@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:motrive/core/utils/formatters.dart';
 import 'package:motrive/features/maintenance/domain/entities/service_info_entity.dart';

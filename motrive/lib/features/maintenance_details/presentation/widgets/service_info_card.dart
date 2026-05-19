@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:motrive/core/utils/formatters.dart';
+import 'package:motrive/core/widgets/severity_widget.dart';
 import 'package:motrive/features/maintenance/domain/entities/service_info_entity.dart';
 
 class ServiceInfoCard extends StatelessWidget {
@@ -22,30 +23,21 @@ class ServiceInfoCard extends StatelessWidget {
               mainAxisAlignment: .spaceBetween,
               children: [
                 Text(
-                 '${'service_odometer'.tr()}: ${Formatters.formatOdometer(serviceInfo.serviceOdometer)}',
+                  '${'service_odometer'.tr()}: ${Formatters.formatOdometer(serviceInfo.serviceOdometer)}',
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
-                Container(
-                  padding: .symmetric(horizontal: 8, vertical: 3),
-                  decoration: BoxDecoration(
-                    borderRadius: .circular(16),
-                    color: serviceInfo.severity == 'critical'.tr()
-                        ? Colors.orangeAccent
-                        : Colors.green,
-                  ),
-                  child: Text(
-                    serviceInfo.severity,
-                    style: TextStyle(color: Colors.white),
-                  ),
+                SeverityWidget(
+                  severity: serviceInfo.severity,
+                  onSeverity: (severity) => serviceInfo.severity == 'routine',
                 ),
               ],
             ),
             Text(
-             '${'date_interval'.tr()}: ${serviceInfo.dateIntervalMonths} ${'months'.tr()}',
+              '${'date_interval'.tr()}: ${serviceInfo.dateIntervalMonths} ${'months'.tr()}',
               softWrap: true,
             ),
             Gap(10),
-           if (serviceInfo.recommendation != 'no_data'.tr())
+            if (serviceInfo.recommendation != 'no_data'.tr())
               Column(
                 spacing: 5,
                 crossAxisAlignment: .start,

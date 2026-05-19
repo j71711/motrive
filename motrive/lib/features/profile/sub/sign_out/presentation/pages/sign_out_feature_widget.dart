@@ -34,10 +34,7 @@ class SignOutFeatureWidget extends StatelessWidget {
               }
 
               if (state is SignOutErrorState) {
-                context.showSnackBar(
-                  state.message,
-                  isError: true,
-                );
+                context.showSnackBar(state.message, isError: true);
               }
             },
             child: Material(
@@ -47,10 +44,10 @@ class SignOutFeatureWidget extends StatelessWidget {
                 onTap: () async {
                   final value = await context.showMyDialog(
                     title: 'sign_out'.tr(),
-                    content:
-                        "sign_out_message".tr(),
+                    content: "sign_out_message".tr(),
                     onConfirm: true,
                     confirmButton: 'sign_out'.tr(),
+                    cancelButton: 'cancel'.tr(),
                   );
 
                   if (value == true) {
@@ -101,8 +98,9 @@ class SignOutFeatureWidget extends StatelessWidget {
                             Text(
                               'logout_from_your_account'.tr(),
                               style: theme.textTheme.bodyMedium?.copyWith(
-                                color: theme.colorScheme.onSurface
-                                    .withValues(alpha: .55),
+                                color: theme.colorScheme.onSurface.withValues(
+                                  alpha: .55,
+                                ),
                               ),
                             ),
                           ],
@@ -112,8 +110,9 @@ class SignOutFeatureWidget extends StatelessWidget {
                       Icon(
                         Icons.chevron_right_rounded,
                         size: 28,
-                        color: theme.colorScheme.onSurface
-                            .withValues(alpha: .25),
+                        color: theme.colorScheme.onSurface.withValues(
+                          alpha: .25,
+                        ),
                       ),
                     ],
                   ),

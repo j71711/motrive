@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:motrive/core/constants/app_policies.dart';
 
@@ -6,9 +7,10 @@ class AgreementScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currentLocale = Localizations.localeOf(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('User Agreement'),
+        title: Text('user_agreement'.tr()),
         centerTitle: true,
         leading: Padding(
           padding: const EdgeInsets.only(left: 12),
@@ -39,7 +41,9 @@ class AgreementScreen extends StatelessWidget {
       body: SingleChildScrollView(
         padding: .all(16),
         child: Text(
-          AppPolicies.userAgreement,
+          currentLocale.languageCode == 'en'
+              ? AppPolicies.userAgreementEr
+              : AppPolicies.userAgreementAr,
           style: TextStyle(fontWeight: .w500),
         ),
       ),

@@ -58,7 +58,7 @@ class ActionCard extends StatelessWidget {
                         ? IconButton(onPressed: onIconClick, icon: Icon(icon))
                         : Icon(icon, color: iconColor, size: 28),
                   ),
-                  ?nextToIcon,
+                  if (nextToIcon != null) Expanded(child: nextToIcon!),
                 ],
               ),
 

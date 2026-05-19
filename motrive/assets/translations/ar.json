@@ -12,6 +12,7 @@
   "english": "الإنجليزية",
   "agreement": "الاتفاقية",
   "agreed_upon_terms": "الشروط المتفق عليها",
+  "user_agreement":"إتفاقيات المستخدم",
   "sign_out": "تسجيل الخروج",
   "logout_from_your_account": "تسجيل الخروج من حسابك",
   "sign_out_message": "أنت على وشك تسجيل الخروج من حسابك، هل أنت متأكد؟",
@@ -101,7 +102,6 @@
   "date_interval": "الفاصل الزمني",
   "months": "شهور",
   "recommendations": "التوصيات",
-  "critical": "حرج",
   "my_maintenance": "صيانة سيارتي",
   "no_services": "لا توجد خدمات",
   "future_maintenance": "الصيانة المستقبلية",
@@ -159,5 +159,20 @@
   "car_assistant": "مساعد السيارة",
   "ask_me_anything_about_your_car":
       "اسألني أي شيء عن سيارتك",
-  "type_your_message": "اكتب رسالتك..."
+  "type_your_message": "اكتب رسالتك...",
+  "nav_home":"الرئيسية",
+  "nav_maintenance":"الصيانة",
+  "nav_expense":"المدفوعات",
+  "nav_location":"الموقع",
+  "routine":"دورية",
+  "critical":"متقدمة",
+  "replace":"استبدال",
+  "adjust":"تعديل",
+  "refill":"تعبئة",
+  "father":"أب",
+  "mother":"أم",
+  "brother":"أخ",
+  "sister":"أخت",
+  "friend":"صديق",
+  "sibling":"قريب"
 }

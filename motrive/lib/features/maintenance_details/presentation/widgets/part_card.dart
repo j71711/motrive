@@ -32,7 +32,7 @@ class PartCard extends StatelessWidget {
           mainAxisSize: .min,
           crossAxisAlignment: .start,
           children: [
-           if (part?.specification != 'no_data'.tr())
+            if (part?.specification != 'no_data'.tr())
               Text(part?.specification ?? ''),
             if (part?.oemPartNumber != 'no_data'.tr())
               Text('${'oem_no'.tr()} ${part?.oemPartNumber}'),

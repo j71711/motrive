@@ -225,7 +225,7 @@ class HomeFeatureScreen extends StatelessWidget {
                     icon: Icons.notifications_active_rounded,
                     iconColor: Theme.of(context).colorScheme.error,
                     onTap: () async => context.showBottomSheet(
-                      widget: AddReminderFeatureWidget(),
+                      widget: const AddReminderFeatureWidget(),
                     ),
                   ),
                 ],

@@ -32,15 +32,15 @@ class MaintenanceAlertFeatureWidget extends StatelessWidget {
               return CustomFadeContainer(
                 fade: maintenance == null,
                 widget: ActionCard(
-                title: 'maintenance'.tr(),
+                  title: 'maintenance'.tr(),
                   subtitle: Formatters.formatOdometer(
                     maintenance?.services.first.serviceOdometer ?? 0,
                   ),
                   nextToIcon: FittedBox(
                     child: SeverityWidget(
-                    severity: status ? 'overdue'.tr() : 'upcoming'.tr(),
+                      severity: status ? 'overdue'.tr() : 'upcoming'.tr(),
                       widthWithText: true,
-                     onSeverity: (severity) => severity == 'overdue'.tr(),
+                      onSeverity: (severity) => severity == 'overdue'.tr(),
                     ),
                   ),
                   showArrow: true,
@@ -70,8 +70,8 @@ class MaintenanceAlertFeatureWidget extends StatelessWidget {
                       }),
                 ),
                 widgetTo: ActionCard(
-                 title: 'maintenance'.tr(),
-              subtitle: 'alerts_will_appear_here'.tr(),
+                  title: 'maintenance'.tr(),
+                  subtitle: 'alerts_will_appear_here'.tr(),
                   icon: Icons.done,
                   iconColor: Theme.of(context).colorScheme.primary,
                   onTap: () {},

@@ -52,8 +52,8 @@ class VehicleCardFeatureWidget extends StatelessWidget {
                     );
                   } else {
                     await context.push(Routes.addVehicle).then((value) {
-                      if (value == true) {
-                        cubit.getVehicleCardMethod();
+                      if (value == true && context.mounted) {
+                        context.go(Routes.loading);
                       }
                     });
                   }

@@ -13,6 +13,7 @@ class VehicleCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textColor = Color.fromARGB(255, 255, 255, 255);
     return Container(
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.all(18),
@@ -28,56 +29,38 @@ class VehicleCardWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
+                  spacing: 12,
+                  mainAxisAlignment: .spaceBetween,
                   children: [
                     Expanded(
-                      child: Text(
-                       'add_your_car_to_start_the_journey'.tr(),
-                        style: Theme.of(context).textTheme.titleMedium
-                            ?.copyWith(
-                              color: Color.fromARGB(
-                                255,
-                                255,
-                                255,
-                                255,
-                              ).withValues(alpha: 1),
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
+                      child: FittedBox(
+                        child: Text(
+                          'add_your_car_to_start_the_journey'.tr(),
+                          style: Theme.of(context).textTheme.titleMedium
+                              ?.copyWith(
+                                color: textColor.withValues(alpha: 1),
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                        ),
                       ),
                     ),
 
-                    const SizedBox(width: 12),
-
                     Container(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 18,
+                        horizontal: 10,
                         vertical: 10,
                       ),
                       decoration: BoxDecoration(
-                        color: Color.fromARGB(
-                          255,
-                          255,
-                          255,
-                          255,
-                        ).withValues(alpha: .5),
-                        borderRadius: BorderRadius.circular(22),
+                        color: textColor.withValues(alpha: .5),
+                        borderRadius: BorderRadius.circular(15),
                         border: Border.all(
-                          color: Color.fromARGB(
-                            255,
-                            255,
-                            255,
-                            255,
-                          ).withValues(alpha: .72),
+                          color: textColor.withValues(alpha: .72),
                         ),
                       ),
                       child: Icon(
                         Icons.add,
-                        color: Color.fromARGB(
-                          255,
-                          255,
-                          255,
-                          255,
-                        ).withValues(alpha: 1),
+                        color: textColor.withValues(alpha: 1),
                       ),
                     ),
                   ],
@@ -88,6 +71,7 @@ class VehicleCardWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
+                  spacing: 6,
                   children: [
                     Expanded(
                       child: Column(
@@ -99,29 +83,17 @@ class VehicleCardWidget extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: Theme.of(context).textTheme.titleMedium
                                 ?.copyWith(
-                                  color: Color.fromARGB(
-                                    255,
-                                    255,
-                                    255,
-                                    255,
-                                  ).withValues(alpha: 1),
+                                  color: textColor.withValues(alpha: 1),
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                 ),
                           ),
 
-                          const SizedBox(height: 6),
-
                           Text(
                             '${vehicle?.year}',
                             style: Theme.of(context).textTheme.bodyMedium
                                 ?.copyWith(
-                                  color: Color.fromARGB(
-                                    255,
-                                    255,
-                                    255,
-                                    255,
-                                  ).withValues(alpha: 1),
+                                  color: textColor.withValues(alpha: 1),
                                   fontSize: 15,
                                 ),
                           ),
@@ -137,35 +109,26 @@ class VehicleCardWidget extends StatelessWidget {
                         vertical: 10,
                       ),
                       decoration: BoxDecoration(
-                        color: Color.fromARGB(
-                          255,
-                          255,
-                          255,
-                          255,
-                        ).withValues(alpha: .5),
+                        color: textColor.withValues(alpha: .5),
                         borderRadius: BorderRadius.circular(22),
                         border: Border.all(
-                          color: Color.fromARGB(
-                            255,
-                            255,
-                            255,
-                            255,
-                          ).withValues(alpha: .72),
+                          color: textColor.withValues(alpha: .72),
                         ),
                       ),
                       child: Text(
                         '${vehicle?.currentOdometer} ${'km'.tr()}',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Color.fromARGB(
-                            255,
-                            255,
-                            255,
-                            255,
-                          ).withValues(alpha: 1),
+                          color: textColor.withValues(alpha: 1),
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
+                    ),
+                    Icon(
+                      isExpanded
+                          ? Icons.keyboard_arrow_up_rounded
+                          : Icons.keyboard_arrow_down_rounded,
+                      color: textColor.withValues(alpha: .5),
                     ),
                   ],
                 ),
@@ -179,41 +142,26 @@ class VehicleCardWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                          '${'color'.tr()}: ${vehicle?.color ?? ''}',
+                            '${'color'.tr()}: ${vehicle?.color ?? ''}',
                             style: Theme.of(context).textTheme.bodySmall
                                 ?.copyWith(
-                                  color: Color.fromARGB(
-                                    255,
-                                    255,
-                                    255,
-                                    255,
-                                  ).withValues(alpha: .72),
+                                  color: textColor.withValues(alpha: .72),
                                 ),
                           ),
 
                           Text(
-                         '${'license_plate'.tr()}: ${vehicle?.licensePlate ?? ''}',
+                            '${'license_plate'.tr()}: ${vehicle?.licensePlate ?? ''}',
                             style: Theme.of(context).textTheme.bodySmall
                                 ?.copyWith(
-                                  color: Color.fromARGB(
-                                    255,
-                                    255,
-                                    255,
-                                    255,
-                                  ).withValues(alpha: .72),
+                                  color: textColor.withValues(alpha: .72),
                                 ),
                           ),
 
                           Text(
-                           '${'vin'.tr()}: ${vehicle?.vin ?? ''}',
+                            '${'vin'.tr()}: ${vehicle?.vin ?? ''}',
                             style: Theme.of(context).textTheme.bodySmall
                                 ?.copyWith(
-                                  color: Color.fromARGB(
-                                    255,
-                                    255,
-                                    255,
-                                    255,
-                                  ).withValues(alpha: .72),
+                                  color: textColor.withValues(alpha: .72),
                                 ),
                           ),
                         ],
@@ -229,12 +177,7 @@ class VehicleCardWidget extends StatelessWidget {
                             }),
                         icon: Icon(
                           Icons.edit,
-                          color: Color.fromARGB(
-                            255,
-                            255,
-                            255,
-                            255,
-                          ).withValues(alpha: .72),
+                          color: textColor.withValues(alpha: .72),
                         ),
                       ),
                     ],

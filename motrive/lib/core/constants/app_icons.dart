@@ -7,5 +7,6 @@ abstract class AppIcons {
   static const String search = '$_iconsPath/search.svg';
   static const String settings = '$_iconsPath/settings.svg';
   static const String google = '$_iconsPath/google-icon-logo-svgrepo-com.svg';
+  static const String chatLoading = '$_iconsPath/chat_typing_indicator.json';
 }
 

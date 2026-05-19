@@ -6,7 +6,7 @@ class Validators {
     if (value == null || value.isEmpty) {
       return 'Email is required';
     }
-    final emailRegex = RegExp(r'^[w-.]+@([w-]+.)+[w-]{2,4}$');
+    final emailRegex = RegExp(r'^[\w\.-]+@([\w-]+\.)+[\w-]{2,4}$');
     if (!emailRegex.hasMatch(value)) {
       return 'Invalid email address';
     }
@@ -62,5 +62,27 @@ class Validators {
       return '${fieldName ?? 'This odometer'} is less than the current';
     }
     return null;
+  }
+
+  static String? validateFullName(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'This field is required';
+    }
+    if (value.length < 2) {
+      return 'Must be at least 2 characters';
+    }
+    final trimmed = value.trim();
+
+    final parts = trimmed.split(RegExp(r'\s+'));
+
+    if (parts.length >= 2 &&
+        parts.length <= 4 &&
+        parts.every(
+          (part) => RegExp(r'^[a-zA-Z\u0600-\u06FF]+$').hasMatch(part),
+        )) {
+      return null;
+    }
+
+    return 'Name is invalid';
   }
 }

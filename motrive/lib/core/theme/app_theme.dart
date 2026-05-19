@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'app_text_theme.dart';
 
 abstract class AppTheme {
@@ -9,7 +10,7 @@ abstract class AppTheme {
     brightness: Brightness.light,
 
     colorScheme: const ColorScheme.light(
-      primary:  Color(0xff020617),
+      primary: Color(0xff020617),
       secondary: Color(0xff111827),
       surface: Color(0xffF8FAFC),
       error: Color(0xffEF4444),
@@ -90,9 +91,7 @@ abstract class AppTheme {
       color: Colors.white,
       elevation: 0,
       shadowColor: Colors.black12,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(28),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
       margin: EdgeInsets.zero,
     ),
 
@@ -102,9 +101,7 @@ abstract class AppTheme {
         foregroundColor: Colors.white,
         elevation: 0,
         minimumSize: const Size(double.infinity, 58),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         textStyle: const TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w700,
@@ -119,23 +116,15 @@ abstract class AppTheme {
         elevation: 0,
         minimumSize: const Size(double.infinity, 58),
         side: const BorderSide(color: Color(0xffE2E8F0), width: 1),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       ),
     ),
 
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: Colors.white,
-      contentPadding: const EdgeInsets.symmetric(
-        horizontal: 20,
-        vertical: 18,
-      ),
-      hintStyle: const TextStyle(
-        color: Color(0xff94A3B8),
-        fontSize: 15,
-      ),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+      hintStyle: const TextStyle(color: Color(0xff94A3B8), fontSize: 15),
       labelStyle: const TextStyle(
         color: Color(0xff111827),
         fontWeight: FontWeight.w600,
@@ -152,10 +141,7 @@ abstract class AppTheme {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(20),
-        borderSide: const BorderSide(
-          color: Color(0xff000000),
-          width: 1.5,
-        ),
+        borderSide: const BorderSide(color: Color(0xff000000), width: 1.5),
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(20),
@@ -163,10 +149,7 @@ abstract class AppTheme {
       ),
       focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(20),
-        borderSide: const BorderSide(
-          color: Color(0xffEF4444),
-          width: 1.5,
-        ),
+        borderSide: const BorderSide(color: Color(0xffEF4444), width: 1.5),
       ),
     ),
 
@@ -204,7 +187,7 @@ abstract class AppTheme {
       onSurface: Colors.white,
     ),
 
-    scaffoldBackgroundColor:Color(0xff020617),
+    scaffoldBackgroundColor: Color(0xff020617),
 
     textTheme: AppTextTheme.darkTextTheme.copyWith(
       headlineLarge: const TextStyle(
@@ -243,14 +226,8 @@ abstract class AppTheme {
         fontWeight: FontWeight.w500,
         color: Colors.white,
       ),
-      bodyMedium: const TextStyle(
-        fontSize: 14,
-        color: Color(0xffCBD5E1),
-      ),
-      bodySmall: const TextStyle(
-        fontSize: 12,
-        color: Color(0xff94A3B8),
-      ),
+      bodyMedium: const TextStyle(fontSize: 14, color: Color(0xffCBD5E1)),
+      bodySmall: const TextStyle(fontSize: 12, color: Color(0xff94A3B8)),
     ),
 
     appBarTheme: const AppBarTheme(
@@ -270,9 +247,7 @@ abstract class AppTheme {
       color: Color(0xff020617),
       elevation: 0,
       shadowColor: Colors.transparent,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(28),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
       margin: EdgeInsets.zero,
     ),
 
@@ -282,9 +257,7 @@ abstract class AppTheme {
         foregroundColor: const Color(0xff020617),
         elevation: 0,
         minimumSize: const Size(double.infinity, 58),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       ),
     ),
 
@@ -293,23 +266,15 @@ abstract class AppTheme {
         foregroundColor: Colors.white,
         side: const BorderSide(color: Color(0xff334155)),
         minimumSize: const Size(double.infinity, 58),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       ),
     ),
 
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: const Color(0xff111827),
-      contentPadding: const EdgeInsets.symmetric(
-        horizontal: 20,
-        vertical: 18,
-      ),
-      hintStyle: const TextStyle(
-        color: Color(0xff64748B),
-        fontSize: 15,
-      ),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+      hintStyle: const TextStyle(color: Color(0xff64748B), fontSize: 15),
       labelStyle: const TextStyle(
         color: Color(0xffCBD5E1),
         fontWeight: FontWeight.w600,
@@ -326,10 +291,7 @@ abstract class AppTheme {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(20),
-        borderSide: const BorderSide(
-          color: Colors.white,
-          width: 1.5,
-        ),
+        borderSide: const BorderSide(color: Colors.white, width: 1.5),
       ),
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(20),
@@ -337,10 +299,7 @@ abstract class AppTheme {
       ),
       focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(20),
-        borderSide: const BorderSide(
-          color: Color(0xffEF4444),
-          width: 1.5,
-        ),
+        borderSide: const BorderSide(color: Color(0xffEF4444), width: 1.5),
       ),
     ),
 

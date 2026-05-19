@@ -12,6 +12,7 @@
   "english": "English",
   "agreement": "Agreement",
   "agreed_upon_terms": "Agreed Upon Terms",
+  "user_agreement":"User Agreement",
   "sign_out": "Sign Out",
   "logout_from_your_account": "Logout From Your Account",
   "sign_out_message": "You're about to sign out of your account, are you sure?",
@@ -159,5 +160,19 @@
   "car_assistant": "Car Assistant",
   "ask_me_anything_about_your_car":
       "Ask me anything about your car",
-  "type_your_message": "Type your message..."
+  "type_your_message": "Type your message...",
+  "nav_home":"Home",
+  "nav_maintenance":"Maintenance",
+  "nav_expense":"Expense",
+  "nav_location":"Location",
+  "routine":"Routine",
+  "replace":"Replace",
+  "adjust":"Adjust",
+  "refill":"Refill",
+  "father":"Father",
+  "mother":"Mother",
+  "brother":"Brother",
+  "sister":"Sister",
+  "friend":"Friend",
+  "sibling":"Sibling"
 }
