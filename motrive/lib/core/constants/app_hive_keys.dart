@@ -18,6 +18,8 @@ abstract class HiveBoxes {
   static const String parking = 'parking';
   static const String profile = 'parking';
   static const String auth = 'auth';
+  static const theme = 'theme';
+static const language = 'language';
 }
 
 // ════════════════════════════════════════════════════════════════

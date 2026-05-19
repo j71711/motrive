@@ -1,5 +1,19 @@
 {
-   "data":"البيانات"
+  "profile": "الملف الشخصي",
+  "personal_information": "المعلومات الشخصية",
 
+  "emergency_contacts": "جهات الاتصال للطوارئ",
+  "manage_trusted_contacts": "إدارة جهات الاتصال الموثوقة",
+
+  "display_theme": "مظهر التطبيق",
+  "dark_mode": "الوضع الداكن",
+
+  "language": "اللغة",
+  "english": "الإنجليزية",
+
+  "agreement": "الاتفاقية",
+  "agreed_upon_terms": "الشروط المتفق عليها",
+
+  "sign_out": "تسجيل الخروج",
+  "logout_from_your_account": "تسجيل الخروج من حسابك"
 }
-
