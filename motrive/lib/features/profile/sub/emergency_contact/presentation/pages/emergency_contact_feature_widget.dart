@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -61,7 +62,7 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          'Emergency Contacts',
+                          "emergency_contacts".tr(),
                           style: Theme.of(context).textTheme.titleLarge
                               ?.copyWith(
                                 color: Theme.of(context).colorScheme.primary,
@@ -127,8 +128,8 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
 
                                           showContactDialog(
                                             context: context,
-                                            title: 'Edit Contact',
-                                            buttonText: 'Update',
+                                            title: 'edit_contact'.tr(),
+                                            buttonText: "update".tr(),
                                             nameController: nameController,
                                             emailController: emailController,
 
@@ -147,7 +148,7 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                                             },
                                           );
                                         },
-                                        child: const Text('Edit'),
+                                        child: Text('edit'.tr()),
                                       ),
                                     ),
                                   ),
@@ -181,7 +182,7 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                                             },
                                           );
                                         },
-                                        child: const Text('Delete'),
+                                        child: Text('delete'.tr()),
                                       ),
                                     ),
                                   ),
@@ -214,8 +215,8 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
 
                             showContactDialog(
                               context: context,
-                              title: 'Add Contact',
-                              buttonText: 'Add',
+                              title: 'add_contact'.tr(),
+                              buttonText: 'add'.tr(),
                               nameController: nameController,
                               emailController: emailController,
                               relationController: relationController,
@@ -231,7 +232,7 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                           },
 
                           child: Text(
-                            '+ Add Contact',
+                            '+ ${'add_contact'.tr()}',
                             style: Theme.of(context).textTheme.titleMedium
                                 ?.copyWith(
                                   color: Theme.of(context).colorScheme.primary,

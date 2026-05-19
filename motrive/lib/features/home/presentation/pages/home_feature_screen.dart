@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -71,7 +72,7 @@ class HomeFeatureScreen extends StatelessWidget {
               BlocBuilder<HomeCubit, HomeState>(
                 builder: (context, state) {
                   return Text(
-                    'Good morning, ${state is HomeSuccessState ? state.user.fullName?.capitalizeEachWord : ''}',
+                    '${'good_morning'.tr()}, ${state is HomeSuccessState ? state.user.fullName?.capitalizeEachWord : ''}',
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: Theme.of(context).colorScheme.primary,
                       fontSize: 13,
@@ -85,7 +86,7 @@ class HomeFeatureScreen extends StatelessWidget {
               const Gap(4),
 
               Text(
-                'Your car assistant',
+                'your_car_assistant'.tr(),
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   color: Theme.of(context).colorScheme.primary,
                   fontSize: 24,
@@ -131,7 +132,7 @@ class HomeFeatureScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Vehicle Status',
+                              'vehicle_status'.tr(),
                               style: Theme.of(context).textTheme.titleLarge
                                   ?.copyWith(
                                     color: Colors.white,
@@ -143,7 +144,7 @@ class HomeFeatureScreen extends StatelessWidget {
                             const SizedBox(height: 2),
 
                             Text(
-                              'Everything looks ready',
+                              'everything_looks_ready'.tr(),
                               style: Theme.of(context).textTheme.bodySmall
                                   ?.copyWith(
                                     color: Colors.white70,
@@ -164,7 +165,7 @@ class HomeFeatureScreen extends StatelessWidget {
 
               const Gap(28),
 
-              SectionTitle(title: 'Emergency'),
+              SectionTitle(title: 'emergency'.tr()),
 
               const Gap(12),
 
@@ -172,7 +173,7 @@ class HomeFeatureScreen extends StatelessWidget {
 
               const Gap(28),
 
-              SectionTitle(title: 'Quick Actions'),
+              SectionTitle(title: 'quick_actions'.tr()),
               const Gap(14),
 
               GridView(
@@ -188,8 +189,8 @@ class HomeFeatureScreen extends StatelessWidget {
                   MaintenanceAlertFeatureWidget(),
 
                   ActionCard(
-                    title: 'Location',
-                    subtitle: 'Save parking',
+                    title: 'location'.tr(),
+                    subtitle: 'save_parking'.tr(),
                     icon: Icons.location_on_rounded,
                     iconColor: Theme.of(context).colorScheme.secondary,
                     onTap: () async {
@@ -200,8 +201,8 @@ class HomeFeatureScreen extends StatelessWidget {
                       if (!context.mounted) return;
 
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Parking location saved'),
+                        SnackBar(
+                          content: Text('parking_location_saved'.tr()),
                           behavior: SnackBarBehavior.floating,
                         ),
                       );
@@ -209,8 +210,8 @@ class HomeFeatureScreen extends StatelessWidget {
                   ),
 
                   ActionCard(
-                    title: 'Expenses',
-                    subtitle: 'Track costs',
+                    title: 'expenses'.tr(),
+                    subtitle: 'track_costs'.tr(),
                     icon: Icons.payments_rounded,
                     iconColor: Theme.of(context).colorScheme.tertiary,
                     onTap: () {
@@ -233,8 +234,8 @@ class HomeFeatureScreen extends StatelessWidget {
                     },
                   ),
                   ActionCard(
-                    title: 'Notifications',
-                    subtitle: 'custom',
+                    title: 'notifications'.tr(),
+                    subtitle: 'custom'.tr(),
                     icon: Icons.notifications_active_rounded,
                     iconColor: Theme.of(context).colorScheme.error,
                     onTap: () async => context.showBottomSheet(

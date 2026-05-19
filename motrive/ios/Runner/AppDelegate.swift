@@ -18,7 +18,7 @@ import flutter_local_notifications
     }
 
 
-    GeneratedPluginRegistrant.register(with: self)
+    // GeneratedPluginRegistrant.register(with: self)
 
     return super.application(
       application,

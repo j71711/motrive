@@ -99,8 +99,8 @@ class ProfileFeatureScreen extends StatelessWidget {
                     settingsTile(
                       context,
                       icon: Icons.person_outline_rounded,
-                      title: 'Profile',
-                      subtitle: 'Personal information',
+                      title: 'profile'.tr(),
+                      subtitle: 'personal_information'.tr(),
 
                       onTap: () {
                         showModalBottomSheet(
@@ -133,8 +133,8 @@ class ProfileFeatureScreen extends StatelessWidget {
                     settingsTile(
                       context,
                       icon: Icons.shield_outlined,
-                      title: 'Emergency Contacts',
-                      subtitle: 'Manage trusted contacts',
+                      title: 'emergency_contacts'.tr(),
+                      subtitle: 'manage_trusted_contacts'.tr(),
 
                       onTap: () {
                         showModalBottomSheet(
@@ -179,11 +179,11 @@ class ProfileFeatureScreen extends StatelessWidget {
                     settingsTile(
                       context,
                       icon: Icons.dark_mode_outlined,
-                      title: 'Display Theme',
+                      title: 'display_theme'.tr(),
 
                       subtitle: Theme.of(context).brightness == Brightness.dark
-                          ? 'Dark Mode'
-                          : 'Light Mode',
+                          ? 'dark_mode'.tr()
+                          : 'light_mode'.tr(),
 
                       trailing:
                       
@@ -207,7 +207,7 @@ class ProfileFeatureScreen extends StatelessWidget {
                     settingsTile(
                       context,
                       icon: Icons.language_rounded,
-                      title: 'Language',
+                      title:  "language".tr(),
 
                       subtitle:
                           context
@@ -216,8 +216,8 @@ class ProfileFeatureScreen extends StatelessWidget {
                                   .locale
                                   .languageCode ==
                               'ar'
-                          ? 'Arabic'
-                          : 'English',
+                          ? 'arabic'.tr()
+                          : 'english'.tr(),
 
                       trailing: CustomToggle(
                         value:
@@ -250,8 +250,8 @@ class ProfileFeatureScreen extends StatelessWidget {
                     settingsTile(
                       context,
                       icon: Icons.assignment_returned_outlined,
-                      title: 'Agreement',
-                      subtitle: 'Agreed upon terms',
+                      title: 'agreement'.tr(),
+                      subtitle: 'agreed_upon_terms'.tr(),
                       onTap: () {},
                     ),
 

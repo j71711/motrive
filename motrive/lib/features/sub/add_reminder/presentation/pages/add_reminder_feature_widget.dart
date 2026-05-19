@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -64,15 +65,15 @@ class AddReminderFeatureWidget extends HookWidget {
                       spacing: 10,
                       children: [
                         ListTile(
-                          title: Text('Reminder Category'),
+                          title: Text('reminder_category'.tr()),
                           trailing: CupertinoSegmentedControl(
                             padding: .zero,
                             groupValue: initState ? state.category : false,
                             children: {
-                              true: Text('Expense'),
+                              true: Text('expense'.tr()),
                               false: Padding(
                                 padding: .symmetric(horizontal: 5),
-                                child: Text('Maintenance'),
+                                child: Text('maintenance'.tr()),
                               ),
                             },
                             onValueChanged: (value) => initState
@@ -86,20 +87,26 @@ class AddReminderFeatureWidget extends HookWidget {
                           validator: Validators.validateRequired,
                           decoration: InputDecoration(
                             label: Text(
-                              'Type of ${initState && state.category ? 'Expense' : 'Maintenance'}',
+                              'type_of'.tr(
+                                args: [
+                                  initState && state.category
+                                      ? 'expense'.tr()
+                                      : 'maintenance'.tr(),
+                                ],
+                              ),
                             ),
                           ),
                         ),
                         ListTile(
-                          title: Text('Reminder Type'),
+                          title: Text('reminder_type'.tr()),
                           trailing: CupertinoSegmentedControl(
                             padding: .zero,
                             groupValue: initState ? state.repeat : false,
                             children: {
-                              false: Text('Remind Once'),
+                              false: Text('remind_once'.tr()),
                               true: Padding(
                                 padding: .symmetric(horizontal: 5),
-                                child: Text('Remind Every'),
+                                child: Text('remind_every'.tr()),
                               ),
                             },
                             onValueChanged: (value) =>
@@ -114,7 +121,7 @@ class AddReminderFeatureWidget extends HookWidget {
                               ? Validators.validateRequired
                               : null,
                           decoration: InputDecoration(
-                            label: Text('By Km'),
+                            label: Text('by_km'.tr()),
                             suffixIcon: Radio(value: true),
                           ),
                         ),
@@ -147,7 +154,7 @@ class AddReminderFeatureWidget extends HookWidget {
                                   }
                                 },
                                 decoration: InputDecoration(
-                                  label: Text('By Date'),
+                                  label: Text('by_date'.tr()),
                                   suffixIcon: Radio(
                                     materialTapTargetSize: .shrinkWrap,
                                     value: false,
@@ -170,7 +177,7 @@ class AddReminderFeatureWidget extends HookWidget {
                                       ? Validators.validateRequired
                                       : null,
                                   decoration: InputDecoration(
-                                    label: Text('Value'),
+                                    label: Text('value'.tr()),
                                   ),
                                 ),
                               ),
@@ -186,7 +193,7 @@ class AddReminderFeatureWidget extends HookWidget {
                                       vertical: 4.w,
                                       horizontal: 5,
                                     ),
-                                    label: Text('Unit'),
+                                    label: Text('unit'.tr()),
                                   ),
                                   style: Theme.of(context).textTheme.bodyLarge,
                                   isExpanded: true,
@@ -210,7 +217,9 @@ class AddReminderFeatureWidget extends HookWidget {
                         ),
                         TextFormField(
                           controller: notesController,
-                          decoration: InputDecoration(label: Text('Notes')),
+                          decoration: InputDecoration(
+                            label: Text('notes'.tr()),
+                          ),
                         ),
                         Row(
                           mainAxisAlignment: .center,
@@ -223,17 +232,17 @@ class AddReminderFeatureWidget extends HookWidget {
                                       context: context,
                                       builder: (context) => AlertDialog(
                                         content: Text(
-                                          'You are about to delete your reminder permanently!',
+                                          'delete_reminder_message'.tr(),
                                         ),
-                                        title: Text('Reminder Deletion'),
+                                        title: Text('reminder_deletion'.tr()),
                                         actions: [
                                           TextButton(
                                             onPressed: () => context.pop(),
-                                            child: Text('Cancel'),
+                                            child: Text('cancel'.tr()),
                                           ),
                                           FilledButton(
                                             onPressed: () => context.pop(true),
-                                            child: Text('Delete'),
+                                            child: Text('delete'.tr()),
                                           ),
                                         ],
                                       ),
@@ -257,11 +266,12 @@ class AddReminderFeatureWidget extends HookWidget {
                                     id: reminder?.id,
                                     title: titleController.text,
                                     category: state.category
-                                        ? 'Expense'
-                                        : 'Maintenance',
+                                        ? 'expense'.tr()
+                                        : 'maintenance'.tr(),
+
                                     triggerType: state.kmOrDate
-                                        ? 'Odometer'
-                                        : 'Date',
+                                        ? 'odometer'.tr()
+                                        : 'date'.tr(),
                                     isRecurring: state.repeat,
                                     recurrenceUnit: state.unit.name,
                                     recurrenceValue: int.tryParse(
@@ -286,7 +296,9 @@ class AddReminderFeatureWidget extends HookWidget {
                                   cubit.getAddReminderMethod(newReminder);
                                 }
                               },
-                              child: Text(reminder != null ? 'Update' : 'Save'),
+                              child: Text(
+                                reminder != null ? 'update'.tr() : 'save'.tr(),
+                              ),
                             ),
                           ],
                         ),

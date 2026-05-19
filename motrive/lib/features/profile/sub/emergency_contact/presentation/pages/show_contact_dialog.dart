@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -24,9 +25,9 @@ void showContactDialog({
               Text(title),
               TextField(
                 controller: nameController,
-                decoration: const InputDecoration(
-                  hintText: 'Name',
-                  labelText: 'Name',
+                decoration:  InputDecoration(
+                  hintText: 'name'.tr(),
+                  labelText: 'name'.tr(),
                   prefixIcon: Icon(Icons.person_outline),
                 ),
               ),
@@ -35,9 +36,9 @@ void showContactDialog({
 
               TextField(
                 controller: emailController,
-                decoration: const InputDecoration(
-                  hintText: 'Email',
-                  labelText: 'Email',
+                decoration:  InputDecoration(
+                  hintText: 'email'.tr(),
+                  labelText: 'email'.tr(),
                   prefixIcon: Icon(Icons.email_outlined),
                 ),
               ),
@@ -46,9 +47,9 @@ void showContactDialog({
 
               TextField(
                 controller: relationController,
-                decoration: const InputDecoration(
-                  hintText: 'Relation',
-                  labelText: 'Relation',
+                decoration:  InputDecoration(
+                hintText: 'relation'.tr(),
+                  labelText: 'relation'.tr(),
                   prefixIcon: Icon(Icons.family_restroom_outlined),
                 ),
               ),
@@ -61,7 +62,7 @@ void showContactDialog({
                       onPressed: () {
                         Navigator.of(dialogContext).pop();
                       },
-                      child: const Text('Cancel'),
+                      child:  Text('cancel'.tr()),
                     ),
                   ),
 
