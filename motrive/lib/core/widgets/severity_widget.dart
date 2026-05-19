@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:motrive/core/extensions/string_extensions.dart';
 import 'package:sizer/sizer.dart';
 
 class SeverityWidget extends StatelessWidget {
@@ -26,9 +27,15 @@ class SeverityWidget extends StatelessWidget {
             : colors[1],
       ),
       child: widthWithText
-          ? Text(severity, style: TextStyle(color: Colors.white))
+          ? Text(
+              severity.capitalizeWords,
+              style: TextStyle(color: Colors.white),
+            )
           : Center(
-              child: Text(severity, style: TextStyle(color: Colors.white)),
+              child: Text(
+                severity.capitalizeWords,
+                style: TextStyle(color: Colors.white),
+              ),
             ),
     );
   }

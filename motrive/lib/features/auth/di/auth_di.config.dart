@@ -11,8 +11,11 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:google_sign_in/google_sign_in.dart' as _i116;
+import 'package:hive_flutter/adapters.dart' as _i744;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:motrive/core/services/user_services.dart' as _i1013;
+import 'package:motrive/features/auth/data/datasources/auth_local_remote_source.dart'
+    as _i691;
 import 'package:motrive/features/auth/data/datasources/auth_remote_data_source.dart'
     as _i727;
 import 'package:motrive/features/auth/data/repositories/auth_repository_data.dart'
@@ -30,6 +33,9 @@ extension GetItInjectableX on _i174.GetIt {
     _i526.EnvironmentFilter? environmentFilter,
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
+    gh.lazySingleton<_i691.BaseAuthLocalDataSource>(
+      () => _i691.AuthLocalDataSource(gh<_i744.Box<dynamic>>()),
+    );
     gh.lazySingleton<_i727.BaseAuthRemoteDataSource>(
       () => _i727.AuthRemoteDataSource(
         gh<_i454.SupabaseClient>(),

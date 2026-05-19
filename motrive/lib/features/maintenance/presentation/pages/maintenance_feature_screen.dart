@@ -13,6 +13,7 @@ import 'package:motrive/features/maintenance/presentation/widgets/maintenance_ca
 import 'package:motrive/core/widgets/severity_widget.dart';
 import 'package:motrive/core/widgets/timeline_widget.dart';
 import 'package:motrive/features/sub/save_service/presentation/pages/save_service_feature_widget.dart';
+import 'package:sizer/sizer.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class MaintenanceFeatureScreen extends StatelessWidget {
@@ -107,29 +108,31 @@ class MaintenanceFeatureScreen extends StatelessWidget {
                                 ),
                                 if (!(state.allDisplayed ?? false))
                                   state.loadingMore ?? false
-                                      ? LoadingWidget()
+                                      ? LoadingWidget(size: 12.w)
                                       : Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Align(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Align(
                                             alignment: Alignment.centerRight,
-                                        
+
                                             child: SizedBox(
-                                              width: 90,
-                                              height: 44,
-                                        
+                                              width: 40.w,
+                                              height: 8.w,
+
                                               child: ElevatedButton(
                                                 style: ElevatedButton.styleFrom(
                                                   shape: RoundedRectangleBorder(
                                                     borderRadius:
-                                                        BorderRadius.circular(32),
+                                                        BorderRadius.circular(
+                                                          32,
+                                                        ),
                                                   ),
                                                 ),
-                                        
+
                                                 onPressed: () =>
                                                     cubit.loadingUpcoming(),
-                                        
+
                                                 child: const Text(
-                                                  'future',
+                                                  'Future Maintenance',
                                                   style: TextStyle(
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.w600,
@@ -138,7 +141,7 @@ class MaintenanceFeatureScreen extends StatelessWidget {
                                               ),
                                             ),
                                           ),
-                                      ),
+                                        ),
                                 Expanded(
                                   child: TimelineWidget(
                                     onRefresh: () => cubit.getMaintenanceMethod(

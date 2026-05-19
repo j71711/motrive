@@ -254,6 +254,7 @@ class AddReminderFeatureWidget extends HookWidget {
                                     return;
                                   }
                                   final newReminder = AddReminderEntity(
+                                    id: reminder?.id,
                                     title: titleController.text,
                                     category: state.category
                                         ? 'Expense'

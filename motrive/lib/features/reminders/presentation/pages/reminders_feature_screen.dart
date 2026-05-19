@@ -68,7 +68,13 @@ class RemindersFeatureScreen extends StatelessWidget {
                                     reminder.triggerDate ?? DateTime.now(),
                                   ),
                           ),
-                          trailing: Text(reminder.triggerOdometer.toString()),
+                          trailing: Text(
+                            reminder.triggerOdometer != null
+                                ? Formatters.formatOdometer(
+                                    reminder.triggerOdometer ?? 0,
+                                  )
+                                : 'In ${DateTime.now().difference(reminder.triggerDate!).inDays} Days',
+                          ),
                           leading: SeverityWidget(
                             severity: reminder.category,
                             widthWithText: true,

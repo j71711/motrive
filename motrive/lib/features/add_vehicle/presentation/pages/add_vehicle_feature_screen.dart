@@ -116,12 +116,16 @@ class AddVehicleFeatureScreen extends HookWidget {
       ),
       body: BlocConsumer<AddVehicleCubit, AddVehicleState>(
         listener: (context, state) async {
+          context.hideLoading();
           if (state is AddVehicleInitialState) {
             dragController.animateTo(
               state.isScanning == true ? 0.45 : 1,
               duration: const Duration(milliseconds: 400),
               curve: Curves.easeInOut,
             );
+            if (state.isLoading == true) {
+              context.showLoading();
+            }
           }
 
           if (state is AddVehicleSuccessState && context.mounted) {
@@ -176,7 +180,7 @@ class AddVehicleFeatureScreen extends HookWidget {
                               ),
                             ),
                           ),
-                        
+
                           const Gap(8),
                           VehicleField(
                             autovalidateMode:

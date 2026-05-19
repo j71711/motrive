@@ -57,7 +57,6 @@ class LoadingWidgetOverlay {
 //--
 
 class LoadingWidget extends StatelessWidget {
-
   const LoadingWidget({super.key, this.size = 400});
 
   final double? size;
@@ -76,14 +75,8 @@ class LoadingWidget extends StatelessWidget {
         fit: BoxFit.contain,
         delegates: LottieDelegates(
           values: [
-            ValueDelegate.color(
-              const ['**'],
-              value: lottieColor,
-            ),
-            ValueDelegate.strokeColor(
-              const ['**'],
-              value: lottieColor,
-            ),
+            ValueDelegate.color(const ['**'], value: lottieColor),
+            ValueDelegate.strokeColor(const ['**'], value: lottieColor),
           ],
         ),
       ),

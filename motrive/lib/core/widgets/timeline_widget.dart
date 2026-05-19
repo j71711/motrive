@@ -58,7 +58,7 @@ class TimelineWidget extends StatelessWidget {
               ),
           itemCount: itemCount,
           contentsAlign: ContentsAlign.basic,
-          nodePositionBuilder: (context, index) => 0.25,
+          nodePositionBuilder: (context, index) => 0.22,
           contentsBuilder: contentsBuilder,
         ),
       ),

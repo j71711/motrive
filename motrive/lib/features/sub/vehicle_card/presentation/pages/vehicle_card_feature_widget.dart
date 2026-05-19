@@ -51,11 +51,11 @@ class VehicleCardFeatureWidget extends StatelessWidget {
                       isExpanded: !state.isExpanded,
                     );
                   } else {
-                    final value = await context.push(Routes.addVehicle);
-
-                    if (value == true) {
-                      cubit.getVehicleCardMethod();
-                    }
+                    await context.push(Routes.addVehicle).then((value) {
+                      if (value == true) {
+                        cubit.getVehicleCardMethod();
+                      }
+                    });
                   }
                 },
                 child: ClipRRect(

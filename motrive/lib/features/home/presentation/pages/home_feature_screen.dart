@@ -4,8 +4,10 @@ import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:motrive/core/extensions/context_extensions.dart';
+import 'package:motrive/core/extensions/string_extensions.dart';
 import 'package:motrive/core/navigation/routers.dart';
 import 'package:motrive/features/home/presentation/cubit/home_cubit.dart';
+import 'package:motrive/features/home/presentation/cubit/home_state.dart';
 import 'package:motrive/features/home/presentation/widgets/circle_Button.dart';
 import 'package:motrive/features/home/presentation/widgets/action_card.dart';
 import 'package:motrive/features/home/presentation/widgets/section_title.dart';
@@ -66,14 +68,18 @@ class HomeFeatureScreen extends StatelessWidget {
 
               const Gap(24),
 
-              Text(
-                'Good morning',
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Theme.of(context).colorScheme.primary,
-                  fontSize: 13,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: -.2,
-                ),
+              BlocBuilder<HomeCubit, HomeState>(
+                builder: (context, state) {
+                  return Text(
+                    'Good morning, ${state is HomeSuccessState ? state.user.fullName?.capitalizeEachWord : ''}',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: -.2,
+                    ),
+                  );
+                },
               ),
 
               const Gap(4),
@@ -179,30 +185,7 @@ class HomeFeatureScreen extends StatelessWidget {
                   childAspectRatio: 1,
                 ),
                 children: [
-                  ActionCard(
-                    title: 'Maintenance',
-                    subtitle: 'Check alerts',
-                    icon: Icons.car_repair_rounded,
-                    iconColor: Theme.of(context).colorScheme.primary,
-                    onTap: () {
-                      showModalBottomSheet(
-                        context: context,
-                        isScrollControlled: true,
-                        backgroundColor: Theme.of(context).colorScheme.surface,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.vertical(
-                            top: Radius.circular(28),
-                          ),
-                        ),
-                        builder: (_) {
-                          return const Padding(
-                            padding: EdgeInsets.all(18),
-                            child: MaintenanceAlertFeatureWidget(),
-                          );
-                        },
-                      );
-                    },
-                  ),
+                  MaintenanceAlertFeatureWidget(),
 
                   ActionCard(
                     title: 'Location',

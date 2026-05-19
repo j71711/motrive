@@ -9,11 +9,12 @@ abstract class AddVehicleState extends Equatable {
 
 class AddVehicleInitialState extends AddVehicleState {
   final bool? isScanning;
+  final bool? isLoading;
 
-  const AddVehicleInitialState({this.isScanning});
+  const AddVehicleInitialState({this.isScanning, this.isLoading});
 
   @override
-  List<Object?> get props => [isScanning];
+  List<Object?> get props => [isScanning, isLoading];
 }
 
 class AddVehicleSuccessState extends AddVehicleState {}

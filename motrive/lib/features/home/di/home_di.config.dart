@@ -13,6 +13,7 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:motrive/core/services/emergency_service.dart' as _i821;
 import 'package:motrive/core/services/local_keys_service.dart' as _i56;
+import 'package:motrive/core/services/user_services.dart' as _i1013;
 import 'package:motrive/features/add_vehicle/sub/add_car_card/data/datasources/add_car_card_remote_data_source.dart'
     as _i25;
 import 'package:motrive/features/home/data/datasources/home_remote_data_source.dart'
@@ -71,6 +72,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i454.SupabaseClient>(),
       ),
     );
+    gh.lazySingleton<_i68.BaseHomeRemoteDataSource>(
+      () => _i68.HomeRemoteDataSource(gh<_i1013.UserService>()),
+    );
     gh.lazySingleton<_i641.ChatBotRepositoryDomain>(
       () =>
           _i810.ChatBotRepositoryData(gh<_i279.BaseChatBotRemoteDataSource>()),
@@ -81,11 +85,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i904.SosRepositoryDomain>(
       () => _i630.SosRepositoryData(gh<_i558.BaseSosRemoteDataSource>()),
     );
-    gh.lazySingleton<_i68.BaseHomeRemoteDataSource>(
-      () => _i68.HomeRemoteDataSource(
-        gh<_i56.LocalKeysService>(),
-        gh<_i454.SupabaseClient>(),
-      ),
+    gh.lazySingleton<_i445.HomeRepositoryDomain>(
+      () => _i248.HomeRepositoryData(gh<_i68.BaseHomeRemoteDataSource>()),
     );
     gh.lazySingleton<_i963.AddExpenseRepositoryDomain>(
       () => _i391.AddExpenseRepositoryData(
@@ -96,14 +97,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i1057.AddExpenseUseCase>(
       () => _i1057.AddExpenseUseCase(gh<_i963.AddExpenseRepositoryDomain>()),
     );
-    gh.lazySingleton<_i168.SosUseCase>(
-      () => _i168.SosUseCase(gh<_i904.SosRepositoryDomain>()),
-    );
-    gh.lazySingleton<_i445.HomeRepositoryDomain>(
-      () => _i248.HomeRepositoryData(gh<_i68.BaseHomeRemoteDataSource>()),
-    );
     gh.lazySingleton<_i463.HomeUseCase>(
       () => _i463.HomeUseCase(gh<_i445.HomeRepositoryDomain>()),
+    );
+    gh.lazySingleton<_i168.SosUseCase>(
+      () => _i168.SosUseCase(gh<_i904.SosRepositoryDomain>()),
     );
     return this;
   }
