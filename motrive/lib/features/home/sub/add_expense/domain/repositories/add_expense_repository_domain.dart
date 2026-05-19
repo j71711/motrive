@@ -4,4 +4,7 @@ import 'package:motrive/features/home/sub/add_expense/domain/entities/add_expens
 
 abstract class AddExpenseRepositoryDomain {
     Future<Result<void, Failure>> addExpense(AddExpenseEntity entity);
+    Future<Result<void, Failure>> updateExpense(AddExpenseEntity entity); 
+    Future<Result<void, Failure>> deleteExpense(String expenseId);
+    Future<Result<AddExpenseEntity, Failure>> getExpenseDetails(String expenseId);
 }

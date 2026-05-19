@@ -9,6 +9,8 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:flutter_local_notifications/flutter_local_notifications.dart'
+    as _i163;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:get_storage/get_storage.dart' as _i792;
@@ -17,9 +19,13 @@ import 'package:hive/hive.dart' as _i979;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:supabase_flutter/supabase_flutter.dart' as _i454;
 
+import '../../features/parking/data/datasources/parking_remote_data_source.dart'
+    as _i851;
 import '../network/dio_client.dart' as _i667;
 import '../services/emergency_service.dart' as _i214;
 import '../services/local_keys_service.dart' as _i945;
+import '../services/local_notification_service.dart' as _i762;
+import '../services/parking_service.dart' as _i1041;
 import '../services/user_services.dart' as _i898;
 import 'app_module.dart' as _i460;
 import 'third_part.dart' as _i423;
@@ -42,9 +48,20 @@ extension GetItInjectableX on _i174.GetIt {
       () => thirdPartyConfig.flutterSecureStorage,
     );
     gh.lazySingleton<_i116.GoogleSignIn>(() => thirdPartyConfig.googleSignIn);
+    gh.lazySingleton<_i163.FlutterLocalNotificationsPlugin>(
+      () => thirdPartyConfig.flutterLocalNotificationsPlugin,
+    );
     gh.lazySingleton<_i667.DioClient>(() => _i667.DioClient());
     gh.lazySingleton<_i214.EmergencyService>(() => _i214.EmergencyService());
     gh.lazySingleton<_i898.UserService>(() => _i898.UserService());
+    gh.lazySingleton<_i1041.ParkingService>(
+      () => _i1041.ParkingService(gh<_i851.BaseParkingRemoteDataSource>()),
+    );
+    gh.lazySingleton<_i762.LocalNotificationService>(
+      () => _i762.LocalNotificationService(
+        gh<_i163.FlutterLocalNotificationsPlugin>(),
+      ),
+    );
     gh.singleton<_i945.LocalKeysService>(() => _i945.LocalKeysService());
     return this;
   }

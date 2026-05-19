@@ -12,7 +12,6 @@ class ExpensesFeatureScreen extends StatelessWidget {
   const ExpensesFeatureScreen({super.key});
   @override
   Widget build(BuildContext context) {
-      final _ = context.read<ExpensesCubit>();
 
     return BlocProvider(
       create: (context) => ExpensesCubit(GetIt.I.get()),
@@ -24,49 +23,61 @@ class ExpensesFeatureScreen extends StatelessWidget {
               bottom: const TabBar(
                 tabs: [
                   Tab(text: 'Statistics'),
-                  Tab(text: 'History'),
+                  Tab(text: 'Expenses'),
                 ],
               ),
           ),
           body: BlocBuilder<ExpensesCubit, ExpensesState>(
             builder: (context, state){
+      final cubit = context.read<ExpensesCubit>();
              switch(state){
               case ExpensesLoadingState _:
               return const ExpenseLoadingWidget();
               case ExpensesErrorState _:
               return Center(child: Text(state.message));
               case ExpensesSuccessState _: 
-                  return TabBarView(
-                    children: [
-                      ExpenseStatisticsPage(
-                        stats: state.stats,
+                  return RefreshIndicator(
+                    onRefresh: () async {
+                      await cubit.getExpensesMethod('vehicleId_here');
+                    },
+                    child: TabBarView(
+                      children: [
+                        ExpenseStatisticsPage(
+                          stats: state.stats,
+                          selectedCategory: state.selectedCategory,
+                        ),
+                            
+                        Slidable(
+                      endActionPane: ActionPane(
+                        motion: const StretchMotion(),
+                    
+                        children: [
+                    
+                          SlidableAction(
+                            onPressed: (_) {
+                              // cubit.updateExpenseMethod();
+                            },
+                            icon: Icons.edit,
+                          ),
+                    
+                          SlidableAction(
+                            onPressed: (_) {
+                              // cubit.deleteExpenseMethod();
+                            },
+                            icon: Icons.delete,
+                          ),
+                        ],
                       ),
-        
-                      Slidable(
-  endActionPane: ActionPane(
-    motion: const StretchMotion(),
-
-    children: [
-
-      SlidableAction(
-        onPressed: (_) {},
-        icon: Icons.edit,
-      ),
-
-      SlidableAction(
-        onPressed: (_) {},
-        icon: Icons.delete,
-      ),
-    ],
-  ),
-
-  child: ExpenseHistoryPage(expenses: state.expenses[0]),
-)
-
-                      // ExpenseHistoryPage(
-                      //   expenses: state.expenses,
-                      // ),
-                    ],
+                    
+                      child: 
+                      ExpenseHistoryPage(expenses: state.expenses),
+                    ),
+                    
+                        // ExpenseHistoryPage(
+                        //   expenses: state.expenses,
+                        // ),
+                      ],
+                    ),
                   );
                 // default: const SizedBox();
             }
@@ -76,6 +87,4 @@ class ExpensesFeatureScreen extends StatelessWidget {
     );
   }
 }
-
-      // appBar: AppBar(title: const Text('Expenses Feature Screen')),
       

@@ -13,11 +13,19 @@ class ExpensesInitialState extends ExpensesState {}
 class ExpensesSuccessState extends ExpensesState {
   final List<ExpensesEntity> expenses;
   final ExpenseStatsEntity stats;
-  const ExpensesSuccessState(this.expenses, this.stats);
+   final List<ExpensesEntity> filteredExpenses;
+   final String selectedCategory;  
+  const ExpensesSuccessState({
+    required this.expenses,
+    required this.stats,
+    List<ExpensesEntity>? filteredExpenses,
+    this.selectedCategory = 'All',
+  }) : this.filteredExpenses = filteredExpenses ?? expenses; // هذا السطر يضمن عدم وجود قائمة فارغة
+  
+  // this.filteredExpenses = filteredExpenses ?? expenses;
   @override
-  List<Object?> get props => [expenses, stats];
+  List<Object?> get props => [expenses, stats, filteredExpenses, selectedCategory];
 }
-
 class ExpensesLoadingState extends ExpensesState{}
 class ExpensesErrorState extends ExpensesState {
   final String message;
@@ -25,4 +33,13 @@ class ExpensesErrorState extends ExpensesState {
   @override
   List<Object?> get props => [message];
 }
+class AddExpensesLoadingState extends ExpensesState{}
+class AddExpenseSuccessState extends ExpensesState{}
+class AddExpenseErrorState extends ExpensesState{
+  final String message;
+ const AddExpenseErrorState(this.message);
+  @override
+  List<Object?> get props => [message];
+}
+
 

@@ -1,10 +1,10 @@
 import 'package:injectable/injectable.dart';
+import 'package:motrive/core/services/local_notification_service.dart';
 import 'package:motrive/core/services/user_services.dart';
 import 'package:motrive/features/maintenance/data/models/maintenance/maintenance_model.dart';
 import 'package:motrive/features/maintenance/data/models/service_info/service_info_model.dart';
 import 'package:motrive/features/maintenance/data/models/vehicle/vehicle_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:motrive/core/services/local_keys_service.dart';
 
 abstract class BaseMaintenanceAlertRemoteDataSource {
   Future<MaintenanceModel?> getMaintenanceAlert();
@@ -14,13 +14,13 @@ abstract class BaseMaintenanceAlertRemoteDataSource {
 class MaintenanceAlertRemoteDataSource
     implements BaseMaintenanceAlertRemoteDataSource {
   final SupabaseClient _supabase;
-  final LocalKeysService _localKeysService;
   final UserService _userService;
+  final LocalNotificationService _localNotificationService;
 
   MaintenanceAlertRemoteDataSource(
-    this._localKeysService,
     this._supabase,
     this._userService,
+    this._localNotificationService,
   );
 
   @override
@@ -58,6 +58,29 @@ class MaintenanceAlertRemoteDataSource
     if (nextMaintenance.isEmpty) {
       return null;
     }
+
+    final kRemaining =
+        nextMaintenance['service_odometer'] - carInfo.first['current_odometer'];
+
+    if (kRemaining < 0) {
+      await _localNotificationService.maintenanceOverdueNotification(
+        carName: carInfo.first['make'],
+        serviceType: nextMaintenance['severity'],
+      );
+    } else {
+      await _localNotificationService.maintenanceDueSoonNotification(
+        kmRemaining: kRemaining,
+        carName: carInfo.first['make'],
+        serviceType: nextMaintenance['severity'],
+      );
+    }
+
+    await _localNotificationService.scheduleMaintenanceDueSoon(
+      id: 10,
+      carName: carInfo.first['make'],
+      serviceType: nextMaintenance['severity'],
+      dueDate: DateTime.now().add(Duration(days: 14)),
+    );
 
     return MaintenanceModel(
       vehicle: UserVehicleModel.fromJson(carInfo.first),

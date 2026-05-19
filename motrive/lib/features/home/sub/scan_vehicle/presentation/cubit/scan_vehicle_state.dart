@@ -7,11 +7,21 @@ abstract class ScanVehicleState extends Equatable {
   List<Object?> get props => [];
 }
 
-class ScanVehicleInitialState extends ScanVehicleState {}
+class ScanVehicleInitialState extends ScanVehicleState {
+  final bool? scanning;
+
+  const ScanVehicleInitialState({this.scanning});
+
+  @override
+  List<Object?> get props => [scanning];
+}
+
 class ScanVehicleLoadingState extends ScanVehicleState {}
+
 class ScanVehicleSavedState extends ScanVehicleState {}
+
 class ScanVehicleSuccessState extends ScanVehicleState {
-    final ScanVehicleEntity vehicle;
+  final ScanVehicleEntity vehicle;
   const ScanVehicleSuccessState(this.vehicle);
   @override
   List<Object?> get props => [vehicle];

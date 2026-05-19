@@ -14,4 +14,33 @@ class AddExpenseUseCase {
    Future<Result<void, Failure>> addExpense(AddExpenseEntity entity,) async {
     return _repositoryData.addExpense(entity);
   }
+
+  // Future<Result<void, Failure>> addExpense(
+  //   AddExpenseEntity entity,
+  // ) {
+  //   return _repositoryData.addExpense(entity);
+  // }
+
+  Future<Result<void, Failure>> updateExpense(
+    AddExpenseEntity entity,
+  ) {
+    return _repositoryData.updateExpense(entity);
+  }
+
+  Future<Result<void, Failure>> deleteExpense(
+    String expenseId,
+  ) {
+    return _repositoryData.deleteExpense(expenseId);
+  }
+
+  Future<Result<AddExpenseEntity, Failure>>
+      getExpenseDetails(
+    String expenseId,
+  ) {
+    return _repositoryData.getExpenseDetails(
+      expenseId,
+    );
+  }
+
+
 }

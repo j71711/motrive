@@ -3,7 +3,6 @@ import 'package:motrive/core/services/user_services.dart';
 import 'package:motrive/features/maintenance/data/models/vehicle/vehicle_model.dart';
 import 'package:motrive/features/maintenance_details/data/models/service_part_info/service_part_info_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:motrive/core/services/local_keys_service.dart';
 import 'package:motrive/features/maintenance_details/data/models/maintenance_details/maintenance_details_model.dart';
 
 abstract class BaseMaintenanceDetailsRemoteDataSource {
@@ -14,11 +13,9 @@ abstract class BaseMaintenanceDetailsRemoteDataSource {
 class MaintenanceDetailsRemoteDataSource
     implements BaseMaintenanceDetailsRemoteDataSource {
   final SupabaseClient _supabase;
-  final LocalKeysService _localKeysService;
   final UserService _userService;
 
   MaintenanceDetailsRemoteDataSource(
-    this._localKeysService,
     this._supabase,
     this._userService,
   );

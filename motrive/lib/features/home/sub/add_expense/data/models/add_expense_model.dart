@@ -6,6 +6,7 @@ part 'add_expense_model.g.dart';
 @freezed
 abstract class AddExpenseModel with _$AddExpenseModel {
   const factory AddExpenseModel({
+    String? id ,
     @JsonKey(name: 'vehicle_id') required String vehicleId,
     required String category,
     required double cost,
@@ -24,7 +25,8 @@ extension AddExpenseModelMapper on AddExpenseModel {
       category: category,
       cost: cost,
       odometer: odometer,
-      notes: notes,
+      notes: notes, 
+      id: id,
     );
   }
 }
@@ -32,6 +34,7 @@ extension AddExpenseModelMapper on AddExpenseModel {
 extension AddExpenseEntityMapper on AddExpenseEntity {
   AddExpenseModel toModel() {
     return AddExpenseModel(
+      id: id,
       vehicleId: vehicleId!,
       category: category,
       cost: cost,

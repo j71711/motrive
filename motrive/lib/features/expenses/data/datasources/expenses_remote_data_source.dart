@@ -7,7 +7,10 @@ import 'package:motrive/features/expenses/domain/entities/expense_stats_entity.d
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class BaseExpensesRemoteDataSource {
-  // Future<ExpensesModel> getExpenses();
+  Future<void> addExpense(AddExpenseModel model);
+  Future<void> updateExpense(AddExpenseModel model);
+  Future<void> deleteExpense(String expenseId);
+  Future<AddExpenseModel> getExpenseDetails(String expenseId);
   Future<List<ExpensesModel>> getExpenses(String vehicleId);
   Future<ExpenseStatsEntity> getExpenseStats(String vehicleId);
 }
@@ -19,12 +22,9 @@ class ExpensesRemoteDataSource implements BaseExpensesRemoteDataSource {
 
   ExpensesRemoteDataSource(this._localKeysService, this._supabase);
 
-Future<void> updateExpense(
-  String id,
-  AddExpenseModel model
-  // Map<String, dynamic> data,
-) async {
-   try {
+  @override
+  Future<void> updateExpense(AddExpenseModel model) async {
+    try {
       await _supabase
           .from('expense_records')
           .update({
@@ -37,9 +37,9 @@ Future<void> updateExpense(
     } catch (error) {
       throw FailureExceptions.getException(error);
     }
-}
+  }
 
-
+@override
 Future<void> deleteExpense(
   String expenseId,
 ) async {
@@ -54,24 +54,18 @@ Future<void> deleteExpense(
 }
   @override
   Future<List<ExpensesModel>> getExpenses(String vehicleId) async {
-    // try {
-    //   return ExpensesModel(id: 1, firstName: "Last Name", lastName: "First Name");
-    // } catch (error) {
-    //  throw FailureExceptions.getException(error);
-    // }
     try {
       print('❤️');
       final response = await _supabase
           .from('expense_records')
           .select()
-          .eq('vehicle_id', vehicleId) // vehicleId
+          .eq('vehicle_id', '9ebf96bd-fc6a-42c6-9a42-f9bebfa59b1c') // vehicleId
           .order('expense_date', ascending: false);
+          print('😎$response');
       return response
           .map<ExpensesModel>((e) => ExpensesModel.fromJson(e))
           .toList();
     } catch (error) {
-      print('❌');
-      print(error);
       throw FailureExceptions.getException(error);
     }
   }
@@ -81,12 +75,13 @@ Future<void> deleteExpense(
     String expenseId,
   ) async {
     try {
+      print('✅');
       final response = await _supabase
           .from('expense_records')
           .select()
           .eq('id', expenseId)
           .single();
-
+print(' Data Source ✅ $response');
       return AddExpenseModel.fromJson(response);
     } catch (error) {
       throw FailureExceptions.getException(error);
@@ -99,12 +94,19 @@ Future<void> deleteExpense(
     final response = await _supabase
         .from('expense_records')
         .select()
-        .eq('vehicle_id', 'd4c4ffb3-7d73-415c-be14-b98e1907f9ef');
+        .eq('vehicle_id', '9ebf96bd-fc6a-42c6-9a42-f9bebfa59b1c');
+
+      double total = 0;
 
     double monthly = 0;
     double yearly = 0;
     double fuel = 0;
     double maintenance = 0;
+
+  double insurance = 0;
+  double oil = 0;
+  double violation = 0;
+  double other = 0;
 
     final now = DateTime.now();
 
@@ -121,22 +123,61 @@ Future<void> deleteExpense(
         yearly += amount;
       }
 
-      if (item['category'] == 'service') {
+      if (item['category'] == 'Fuel') {
         fuel += amount;
       }
+      if (item['category'] == 'Traffic violation') {
+        violation += amount;
+      }
+      if (item['category'] == 'Vehicle insurance') {
+        insurance += amount;
+      }
+      if (item['category'] == 'Oil') {
+        oil += amount;
+      }
 
-      if (item['category'] == 'maintenance') {
+      if (item['category'] == 'Maintenance') {
         maintenance += amount;
       }
+      
+      if (item['category'] == 'Other') {
+        other += amount;
+      }
+
       print('👀');
       print('$response  👀');
+
+    print('💕fuels 💕$fuel');
+    print('💕maintenanceTotal 💕$maintenance');
+    print('💕Violation 💕$violation');
+    print('💕nsuranceTotal 💕$insurance');
 
     }
     return ExpenseStatsEntity(
       monthlyTotal: monthly,
       yearlyTotal: yearly,
       fuelTotal: fuel,
-      maintenanceTotal: maintenance,
+      maintenanceTotal: maintenance, 
+      insuranceTotal: insurance, 
+      oilTotal: oil, 
+      violationTotal: violation, 
+      otherTotal: other,
     );
+  }
+  
+  @override
+  Future<void> addExpense(AddExpenseModel model) async {
+    try {
+      await _supabase.from('expense_records').insert({
+        'vehicle_id': model.vehicleId,
+        'category': model.category,
+        'cost': model.cost,
+        'odometer_at_expense': model.odometer,
+        'notes': model.notes,
+        'expense_date': DateTime.now().toIso8601String(),
+      });
+    } catch (error) {
+      throw FailureExceptions.getException(error);
+    }
   }
 }

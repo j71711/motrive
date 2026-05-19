@@ -1,8 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class UserVehicleEntity extends Equatable {
-  final String userId;
-  final String id;
+  final String? id;
   final String make;
   final String model;
   final int year;
@@ -11,17 +10,21 @@ class UserVehicleEntity extends Equatable {
   final String? vin;
   final int? currentOdometer;
   final int? odometerAtRegistered;
+  final String? userId;
+  final String? carInfoId;
 
   const UserVehicleEntity({
-    required this.userId,
-    required this.id,
+    this.userId,
+    this.id,
     required this.make,
     required this.model,
     required this.year,
     this.color,
     this.licensePlate,
     this.vin,
-    this.currentOdometer, this.odometerAtRegistered,
+    this.currentOdometer,
+    this.odometerAtRegistered,
+    this.carInfoId,
   });
 
   @override
@@ -35,6 +38,7 @@ class UserVehicleEntity extends Equatable {
     licensePlate,
     vin,
     currentOdometer,
-    odometerAtRegistered
+    odometerAtRegistered,
+    carInfoId,
   ];
 }

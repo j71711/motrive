@@ -174,4 +174,8 @@ class ScanVehicleCubit extends Cubit<ScanVehicleState> {
       },
     );
   }
+
+  void toggleCamera(bool scanning) {
+    emit(ScanVehicleInitialState(scanning: scanning));
+  }
 }

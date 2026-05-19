@@ -22,7 +22,6 @@ class AuthFeatureScreen extends HookWidget {
     final emailController = useTextEditingController();
     final nameController = useTextEditingController();
 
-
     final formKey = useMemoized(() => GlobalKey<FormState>());
 
     return Scaffold(
@@ -235,7 +234,9 @@ class AuthFeatureScreen extends HookWidget {
                                     height: 28,
                                     width: 28,
                                   ),
+
                                   const Gap(24),
+
                                   Text(
                                     'Login With Google',
                                     style: TextStyle(

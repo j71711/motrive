@@ -3,6 +3,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
 import 'package:motrive/core/common/auth_model.dart';
 import 'package:motrive/core/services/user_services.dart';
+import 'package:motrive/features/maintenance/data/models/vehicle/vehicle_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'package:motrive/core/errors/network_exceptions.dart';
@@ -50,7 +51,6 @@ class AuthRemoteDataSource implements BaseAuthRemoteDataSource {
       accessToken: accessToken,
     );
 
-
     final user = _supabase.auth.currentUser;
 
     if (user == null) {
@@ -73,7 +73,6 @@ class AuthRemoteDataSource implements BaseAuthRemoteDataSource {
     required String email,
     required String otp,
   }) async {
-
     await _supabase.auth.verifyOTP(
       type: OtpType.email,
       token: otp,
@@ -88,7 +87,6 @@ class AuthRemoteDataSource implements BaseAuthRemoteDataSource {
     final userInfo = await insertOrGetUser(
       authId: user.id,
       name: user.userMetadata?['full_name'] ?? '',
-
       email: email,
     );
 
@@ -101,7 +99,6 @@ class AuthRemoteDataSource implements BaseAuthRemoteDataSource {
   Future<void> emailSignIn({required String email, String? name}) async {
     await _supabase.auth.signInWithOtp(email: email, data: {'full_name': name});
   }
-
 
   Future<Map<String, dynamic>> insertOrGetUser({
     required String authId,
@@ -117,6 +114,14 @@ class AuthRemoteDataSource implements BaseAuthRemoteDataSource {
         .maybeSingle();
 
     if (response != null) {
+      final vehicle = await _supabase
+          .from('vehicles')
+          .select()
+          .eq('user_id', response['id'])
+          .maybeSingle();
+      if (vehicle != null) {
+        _userService.setVehicle = UserVehicleModel.fromJson(vehicle);
+      }
       return response;
     }
 

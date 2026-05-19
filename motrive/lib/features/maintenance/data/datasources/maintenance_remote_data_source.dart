@@ -1,7 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:motrive/core/services/user_services.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:motrive/core/services/local_keys_service.dart';
 import 'package:motrive/features/maintenance/data/models/maintenance/maintenance_model.dart';
 
 abstract class BaseMaintenanceRemoteDataSource {
@@ -11,11 +10,9 @@ abstract class BaseMaintenanceRemoteDataSource {
 @LazySingleton(as: BaseMaintenanceRemoteDataSource)
 class MaintenanceRemoteDataSource implements BaseMaintenanceRemoteDataSource {
   final SupabaseClient _supabase;
-  final LocalKeysService _localKeysService;
   final UserService _userService;
 
   MaintenanceRemoteDataSource(
-    this._localKeysService,
     this._supabase,
     this._userService,
   );
@@ -37,7 +34,7 @@ class MaintenanceRemoteDataSource implements BaseMaintenanceRemoteDataSource {
         .from('services_info')
         .select()
         .eq('car_id', userCars.first['car_info_id'])
-        .order('service_odometer');
+        .order('service_odometer', ascending: true);
 
     final doneServices = await _supabase
         .from('maintenance_logs')

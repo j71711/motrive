@@ -1,13 +1,15 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:motrive/features/home/sub/add_expense/domain/entities/add_expense_entity.dart';
 part 'add_expense_entity.freezed.dart';
+part 'add_expense_entity.g.dart';
+
 //add_expense_entity.dart
 @freezed
 abstract class AddExpenseModel with _$AddExpenseModel {
   const factory AddExpenseModel({
     String? id,
     @JsonKey(name: 'vehicle_id')
-    required String vehicleId,
+     String? vehicleId,
     required String category,
     required double cost,
     @JsonKey(name: 'odometer_at_expense')
@@ -18,19 +20,19 @@ abstract class AddExpenseModel with _$AddExpenseModel {
   }) = _AddExpenseModel;
 
   factory AddExpenseModel.fromJson(Map<String, Object?> json) =>
-      _$AddExpenseModelFromJson(json);
+  _$AddExpenseModelFromJson(json);
 }
 
 extension AddExpenseModelMapper on AddExpenseModel {
   AddExpenseEntity toEntity() {
     return AddExpenseEntity(
-      // id: id ?? '',
+      id: id ,
       vehicleId: vehicleId,
       category: category,
       cost: cost,
       odometer: odometer,
       notes: notes,
-      // expenseDate: expenseDate,
+      expenseDate: expenseDate,
     );
   }
 }
@@ -38,13 +40,13 @@ extension AddExpenseModelMapper on AddExpenseModel {
 extension AddExpenseEntityMapper on AddExpenseEntity {
   AddExpenseModel toModel() {
     return AddExpenseModel(
-      // id: id,
-      // vehicleId: vehicleId,
+      id: id,
+      vehicleId: vehicleId,
       category: category,
       cost: cost,
       odometer: odometer,
-      notes: notes, vehicleId: '',
-      // expenseDate: expenseDate,
+      notes: notes,
+      expenseDate: expenseDate,
     );
   }
 }

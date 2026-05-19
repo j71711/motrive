@@ -13,9 +13,17 @@ class NavBar extends StatelessWidget {
         onTap: (value) => navigationShell.goBranch(value),
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.car_repair), label: 'Maintenance'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile')
-        ]),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.car_repair),
+            label: 'Maintenance',
+          ),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.location_city),
+            label: 'location',
+          ),
+        ],
+      ),
       body: navigationShell,
     );
   }

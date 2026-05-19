@@ -6,14 +6,15 @@ import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:motrive/core/extensions/context_extensions.dart';
 import 'package:motrive/features/home/sub/add_car_card/presentation/cubit/add_car_card_cubit.dart';
+import 'package:motrive/features/home/sub/add_car_card/presentation/cubit/add_car_card_state.dart';
 import 'package:motrive/features/home/sub/scan_vehicle/presentation/cubit/scan_vehicle_cubit.dart';
 import 'package:motrive/features/home/sub/scan_vehicle/presentation/cubit/scan_vehicle_state.dart';
 import 'package:motrive/features/home/sub/scan_vehicle/presentation/pages/camera_section_widget.dart';
 
 class ScanVehicleFeatureWidget extends HookWidget {
-   ScanVehicleFeatureWidget({super.key});
+  ScanVehicleFeatureWidget({super.key});
 
-    final formKey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -34,15 +35,16 @@ class ScanVehicleFeatureWidget extends HookWidget {
             final cubit = context.read<ScanVehicleCubit>();
             return Stack(
               children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.50,
-                  width: double.infinity,
-                  child: CameraSectionWidget(
-                    onCapture: (imagePath) {
-                      cubit.processImage(imagePath);
-                    },
+                if (state is ScanVehicleInitialState && state.scanning == true)
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.50,
+                    width: double.infinity,
+                    child: CameraSectionWidget(
+                      onCapture: (imagePath) {
+                        cubit.processImage(imagePath);
+                      },
+                    ),
                   ),
-                ),
 
                 DraggableScrollableSheet(
                   initialChildSize: 0.55,
@@ -75,41 +77,51 @@ class ScanVehicleFeatureWidget extends HookWidget {
                             Text(
                               'Review and edit vehicle details before saving.',
                             ),
-                            
+
                             const Gap(32),
                             VehicleField(
-                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
                               controller: cubit.vinController,
                               label: 'VIN *',
                               maxLength: 17,
+                              suffix: IconButton(
+                                onPressed: () => cubit.toggleCamera(
+                                  state is ScanVehicleInitialState
+                                      ? !(state.scanning ?? false)
+                                      : true,
+                                ),
+                                padding: .zero,
+                                icon: Icon(Icons.camera_alt_outlined),
+                              ),
                               icon: Icons.confirmation_number_outlined,
                               validator: (value) {
                                 if (value == null || value.trim().isEmpty) {
                                   return 'VIN number is required';
                                 }
-                                if (value.trim().length != 17){
-                                  return 'VIN must be exactly 17 characters'; 
+                                if (value.trim().length != 17) {
+                                  return 'VIN must be exactly 17 characters';
                                 }
                                 return null;
                               },
                             ),
-                            
+
                             const Gap(16),
-                        
+
                             VehicleField(
                               controller: cubit.makeController,
                               label: 'Make',
                               icon: Icons.car_rental_outlined,
                             ),
                             const Gap(16),
-                        
+
                             VehicleField(
                               controller: cubit.modelController,
                               label: 'Model',
                               icon: Icons.car_rental_outlined,
                             ),
                             const Gap(16),
-                        
+
                             VehicleField(
                               controller: cubit.yearController,
                               label: 'Year',
@@ -117,24 +129,24 @@ class ScanVehicleFeatureWidget extends HookWidget {
                               keyboardType: TextInputType.number,
                             ),
                             const Gap(16),
-                        
+
                             VehicleField(
                               controller: cubit.colorController,
                               label: 'Color',
                               icon: Icons.color_lens_outlined,
                             ),
                             const Gap(16),
-                        
+
                             VehicleField(
                               controller: cubit.licensePlateController,
                               label: 'License Plate',
                               icon: Icons.padding_outlined,
                             ),
                             const Gap(32),
-                        
+
                             if (state is ScanVehicleLoadingState)
                               const Center(child: CircularProgressIndicator()),
-                           
+
                             SizedBox(
                               width: double.infinity,
                               child: FilledButton.icon(
@@ -168,12 +180,13 @@ class VehicleField extends StatelessWidget {
   final TextEditingController controller;
   final String label;
   final IconData icon;
+  final Widget? suffix;
   final String? Function(String?)? validator;
   final TextInputType? keyboardType;
   AutovalidateMode? autovalidateMode;
   final int? maxLength;
 
-   VehicleField({
+  VehicleField({
     super.key,
     required this.controller,
     required this.label,
@@ -182,6 +195,7 @@ class VehicleField extends StatelessWidget {
     this.validator,
     this.autovalidateMode,
     this.maxLength,
+    this.suffix,
   });
 
   @override
@@ -192,13 +206,12 @@ class VehicleField extends StatelessWidget {
       keyboardType: keyboardType,
       validator: validator,
       maxLength: maxLength,
-      inputFormatters: [
-        LengthLimitingTextInputFormatter(maxLength), 
-        ],
+      inputFormatters: [LengthLimitingTextInputFormatter(maxLength)],
       decoration: InputDecoration(
         labelText: label,
         prefixIcon: Icon(icon),
         border: const OutlineInputBorder(),
+        suffix: suffix,
       ),
     );
   }

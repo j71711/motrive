@@ -8,6 +8,7 @@ part of 'add_expense_model.dart';
 
 _AddExpenseModel _$AddExpenseModelFromJson(Map<String, dynamic> json) =>
     _AddExpenseModel(
+      id: json['id'] as String?,
       vehicleId: json['vehicle_id'] as String,
       category: json['category'] as String,
       cost: (json['cost'] as num).toDouble(),
@@ -17,6 +18,7 @@ _AddExpenseModel _$AddExpenseModelFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$AddExpenseModelToJson(_AddExpenseModel instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'vehicle_id': instance.vehicleId,
       'category': instance.category,
       'cost': instance.cost,

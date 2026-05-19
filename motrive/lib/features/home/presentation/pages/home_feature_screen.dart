@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:gap/gap.dart';
 import 'package:motrive/core/constants/app_colors.dart';
 import 'package:motrive/core/navigation/routers.dart';
 import 'package:motrive/features/home/presentation/cubit/home_cubit.dart';
 import 'package:motrive/features/home/sub/add_car_card/presentation/cubit/add_car_card_cubit.dart';
 import 'package:motrive/features/home/sub/add_car_card/presentation/cubit/add_car_card_state.dart';
 import 'package:motrive/features/home/sub/add_car_card/presentation/pages/add_car_card_feature_widget.dart';
-import 'package:motrive/features/home/sub/add_expense/presentation/pages/add_expense_feature_widget.dart';
-import 'package:motrive/features/home/sub/chat_bot/presentation/pages/chat_bot_feature_widget.dart';
 import 'package:motrive/features/home/sub/sos/presentation/pages/sos_feature_widget.dart';
 import 'package:motrive/features/profile/sub/emergency_contact/presentation/cubit/emergency_contact_cubit.dart';
 import 'package:motrive/features/sub/maintenance_alert/presentation/pages/maintenance_alert_feature_widget.dart';
+import 'package:motrive/features/home/sub/add_expense/presentation/pages/add_expense_feature_widget.dart';
+import 'package:motrive/features/home/sub/chat_bot/presentation/pages/chat_bot_feature_widget.dart';
 import 'package:sizer/sizer.dart';
 
 class HomeFeatureScreen extends StatelessWidget {
@@ -48,7 +48,6 @@ class HomeFeatureScreen extends StatelessWidget {
                         state is CarsInfoLoadingState) {
                       return const CircularProgressIndicator();
                     }
-
                     if (state is AddCarCardLoadedState ||
                         state is CarInfoLoadedState) {
                       return GestureDetector(

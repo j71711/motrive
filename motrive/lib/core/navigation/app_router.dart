@@ -1,6 +1,8 @@
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:motrive/core/widgets/nav_bar.dart';
+import 'package:motrive/features/expenses/presentation/cubit/expenses_cubit.dart';
+import 'package:motrive/features/expenses/presentation/pages/expenses_feature_screen.dart';
 import 'package:motrive/features/maintenance/domain/entities/service_info_entity.dart';
 import 'routers.dart';
 import 'package:get_it/get_it.dart';
@@ -17,10 +19,12 @@ import 'package:motrive/features/maintenance_details/presentation/pages/maintena
 import 'package:motrive/features/maintenance_details/presentation/cubit/maintenance_details_cubit.dart';
 import 'package:motrive/features/loading/presentation/pages/loading_feature_screen.dart';
 import 'package:motrive/features/loading/presentation/cubit/loading_cubit.dart';
+import 'package:motrive/features/parking/presentation/pages/parking_feature_screen.dart';
+import 'package:motrive/features/parking/presentation/cubit/parking_cubit.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: Routes.loading,
+    initialLocation: Routes.expenses,
     routes: [
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) =>
@@ -59,6 +63,18 @@ class AppRouter {
               ),
             ],
           ),
+
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.parking,
+                builder: (context, state) => BlocProvider(
+                  create: (context) => ParkingCubit(GetIt.I.get()),
+                  child: const ParkingFeatureScreen(),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
       GoRoute(
@@ -74,24 +90,32 @@ class AppRouter {
           create: (context) => AuthCubit(GetIt.I.get()),
           child: const AuthFeatureScreen(),
         ),
-      ),
-    
-  GoRoute(
-    path: Routes.maintenanceDetails,
-    builder: (context, state) => BlocProvider(
-          create: (context) => MaintenanceDetailsCubit(GetIt.I.get()),
-          child: MaintenanceDetailsFeatureScreen(serviceInfo: state.extra as ServiceInfoEntity,),
+      ),GoRoute(
+        path: Routes.expenses,
+        builder: (context, state) => BlocProvider(
+          create: (context) => ExpensesCubit(GetIt.I.get()),
+          child: const ExpensesFeatureScreen(),
         ),
-  ),
+      ),
 
-  GoRoute(
-    path: Routes.loading,
-    builder: (context, state) => BlocProvider(
+      GoRoute(
+        path: Routes.loading,
+        builder: (context, state) => BlocProvider(
           create: (context) => LoadingCubit(GetIt.I.get()),
           child: const LoadingFeatureScreen(),
         ),
-  ),
-],
+      ),
+
+      GoRoute(
+        path: Routes.maintenanceDetails,
+        builder: (context, state) => BlocProvider(
+          create: (context) => MaintenanceDetailsCubit(GetIt.I.get()),
+          child: MaintenanceDetailsFeatureScreen(
+            serviceInfo: state.extra as ServiceInfoEntity,
+          ),
+        ),
+      ),
+    ],
 
     errorBuilder: (context, state) =>
         Scaffold(body: Center(child: Text('Page not found: ${state.uri}'))),

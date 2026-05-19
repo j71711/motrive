@@ -7,6 +7,7 @@ import 'package:multiple_result/multiple_result.dart';
 abstract class ExpensesRepositoryDomain {
     Future<Result<List<ExpensesEntity>, Failure>> getExpenses(String vehicleId);
     Future<Result<ExpenseStatsEntity, Failure>> getExpenseStats(String vehicleId);
+    Future<Result<void, Failure>> addExpense(AddExpenseEntity entity);
     Future<Result<void, Failure>> updateExpense(AddExpenseEntity entity);
     Future<Result<void, Failure>> deleteExpense(String expenseId);
     Future<Result<AddExpenseEntity, Failure>> getExpenseDetails(String expenseId,);

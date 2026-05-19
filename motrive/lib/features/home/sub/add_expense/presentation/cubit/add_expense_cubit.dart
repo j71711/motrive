@@ -24,10 +24,11 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
     emit(AddExpensesLoadingState());
 
     final entity = AddExpenseEntity(
-      // vehicleId: vehicleId,
+      vehicleId: 'vehicleId',
       category: selectedCategory!,
       cost: double.tryParse(costController.text) ?? 0.0,
-      odometer: int.tryParse(kmController.text) ?? 0,
+      odometer: int.tryParse(kmController.text) ?? 0, 
+      id: '',
     );
 
     final result = await _addExpenseUseCase.addExpense(entity);
@@ -43,6 +44,46 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
     kmController.clear();
     selectedCategory = null;
   }
+
+  Future<void> deleteExpenseMethod(
+  String expenseId,
+) async {
+  emit(AddExpensesLoadingState());
+
+  final result =
+      await _addExpenseUseCase.deleteExpense(
+    expenseId,
+  );
+
+  result.when(
+    (success) => emit(AddExpenseSuccessState()),
+    (error) => emit(
+      AddExpenseErrorState(
+        message: error.message,
+      ),
+    ),
+  );
+}
+
+Future<void> updateExpenseMethod(
+  AddExpenseEntity entity,
+) async {
+  emit(AddExpensesLoadingState());
+
+  final result =
+      await _addExpenseUseCase.updateExpense(
+    entity,
+  );
+
+  result.when(
+    (success) => emit(AddExpenseSuccessState()),
+    (error) => emit(
+      AddExpenseErrorState(
+        message: error.message,
+      ),
+    ),
+  );
+}
 
   @override
   Future<void> close() {

@@ -19,7 +19,7 @@ class AddExpenseFeatureWidget extends StatelessWidget {
     final cubit = context.read<AddExpenseCubit>();
     final formKey =  GlobalKey<FormState>();    
     return DraggableScrollableSheet(
-      // initialChildSize: 0.7,
+      initialChildSize: 0.7,
       minChildSize: 0.5,
       maxChildSize: 0.7,
 

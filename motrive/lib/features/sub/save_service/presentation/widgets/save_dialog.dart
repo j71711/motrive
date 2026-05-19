@@ -31,7 +31,7 @@ class SaveDialog extends HookWidget {
       child: Form(
         key: formKey,
         child: Column(
-          spacing: 5,
+          spacing: 10,
           children: [
             TextFormField(
               controller: serviceDateController,
@@ -42,9 +42,11 @@ class SaveDialog extends HookWidget {
                     await showDialog(
                       context: context,
                       builder: (context) => Dialog(
-                        child: DatePickerDialog(
-                          firstDate: DateTime(1990),
-                          lastDate: DateTime.now(),
+                        child: FittedBox(
+                          child: DatePickerDialog(
+                            firstDate: DateTime(1990),
+                            lastDate: DateTime.now(),
+                          ),
                         ),
                       ),
                     ).then((value) {
@@ -89,18 +91,14 @@ class SaveDialog extends HookWidget {
             TextFormField(
               controller: providerController,
               decoration: InputDecoration(
-                label: Text('Provider Name'),
-                helperText: '(Optional)',
+                label: Text('Provider Name (Optional)'),
               ),
               onTapOutside: (event) =>
                   FocusManager.instance.primaryFocus?.unfocus(),
             ),
             TextFormField(
               controller: notesController,
-              decoration: InputDecoration(
-                label: Text('Notes'),
-                helperText: '(Optional)',
-              ),
+              decoration: InputDecoration(label: Text('Notes (Optional)')),
               onTapOutside: (event) =>
                   FocusManager.instance.primaryFocus?.unfocus(),
             ),

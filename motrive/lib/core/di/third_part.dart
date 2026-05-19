@@ -1,3 +1,4 @@
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -21,5 +22,9 @@ abstract class ThirdPartyConfig {
   //----------------------------------------------------------------------------
   @lazySingleton
   GoogleSignIn get googleSignIn => GoogleSignIn.instance;
+  //----------------------------------------------------------------------------
+  @lazySingleton
+  FlutterLocalNotificationsPlugin get flutterLocalNotificationsPlugin =>
+      FlutterLocalNotificationsPlugin();
 }
 

@@ -54,15 +54,9 @@ abstract class AppTheme {
         color: Color(0xff2D1B35),
       ),
 
-      bodyMedium: const TextStyle(
-        fontSize: 14,
-        color: Color(0xff6B7280),
-      ),
+      bodyMedium: const TextStyle(fontSize: 14, color: Color(0xff6B7280)),
 
-      bodySmall: const TextStyle(
-        fontSize: 12,
-        color: Color(0xff9CA3AF),
-      ),
+      bodySmall: const TextStyle(fontSize: 12, color: Color(0xff9CA3AF)),
     ),
 
     appBarTheme: const AppBarTheme(
@@ -70,9 +64,7 @@ abstract class AppTheme {
       elevation: 0,
       scrolledUnderElevation: 0,
       centerTitle: false,
-      iconTheme: IconThemeData(
-        color: Color(0xff2D1B35),
-      ),
+      iconTheme: IconThemeData(color: Color(0xff2D1B35)),
       titleTextStyle: TextStyle(
         color: Color(0xff2D1B35),
         fontSize: 24,
@@ -84,9 +76,7 @@ abstract class AppTheme {
       color: Colors.white,
       elevation: 0,
       shadowColor: Colors.transparent,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(24),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       margin: EdgeInsets.zero,
     ),
 
@@ -96,13 +86,8 @@ abstract class AppTheme {
         foregroundColor: Colors.white,
         elevation: 0,
         minimumSize: const Size(double.infinity, 58),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(18),
-        ),
-        textStyle: const TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.w600,
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+        textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
       ),
     ),
 
@@ -111,17 +96,9 @@ abstract class AppTheme {
         foregroundColor: const Color(0xff8E24AA),
         elevation: 0,
         minimumSize: const Size(double.infinity, 58),
-        side: const BorderSide(
-          color: Color(0xffE9D5F1),
-          width: 1,
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(18),
-        ),
-        textStyle: const TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.w600,
-        ),
+        side: const BorderSide(color: Color(0xffE9D5F1), width: 1),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+        textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
       ),
     ),
 
@@ -129,15 +106,9 @@ abstract class AppTheme {
       filled: true,
       fillColor: Colors.white,
 
-      contentPadding: const EdgeInsets.symmetric(
-        horizontal: 20,
-        vertical: 18,
-      ),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
 
-      hintStyle: const TextStyle(
-        color: Color(0xff9CA3AF),
-        fontSize: 15,
-      ),
+      hintStyle: const TextStyle(color: Color(0xff9CA3AF), fontSize: 15),
 
       labelStyle: const TextStyle(
         color: Color(0xff8E24AA),
@@ -149,41 +120,27 @@ abstract class AppTheme {
 
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(18),
-        borderSide: const BorderSide(
-          color: Color(0xffE9D5F1),
-        ),
+        borderSide: const BorderSide(color: Color(0xffE9D5F1)),
       ),
 
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(18),
-        borderSide: const BorderSide(
-          color: Color(0xffE9D5F1),
-          width: 1,
-        ),
+        borderSide: const BorderSide(color: Color(0xffE9D5F1), width: 1),
       ),
 
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(18),
-        borderSide: const BorderSide(
-          color: Color(0xff8E24AA),
-          width: 1.5,
-        ),
+        borderSide: const BorderSide(color: Color(0xff8E24AA), width: 1.5),
       ),
 
       errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(18),
-        borderSide: const BorderSide(
-          color: Color(0xffEF4444),
-          width: 1,
-        ),
+        borderSide: const BorderSide(color: Color(0xffEF4444), width: 1),
       ),
 
       focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(18),
-        borderSide: const BorderSide(
-          color: Color(0xffEF4444),
-          width: 1.5,
-        ),
+        borderSide: const BorderSide(color: Color(0xffEF4444), width: 1.5),
       ),
     ),
 
@@ -193,10 +150,7 @@ abstract class AppTheme {
       unselectedItemColor: Color(0xff9CA3AF),
       elevation: 0,
       type: BottomNavigationBarType.fixed,
-      selectedLabelStyle: TextStyle(
-        fontWeight: FontWeight.w600,
-        fontSize: 12,
-      ),
+      selectedLabelStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
       unselectedLabelStyle: TextStyle(
         fontWeight: FontWeight.w500,
         fontSize: 12,
@@ -224,6 +178,19 @@ abstract class AppTheme {
       secondary: Color(0xffBA68C8),
       surface: Color(0xFF1E1E1E),
       error: Color(0xffEF4444),
+    ),
+
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      //backgroundColor: Colors.white,
+      selectedItemColor: Color(0xff8E24AA),
+      unselectedItemColor: Color(0xff9CA3AF),
+      elevation: 0,
+      type: BottomNavigationBarType.fixed,
+      selectedLabelStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
+      unselectedLabelStyle: TextStyle(
+        fontWeight: FontWeight.w500,
+        fontSize: 12,
+      ),
     ),
 
     scaffoldBackgroundColor: const Color(0xFF111827),

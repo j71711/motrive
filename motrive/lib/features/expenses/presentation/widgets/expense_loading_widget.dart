@@ -33,24 +33,7 @@ class ExpenseLoadingWidget extends StatelessWidget {
       //   itemCount: state.expenses.length,
       //   itemBuilder: (context, index) => ExpenseTile(state.expenses[index]));
         default: return const Text('Something went wrong');
-    }
-
-  }
-
-    // return Skeletonizer(
-    //   enabled: true,
-    //   child: ListView.builder(
-    //     itemCount: 6,
-    //     itemBuilder: (context, index) {
-    //       return const Card(
-    //         child: ListTile(
-    //           leading: CircleAvatar(),
-    //           title: Text('Loading Loading'),
-    //           subtitle: Text('Loading Loading'),
-    //         ),
-    //       );
-    //     },
-    //   ),
+        }}
     );
   }
 }
