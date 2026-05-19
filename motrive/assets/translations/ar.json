@@ -15,9 +15,6 @@
   "agreed_upon_terms": "الشروط المتفق عليها",
 
   "sign_out": "تسجيل الخروج",
-<<<<<<< Updated upstream
-  "logout_from_your_account": "تسجيل الخروج من حسابك"
-=======
   "logout_from_your_account": "تسجيل الخروج من حسابك",
   "sign_out_message": "أنت على وشك تسجيل الخروج من حسابك، هل أنت متأكد؟",
   "edit_contact": "تعديل جهة الاتصال",
@@ -184,5 +181,4 @@
   "save_parking_location": "حفظ موقع الوقوف",
   "L":"لتر",
   "item":"قطعة"
->>>>>>> Stashed changes
 }

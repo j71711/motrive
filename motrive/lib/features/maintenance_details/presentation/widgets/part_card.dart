@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:motrive/core/widgets/severity_widget.dart';
 import 'package:motrive/features/maintenance_details/domain/entities/service_part_info_entity.dart';
@@ -23,13 +24,9 @@ class PartCard extends StatelessWidget {
               onSeverity: (severity) => severity == 'inspect',
             ),
             if ((part?.quantity ?? 0) != 0)
-<<<<<<< Updated upstream
-              Text('Qty: ${part?.quantity} ${part?.quantityUnit}'),
-=======
               Text(
                 '${'qty'.tr()}: ${part?.quantity} ${part?.quantityUnit.tr()}',
               ),
->>>>>>> Stashed changes
           ],
         ),
         subtitle: Column(
@@ -37,17 +34,10 @@ class PartCard extends StatelessWidget {
           mainAxisSize: .min,
           crossAxisAlignment: .start,
           children: [
-<<<<<<< Updated upstream
-            if (part?.specification != 'no data')
-              Text(part?.specification ?? ''),
-            if (part?.oemPartNumber != 'no data')
-              Text('OEM No. ${part?.oemPartNumber}'),
-=======
             if (part?.specification != 'no data'.tr())
               Text(part?.specification ?? ''),
             if (part?.oemPartNumber != 'no data'.tr())
               Text('${'oem_no'.tr()} ${part?.oemPartNumber}'),
->>>>>>> Stashed changes
           ],
         ),
       ),

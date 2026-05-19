@@ -15,10 +15,6 @@
   "agreed_upon_terms": "Agreed upon terms",
 
   "sign_out": "Sign Out",
-<<<<<<< Updated upstream
-  "logout_from_your_account": "Logout from your account"
-}
-=======
   "logout_from_your_account": "Logout From Your Account",
   "sign_out_message": "You're about to sign out of your account, are you sure?",
   "edit_contact": "Edit Contact",
@@ -186,4 +182,3 @@
   "L":"L",
   "item":"Item"
 }
->>>>>>> Stashed changes
