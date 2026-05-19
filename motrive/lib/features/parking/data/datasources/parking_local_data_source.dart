@@ -12,8 +12,7 @@ abstract class BaseParkingLocalDataSource {
 }
 
 @LazySingleton(as: BaseParkingLocalDataSource)
-class ParkingLocalDataSource
-    implements BaseParkingLocalDataSource {
+class ParkingLocalDataSource implements BaseParkingLocalDataSource {
   final Box _box;
 
   ParkingLocalDataSource(this._box);
@@ -21,9 +20,7 @@ class ParkingLocalDataSource
   @override
   Future<ParkingModel?> getParking() async {
     try {
-      final rawParking = await _box.get(
-        HiveBoxes.parking,
-      );
+      final rawParking = await _box.get(HiveBoxes.parking);
 
       if (rawParking == null) {
         return null;
@@ -39,19 +36,12 @@ class ParkingLocalDataSource
   }
 
   Map<String, dynamic> toStringMap(dynamic raw) =>
-      (raw as Map).map(
-        (k, v) => MapEntry(k.toString(), v),
-      );
+      (raw as Map).map((k, v) => MapEntry(k.toString(), v));
 
   @override
-  Future<void> saveParking(
-    ParkingModel parking,
-  ) async {
+  Future<void> saveParking(ParkingModel parking) async {
     try {
-      await _box.put(
-        HiveBoxes.parking,
-        parking.toJson(),
-      );
+      await _box.put(HiveBoxes.parking, parking.toJson());
     } catch (e) {
       log(e.toString());
     }

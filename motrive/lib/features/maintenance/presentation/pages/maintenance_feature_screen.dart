@@ -108,13 +108,37 @@ class MaintenanceFeatureScreen extends StatelessWidget {
                                 if (!(state.allDisplayed ?? false))
                                   state.loadingMore ?? false
                                       ? LoadingWidget()
-                                      : TextButton(
-                                          onPressed: () =>
-                                              cubit.loadingUpcoming(),
-                                          child: Text(
-                                            'See Upcoming Maintenance',
+                                      : Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Align(
+                                            alignment: Alignment.centerRight,
+                                        
+                                            child: SizedBox(
+                                              width: 90,
+                                              height: 44,
+                                        
+                                              child: ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(32),
+                                                  ),
+                                                ),
+                                        
+                                                onPressed: () =>
+                                                    cubit.loadingUpcoming(),
+                                        
+                                                child: const Text(
+                                                  'future',
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
                                           ),
-                                        ),
+                                      ),
                                 Expanded(
                                   child: TimelineWidget(
                                     onRefresh: () => cubit.getMaintenanceMethod(
