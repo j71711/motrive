@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -23,7 +24,7 @@ class ChatBotFeatureWidget extends StatelessWidget {
             appBar: AppBar(
               elevation: 0,
               centerTitle: true,
-              title: const Text('Car Assistant'),
+            title: Text('car_assistant'.tr()),
             ),
             body: Column(
               children: [
@@ -46,7 +47,7 @@ class ChatBotFeatureWidget extends StatelessWidget {
                       if (currentMessages.isEmpty) {
                         return Center(
                           child: Text(
-                            'Ask me anything about your car',
+                            'ask_me_anything_about_your_car'.tr(),
                             style: TextStyle(
                               color: Theme.of(context)
                                   .colorScheme
@@ -139,7 +140,7 @@ class ChatBotFeatureWidget extends StatelessWidget {
                             minLines: 1,
                             maxLines: 4,
                             decoration: InputDecoration(
-                              hintText: 'Type your message...',
+                          hintText: 'type_your_message'.tr(),
                               filled: true,
                               fillColor: Theme.of(context)
                                   .colorScheme

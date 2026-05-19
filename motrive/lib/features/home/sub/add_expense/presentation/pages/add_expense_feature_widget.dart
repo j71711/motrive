@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,6 +10,7 @@ import 'package:motrive/features/home/sub/add_expense/presentation/cubit/add_exp
 
 class AddExpenseFeatureWidget extends StatelessWidget {
   const AddExpenseFeatureWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -17,13 +19,36 @@ class AddExpenseFeatureWidget extends StatelessWidget {
         builder: (context) {
           final cubit = context.read<AddExpenseCubit>();
           final formKey = GlobalKey<FormState>();
+
+          final categories = [
+            {
+              'value': 'Fuel',
+              'label': 'fuel',
+            },
+            {
+              'value': 'Vehicle insurance',
+              'label': 'vehicle_insurance',
+            },
+            {
+              'value': 'Maintenance',
+              'label': 'maintenance',
+            },
+            {
+              'value': 'Oil',
+              'label': 'oil',
+            },
+            {
+              'value': 'Traffic violation',
+              'label': 'traffic_violation',
+            },
+            {
+              'value': 'Other',
+              'label': 'other',
+            },
+          ];
+
           return Container(
-            padding: EdgeInsets.only(
-              // left: 20,
-              // right: 20,
-              top: 16,
-              // bottom: MediaQuery.of(context).viewInsets.bottom + 20,
-            ),
+            padding: const EdgeInsets.only(top: 16),
 
             child: SingleChildScrollView(
               child: Form(
@@ -31,12 +56,10 @@ class AddExpenseFeatureWidget extends StatelessWidget {
 
                 child: Column(
                   spacing: 12,
-                  // crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // const Gap(20),
-                    const Text(
-                      'Add Expense',
-                      style: TextStyle(
+                    Text(
+                      'add_expense'.tr(),
+                      style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
@@ -45,40 +68,73 @@ class AddExpenseFeatureWidget extends StatelessWidget {
                     const Gap(24),
 
                     DropdownButtonFormField<String>(
-                      value: cubit.selectedCategory,
-                      decoration: const InputDecoration(labelText: 'Category'),
-                      items:
-                          [
-                                'Fuel',
-                                'Vehicle insurance',
-                                'Maintenance',
-                                'Oil',
-                                'Traffic violation',
-                                'Other',
-                              ]
-                              .map(
-                                (e) =>
-                                    DropdownMenuItem(value: e, child: Text(e)),
-                              )
-                              .toList(),
-                      onChanged: (val) => cubit.selectedCategory = val,
-                      validator: (val) => val == null ? 'required' : null,
+                      initialValue: cubit.selectedCategory,
+
+                      decoration: InputDecoration(
+                        labelText: 'category'.tr(),
+                      ),
+
+                      items: categories
+                          .map(
+                            (e) => DropdownMenuItem<String>(
+                              value: e['value'],
+                              child: Text(
+                                e['label']!.tr(),
+                              ),
+                            ),
+                          )
+                          .toList(),
+
+                      onChanged: (val) {
+                        cubit.selectedCategory = val;
+                      },
+
+                      validator: (val) {
+                        if (val == null) {
+                          return 'required'.tr();
+                        }
+                        return null;
+                      },
                     ),
 
                     TextFormField(
                       controller: cubit.costController,
                       keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(labelText: 'Cost'),
-                      validator: (val) =>
-                          (val == null || val.isEmpty) ? 'required' : null,
+
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
+
+                      decoration: InputDecoration(
+                        labelText: 'cost'.tr(),
+                      ),
+
+                      validator: (val) {
+                        if (val == null || val.isEmpty) {
+                          return 'required'.tr();
+                        }
+                        return null;
+                      },
                     ),
 
                     TextFormField(
                       controller: cubit.kmController,
                       keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(labelText: 'Odometer'),
-                      validator: (val) =>
-                          (val == null || val.isEmpty) ? 'required' : null,
+
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                      ],
+
+                      decoration: InputDecoration(
+                        labelText: 'odometer'.tr(),
+                      ),
+
+                      validator: (val) {
+                        if (val == null || val.isEmpty) {
+                          return 'required'.tr();
+                        }
+                        return null;
+                      },
                     ),
 
                     const Gap(30),
@@ -87,27 +143,38 @@ class AddExpenseFeatureWidget extends StatelessWidget {
                       listener: (context, state) {
                         switch (state) {
                           case AddExpenseSuccessState _:
-                            return context.showSnackBar('Saved successfully');
+                            context.showSnackBar(
+                              'saved_successfully'.tr(),
+                            );
+
                           case AddExpenseErrorState _:
-                            return context.showSnackBar(state.message);
+                            context.showSnackBar(state.message);
+
+                          default:
                         }
                       },
+
                       builder: (context, state) {
-                        final isLoading = state is AddExpensesLoadingState;
+                        final isLoading =
+                            state is AddExpensesLoadingState;
+
                         return SizedBox(
                           width: double.infinity,
                           height: 50,
+
                           child: ElevatedButton(
                             onPressed: isLoading
                                 ? null
                                 : () {
-                                    if (formKey.currentState!.validate()) {
+                                    if (formKey.currentState!
+                                        .validate()) {
                                       cubit.addExpenseMethod();
                                     }
                                   },
+
                             child: isLoading
                                 ? const CircularProgressIndicator()
-                                : const Text("save"),
+                                : Text('save'.tr()),
                           ),
                         );
                       },

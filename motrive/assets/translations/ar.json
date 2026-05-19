@@ -137,5 +137,27 @@
   "do_you_want_delete": "هل تريد حذف",
   "deleted": "تم حذف",
   "successfully": "بنجاح",
-  "add_vehicle": "إضافة سيارة"
+  "add_vehicle": "إضافة سيارة",
+  "emergency_help": "مساعدة الطوارئ",
+  "police": "الشرطة",
+  "call_999": "اتصل بـ 999",
+  "ambulance": "الإسعاف",
+  "call_997": "اتصل بـ 997",
+  "emergency_contact": "جهة اتصال الطوارئ",
+  "contact": "جهة الاتصال",
+  "no_contacts": "لا توجد جهات اتصال",
+  "add_expense": "إضافة مصروف",
+  "category": "الفئة",
+  "odometer": "عداد الكيلومترات",
+  "fuel": "الوقود",
+  "vehicle_insurance": "تأمين السيارة",
+  "oil": "الزيت",
+  "traffic_violation": "مخالفة مرورية",
+  "other": "أخرى",
+  "required": "مطلوب",
+  "saved_successfully": "تم الحفظ بنجاح",
+  "car_assistant": "مساعد السيارة",
+  "ask_me_anything_about_your_car":
+      "اسألني أي شيء عن سيارتك",
+  "type_your_message": "اكتب رسالتك..."
 }

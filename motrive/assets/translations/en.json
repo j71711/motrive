@@ -137,5 +137,27 @@
   "do_you_want_delete": "Do you want to delete",
   "deleted": "Deleted",
   "successfully": "successfully",
-  "add_vehicle": "Add Vehicle"
+  "add_vehicle": "Add Vehicle",
+  "emergency_help": "Emergency Help",
+  "police": "Police",
+  "call_999": "Call 999",
+  "ambulance": "Ambulance",
+  "call_997": "Call 997",
+  "emergency_contact": "Emergency Contact",
+  "contact": "Contact",
+  "no_contacts": "No contacts",
+  "add_expense": "Add Expense",
+  "category": "Category",
+  "odometer": "Odometer",
+  "fuel": "Fuel",
+  "vehicle_insurance": "Vehicle insurance",
+  "oil": "Oil",
+  "traffic_violation": "Traffic violation",
+  "other": "Other",
+  "required": "Required",
+  "saved_successfully": "Saved successfully",
+  "car_assistant": "Car Assistant",
+  "ask_me_anything_about_your_car":
+      "Ask me anything about your car",
+  "type_your_message": "Type your message..."
 }
