@@ -55,13 +55,11 @@ Future<void> deleteExpense(
   @override
   Future<List<ExpensesModel>> getExpenses(String vehicleId) async {
     try {
-      print('❤️');
       final response = await _supabase
           .from('expense_records')
           .select()
-          .eq('vehicle_id', '9ebf96bd-fc6a-42c6-9a42-f9bebfa59b1c') // vehicleId
+          .eq('vehicle_id', vehicleId) 
           .order('expense_date', ascending: false);
-          print('😎$response');
       return response
           .map<ExpensesModel>((e) => ExpensesModel.fromJson(e))
           .toList();
@@ -75,13 +73,11 @@ Future<void> deleteExpense(
     String expenseId,
   ) async {
     try {
-      print('✅');
       final response = await _supabase
           .from('expense_records')
           .select()
           .eq('id', expenseId)
           .single();
-print(' Data Source ✅ $response');
       return AddExpenseModel.fromJson(response);
     } catch (error) {
       throw FailureExceptions.getException(error);
@@ -90,11 +86,10 @@ print(' Data Source ✅ $response');
 
   @override
   Future<ExpenseStatsEntity> getExpenseStats(String vehicleId) async {
-    print('❤️');
     final response = await _supabase
         .from('expense_records')
         .select()
-        .eq('vehicle_id', '9ebf96bd-fc6a-42c6-9a42-f9bebfa59b1c');
+        .eq('vehicle_id', vehicleId);
 
       double total = 0;
 
@@ -111,11 +106,8 @@ print(' Data Source ✅ $response');
     final now = DateTime.now();
 
     for (final item in response) {
-      // final amount = (item['amount'] as num).toDouble();
       final amount = (item['cost'] as num?)?.toDouble() ?? 0.0;
-
       final date = DateTime.parse(item['expense_date']);
-
       if (date.month == now.month) {
         monthly += amount;
       }
@@ -143,14 +135,6 @@ print(' Data Source ✅ $response');
       if (item['category'] == 'Other') {
         other += amount;
       }
-
-      print('👀');
-      print('$response  👀');
-
-    print('💕fuels 💕$fuel');
-    print('💕maintenanceTotal 💕$maintenance');
-    print('💕Violation 💕$violation');
-    print('💕nsuranceTotal 💕$insurance');
 
     }
     return ExpenseStatsEntity(

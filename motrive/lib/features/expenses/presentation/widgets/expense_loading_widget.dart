@@ -28,10 +28,6 @@ class ExpenseLoadingWidget extends StatelessWidget {
           );
         },
       );
-
-      //  ListView.builder(
-      //   itemCount: state.expenses.length,
-      //   itemBuilder: (context, index) => ExpenseTile(state.expenses[index]));
         default: return const Text('Something went wrong');
         }}
     );

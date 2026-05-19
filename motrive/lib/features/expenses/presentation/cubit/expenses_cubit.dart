@@ -9,10 +9,7 @@ import 'package:multiple_result/multiple_result.dart';
 
 class ExpensesCubit extends Cubit<ExpensesState> {
   final ExpensesUseCase expensesUseCase;
-  ExpensesCubit(this.expensesUseCase) : super(ExpensesInitialState()){
-    getExpensesMethod('9ebf96bd-fc6a-42c6-9a42-f9bebfa59b1c');
-    // getExpensesMethod('vehicleId');
-  }
+  ExpensesCubit(this.expensesUseCase) : super(ExpensesInitialState());
 
 Future<void> addExpenseMethod(
   AddExpenseEntity entity,
@@ -49,8 +46,8 @@ Future<void> addExpenseMethod(
 Future<void> getExpensesMethod(String vehicleId) async {
     emit(ExpensesLoadingState());
     final results = await Future.wait([
-      expensesUseCase.getExpenses('9ebf96bd-fc6a-42c6-9a42-f9bebfa59b1c'),
-      expensesUseCase.getExpenseStats('9ebf96bd-fc6a-42c6-9a42-f9bebfa59b1c'),
+      expensesUseCase.getExpenses(vehicleId),
+      expensesUseCase.getExpenseStats(vehicleId),
     ]);
   
     final expensesResult = results[0] as Result<List<ExpensesEntity>, Failure>;
@@ -78,7 +75,7 @@ Future<void> deleteExpenseMethod(
   final result = await expensesUseCase.deleteExpense(expenseId);
 
   result.when(
-    (success) => emit(AddExpenseSuccessState()),  //emit(AddExpenseSuccessState()),
+    (success) => emit(AddExpenseSuccessState()),  
     (error) => emit(AddExpenseErrorState(error.message)),
   );
 }
@@ -87,34 +84,23 @@ Future<void> updateExpenseMethod(
   AddExpenseEntity entity,
 ) async {
   emit(AddExpensesLoadingState());
-
   final result = await expensesUseCase.updateExpense(entity);
-
   result.when(
-    (success) async => await getExpensesMethod(entity.vehicleId!), //emit(AddExpenseSuccessState()),
+    (success) async => await getExpensesMethod(entity.vehicleId!), 
     (error) => emit(AddExpenseErrorState(error.message)),
   );
 }
 
 
 void filterByCategory(String category) {
-
   if (state is! ExpensesSuccessState) {
     return;
   }
 
-  final current =
-      state as ExpensesSuccessState;
-
+  final current = state as ExpensesSuccessState;
   final filtered = category == 'All'
-
       ? current.expenses
-
-      : current.expenses
-          .where(
-            (e) => e.category == category,
-          )
-          .toList();
+      : current.expenses.where((e) => e.category == category,).toList();
 
 
   double total = 0;
@@ -132,27 +118,21 @@ void filterByCategory(String category) {
     total += amount;
 
     switch (item.category) {
-
       case 'Fuel':
         fuel += amount;
         break;
-
       case 'Vehicle insurance':
         insurance += amount;
         break;
-
       case 'Maintenance':
         maintenance += amount;
         break;
-
       case 'Oil':
         oil += amount;
         break;
-
       case 'Traffic violation':
         violation += amount;
         break;
-
       case 'Other':
         other += amount;
         break;
@@ -161,7 +141,6 @@ void filterByCategory(String category) {
 
   emit(
     ExpensesSuccessState(
-
       expenses: current.expenses,
        stats: ExpenseStatsEntity(
         monthlyTotal: total,
@@ -175,8 +154,6 @@ void filterByCategory(String category) {
       ),
       filteredExpenses: filtered,
       selectedCategory: category,
-
-     
     ),
   );
 }
