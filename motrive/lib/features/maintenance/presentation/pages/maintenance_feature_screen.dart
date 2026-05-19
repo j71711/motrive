@@ -30,6 +30,7 @@ class MaintenanceFeatureScreen extends StatelessWidget {
             context.showSnackBar(state.message, isError: true);
           }
         },
+<<<<<<< Updated upstream
         child: Column(
           crossAxisAlignment: .center,
           mainAxisAlignment: .start,
@@ -54,12 +55,110 @@ class MaintenanceFeatureScreen extends StatelessWidget {
                                       severity: '   ',
                                       onSeverity: (severity) =>
                                           severity == '   ',
+=======
+        builder: (context, state) {
+          switch (state) {
+            case MaintenanceLoadingState _:
+              return Skeletonizer(
+                child: Column(
+                  crossAxisAlignment: .center,
+                  mainAxisAlignment: .start,
+                  children: [
+                    CarProgressCard(),
+                    FilledButton(onPressed: () {}, child: Text('   ')),
+                    Expanded(
+                      child: TimelineWidget(
+                        onRefresh: () async {},
+                        dashedOrSolid: (index) => true,
+                        itemCount: 10,
+                        oppositeContentsBuilder: (context, index) =>
+                            SeverityWidget(
+                              severity: '   ',
+                              onSeverity: (severity) => severity == '   ',
+                            ),
+                        contentsBuilder: (p0, p1) => MaintenanceCard(
+                          hasCheckBox: true,
+                          onChanged: (value) => value,
+                          value: true,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            case MaintenanceErrorState _:
+              return ErrorButton(
+                message: state.message,
+                refresh: () => cubit.getMaintenanceMethod(fromRemote: true),
+              );
+            case MaintenanceDataProcessState _:
+              return Column(
+                mainAxisAlignment: .center,
+                spacing: 10,
+                children: [
+                  LoadingWidget(),
+                  Text(
+                    state.status ?? '',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ],
+              );
+            case MaintenanceSuccessState _:
+              final vehicle = state.maintenanceEntity.vehicle;
+              final services = state.services;
+              final nextMaintenance = services.lastWhereOrNull(
+                (element) =>
+                    element.serviceOdometer > (vehicle.currentOdometer ?? 0) &&
+                    !element.done,
+              );
+              final double progress =
+                  (vehicle.currentOdometer ?? 0) /
+                  (nextMaintenance?.serviceOdometer ?? 1);
+
+              return services.isEmpty
+                  ? Center(child: Text('no_services'.tr()))
+                  : Column(
+                      children: [
+                        CarProgressCard(
+                          vehicle: vehicle,
+                          progress: progress,
+                          nextMaintenance: nextMaintenance?.serviceOdometer,
+                        ),
+                        if (!(state.allDisplayed ?? false))
+                          state.loadingMore ?? false
+                              ? LoadingWidget(size: 16.w)
+                              : Padding(
+                                  padding: const .all(8.0),
+                                  child: Align(
+                                    alignment: AlignmentDirectional.centerEnd,
+
+                                    child: FilledButton(
+                                      style: ElevatedButton.styleFrom(
+                                        tapTargetSize: .shrinkWrap,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            32,
+                                          ),
+                                        ),
+                                      ),
+
+                                      onPressed: () => cubit.loadingUpcoming(),
+
+                                      child: Text(
+                                        'future_maintenance'.tr(),
+                                        style: const TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+>>>>>>> Stashed changes
                                     ),
                                 contentsBuilder: (p0, p1) => MaintenanceCard(
                                   hasCheckBox: true,
                                   onChanged: (value) => value,
                                   value: true,
                                 ),
+<<<<<<< Updated upstream
                               ),
                             ),
                           ],
@@ -206,6 +305,65 @@ class MaintenanceFeatureScreen extends StatelessWidget {
             ),
           ],
         ),
+=======
+                        Expanded(
+                          child: TimelineWidget(
+                            onRefresh: () =>
+                                cubit.getMaintenanceMethod(fromRemote: true),
+                            dashedOrSolid: (index) => services[index].done,
+                            itemCount: services.length,
+                            oppositeContentsBuilder: (context, index) =>
+                                SeverityWidget(
+                                  severity: services[index].severity,
+                                  onSeverity: (severity) =>
+                                      severity == 'routine',
+                                ),
+                            contentsBuilder: (context, index) {
+                              final service = services[index];
+                              return MaintenanceCard(
+                                hasCheckBox: true,
+                                service: service,
+                                onTab: () async {
+                                  context
+                                      .push(
+                                        Routes.maintenanceDetails,
+                                        extra: service,
+                                      )
+                                      .then((value) {
+                                        if (value == true) {
+                                          cubit.getMaintenanceMethod(
+                                            fromRemote: false,
+                                          );
+                                        }
+                                      });
+                                },
+                                onChanged: (value) async {
+                                  await showDialog(
+                                    context: context,
+                                    builder: (context) =>
+                                        SaveServiceFeatureWidget(
+                                          serviceInfo: service,
+                                          vehicle: vehicle,
+                                        ),
+                                  ).then((value) {
+                                    if (value == true && context.mounted) {
+                                      cubit.getMaintenanceMethod(
+                                        fromRemote: false,
+                                      );
+                                    }
+                                  });
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    );
+            default:
+              return SizedBox.shrink();
+          }
+        },
+>>>>>>> Stashed changes
       ),
     );
   }
