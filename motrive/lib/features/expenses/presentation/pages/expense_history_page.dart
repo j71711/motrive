@@ -67,16 +67,28 @@ class ExpenseHistoryPage extends StatelessWidget {
                     motion: const StretchMotion(),
                     children: [
                       SlidableAction(
-                        onPressed: (_) {
-                          showEditExpenseBottomSheet(context, item);
+                        onPressed: (_) async {
+                          context
+                              .showBottomSheet(
+                                widget: AddExpenseFeatureWidget(expense: item),
+                              )
+                              .then((value) {
+                                if (value == true) {
+                                  cubit.getExpensesMethod();
+                                }
+                              });
                         },
                         icon: Icons.edit,
                       ),
 
                       SlidableAction(
                         backgroundColor: Colors.redAccent,
-                        onPressed: (_) {
-                          showDeleteDialog(context, item.id);
+                        onPressed: (_) async {
+                          showDeleteDialog(context, item.id).then((value) {
+                            if (value == true) {
+                              cubit.getExpensesMethod();
+                            }
+                          });
                         },
                         icon: Icons.delete,
                       ),
@@ -150,8 +162,8 @@ class ExpenseHistoryPage extends StatelessWidget {
   }
 }
 
-void showDeleteDialog(BuildContext context, String expenseId) {
-  showDialog(
+Future<T?> showDeleteDialog<T>(BuildContext context, String expenseId) async {
+  return await showDialog(
     context: context,
     builder: (_) {
       return AlertDialog(
@@ -160,7 +172,7 @@ void showDeleteDialog(BuildContext context, String expenseId) {
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.pop(context);
+              context.pop();
             },
             child: const Text('Cancel'),
           ),
@@ -170,7 +182,7 @@ void showDeleteDialog(BuildContext context, String expenseId) {
                 expenseId,
               );
               if (context.mounted) {
-                context.pop();
+                context.pop(true);
               }
             },
             child: const Text('Delete'),
