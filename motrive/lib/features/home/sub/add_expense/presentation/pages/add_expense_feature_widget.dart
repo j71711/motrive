@@ -108,7 +108,7 @@ class AddExpenseFeatureWidget extends StatelessWidget {
                             Align(
                               alignment: .centerEnd,
                               child: Text(
-                               '${'last_odometer'.tr()}: ${loaded ? Formatters.formatOdometer(state.vehicle!.currentOdometer ?? 0) : 0}',
+                                'Last odometer: ${loaded ? Formatters.formatOdometer(state.vehicle!.currentOdometer ?? 0) : 0}',
                               ),
                             ),
                           ],
