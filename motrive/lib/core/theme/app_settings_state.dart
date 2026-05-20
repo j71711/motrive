@@ -52,10 +52,10 @@ class ThemeCubit extends Cubit<AppSettingsState> {
     final value = box.get(HiveBoxes.language);
 
     if (value == 'ar') {
-      return const Locale('ar');
+      return  Locale('ar');
     }
 
-    return const Locale('en');
+    return  Locale('en');
   }
 
   Future<void> getSettingsMethod() async {
@@ -89,6 +89,7 @@ class ThemeCubit extends Cubit<AppSettingsState> {
     await _box.put(HiveBoxes.language, locale.languageCode);
 
     emit(AppSettingsState(themeMode: themeMode, locale: locale));
+   print(locale);
   }
 
   Future<void> changeTheme(ThemeMode themeMode) async {
@@ -110,8 +111,12 @@ class ThemeCubit extends Cubit<AppSettingsState> {
   }
 
   Future<void> changeLanguage(Locale locale) async {
-    emit(state.copyWith(locale: locale));
+  emit(state.copyWith(locale: locale));
     await _box.put(HiveBoxes.language, locale.languageCode);
+      print("______________________________");
+
+print(locale);
+      print("______________________________");
 
     final user = _userService.currentUser;
 
@@ -122,5 +127,8 @@ class ThemeCubit extends Cubit<AppSettingsState> {
         'preferred_lang': locale.languageCode,
       });
     }
+    
   }
+
+  
 }

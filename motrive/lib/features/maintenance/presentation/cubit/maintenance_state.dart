@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:motrive/features/maintenance/domain/entities/maintenance_entity.dart';
 import 'package:motrive/features/maintenance/domain/entities/service_info_entity.dart';
+import 'package:timezone/timezone.dart';
 
 abstract class MaintenanceState extends Equatable {
   const MaintenanceState();
@@ -16,12 +17,14 @@ class MaintenanceSuccessState extends MaintenanceState {
   final List<ServiceInfoEntity> services;
   final bool? allDisplayed;
   final bool? loadingMore;
+ 
 
   const MaintenanceSuccessState({
     required this.maintenanceEntity,
     required this.services,
     this.allDisplayed,
     this.loadingMore,
+
   });
 
   @override
@@ -30,6 +33,7 @@ class MaintenanceSuccessState extends MaintenanceState {
     services,
     allDisplayed,
     loadingMore,
+
   ];
 }
 

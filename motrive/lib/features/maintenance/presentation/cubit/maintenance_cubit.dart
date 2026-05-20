@@ -40,6 +40,7 @@ class MaintenanceCubit extends Cubit<MaintenanceState> {
             .reversed
             .toList();
         maintenanceEntity = success;
+         
         emit(
           MaintenanceSuccessState(
             maintenanceEntity: maintenanceEntity!,
@@ -47,7 +48,9 @@ class MaintenanceCubit extends Cubit<MaintenanceState> {
           ),
         );
         page += index + 2;
+        
       },
+      
       (whenError) {
         emit(MaintenanceErrorState(message: whenError.message));
       },

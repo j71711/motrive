@@ -14,6 +14,7 @@ class ExpensesFeatureScreen extends StatelessWidget {
   const ExpensesFeatureScreen({super.key});
   @override
   Widget build(BuildContext context) {
+    final activeLoc = context.locale;
     return BlocProvider(
       create: (context) => ExpensesCubit(GetIt.I.get()),
       child: DefaultTabController(
@@ -37,8 +38,8 @@ class ExpensesFeatureScreen extends StatelessWidget {
             bottom: TabBar(
               dividerHeight: 0,
               tabs: [
-               Tab(text: 'expenses'.tr()),
-               Tab(text: 'statistics'.tr()),
+                Tab(text: 'expenses'.tr()),
+                Tab(text: 'statistics'.tr()),
               ],
             ),
           ),

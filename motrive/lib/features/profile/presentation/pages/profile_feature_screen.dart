@@ -195,9 +195,14 @@ class ProfileFeatureScreen extends StatelessWidget {
                         onChanged: (value) {
                           context.read<ThemeCubit>().changeTheme(
                             value ? ThemeMode.dark : ThemeMode.light,
+                            
+
                           );
+                             print("---------------------------------");
                         },
+                     
                       ),
+                      
                     ),
 
                     divider(context),
@@ -219,30 +224,25 @@ class ProfileFeatureScreen extends StatelessWidget {
                           : 'english'.tr(),
 
                       trailing: CustomToggle(
-                        value:
-                            context
-                                .watch<ThemeCubit>()
-                                .state
-                                .locale
-                                .languageCode ==
-                            'ar',
+                        value: context.locale.languageCode == 'en',
 
-                        activeIcon: Icons.language_rounded,
-                        inactiveIcon: Icons.translate_rounded,
+                        activeIcon: Icons.language,
+                        inactiveIcon: Icons.language,
 
                         onChanged: (value) async {
-                          final locale = Locale(value ? 'ar' : 'en');
+                        
+                          final locale = value
 
-                          await context.read<ThemeCubit>().changeLanguage(
-                            locale,
-                          );
+                              ?  Locale('en')
+                              :  Locale('ar');
 
-                          if (context.mounted) {
-                            context.setLocale(locale);
-                          }
+                          await context.setLocale(locale);
+
+                          context.read<ThemeCubit>().changeLanguage(locale);
                         },
                       ),
                     ),
+                    //!------------------
                     divider(context),
 
                     /// AGREEMENT

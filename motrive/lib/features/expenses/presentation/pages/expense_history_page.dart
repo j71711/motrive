@@ -23,6 +23,7 @@ class ExpenseHistoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<ExpensesCubit>();
+    print(cubit);
     if (expenses.isEmpty) {
       return Center(child: Text('no_expenses_found'.tr()));
     }

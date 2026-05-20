@@ -105,28 +105,22 @@ class AuthFeatureScreen extends HookWidget {
                       right: 24,
 
                       child: CustomToggle(
-                        value:
-                            context
-                                .watch<ThemeCubit>()
-                                .state
-                                .locale
-                                .languageCode ==
-                            'ar',
-                      
-                        activeIcon: Icons.language_rounded,
-                        inactiveIcon: Icons.translate_rounded,
-                      
+                        value: context.locale.languageCode == 'en',
+
+                        activeIcon: Icons.language,
+                        inactiveIcon: Icons.language,
+
                         onChanged: (value) async {
-                          final locale = Locale(value ? 'ar' : 'en');
-                      
-                          await context.read<ThemeCubit>().changeLanguage(
-                            locale,
-                          );
-                      
-                          if (context.mounted) {
-                            context.setLocale(locale);
-                          }
+                          print('FFFFFFF');
+                          final locale = value
+                              ? const Locale('en')
+                              : const Locale('ar');
+                         context.setLocale(locale);
+                      context.read<ThemeCubit>().changeLanguage(locale);
+
+
                         },
+                        
                       ),
                     ),
                     Center(

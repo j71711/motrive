@@ -4,11 +4,14 @@ import 'package:motrive/features/home/sub/add_expense/domain/entities/add_expens
 
 class ExpenseDetailsPage extends StatelessWidget {
   final AddExpenseEntity expense;
+  
 
   const ExpenseDetailsPage({super.key, required this.expense});
 
   @override
   Widget build(BuildContext context) {
+        final activeLoc = context.locale;
+
     return Scaffold(
       appBar: AppBar(title: Text('expense_details'.tr())),
       body: Padding(

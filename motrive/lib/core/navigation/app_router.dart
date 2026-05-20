@@ -38,8 +38,10 @@ class AppRouter {
           StatefulShellBranch(
             routes: [
               GoRoute(
+                
                 path: Routes.home,
                 builder: (context, state) => BlocProvider(
+                  
                   create: (context) => HomeCubit(GetIt.I.get()),
                   child: HomeFeatureScreen(),
                 ),
@@ -51,6 +53,7 @@ class AppRouter {
               GoRoute(
                 path: Routes.maintenance,
                 builder: (context, state) => BlocProvider(
+
                   create: (context) => MaintenanceCubit(GetIt.I.get()),
                   child: MaintenanceFeatureScreen(),
                 ),

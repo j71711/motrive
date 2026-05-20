@@ -31,10 +31,10 @@ Future<void> main() async {
       runApp(
         SentryWidget(
           child: EasyLocalization(
-            supportedLocales: const [Locale('en'), Locale('ar')],
+            supportedLocales: [Locale('en'), Locale('ar')],
             path: 'assets/translations',
-            fallbackLocale: const Locale('en'),
-            child: const MainApp(),
+            fallbackLocale: Locale('en'),
+            child: MainApp(),
           ),
         ),
       );
@@ -65,16 +65,17 @@ class MainApp extends StatelessWidget {
                     localizationsDelegates: context.localizationDelegates,
                     supportedLocales: context.supportedLocales,
                     locale: state.locale,
+                    //!  key: ValueKey(state.locale.languageCode),
                     themeMode: state.themeMode,
                     theme: AppTheme.lightTheme,
                     darkTheme: AppTheme.darkTheme,
                     debugShowCheckedModeBanner: false,
-
                     builder: (context, child) {
                       return Directionality(
                         textDirection: state.locale.languageCode == 'ar'
-                            ? ui.TextDirection.ltr
-                            : ui.TextDirection.rtl,
+                            ? ui.TextDirection.rtl
+                            : ui.TextDirection.ltr,
+
                         child: child ?? const SizedBox(),
                       );
                     },

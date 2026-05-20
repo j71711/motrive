@@ -22,9 +22,12 @@ class MaintenanceFeatureScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<MaintenanceCubit>();
+    final activeLoc = context.locale;
+
 
     return Scaffold(
-      appBar: AppBar(title: const Text('My Maintenance'), centerTitle: true),
+      
+      appBar: AppBar(title:  Text('maintenance'.tr()), centerTitle: true),
       body: BlocConsumer<MaintenanceCubit, MaintenanceState>(
         listener: (context, state) {
           if (state is MaintenanceErrorState) {

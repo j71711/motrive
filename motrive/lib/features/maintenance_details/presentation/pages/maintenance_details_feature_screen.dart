@@ -18,14 +18,17 @@ class MaintenanceDetailsFeatureScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<MaintenanceDetailsCubit>();
+    final activeLoc = context.locale;
     cubit.getMaintenanceDetailsMethod(serviceInfo.id);
-
+  
     return Scaffold(
       appBar: AppBar(
         actionsPadding: .symmetric(horizontal: 8),
         actions: [
           BlocBuilder<MaintenanceDetailsCubit, MaintenanceDetailsState>(
             builder: (context, state) {
+       
+
               if (!serviceInfo.done) {
                 return IconButton.filled(
                   onPressed: () async {
