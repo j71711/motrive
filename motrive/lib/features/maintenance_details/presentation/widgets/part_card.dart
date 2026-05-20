@@ -24,7 +24,9 @@ class PartCard extends StatelessWidget {
               onSeverity: (severity) => severity == 'inspect'.tr(),
             ),
             if ((part?.quantity ?? 0) != 0)
-              Text('${'qty'.tr()}: ${part?.quantity} ${part?.quantityUnit}'),
+              Text(
+                '${'qty'.tr()}: ${part?.quantity} ${part?.quantityUnit.tr()}',
+              ),
           ],
         ),
         subtitle: Column(
@@ -32,9 +34,9 @@ class PartCard extends StatelessWidget {
           mainAxisSize: .min,
           crossAxisAlignment: .start,
           children: [
-            if (part?.specification != 'no_data'.tr())
+            if (part?.specification != 'no data'.tr())
               Text(part?.specification ?? ''),
-            if (part?.oemPartNumber != 'no_data'.tr())
+            if (part?.oemPartNumber != 'no data'.tr())
               Text('${'oem_no'.tr()} ${part?.oemPartNumber}'),
           ],
         ),

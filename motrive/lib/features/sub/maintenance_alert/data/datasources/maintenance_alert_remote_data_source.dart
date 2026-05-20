@@ -70,13 +70,16 @@ class MaintenanceAlertRemoteDataSource
         serviceType: nextMaintenance['severity'],
       );
     }
-
-    await _localNotificationService.scheduleMaintenanceDueSoon(
-      id: 10,
-      carName: carInfo.make,
-      serviceType: nextMaintenance['severity'],
-      dueDate: DateTime.now().add(Duration(days: 14)),
-    );
+    final pendingNotification = await _localNotificationService
+        .getPendingNotifications();
+    if (!pendingNotification.any((element) => element.id == 10)) {
+      await _localNotificationService.scheduleMaintenanceDueSoon(
+        id: 10,
+        carName: carInfo.make,
+        serviceType: nextMaintenance['severity'],
+        dueDate: DateTime.now().add(Duration(minutes: 14)),
+      );
+    }
 
     return MaintenanceModel(
       vehicle: carInfo,

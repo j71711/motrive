@@ -178,5 +178,7 @@
   "sibling":"Sibling",
   "no_parking_location": "No Parking Location",
   "save_parking_description": "Save your parking location to quickly find your car later.",
-  "save_parking_location": "Save Parking Location"
+  "save_parking_location": "Save Parking Location",
+  "L":"L",
+  "item":"Item"
 }

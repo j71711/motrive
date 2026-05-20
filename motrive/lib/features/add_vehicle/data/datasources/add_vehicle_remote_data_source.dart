@@ -19,6 +19,13 @@ class AddVehicleRemoteDataSource implements BaseAddVehicleRemoteDataSource {
 
   @override
   Future<UserVehicleModel> getAddVehicle(UserVehicleEntity vehicle) async {
+    final supportedCars = await _supabase
+        .from('cars_info')
+        .select()
+        .ilike('model', '%${vehicle.model}%');
+    final matchedCar = supportedCars
+        .takeWhile((value) => value['year'] == vehicle.year)
+        .toList();
     final userCar = await _supabase
         .from('vehicles')
         .insert({
@@ -30,8 +37,8 @@ class AddVehicleRemoteDataSource implements BaseAddVehicleRemoteDataSource {
           'license_plate': vehicle.licensePlate,
           'vin': vehicle.vin,
           'current_odometer': vehicle.currentOdometer,
-          'car_info_id': vehicle.carInfoId,
-          'odometer_at_registered':vehicle.currentOdometer
+          if (matchedCar.isNotEmpty) 'car_info_id': matchedCar.first['id'],
+          'odometer_at_registered': vehicle.currentOdometer,
         })
         .select()
         .single();
@@ -59,10 +66,7 @@ class AddVehicleRemoteDataSource implements BaseAddVehicleRemoteDataSource {
 
   @override
   Future<void> deleteVehicle(UserVehicleEntity vehicle) async {
-    await _supabase
-        .from('vehicles')
-        .delete()
-        .eq('id', vehicle.id!);
+    await _supabase.from('vehicles').delete().eq('id', vehicle.id!);
     _userService.setVehicle = null;
   }
 }

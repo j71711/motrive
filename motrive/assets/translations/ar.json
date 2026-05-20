@@ -178,5 +178,7 @@
   "sibling":"قريب",
   "no_parking_location": "لا يوجد موقع موقف",
   "save_parking_description": "احفظ موقع سيارتك للوصول إليها لاحقًا بسهولة.",
-  "save_parking_location": "حفظ موقع الوقوف"
+  "save_parking_location": "حفظ موقع الوقوف",
+  "L":"لتر",
+  "item":"قطعة"
 }
