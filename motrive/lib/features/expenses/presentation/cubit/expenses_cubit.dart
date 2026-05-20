@@ -1,11 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:motrive/core/errors/failure.dart';
 import 'package:motrive/features/expenses/domain/entities/expense_stats_entity.dart';
-import 'package:motrive/features/expenses/domain/entities/expenses_entity.dart';
 import 'package:motrive/features/expenses/domain/use_cases/expenses_use_case.dart';
 import 'package:motrive/features/expenses/presentation/cubit/expenses_state.dart';
-import 'package:motrive/features/home/sub/add_expense/domain/entities/add_expense_entity.dart';
-import 'package:multiple_result/multiple_result.dart';
 
 class ExpensesCubit extends Cubit<ExpensesState> {
   final ExpensesUseCase expensesUseCase;
@@ -13,36 +9,17 @@ class ExpensesCubit extends Cubit<ExpensesState> {
     getExpensesMethod();
   }
 
-  Future<void> addExpenseMethod(AddExpenseEntity entity) async {
-    emit(AddExpensesLoadingState());
-
-    final result = await expensesUseCase.addExpense(entity);
-
-    result.when(
-      (success) async {
-        await getExpensesMethod();
-      },
-
-      (error) {
-        emit(AddExpenseErrorState(error.message));
-      },
-    );
-  }
-
   Future<void> getExpensesMethod() async {
     emit(ExpensesLoadingState());
-    final results = await Future.wait([
-      expensesUseCase.getExpenses(),
-      expensesUseCase.getExpenseStats(),
-    ]);
 
-    final expensesResult = results[0] as Result<List<ExpensesEntity>, Failure>;
-    final statsResult = results[1] as Result<ExpenseStatsEntity, Failure>;
-    expensesResult.when((expensesList) {
-      statsResult.when((statsData) {
-        emit(ExpensesSuccessState(expenses: expensesList, stats: statsData));
-      }, (statsError) => emit(ExpensesErrorState(statsError.message)));
-    }, (expensesError) => emit(ExpensesErrorState(expensesError.message)));
+    final result = await expensesUseCase.getExpenses();
+    final statsResult = await expensesUseCase.getExpenseStats();
+
+    result.when((expensesList) {
+        statsResult.when((statsData) {
+          emit(ExpensesSuccessState(expenses: expensesList, stats: statsData));
+        }, (statsError) => emit(ExpensesErrorState(statsError.message)));
+      }, (expensesError) => emit(ExpensesErrorState(expensesError.message))); 
   }
 
   Future<void> deleteExpenseMethod(String expenseId) async {
@@ -51,16 +28,7 @@ class ExpensesCubit extends Cubit<ExpensesState> {
     final result = await expensesUseCase.deleteExpense(expenseId);
 
     result.when(
-      (success) => emit(AddExpenseSuccessState()),
-      (error) => emit(AddExpenseErrorState(error.message)),
-    );
-  }
-
-  Future<void> updateExpenseMethod(AddExpenseEntity entity) async {
-    emit(AddExpensesLoadingState());
-    final result = await expensesUseCase.updateExpense(entity);
-    result.when(
-      (success) async => await getExpensesMethod(),
+      (success) => getExpensesMethod(), //getExpensesMethod(),
       (error) => emit(AddExpenseErrorState(error.message)),
     );
   }

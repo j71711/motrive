@@ -6,7 +6,7 @@ import 'package:motrive/features/maintenance/data/models/service_info/service_in
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class BaseMaintenanceAlertRemoteDataSource {
-  Future<MaintenanceModel?> getMaintenanceAlert();
+  Stream<MaintenanceModel> getMaintenanceAlert();
 }
 
 @LazySingleton(as: BaseMaintenanceAlertRemoteDataSource)
@@ -23,67 +23,74 @@ class MaintenanceAlertRemoteDataSource
   );
 
   @override
-  Future<MaintenanceModel?> getMaintenanceAlert() async {
-    final carInfo = _userService.currentVehicle;
-    final maintenanceLogs = await _supabase
-        .from('maintenance_logs')
-        .select()
-        .eq('vehicle_id', carInfo!.id);
-    final maintenance = await _supabase
-        .from('services_info')
-        .select()
-        .eq('car_id', carInfo.carInfoId ?? '')
-        .order('service_odometer');
+  Stream<MaintenanceModel> getMaintenanceAlert() {
+    return _supabase
+        .from('vehicles')
+        .stream(primaryKey: ['id'])
+        .eq('id', _userService.currentVehicle!.id)
+        .asyncMap((event) async {
+          final carInfo = _userService.currentVehicle;
+          final maintenanceLogs = await _supabase
+              .from('maintenance_logs')
+              .select()
+              .eq('vehicle_id', carInfo!.id);
+          final maintenance = await _supabase
+              .from('services_info')
+              .select()
+              .eq('car_id', carInfo.carInfoId ?? '')
+              .order('service_odometer');
 
-    final doneMaintenance = maintenance
-        .takeWhile(
-          (maintenance) => maintenanceLogs.any(
-            (log) => log['service_id'] != maintenance['id'],
-          ),
-        )
-        .toList();
+          final doneMaintenance = maintenance
+              .takeWhile(
+                (maintenance) => maintenanceLogs.any(
+                  (log) => log['service_id'] != maintenance['id'],
+                ),
+              )
+              .toList();
 
-    final nextMaintenance = doneMaintenance.isEmpty
-        ? maintenance.last
-        : doneMaintenance.firstWhere(
-            (element) =>
-                element['service_odometer'] - carInfo.currentOdometer < 2000,
-            orElse: () => {},
+          final nextMaintenance = doneMaintenance.isEmpty
+              ? maintenance.last
+              : doneMaintenance.firstWhere(
+                  (element) =>
+                      element['service_odometer'] - carInfo.currentOdometer <
+                      2000,
+                  orElse: () => {},
+                );
+
+          if (nextMaintenance.isEmpty) {
+            return throw Exception('No Car Found');
+          }
+
+          final kRemaining =
+              nextMaintenance['service_odometer'] - carInfo.currentOdometer;
+
+          if (kRemaining < 0) {
+            await _localNotificationService.maintenanceOverdueNotification(
+              carName: carInfo.make,
+              serviceType: nextMaintenance['severity'],
+            );
+          } else {
+            await _localNotificationService.maintenanceDueSoonNotification(
+              kmRemaining: kRemaining,
+              carName: carInfo.make,
+              serviceType: nextMaintenance['severity'],
+            );
+          }
+          final pendingNotification = await _localNotificationService
+              .getPendingNotifications();
+          if (!pendingNotification.any((element) => element.id == 10)) {
+            await _localNotificationService.scheduleMaintenanceDueSoon(
+              id: 10,
+              carName: carInfo.make,
+              serviceType: nextMaintenance['severity'],
+              dueDate: DateTime.now().add(Duration(minutes: 14)),
+            );
+          }
+
+          return MaintenanceModel(
+            vehicle: carInfo,
+            services: [ServiceInfoModel.fromJson(nextMaintenance)],
           );
-
-    if (nextMaintenance.isEmpty) {
-      return null;
-    }
-
-    final kRemaining =
-        nextMaintenance['service_odometer'] - carInfo.currentOdometer;
-
-    if (kRemaining < 0) {
-      await _localNotificationService.maintenanceOverdueNotification(
-        carName: carInfo.make,
-        serviceType: nextMaintenance['severity'],
-      );
-    } else {
-      await _localNotificationService.maintenanceDueSoonNotification(
-        kmRemaining: kRemaining,
-        carName: carInfo.make,
-        serviceType: nextMaintenance['severity'],
-      );
-    }
-    final pendingNotification = await _localNotificationService
-        .getPendingNotifications();
-    if (!pendingNotification.any((element) => element.id == 10)) {
-      await _localNotificationService.scheduleMaintenanceDueSoon(
-        id: 10,
-        carName: carInfo.make,
-        serviceType: nextMaintenance['severity'],
-        dueDate: DateTime.now().add(Duration(minutes: 14)),
-      );
-    }
-
-    return MaintenanceModel(
-      vehicle: carInfo,
-      services: [ServiceInfoModel.fromJson(nextMaintenance)],
-    );
+        });
   }
 }

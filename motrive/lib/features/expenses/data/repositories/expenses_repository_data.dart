@@ -11,79 +11,65 @@ import 'package:motrive/features/home/sub/add_expense/domain/entities/add_expens
 import 'package:multiple_result/multiple_result.dart';
 
 @LazySingleton(as: ExpensesRepositoryDomain)
-class ExpensesRepositoryData implements ExpensesRepositoryDomain{
+class ExpensesRepositoryData implements ExpensesRepositoryDomain {
   final BaseExpensesRemoteDataSource remoteDataSource;
-
 
   ExpensesRepositoryData(this.remoteDataSource);
 
   @override
   Future<Result<ExpenseStatsEntity, Failure>> getExpenseStats() async {
-   try{
-    final response = await remoteDataSource.getExpenseStats();
-    
+    try {
+      final response = await remoteDataSource.getExpenseStats();
+
       return Success(response);
-   }
-   catch(error){
+    } catch (error) {
       return Error(FailureExceptions.getException(error));
-   }
+    }
   }
 
   @override
-  Future<Result<List<ExpensesEntity>, Failure>> getExpenses() async{
-    try{
+  Future<Result<List<ExpensesEntity>, Failure>> getExpenses() async {
+    try {
       final response = await remoteDataSource.getExpenses();
-      final entities = response.map((item) => item.toEntity()).toList();
-print('😏$response');
-print('😏$entities');
-      return Success(entities);
-    }
-    catch(error){
+      return Success(response.map((e) => e.toEntity()).toList());
+    } on Failure catch (error) {
+      return Error(error);
+    } catch (error) {
       return Error(FailureExceptions.getException(error));
     }
   }
 
-
-    @override
-  Future<Result<void, Failure>> addExpense(
-    AddExpenseEntity entity,
-  ) async {
+  @override
+  Future<Result<void, Failure>> addExpense(AddExpenseEntity entity) async {
     try {
       await remoteDataSource.addExpense(entity.toModel());
 
       return const Success(unit);
     } catch (error) {
-      return Error(
-        FailureExceptions.getException(error),
-      );
+      return Error(FailureExceptions.getException(error));
     }
   }
 
-  
   @override
   Future<Result<void, Failure>> deleteExpense(String expenseId) async {
     try {
       await remoteDataSource.deleteExpense(expenseId);
       return const Success(unit);
     } catch (error) {
-      return Error(
-        FailureExceptions.getException(error),
-      );
+      return Error(FailureExceptions.getException(error));
     }
   }
-  
+
   @override
   getExpenseDetails(String expenseId) async {
-    try{final response = await remoteDataSource.getExpenseDetails(
-        expenseId,
-      );
+    try {
+      final response = await remoteDataSource.getExpenseDetails(expenseId);
       return Success(response.toEntity());
-    }
-    catch(error){
-      return Error(FailureExceptions.getException(error),);
+    } catch (error) {
+      return Error(FailureExceptions.getException(error));
     }
   }
-  
+
   @override
   Future<Result<void, Failure>> updateExpense(AddExpenseEntity entity) async {
     try {
@@ -95,5 +81,3 @@ print('😏$entities');
     }
   }
 }
-
-

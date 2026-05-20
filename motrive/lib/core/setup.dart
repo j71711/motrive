@@ -17,12 +17,6 @@ Future<void> setup() async {
   //----------------------------------------------------------------------------
   await Hive.openBox('vehicles_box');
   //----------------------------------------------------------------------------
-
-  // await Future.wait([
-  //   Hive.openBox('vehicles_box'),
-  //   Hive.openBox('maintenance_box'),
-  //   Hive.openBox('settings_box'),
-  // ]);
   await Supabase.initialize(url: Env.urlSupabase, anonKey: Env.keySupabase);
   //----------------------------------------------------------------------------
   await GoogleSignIn.instance.initialize(

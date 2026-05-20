@@ -12,29 +12,21 @@ class VehicleCardCubit extends Cubit<VehicleCardState> {
   }
 
   Future<void> getVehicleCardMethod() async {
-    emit(VehicleCardInitialState());
-    final result = await _vehicleCardUseCase.getVehicleCard();
-    result.when(
-      (success) {
-        emit(VehicleCardSuccessState(vehicle: success, isExpanded: false));
-      },
-      (whenError) {
-        emit(VehicleCardErrorState(message: whenError.message));
-      },
-    );
-  }
-
-  Future<void> deleteVehicle(UserVehicleEntity vehicle) async {
-    emit(VehicleCardInitialState());
-    final result = await _vehicleCardUseCase.getVehicleCard();
-    result.when(
-      (success) {
-        emit(VehicleCardSuccessState(vehicle: success, isExpanded: false));
-      },
-      (whenError) {
-        emit(VehicleCardErrorState(message: whenError.message));
-      },
-    );
+    _vehicleCardUseCase.getVehicleCard().listen((event) async {
+      emit(VehicleCardInitialState());
+      await event.when(
+        (success) {
+          if (success == null) {
+            emit(VehicleCardErrorState(message: ''));
+          } else {
+            emit(VehicleCardSuccessState(vehicle: success, isExpanded: false));
+          }
+        },
+        (whenError) {
+          emit(VehicleCardErrorState(message: whenError.message));
+        },
+      );
+    });
   }
 
   void expandInfo({

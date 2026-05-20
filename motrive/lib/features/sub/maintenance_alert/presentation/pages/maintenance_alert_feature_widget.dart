@@ -20,7 +20,7 @@ class MaintenanceAlertFeatureWidget extends StatelessWidget {
       create: (context) => MaintenanceAlertCubit(GetIt.I.get()),
       child: Builder(
         builder: (context) {
-          final cubit = context.read<MaintenanceAlertCubit>();
+          final _ = context.read<MaintenanceAlertCubit>();
           return BlocBuilder<MaintenanceAlertCubit, MaintenanceAlertState>(
             builder: (context, state) {
               final maintenance = state is MaintenanceAlertSuccessState
@@ -40,34 +40,24 @@ class MaintenanceAlertFeatureWidget extends StatelessWidget {
                     child: SeverityWidget(
                       severity: status ? 'overdue'.tr() : 'upcoming'.tr(),
                       widthWithText: true,
+                      colors: [Colors.redAccent, Colors.orangeAccent],
                       onSeverity: (severity) => severity == 'overdue'.tr(),
                     ),
                   ),
                   showArrow: true,
                   icon: Icons.radio_button_off,
                   iconColor: status ? Colors.redAccent : Colors.orangeAccent,
-                  onTap: () async => context
-                      .push(
-                        Routes.maintenanceDetails,
-                        extra: maintenance!.services.first,
-                      )
-                      .then((value) {
-                        if (value == true) {
-                          cubit.getMaintenanceAlertMethod();
-                        }
-                      }),
-                  onIconClick: () =>
-                      showDialog(
-                        context: context,
-                        builder: (context) => SaveServiceFeatureWidget(
-                          serviceInfo: maintenance!.services.first,
-                          vehicle: maintenance.vehicle,
-                        ),
-                      ).then((value) {
-                        if (value == true) {
-                          cubit.getMaintenanceAlertMethod();
-                        }
-                      }),
+                  onTap: () async => context.push(
+                    Routes.maintenanceDetails,
+                    extra: maintenance!.services.first,
+                  ),
+                  onIconClick: () => showDialog(
+                    context: context,
+                    builder: (context) => SaveServiceFeatureWidget(
+                      serviceInfo: maintenance!.services.first,
+                      vehicle: maintenance.vehicle,
+                    ),
+                  ),
                 ),
                 widgetTo: ActionCard(
                   title: 'maintenance'.tr(),

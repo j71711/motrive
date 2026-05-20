@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:motrive/core/network/dio_client.dart';
 import 'package:motrive/core/services/maintenance_normalizer.dart';
 import 'package:motrive/core/services/user_services.dart';
+import 'package:motrive/features/maintenance/data/models/vehicle/vehicle_model.dart';
 import 'package:motrive/features/maintenance/domain/entities/vehicle_entity.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:motrive/features/maintenance/data/models/maintenance/maintenance_model.dart';
@@ -44,7 +45,7 @@ class MaintenanceRemoteDataSource implements BaseMaintenanceRemoteDataSource {
     List<Map<String, dynamic>> carServices = await _supabase
         .from('services_info')
         .select()
-        .eq('car_id', userCars.first['car_info_id'])
+        .eq('car_id', userCars.first['car_info_id'] ?? '')
         .order('service_odometer', ascending: true);
 
     final doneServices = await _supabase

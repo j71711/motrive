@@ -17,17 +17,12 @@ class MaintenanceAlertRepositoryData
   MaintenanceAlertRepositoryData(this.remoteDataSource, this.localDataSource);
 
   @override
-  Future<Result<MaintenanceEntity?, Failure>> getMaintenanceAlert() async {
-    try {
-      final local = await localDataSource.getMaintenanceAlert();
-        if (local != null && local.services.isNotEmpty) {
-          return Success(local.toEntity());
-        }
-
-      final response = await remoteDataSource.getMaintenanceAlert();
-      return Success(response?.toEntity());
-    } catch (error) {
-      return Error(FailureExceptions.getException(error));
-    }
+  Stream<Result<MaintenanceEntity, Failure>> getMaintenanceAlert() {
+    return remoteDataSource
+        .getMaintenanceAlert()
+        .map<Result<MaintenanceEntity, Failure>>(
+          (event) => Success(event.toEntity()),
+        )
+        .handleError((error) => Error(FailureExceptions.getException(error)));
   }
 }

@@ -34,6 +34,13 @@ class AddExpenseRemoteDataSource implements BaseAddExpenseRemoteDataSource {
       'notes': model.notes,
       'expense_date': DateTime.now().toIso8601String(),
     });
+    final updatedCar = await _supabase
+        .from('vehicles')
+        .update({'current_odometer': model.odometer})
+        .eq('user_id', _userService.currentUser!.id)
+        .select();
+
+    _userService.setVehicle = UserVehicleModel.fromJson(updatedCar.first);
   }
 
   @override

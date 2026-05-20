@@ -11,7 +11,7 @@ class VehicleCardUseCase {
 
   VehicleCardUseCase(this._repositoryData);
 
-   Future<Result<UserVehicleEntity, Failure>> getVehicleCard() async {
+    Stream<Result<UserVehicleEntity?, Failure>> getVehicleCard() {
     return _repositoryData.getVehicleCard();
   }
 }

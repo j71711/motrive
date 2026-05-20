@@ -18,32 +18,33 @@ class MaintenanceLocalDataSource implements BaseMaintenanceLocalDataSource {
 
   @override
   Future<MaintenanceModel?> getMaintenance() async {
-  try {
+    try {
+      final rawCars = await _box.get(HiveBoxes.vehicles, defaultValue: []);
+      if (rawCars == null) return null;
+      final userCars = (rawCars as List).map((e) => toStringMap(e)).toList();
 
-    final rawCars = await _box.get(HiveBoxes.vehicles, defaultValue: []);
-    final userCars = (rawCars as List)
-        .map((e) => toStringMap(e))
-        .toList();
+      if (userCars.isEmpty) return null;
 
-    if (userCars.isEmpty) return null;
+      final rawServices = await _box.get(
+        HiveBoxes.servicesInfo,
+        defaultValue: [],
+      );
+      final carServices = (rawServices as List)
+          .map((e) => toStringMap(e))
+          .toList();
 
-    final rawServices = await _box.get(HiveBoxes.servicesInfo, defaultValue: []);
-    final carServices = (rawServices as List)
-        .map((e) => toStringMap(e))
-        .toList();
-
-    return MaintenanceModel.fromJson({
-      'vehicle': userCars.first,
-      'services': carServices,
-    });
-  } catch (e) {
-    log(e.toString());
-    return null;
+      return MaintenanceModel.fromJson({
+        'vehicle': userCars.first,
+        'services': carServices,
+      });
+    } catch (e) {
+      log(e.toString());
+      return null;
+    }
   }
-}
 
   Map<String, dynamic> toStringMap(dynamic raw) =>
-        (raw as Map).map((k, v) => MapEntry(k.toString(), v));
+      (raw as Map).map((k, v) => MapEntry(k.toString(), v));
 
   @override
   Future<void> saveMaintenance(MaintenanceModel maintenance) async {

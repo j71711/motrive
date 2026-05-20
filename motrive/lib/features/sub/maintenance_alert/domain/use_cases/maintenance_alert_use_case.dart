@@ -11,7 +11,7 @@ class MaintenanceAlertUseCase {
 
   MaintenanceAlertUseCase(this._repositoryData);
 
-   Future<Result<MaintenanceEntity?, Failure>> getMaintenanceAlert() async {
+   Stream<Result<MaintenanceEntity, Failure>> getMaintenanceAlert() {
     return _repositoryData.getMaintenanceAlert();
   }
 }

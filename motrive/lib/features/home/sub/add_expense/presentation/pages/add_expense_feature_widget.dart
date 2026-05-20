@@ -10,6 +10,8 @@ import 'package:motrive/core/utils/validators.dart';
 import 'package:motrive/features/expenses/domain/entities/expenses_entity.dart';
 import 'package:motrive/features/home/sub/add_expense/presentation/cubit/add_expense_cubit.dart';
 import 'package:motrive/features/home/sub/add_expense/presentation/cubit/add_expense_state.dart';
+import 'package:motrive/features/maintenance/domain/entities/vehicle_entity.dart';
+import 'package:motrive/features/sub/last_odometer/presentation/pages/last_odometer_feature_widget.dart';
 
 class AddExpenseFeatureWidget extends StatelessWidget {
   final ExpensesEntity? expense;
@@ -17,6 +19,7 @@ class AddExpenseFeatureWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UserVehicleEntity? vehicle;
     return BlocProvider(
       create: (context) => AddExpenseCubit(GetIt.I.get()),
       child: Builder(
@@ -32,7 +35,6 @@ class AddExpenseFeatureWidget extends StatelessWidget {
             listener: (context, state) {
               switch (state) {
                 case AddExpenseSuccessState _:
-                  context.showSnackBar('saved_successfully');
                   context.pop(true);
                 case AddExpenseErrorState _:
                   context.showSnackBar(state.message);
@@ -87,9 +89,6 @@ class AddExpenseFeatureWidget extends StatelessWidget {
 
                     BlocBuilder<AddExpenseCubit, AddExpenseState>(
                       builder: (context, state) {
-                        final loaded =
-                            state is AddExpenseSuccessState &&
-                            state.vehicle != null;
                         return Column(
                           children: [
                             TextFormField(
@@ -100,15 +99,13 @@ class AddExpenseFeatureWidget extends StatelessWidget {
                               ),
                               validator: (value) => Validators.validateOdometer(
                                 value,
-                                loaded
-                                    ? state.vehicle!.odometerAtRegistered ?? 0
-                                    : 0,
+                                vehicle?.currentOdometer ?? 0,
                               ),
                             ),
                             Align(
                               alignment: .centerEnd,
-                              child: Text(
-                               '${'last_odometer'.tr()}: ${loaded ? Formatters.formatOdometer(state.vehicle!.currentOdometer ?? 0) : 0}',
+                              child: LastOdometerFeatureWidget(
+                                vehicle: (userVehicle) => vehicle = userVehicle,
                               ),
                             ),
                           ],

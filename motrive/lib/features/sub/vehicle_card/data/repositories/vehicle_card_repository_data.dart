@@ -1,4 +1,3 @@
-
 import 'package:injectable/injectable.dart';
 import 'package:motrive/features/maintenance/data/models/vehicle/vehicle_model.dart';
 import 'package:motrive/features/maintenance/domain/entities/vehicle_entity.dart';
@@ -10,19 +9,16 @@ import 'package:motrive/features/sub/vehicle_card/data/datasources/vehicle_card_
 import 'package:motrive/features/sub/vehicle_card/domain/repositories/vehicle_card_repository_domain.dart';
 
 @LazySingleton(as: VehicleCardRepositoryDomain)
-class VehicleCardRepositoryData implements VehicleCardRepositoryDomain{
+class VehicleCardRepositoryData implements VehicleCardRepositoryDomain {
   final BaseVehicleCardRemoteDataSource remoteDataSource;
-
 
   VehicleCardRepositoryData(this.remoteDataSource);
 
-@override
-  Future<Result<UserVehicleEntity, Failure>> getVehicleCard() async {
-    try {
-      final response = await remoteDataSource.getVehicleCard();
-      return Success(response.toEntity());
-    } catch (error) {
-      return Error(FailureExceptions.getException(error));
-    }
+  @override
+  Stream<Result<UserVehicleEntity?, Failure>> getVehicleCard() {
+    return remoteDataSource
+        .getVehicleCard()
+        .map<Result<UserVehicleEntity?, Failure>>((event) => Success(event?.toEntity()))
+        .handleError((error) => Error(FailureExceptions.getException(error)));
   }
 }

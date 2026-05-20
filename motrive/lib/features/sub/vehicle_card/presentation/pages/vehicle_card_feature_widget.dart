@@ -29,14 +29,12 @@ class VehicleCardFeatureWidget extends StatelessWidget {
                     enabled: true,
                     child: VehicleCardWidget(isExpanded: false),
                   );
-                  break;
 
                 case VehicleCardSuccessState _:
                   child = VehicleCardWidget(
                     vehicle: state.vehicle,
                     isExpanded: state.isExpanded,
                   );
-                  break;
 
                 default:
                   child = const VehicleCardWidget(isExpanded: false);
@@ -44,18 +42,14 @@ class VehicleCardFeatureWidget extends StatelessWidget {
 
               return InkWell(
                 borderRadius: BorderRadius.circular(28),
-                onTap: () async {
+                onTap: () {
                   if (state is VehicleCardSuccessState) {
                     cubit.expandInfo(
                       vehicle: state.vehicle,
                       isExpanded: !state.isExpanded,
                     );
                   } else {
-                    await context.push(Routes.addVehicle).then((value) {
-                      if (value == true && context.mounted) {
-                        context.go(Routes.loading);
-                      }
-                    });
+                    context.push(Routes.addVehicle);
                   }
                 },
                 child: ClipRRect(
