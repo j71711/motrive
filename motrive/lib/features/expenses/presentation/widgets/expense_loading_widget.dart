@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:motrive/features/expenses/presentation/cubit/expenses_cubit.dart';
@@ -8,28 +9,28 @@ class ExpenseLoadingWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-  return  BlocBuilder<ExpensesCubit, ExpensesState>(
-  builder: (context, state){
-    switch (state){
-      case ExpensesLoadingState _:
-      return const Center(child: CircularProgressIndicator());
-      case ExpensesSuccessState _:
-       return 
-       ListView.builder(
-        itemCount: state.expenses.length,
-        itemBuilder: (context, index) {
-          return const Card(
-            child: ListTile(
-              leading: CircleAvatar(),
-              title: Text('Loading Loading'),
-              subtitle: Text('Loading Loading'),
-            ),
-          );
-        },
-      );
-        default: return const Text('Something went wrong');
-        }}
+    return BlocBuilder<ExpensesCubit, ExpensesState>(
+      builder: (context, state) {
+        switch (state) {
+          case ExpensesLoadingState _:
+            return const Center(child: CircularProgressIndicator());
+          case ExpensesSuccessState _:
+            return ListView.builder(
+              itemCount: state.expenses.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  child: ListTile(
+                    leading: CircleAvatar(),
+                    title: Text('loading'.tr()),
+                    subtitle: Text('loading'.tr()),
+                  ),
+                );
+              },
+            );
+          default:
+            return  Text(  'something_went_wrong'.tr());
+        }
+      },
     );
   }
 }

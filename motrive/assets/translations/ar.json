@@ -180,5 +180,20 @@
   "save_parking_description": "احفظ موقع سيارتك للوصول إليها لاحقًا بسهولة.",
   "save_parking_location": "حفظ موقع الوقوف",
   "L":"لتر",
-  "item":"قطعة"
+  "item":"قطعة",
+  "loading": "جارٍ التحميل...",
+  "something_went_wrong": "حدث خطأ ما",
+  "my_expenses": "مصروفاتي",
+  "statistics": "الإحصائيات",
+  "all": "الكل",
+  "insurance": "تأمين",
+  "violation": "مخالفات",
+  "total_expenses": "إجمالي المصروفات",
+  "sar": "ر.س",
+  "no_expenses_found": "لا توجد مصروفات",
+  "details": "التفاصيل",
+  "delete_expense": "حذف المصروف",
+  "are_you_sure": "هل أنت متأكد؟",
+  "amount": "المبلغ",
+  "date": "التاريخ"
 }

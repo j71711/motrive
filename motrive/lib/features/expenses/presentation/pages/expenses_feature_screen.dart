@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -19,7 +20,7 @@ class ExpensesFeatureScreen extends StatelessWidget {
         length: 2,
         child: Scaffold(
           appBar: AppBar(
-            title: const Text('My Expenses'),
+            title: Text('my_expenses'.tr()),
             centerTitle: true,
             actions: [
               IconButton(
@@ -33,11 +34,11 @@ class ExpensesFeatureScreen extends StatelessWidget {
                 icon: Icon(Icons.add_card_rounded),
               ),
             ],
-            bottom: const TabBar(
+            bottom: TabBar(
               dividerHeight: 0,
               tabs: [
-                Tab(text: 'Expenses'),
-                Tab(text: 'Statistics'),
+               Tab(text: 'expenses'.tr()),
+               Tab(text: 'statistics'.tr()),
               ],
             ),
           ),

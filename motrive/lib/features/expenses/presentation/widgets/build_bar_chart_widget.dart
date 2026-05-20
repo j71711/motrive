@@ -1,6 +1,7 @@
 
 import 'dart:ui';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:motrive/core/constants/app_colors.dart';
@@ -23,12 +24,12 @@ Widget buildBarChart(ExpenseStatsEntity stats) {
               getTitlesWidget: (value, meta) {
                 const style = TextStyle(color: Colors.grey, fontSize: 11, fontWeight: FontWeight.bold);
                 switch (value.toInt()) {
-                  case 0: return SideTitleWidget( meta: meta, child: const Text('Fuel', style: style));
-                  case 1: return SideTitleWidget( meta: meta, child: const Text('Ins', style: style));
-                  case 2: return SideTitleWidget( meta: meta, child: const Text('Main', style: style));
-                  case 3: return SideTitleWidget( meta: meta, child: const Text('Oil', style: style));
-                  case 4: return SideTitleWidget( meta: meta, child: const Text('Viol', style: style));
-                  case 5: return SideTitleWidget( meta: meta, child: const Text('Other', style: style));
+                  case 0: return SideTitleWidget( meta: meta, child: Text('fuel'.tr(), style: style));
+                  case 1: return SideTitleWidget( meta: meta, child: Text('insurance'.tr(), style: style));
+                  case 2: return SideTitleWidget( meta: meta, child: Text('maintenance'.tr(), style: style));
+                  case 3: return SideTitleWidget( meta: meta, child:Text('oil'.tr(), style: style));
+                  case 4: return SideTitleWidget( meta: meta, child:Text('violation'.tr(), style: style));
+                  case 5: return SideTitleWidget( meta: meta, child: Text('other'.tr(), style: style));
                   default: return const SizedBox();
                 }
               },

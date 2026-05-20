@@ -22,21 +22,13 @@ class ParkingFeatureScreen extends StatelessWidget {
               !state.message.contains('No parking location found')) {
             ScaffoldMessenger.of(
               context,
-            ).showSnackBar(
-              SnackBar(
-                content: Text(state.message),
-              ),
-            );
+            ).showSnackBar(SnackBar(content: Text(state.message)));
           }
 
           if (state is ParkingActionSuccessState) {
             ScaffoldMessenger.of(
               context,
-            ).showSnackBar(
-              SnackBar(
-                content: Text(state.message),
-              ),
-            );
+            ).showSnackBar(SnackBar(content: Text(state.message)));
 
             cubit.getParkingMethod();
           }
@@ -62,18 +54,14 @@ class ParkingFeatureScreen extends StatelessWidget {
 
                   markers: {
                     Marker(
-                      markerId: MarkerId(
-                        'parking_location'.tr(),
-                      ),
+                      markerId: MarkerId('parking_location'.tr()),
 
                       position: LatLng(
                         state.parking.latitudes,
                         state.parking.longitude,
                       ),
 
-                      infoWindow: InfoWindow(
-                        title: 'your_parked_car'.tr(),
-                      ),
+                      infoWindow: InfoWindow(title: 'your_parked_car'.tr()),
                     ),
                   },
                 ),
@@ -88,9 +76,7 @@ class ParkingFeatureScreen extends StatelessWidget {
                           width: 54,
 
                           decoration: BoxDecoration(
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.surface,
+                            color: Theme.of(context).colorScheme.surface,
 
                             borderRadius: BorderRadius.circular(18),
 
@@ -119,9 +105,7 @@ class ParkingFeatureScreen extends StatelessWidget {
                             alignment: Alignment.center,
 
                             decoration: BoxDecoration(
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.surface,
+                              color: Theme.of(context).colorScheme.surface,
 
                               borderRadius: BorderRadius.circular(18),
 
@@ -141,9 +125,7 @@ class ParkingFeatureScreen extends StatelessWidget {
                                 fontSize: 20,
                                 fontWeight: FontWeight.w900,
 
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.onSurface,
+                                color: Theme.of(context).colorScheme.onSurface,
                               ),
                             ),
                           ),
@@ -156,9 +138,7 @@ class ParkingFeatureScreen extends StatelessWidget {
                           width: 54,
 
                           decoration: BoxDecoration(
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.surface,
+                            color: Theme.of(context).colorScheme.surface,
 
                             borderRadius: BorderRadius.circular(18),
 
@@ -189,8 +169,7 @@ class ParkingFeatureScreen extends StatelessWidget {
                                         MediaQuery.of(context).size.height *
                                         .82,
 
-                                    child:
-                                        const ParkingHistoryFeatureWidget(),
+                                    child: const ParkingHistoryFeatureWidget(),
                                   );
                                 },
                               );
@@ -198,9 +177,7 @@ class ParkingFeatureScreen extends StatelessWidget {
 
                             icon: Icon(
                               Icons.history_rounded,
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.primary,
+                              color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
                         ),
@@ -222,13 +199,9 @@ class ParkingFeatureScreen extends StatelessWidget {
                         cubit.manualSaveParkingMethod();
                       },
 
-                      icon: const Icon(
-                        Icons.my_location_rounded,
-                      ),
+                      icon: const Icon(Icons.my_location_rounded),
 
-                      label: Text(
-                        'save_current_parking'.tr(),
-                      ),
+                      label: Text('save_current_parking'.tr()),
 
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.black,
@@ -278,7 +251,7 @@ class ParkingFeatureScreen extends StatelessWidget {
                         const Gap(24),
 
                         Text(
-                        'no_parking_location'.tr(),
+                          'no_parking_location'.tr(),
 
                           textAlign: TextAlign.center,
 
@@ -286,9 +259,7 @@ class ParkingFeatureScreen extends StatelessWidget {
                             fontSize: 24,
                             fontWeight: FontWeight.w900,
 
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.onSurface,
+                            color: Theme.of(context).colorScheme.onSurface,
                           ),
                         ),
 
@@ -320,13 +291,9 @@ class ParkingFeatureScreen extends StatelessWidget {
                               cubit.manualSaveParkingMethod();
                             },
 
-                            icon: const Icon(
-                              Icons.my_location_rounded,
-                            ),
+                            icon: const Icon(Icons.my_location_rounded),
 
-                            label:  Text(
-                             'save_parking_location'.tr(),
-                            ),
+                            label: Text('save_parking_location'.tr()),
 
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.black,
@@ -350,17 +317,19 @@ class ParkingFeatureScreen extends StatelessWidget {
                 ),
               ],
 
+              if (state is ParkingLoadingState)
+                Positioned.fill(
+                  child: Container(
+                    color: const Color.fromARGB(
+                      0,
+                      255,
+                      255,
+                      255,
+                    ).withValues(alpha: 7),
 
-      if (state is ParkingLoadingState)
-        Positioned.fill(
-          child: Container(
-            color: const Color.fromARGB(0, 255, 255, 255).withValues(alpha: 7),
-
-            child: const Center(
-              child: LoadingWidget(),
-            ),
-          ),
-        ),
+                    child: const Center(child: LoadingWidget()),
+                  ),
+                ),
             ],
           );
         },

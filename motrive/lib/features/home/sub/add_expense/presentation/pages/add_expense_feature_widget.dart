@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -31,7 +32,7 @@ class AddExpenseFeatureWidget extends StatelessWidget {
             listener: (context, state) {
               switch (state) {
                 case AddExpenseSuccessState _:
-                  context.showSnackBar('Saved successfully');
+                  context.showSnackBar('saved_successfully');
                   context.pop(true);
                 case AddExpenseErrorState _:
                   context.showSnackBar(state.message);
@@ -46,8 +47,8 @@ class AddExpenseFeatureWidget extends StatelessWidget {
                   // crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // const Gap(20),
-                    const Text(
-                      'Add Expense',
+                    Text(
+                      'add_expense'.tr(),
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -58,15 +59,15 @@ class AddExpenseFeatureWidget extends StatelessWidget {
 
                     DropdownButtonFormField(
                       initialValue: cubit.selectedCategory,
-                      decoration: const InputDecoration(labelText: 'Category'),
+                      decoration: InputDecoration(labelText: 'category'.tr()),
                       items:
                           [
-                                'Fuel',
-                                'Vehicle insurance',
-                                'Maintenance',
-                                'Oil',
-                                'Traffic violation',
-                                'Other',
+                                'fuel'.tr(),
+                                'vehicle_insurance'.tr(),
+                                'maintenance'.tr(),
+                                'oil'.tr(),
+                                'traffic_violation'.tr(),
+                                'other'.tr(),
                               ]
                               .map(
                                 (e) =>
@@ -80,7 +81,7 @@ class AddExpenseFeatureWidget extends StatelessWidget {
                     TextFormField(
                       controller: cubit.costController,
                       keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(labelText: 'Cost'),
+                      decoration: InputDecoration(labelText: 'cost'.tr()),
                       validator: Validators.validateRequired,
                     ),
 
@@ -94,8 +95,8 @@ class AddExpenseFeatureWidget extends StatelessWidget {
                             TextFormField(
                               controller: cubit.kmController,
                               keyboardType: TextInputType.number,
-                              decoration: const InputDecoration(
-                                labelText: 'Odometer',
+                              decoration: InputDecoration(
+                                labelText: 'odometer'.tr(),
                               ),
                               validator: (value) => Validators.validateOdometer(
                                 value,
@@ -107,7 +108,7 @@ class AddExpenseFeatureWidget extends StatelessWidget {
                             Align(
                               alignment: .centerEnd,
                               child: Text(
-                                'Last odometer: ${loaded ? Formatters.formatOdometer(state.vehicle!.currentOdometer ?? 0) : 0}',
+                               '${'last_odometer'.tr()}: ${loaded ? Formatters.formatOdometer(state.vehicle!.currentOdometer ?? 0) : 0}',
                               ),
                             ),
                           ],
@@ -133,7 +134,7 @@ class AddExpenseFeatureWidget extends StatelessWidget {
                                   },
                             child: isLoading
                                 ? const CircularProgressIndicator()
-                                : const Text("save"),
+                                : Text('save'.tr()),
                           ),
                         );
                       },
