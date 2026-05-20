@@ -7,7 +7,7 @@ class AgreementScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentLocale = Localizations.localeOf(context);
+    final languageCode = context.locale.languageCode;
     return Scaffold(
       appBar: AppBar(
         title: Text('user_agreement'.tr()),
@@ -41,9 +41,11 @@ class AgreementScreen extends StatelessWidget {
       body: SingleChildScrollView(
         padding: .all(16),
         child: Text(
-          currentLocale.languageCode == 'en'
+          languageCode == 'ar'
+         
               ? AppPolicies.userAgreementEr
               : AppPolicies.userAgreementAr,
+             
           style: TextStyle(fontWeight: .w500),
         ),
       ),
