@@ -21,7 +21,7 @@ class ExpenseDetailsPage extends StatelessWidget {
             ),
 
             ListTile(
-              title: const Text('Cost'),
+              title:  Text('cost'.tr()),
               subtitle: Text('${expense.cost} SAR'),
             ),
 

@@ -1,3 +1,4 @@
+import 'dart:ui' as ui;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -69,12 +70,21 @@ class MainApp extends StatelessWidget {
                     theme: AppTheme.lightTheme,
                     darkTheme: AppTheme.darkTheme,
                     debugShowCheckedModeBanner: false,
+
+                    builder: (context, child) {
+                      return Directionality(
+                        textDirection: state.locale.languageCode == 'ar'
+                            ? ui.TextDirection.ltr
+                            : ui.TextDirection.rtl,
+                        child: child ?? const SizedBox(),
+                      );
+                    },
                   );
                 },
               );
             },
           );
-        }
+        },
       ),
     );
   }
