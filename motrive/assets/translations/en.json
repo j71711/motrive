@@ -180,5 +180,22 @@
   "save_parking_description": "Save your parking location to quickly find your car later.",
   "save_parking_location": "Save Parking Location",
   "L":"L",
-  "item":"Item"
+  "item":"Item",
+  "loading": "Loading...",
+  "something_went_wrong": "Something went wrong",
+  "main_short": "Main",
+  "viol_short": "Viol",
+  "my_expenses": "My Expenses",
+  "statistics": "Statistics",
+  "all": "All",
+  "insurance": "Insurance",
+  "violation": "Violation",
+  "total_expenses": "Total Expenses",
+  "sar": "SAR",
+  "no_expenses_found": "No Expenses Found",
+  "details": "Details",
+  "delete_expense": "Delete Expense",
+  "are_you_sure": "Are you sure?",
+  "amount": "Amount",
+  "date": "Date"
 }

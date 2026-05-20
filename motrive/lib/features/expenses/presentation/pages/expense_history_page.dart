@@ -24,7 +24,7 @@ class ExpenseHistoryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final cubit = context.read<ExpensesCubit>();
     if (expenses.isEmpty) {
-      return const Center(child: Text('No Expenses Found'));
+      return Center(child: Text('no_expenses_found'.tr()));
     }
 
     return BlocConsumer<ExpensesCubit, ExpensesState>(
@@ -112,7 +112,7 @@ class ExpenseHistoryPage extends StatelessWidget {
                         ),
 
                         const Gap(12),
-                        Text('${item.cost} SAR'),
+             Text('${item.cost} ${'sar'.tr()}'),
                         const Gap(8),
                         Row(
                           mainAxisAlignment: .spaceBetween,
@@ -126,7 +126,7 @@ class ExpenseHistoryPage extends StatelessWidget {
                                 padding: .all(.symmetric(horizontal: 15)),
                                 tapTargetSize: .shrinkWrap,
                               ),
-                              child: const Text('Details'),
+                              child: Text('details'.tr()),
                             ),
                           ],
                         ),
@@ -167,14 +167,14 @@ Future<T?> showDeleteDialog<T>(BuildContext context, String expenseId) async {
     context: context,
     builder: (_) {
       return AlertDialog(
-        title: const Text('Delete Expense'),
-        content: const Text('Are you sure?'),
+        title: Text('delete_expense'.tr()),
+        content: Text('are_you_sure'.tr()),
         actions: [
           TextButton(
             onPressed: () {
               context.pop();
             },
-            child: const Text('Cancel'),
+            child: Text('cancel'.tr()),
           ),
           FilledButton(
             onPressed: () async {
@@ -185,7 +185,7 @@ Future<T?> showDeleteDialog<T>(BuildContext context, String expenseId) async {
                 context.pop(true);
               }
             },
-            child: const Text('Delete'),
+            child:Text('delete'.tr()),
           ),
         ],
       );
@@ -297,19 +297,19 @@ void showExpenseDetailsBottomSheet(
           const Gap(24),
           ListTile(
             leading: const Icon(Icons.payments),
-            title: const Text('Amount'),
-            trailing: Text('${expense.cost} SAR'),
+             title: Text('amount'.tr()),
+          trailing: Text('${expense.cost} SAR'),
           ),
 
           ListTile(
             leading: const Icon(Icons.speed),
-            title: const Text('Odometer'),
-            trailing: Text('${expense.odometer} KM'),
+         title: Text('odometer'.tr()),
+        trailing: Text('${expense.odometer} ${'km'.tr()}'),
           ),
 
           ListTile(
             leading: const Icon(Icons.calendar_month),
-            title: const Text('Date'),
+           title: Text('date'.tr()),
             trailing: Text(
               DateFormat('dd MMM yyyy').format(expense.expenseDate!),
             ),
@@ -318,7 +318,7 @@ void showExpenseDetailsBottomSheet(
           if (expense.notes != null && expense.notes!.isNotEmpty)
             ListTile(
               leading: const Icon(Icons.notes),
-              title: const Text('Notes'),
+            title: Text('notes'.tr()),
               subtitle: Text(expense.notes!),
             ),
 

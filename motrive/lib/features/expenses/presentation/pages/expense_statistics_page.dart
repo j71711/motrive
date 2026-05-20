@@ -1,4 +1,4 @@
-
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:motrive/core/constants/app_colors.dart';
@@ -16,7 +16,7 @@ class ExpenseStatisticsPage extends StatelessWidget {
     required this.stats,
     required this.selectedCategory,
   });
- 
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ExpensesCubit, ExpensesState>(
@@ -29,7 +29,7 @@ class ExpenseStatisticsPage extends StatelessWidget {
           return RefreshIndicator(
             onRefresh: () => context.read<ExpensesCubit>().getExpensesMethod(),
             child: SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(), 
+              physics: const AlwaysScrollableScrollPhysics(),
               padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
@@ -39,18 +39,38 @@ class ExpenseStatisticsPage extends StatelessWidget {
                     children: [
                       Expanded(
                         child: DropdownButtonFormField<String>(
-                          value: state.selectedCategory, 
-                          items: const [
-                            DropdownMenuItem(value: 'All', child: Text('All')),
-                            DropdownMenuItem(value: 'Fuel', child: Text('Fuel')),
-                            DropdownMenuItem(value: 'Maintenance', child: Text('Maintenance')),
-                            DropdownMenuItem(value: 'Oil', child: Text('Oil')),
-                            DropdownMenuItem(value: 'Insurance', child: Text('Insurance')),
-                            DropdownMenuItem(value: 'Violation', child: Text('Violation')),
-                          ],//'Traffic violation' ,Vehicle insurance
+                          initialValue: state.selectedCategory,
+                          items:  [
+                            DropdownMenuItem(
+                              value: 'All',
+                              child: Text('all'.tr()),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Fuel',
+                              child: Text('fuel'.tr()),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Maintenance',
+                              child: Text('maintenance'.tr()),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Oil',
+                              child: Text('oil'.tr()),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Insurance',
+                              child: Text('insurance'.tr()),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Violation',
+                              child: Text('violation'.tr()),
+                            ),
+                          ], //'Traffic violation' ,Vehicle insurance
                           onChanged: (val) {
                             if (val != null) {
-                              context.read<ExpensesCubit>().filterByCategory(val);
+                              context.read<ExpensesCubit>().filterByCategory(
+                                val,
+                              );
                             }
                           },
                         ),
@@ -73,44 +93,47 @@ class ExpenseStatisticsPage extends StatelessWidget {
 
   double _calculateDisplayTotal(ExpensesSuccessState state) {
     switch (state.selectedCategory) {
-      case 'Fuel': return state.stats.fuelTotal;
-      case 'Maintenance': return state.stats.maintenanceTotal;
-      case 'Vehicle insurance': return state.stats.insuranceTotal;
-      case 'Oil': return state.stats.oilTotal;
-      case 'Traffic violation': return state.stats.violationTotal;
-      default: return state.stats.yearlyTotal;
+      case 'Fuel':
+        return state.stats.fuelTotal;
+      case 'Maintenance':
+        return state.stats.maintenanceTotal;
+      case 'Vehicle insurance':
+        return state.stats.insuranceTotal;
+      case 'Oil':
+        return state.stats.oilTotal;
+      case 'Traffic violation':
+        return state.stats.violationTotal;
+      default:
+        return state.stats.yearlyTotal;
     }
   }
-  Widget _buildTotalCard(double total) {
-  return Container(
-    width: double.infinity,
-    padding: const EdgeInsets.all(20),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(20),
-      color: AppColors.secondary
-    ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          'Total Expenses',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-          ),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          '${total.toStringAsFixed(2)} SAR', 
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ],
-    ),
-  );
-}
-}
 
+  Widget _buildTotalCard(double total) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: AppColors.secondary,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+           Text(
+            'total_expenses'.tr(),
+            style: TextStyle(color: Colors.white, fontSize: 18),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            '${total.toStringAsFixed(2)} ${'sar'.tr()}',
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
