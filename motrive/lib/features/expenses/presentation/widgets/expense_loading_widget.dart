@@ -28,7 +28,7 @@ class ExpenseLoadingWidget extends StatelessWidget {
               },
             );
           default:
-            return  Text(  'something_went_wrong'.tr());
+            return Text('something_went_wrong'.tr());
         }
       },
     );

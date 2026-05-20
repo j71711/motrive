@@ -5,6 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:motrive/core/extensions/context_extensions.dart';
+import 'package:motrive/core/navigation/routers.dart';
 import 'package:motrive/core/utils/validators.dart';
 import 'package:motrive/features/add_vehicle/presentation/cubit/add_vehicle_cubit.dart';
 import 'package:motrive/features/add_vehicle/presentation/cubit/add_vehicle_state.dart';
@@ -128,6 +129,8 @@ class AddVehicleFeatureScreen extends HookWidget {
           }
 
           if (state is AddVehicleSuccessState && context.mounted) {
+            state.deleted == true ?
+            context.go(Routes.loading) :
             context.pop(true);
           }
         },

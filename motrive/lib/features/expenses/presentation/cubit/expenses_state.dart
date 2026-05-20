@@ -14,7 +14,8 @@ class ExpensesSuccessState extends ExpensesState {
   final List<ExpensesEntity> expenses;
   final ExpenseStatsEntity stats;
    final List<ExpensesEntity> filteredExpenses;
-   final String selectedCategory;  
+   final String selectedCategory; 
+    
   const ExpensesSuccessState({
     required this.expenses,
     required this.stats,

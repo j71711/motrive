@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:injectable/injectable.dart';
 import 'package:motrive/core/services/user_services.dart';
 import 'package:motrive/features/maintenance/data/models/vehicle/vehicle_model.dart';
@@ -19,6 +21,7 @@ class AddVehicleRemoteDataSource implements BaseAddVehicleRemoteDataSource {
 
   @override
   Future<UserVehicleModel> getAddVehicle(UserVehicleEntity vehicle) async {
+    log('----------1');
     final supportedCars = await _supabase
         .from('cars_info')
         .select()
@@ -26,6 +29,7 @@ class AddVehicleRemoteDataSource implements BaseAddVehicleRemoteDataSource {
     final matchedCar = supportedCars
         .takeWhile((value) => value['year'] == vehicle.year)
         .toList();
+    log('----------2');
     final userCar = await _supabase
         .from('vehicles')
         .insert({
@@ -37,11 +41,15 @@ class AddVehicleRemoteDataSource implements BaseAddVehicleRemoteDataSource {
           'license_plate': vehicle.licensePlate,
           'vin': vehicle.vin,
           'current_odometer': vehicle.currentOdometer,
-          if (matchedCar.isNotEmpty) 'car_info_id': matchedCar.first['id'],
+          if (matchedCar.isNotEmpty)
+            'car_info_id': matchedCar.first['id']
+          else if (vehicle.carInfoId != null)
+            'car_info_id': vehicle.carInfoId,
           'odometer_at_registered': vehicle.currentOdometer,
         })
         .select()
         .single();
+    log('----------3');
     _userService.setVehicle = UserVehicleModel.fromJson(userCar);
     return _userService.currentVehicle!;
   }

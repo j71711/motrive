@@ -168,13 +168,8 @@ class VehicleCardWidget extends StatelessWidget {
                       ),
 
                       IconButton(
-                        onPressed: () async => context
-                            .push(Routes.addVehicle, extra: vehicle)
-                            .then((value) {
-                              if (value == true && context.mounted) {
-                                context.go(Routes.loading);
-                              }
-                            }),
+                        onPressed: () async =>
+                            context.push(Routes.addVehicle, extra: vehicle),
                         icon: Icon(
                           Icons.edit,
                           color: textColor.withValues(alpha: .72),

@@ -39,7 +39,7 @@ class AddVehicleCubit extends Cubit<AddVehicleState> {
     final result = await _addVehicleUseCase.deleteVehicle(vehicle);
     result.when(
       (success) {
-        emit(AddVehicleSuccessState());
+        emit(AddVehicleSuccessState(deleted: true));
       },
       (whenError) {
         emit(AddVehicleErrorState(message: whenError.message));

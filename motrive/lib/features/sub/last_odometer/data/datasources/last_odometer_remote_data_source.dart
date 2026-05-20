@@ -3,26 +3,23 @@ import 'package:motrive/core/services/user_services.dart';
 import 'package:motrive/features/maintenance/data/models/vehicle/vehicle_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-abstract class BaseVehicleCardRemoteDataSource {
-  Stream<UserVehicleModel?> getVehicleCard();
+abstract class BaseLastOdometerRemoteDataSource {
+  Stream<UserVehicleModel> getLastOdometer();
 }
 
-@LazySingleton(as: BaseVehicleCardRemoteDataSource)
-class VehicleCardRemoteDataSource implements BaseVehicleCardRemoteDataSource {
+@LazySingleton(as: BaseLastOdometerRemoteDataSource)
+class LastOdometerRemoteDataSource implements BaseLastOdometerRemoteDataSource {
   final SupabaseClient _supabase;
   final UserService _userService;
 
-  VehicleCardRemoteDataSource(this._supabase, this._userService);
+  LastOdometerRemoteDataSource(this._userService, this._supabase);
 
   @override
-  Stream<UserVehicleModel?> getVehicleCard() {
+  Stream<UserVehicleModel> getLastOdometer() {
     return _supabase
         .from('vehicles')
         .stream(primaryKey: ['id'])
         .eq('user_id', _userService.currentUser!.id)
-        .map((event) {
-          if (event.isEmpty) return null;
-          return UserVehicleModel.fromJson(event.last);
-        });
+        .map((event) => UserVehicleModel.fromJson(event.last));
   }
 }

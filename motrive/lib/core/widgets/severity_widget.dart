@@ -6,16 +6,17 @@ class SeverityWidget extends StatelessWidget {
   final String severity;
   final bool Function(String severity)? onSeverity;
   final bool widthWithText;
+  final List<ColorSwatch<int>>? colors;
   const SeverityWidget({
     super.key,
     required this.severity,
     this.onSeverity,
-    this.widthWithText = false,
+    this.widthWithText = false, this.colors,
   });
 
   @override
   Widget build(BuildContext context) {
-    final colors = [Colors.green, Colors.orangeAccent];
+    final colors = this.colors ?? [Colors.green, Colors.orangeAccent];
     return Container(
       margin: .symmetric(horizontal: 4),
       padding: .symmetric(horizontal: 8, vertical: 3),

@@ -12,15 +12,16 @@ class MaintenanceAlertCubit extends Cubit<MaintenanceAlertState> {
 
   Future<void> getMaintenanceAlertMethod() async {
     emit(MaintenanceAlertInitialState());
-    final result = await _maintenanceAlertUseCase.getMaintenanceAlert();
-    result.when(
-      (success) {
-        emit(MaintenanceAlertSuccessState(maintenance: success));
-      },
-      (whenError) {
-        emit(MaintenanceAlertErrorState(message: whenError.message));
-      },
-    );
+    _maintenanceAlertUseCase.getMaintenanceAlert().listen((event) async {
+      await event.when(
+        (success) {
+          emit(MaintenanceAlertSuccessState(maintenance: success));
+        },
+        (whenError) {
+          emit(MaintenanceAlertErrorState(message: whenError.message));
+        },
+      );
+    });
   }
 
   @override

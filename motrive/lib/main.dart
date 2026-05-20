@@ -26,6 +26,7 @@ Future<void> main() async {
       options.dsn =
           'https://0f53efbded0c05e01fdafc2574c26dfb@o4511409715740672.ingest.us.sentry.io/4511409719083008';
       options.tracesSampleRate = 1.0;
+      options.enableAutoSessionTracking = false;
     },
     appRunner: () {
       runApp(

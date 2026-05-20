@@ -150,18 +150,10 @@ class MaintenanceFeatureScreen extends StatelessWidget {
                                 hasCheckBox: true,
                                 service: service,
                                 onTab: () async {
-                                  context
-                                      .push(
-                                        Routes.maintenanceDetails,
-                                        extra: service,
-                                      )
-                                      .then((value) {
-                                        if (value == true) {
-                                          cubit.getMaintenanceMethod(
-                                            fromRemote: false,
-                                          );
-                                        }
-                                      });
+                                  context.push(
+                                    Routes.maintenanceDetails,
+                                    extra: service,
+                                  );
                                 },
                                 onChanged: (value) async {
                                   await showDialog(
@@ -171,13 +163,7 @@ class MaintenanceFeatureScreen extends StatelessWidget {
                                           serviceInfo: service,
                                           vehicle: vehicle,
                                         ),
-                                  ).then((value) {
-                                    if (value == true && context.mounted) {
-                                      cubit.getMaintenanceMethod(
-                                        fromRemote: false,
-                                      );
-                                    }
-                                  });
+                                  );
                                 },
                               );
                             },

@@ -39,9 +39,7 @@ class ExpenseHistoryPage extends StatelessWidget {
         return Stack(
           children: [
             TimelineWidget(
-              onRefresh: () async {
-                await cubit.getExpensesMethod();
-              },
+              onRefresh: () async {},
               itemCount: expenses.length,
               dashedOrSolid: (index) {
                 return expenses.length - 1 != index;
@@ -112,13 +110,11 @@ class ExpenseHistoryPage extends StatelessWidget {
                           ),
                         ),
 
-                        const Gap(12),
-             Text('${item.cost} ${'sar'.tr()}'),
-                        const Gap(8),
                         Row(
+                          crossAxisAlignment: .center,
                           mainAxisAlignment: .spaceBetween,
                           children: [
-                            Text(Formatters.formatOdometer(item.odometer)),
+                            Text('${item.cost} ${'sar'.tr()}'),
                             FilledButton(
                               onPressed: () {
                                 showExpenseDetailsBottomSheet(context, item);
@@ -131,12 +127,14 @@ class ExpenseHistoryPage extends StatelessWidget {
                             ),
                           ],
                         ),
+                        Text(Formatters.formatOdometer(item.odometer)),
 
                         if (item.notes != null && item.notes!.isNotEmpty)
                           Padding(
                             padding: .only(top: 8),
                             child: Text(item.notes!),
                           ),
+                        const Gap(10),
                       ],
                     ),
                   ),
@@ -178,15 +176,10 @@ Future<T?> showDeleteDialog<T>(BuildContext context, String expenseId) async {
             child: Text('cancel'.tr()),
           ),
           FilledButton(
-            onPressed: () async {
-              await context.read<ExpensesCubit>().deleteExpenseMethod(
-                expenseId,
-              );
-              if (context.mounted) {
-                context.pop(true);
-              }
+            onPressed: () {
+              context.pop(true);
             },
-            child:Text('delete'.tr()),
+            child: Text('delete'.tr()),
           ),
         ],
       );
@@ -298,19 +291,19 @@ void showExpenseDetailsBottomSheet(
           const Gap(24),
           ListTile(
             leading: const Icon(Icons.payments),
-             title: Text('amount'.tr()),
-          trailing: Text('${expense.cost} SAR'),
+            title: Text('amount'.tr()),
+            trailing: Text('${expense.cost} SAR'),
           ),
 
           ListTile(
             leading: const Icon(Icons.speed),
-         title: Text('odometer'.tr()),
-        trailing: Text('${expense.odometer} ${'km'.tr()}'),
+            title: Text('odometer'.tr()),
+            trailing: Text('${expense.odometer} ${'km'.tr()}'),
           ),
 
           ListTile(
             leading: const Icon(Icons.calendar_month),
-           title: Text('date'.tr()),
+            title: Text('date'.tr()),
             trailing: Text(
               DateFormat('dd MMM yyyy').format(expense.expenseDate!),
             ),
@@ -319,7 +312,7 @@ void showExpenseDetailsBottomSheet(
           if (expense.notes != null && expense.notes!.isNotEmpty)
             ListTile(
               leading: const Icon(Icons.notes),
-            title: Text('notes'.tr()),
+              title: Text('notes'.tr()),
               subtitle: Text(expense.notes!),
             ),
 

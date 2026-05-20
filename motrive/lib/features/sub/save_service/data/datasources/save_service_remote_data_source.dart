@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:motrive/core/services/local_notification_service.dart';
 import 'package:motrive/core/services/user_services.dart';
+import 'package:motrive/features/maintenance/data/models/vehicle/vehicle_model.dart';
 import 'package:motrive/features/maintenance/domain/entities/service_info_entity.dart';
 import 'package:motrive/features/maintenance/domain/entities/vehicle_entity.dart';
 import 'package:motrive/features/maintenance_details/domain/entities/maintenance_save_info.dart';
@@ -55,11 +56,6 @@ class SaveServiceRemoteDataSource implements BaseSaveServiceRemoteDataSource {
         'expense_date': maintenanceSaveInfo.serviceDate.toIso8601String(),
       }),
 
-      _supabase
-          .from('vehicles')
-          .update({'current_odometer': maintenanceSaveInfo.odometerAtService})
-          .eq('user_id', _userService.currentUser!.id),
-
       _localNotificationService.maintenanceCompletedNotification(
         carName: vehicle.model,
         serviceType: serviceInfo.severity,
@@ -68,5 +64,12 @@ class SaveServiceRemoteDataSource implements BaseSaveServiceRemoteDataSource {
       _localNotificationService.cancelMaintenanceSchedule(10),
     ], eagerError: true);
     await calls;
+    final updatedCar = await _supabase
+        .from('vehicles')
+        .update({'current_odometer': maintenanceSaveInfo.odometerAtService})
+        .eq('user_id', _userService.currentUser!.id)
+        .select();
+
+    _userService.setVehicle = UserVehicleModel.fromJson(updatedCar.first);
   }
 }

@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:motrive/core/utils/formatters.dart';
 import 'package:motrive/core/utils/validators.dart';
 import 'package:motrive/features/maintenance_details/domain/entities/maintenance_save_info.dart';
+import 'package:motrive/features/sub/last_odometer/presentation/pages/last_odometer_feature_widget.dart';
 
 class SaveDialog extends HookWidget {
   final Function(MaintenanceSaveInfo) onSave;
@@ -37,7 +38,7 @@ class SaveDialog extends HookWidget {
             TextFormField(
               controller: serviceDateController,
               decoration: InputDecoration(
-               label: Text('service_date'.tr()),
+                label: Text('service_date'.tr()),
                 suffixIcon: IconButton(
                   onPressed: () async {
                     await showDialog(
@@ -68,7 +69,9 @@ class SaveDialog extends HookWidget {
             ),
             TextFormField(
               controller: odometerController,
-              decoration: InputDecoration(label: Text('odometer_at_service'.tr())),
+              decoration: InputDecoration(
+                label: Text('odometer_at_service'.tr()),
+              ),
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               validator: (value) =>
                   Validators.validateOdometer(value, lastOdometer),
@@ -77,13 +80,16 @@ class SaveDialog extends HookWidget {
             ),
             Align(
               alignment: .centerEnd,
-              child: Text(
+
+              child: LastOdometerFeatureWidget(),
+
+              /* Text(
                 '${'last_odometer'.tr()}: ${Formatters.formatOdometer(lastOdometer)}',
-              ),
+              ), */
             ),
             TextFormField(
               controller: costController,
-              decoration: InputDecoration(label: Text('cost'.tr()),),
+              decoration: InputDecoration(label: Text('cost'.tr())),
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               validator: Validators.validateRequired,
               onTapOutside: (event) =>
@@ -92,14 +98,14 @@ class SaveDialog extends HookWidget {
             TextFormField(
               controller: providerController,
               decoration: InputDecoration(
-              label: Text('provider_name_optional'.tr()),
+                label: Text('provider_name_optional'.tr()),
               ),
               onTapOutside: (event) =>
                   FocusManager.instance.primaryFocus?.unfocus(),
             ),
             TextFormField(
               controller: notesController,
-              decoration: InputDecoration(label: Text('notes_optional'.tr()),),
+              decoration: InputDecoration(label: Text('notes_optional'.tr())),
               onTapOutside: (event) =>
                   FocusManager.instance.primaryFocus?.unfocus(),
             ),

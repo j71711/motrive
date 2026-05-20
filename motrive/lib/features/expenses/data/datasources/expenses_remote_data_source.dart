@@ -4,6 +4,7 @@ import 'package:motrive/core/services/user_services.dart';
 import 'package:motrive/features/expenses/data/models/expenses_model.dart';
 import 'package:motrive/features/expenses/domain/entities/add_expense_entity.dart';
 import 'package:motrive/features/expenses/domain/entities/expense_stats_entity.dart';
+import 'package:motrive/features/maintenance/data/models/vehicle/vehicle_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class BaseExpensesRemoteDataSource {
@@ -41,27 +42,33 @@ class ExpensesRemoteDataSource implements BaseExpensesRemoteDataSource {
 
   @override
   Future<void> deleteExpense(String expenseId) async {
-    try {
-      await _supabase.from('expense_records').delete().eq('id', expenseId);
-    } catch (error) {
-      throw FailureExceptions.getException(error);
-    }
+    await _supabase.from('expense_records').delete().eq('id', expenseId);
+    final response = await _supabase
+        .from('expense_records')
+        .select()
+        .eq('vehicle_id', _userService.currentVehicle!.id)
+        .order('expense_date');
+    final updatedVehicle = await _supabase
+        .from('vehicles')
+        .update({'current_odometer': response.first['odometer_at_expense']})
+        .eq('id', _userService.currentVehicle!.id)
+        .select()
+        .single();
+    _userService.setVehicle = UserVehicleModel.fromJson(updatedVehicle);
   }
 
   @override
   Future<List<ExpensesModel>> getExpenses() async {
-    try {
-      final response = await _supabase
-          .from('expense_records')
-          .select()
-          .eq('vehicle_id', _userService.currentVehicle!.id)
-          .order('expense_date', ascending: false);
-      return response
-          .map<ExpensesModel>((e) => ExpensesModel.fromJson(e))
-          .toList();
-    } catch (error) {
-      throw FailureExceptions.getException(error);
+    if (_userService.currentVehicle == null) {
+      throw Exception('No car found');
     }
+    final expenses = await _supabase
+        .from('expense_records')
+        .select()
+        .eq('vehicle_id', _userService.currentVehicle!.id)
+        .order('expense_date', ascending: false);
+
+    return expenses.map((e) => ExpensesModel.fromJson(e)).toList();
   }
 
   @override
