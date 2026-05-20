@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:motrive/core/common/auth_entity.dart';
 
 abstract class HomeState extends Equatable {
   const HomeState();
@@ -8,7 +9,15 @@ abstract class HomeState extends Equatable {
 }
 
 class HomeInitialState extends HomeState {}
-class HomeSuccessState extends HomeState {}
+
+class HomeSuccessState extends HomeState {
+  final AuthEntity user;
+
+  const HomeSuccessState({required this.user});
+
+  @override
+  List<Object?> get props => [user];
+}
 
 class HomeErrorState extends HomeState {
   final String message;
@@ -16,4 +25,3 @@ class HomeErrorState extends HomeState {
   @override
   List<Object?> get props => [message];
 }
-

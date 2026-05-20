@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -15,13 +16,10 @@ class SosFeatureWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (_) => SosCubit(GetIt.I.get())),
         BlocProvider(
-          create: (_) => SosCubit(GetIt.I.get()),
-        ),
-        BlocProvider(
-          create: (_) => EmergencyContactCubit(
-            GetIt.I.get(),
-          )..getEmergencyContactMethod(),
+          create: (_) =>
+              EmergencyContactCubit(GetIt.I.get())..getEmergencyContactMethod(),
         ),
       ],
 
@@ -33,20 +31,14 @@ class SosFeatureWidget extends StatelessWidget {
             listener: (context, state) {
               if (state is SosSendEmailSuccessState) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text(
-                      'SOS email sent successfully',
-                    ),
-                  ),
+                  SnackBar(content: Text('sos_email_sent_successfully'.tr())),
                 );
               }
 
               if (state is SosErrorState) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(state.message),
-                  ),
-                );
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text(state.message)));
               }
             },
 
@@ -59,18 +51,13 @@ class SosFeatureWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(34),
 
                 child: BackdropFilter(
-                  filter: ImageFilter.blur(
-                    sigmaX: 12,
-                    sigmaY: 12,
-                  ),
+                  filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
 
                   child: Container(
                     height: 88,
                     width: double.infinity,
 
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
 
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(34),
@@ -80,24 +67,21 @@ class SosFeatureWidget extends StatelessWidget {
                         end: Alignment.bottomRight,
 
                         colors: [
-                          Theme.of(context)
-                              .colorScheme
-                              .error
-                              .withValues(alpha: .95),
+                          Theme.of(
+                            context,
+                          ).colorScheme.error.withValues(alpha: .95),
 
-                          Theme.of(context)
-                              .colorScheme
-                              .errorContainer
-                              .withValues(alpha: .85),
+                          Theme.of(
+                            context,
+                          ).colorScheme.errorContainer.withValues(alpha: .85),
                         ],
                       ),
 
                       boxShadow: [
                         BoxShadow(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .error
-                              .withValues(alpha: .35),
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.error.withValues(alpha: .35),
 
                           blurRadius: 24,
                           offset: const Offset(0, 10),
@@ -114,9 +98,7 @@ class SosFeatureWidget extends StatelessWidget {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
 
-                            color: Colors.white.withValues(
-                              alpha: .18,
-                            ),
+                            color: Colors.white.withValues(alpha: .18),
                           ),
 
                           child: const Icon(
@@ -130,16 +112,13 @@ class SosFeatureWidget extends StatelessWidget {
 
                         Expanded(
                           child: Column(
-                            mainAxisAlignment:
-                                MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
 
-                            crossAxisAlignment:
-                                CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
 
-                            children: const [
+                            children: [
                               Text(
-                                'SOS Emergency',
-
+                                'sos_emergency'.tr(),
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 24,
@@ -150,7 +129,7 @@ class SosFeatureWidget extends StatelessWidget {
                               SizedBox(height: 4),
 
                               Text(
-                                'Tap to send emergency alert',
+                                'tap_to_send_emergency_alert'.tr(),
 
                                 style: TextStyle(
                                   color: Colors.white70,
@@ -161,8 +140,6 @@ class SosFeatureWidget extends StatelessWidget {
                             ],
                           ),
                         ),
-
-                       
                       ],
                     ),
                   ),

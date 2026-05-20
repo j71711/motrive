@@ -47,9 +47,6 @@ class SaveServiceLocalDataSource implements BaseSaveServiceLocalDataSource {
         return service;
       }).toList();
 
-      log(updatedServices.toString());
-      log(updatedServices.toString());
-
       await _box.put(HiveBoxes.vehicles, [updatedCar]);
       await _box.put(HiveBoxes.servicesInfo, updatedServices);
     } catch (e) {

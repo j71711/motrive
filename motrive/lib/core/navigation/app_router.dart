@@ -29,7 +29,7 @@ import 'package:motrive/features/reminders/presentation/cubit/reminders_cubit.da
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: Routes.expenses,
+    initialLocation: Routes.loading,
     routes: [
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) =>
@@ -41,7 +41,7 @@ class AppRouter {
                 path: Routes.home,
                 builder: (context, state) => BlocProvider(
                   create: (context) => HomeCubit(GetIt.I.get()),
-                  child: const HomeFeatureScreen(),
+                  child: HomeFeatureScreen(),
                 ),
               ),
             ],
@@ -52,7 +52,7 @@ class AppRouter {
                 path: Routes.maintenance,
                 builder: (context, state) => BlocProvider(
                   create: (context) => MaintenanceCubit(GetIt.I.get()),
-                  child: const MaintenanceFeatureScreen(),
+                  child: MaintenanceFeatureScreen(),
                 ),
               ),
             ],
@@ -63,7 +63,7 @@ class AppRouter {
                 path: Routes.expenses,
                 builder: (context, state) => BlocProvider(
                   create: (context) => ExpensesCubit(GetIt.I.get()),
-                  child: const ExpensesFeatureScreen(),
+                  child: ExpensesFeatureScreen(),
                 ),
               ),
             ],
@@ -75,7 +75,7 @@ class AppRouter {
                 path: Routes.parking,
                 builder: (context, state) => BlocProvider(
                   create: (context) => ParkingCubit(GetIt.I.get()),
-                  child: const ParkingFeatureScreen(),
+                  child: ParkingFeatureScreen(),
                 ),
               ),
             ],
@@ -86,22 +86,15 @@ class AppRouter {
         path: Routes.profile,
         builder: (context, state) => BlocProvider(
           create: (context) => ProfileCubit(GetIt.I.get()),
-          child: const ProfileFeatureScreen(),
+          child: ProfileFeatureScreen(),
         ),
-      ),
-
-      GoRoute(
-        path: Routes.splash,
-        builder: (context, state) {
-          return Scaffold(body: Center(child: Text("splash screen")));
-        }, // SplashScreen
       ),
 
       GoRoute(
         path: Routes.auth,
         builder: (context, state) => BlocProvider(
           create: (context) => AuthCubit(GetIt.I.get()),
-          child: const AuthFeatureScreen(),
+          child: AuthFeatureScreen(),
         ),
       ),GoRoute(
         path: Routes.expenses,
@@ -126,7 +119,7 @@ class AppRouter {
         path: Routes.loading,
         builder: (context, state) => BlocProvider(
           create: (context) => LoadingCubit(GetIt.I.get()),
-          child: const LoadingFeatureScreen(),
+          child: LoadingFeatureScreen(),
         ),
       ),
 
@@ -144,7 +137,7 @@ class AppRouter {
     path: Routes.reminders,
     builder: (context, state) => BlocProvider(
           create: (context) => RemindersCubit(GetIt.I.get()),
-          child: const RemindersFeatureScreen(),
+          child: RemindersFeatureScreen(),
         ),
   ),
 ],

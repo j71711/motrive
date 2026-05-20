@@ -1,8 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
-import 'package:motrive/core/theme/theme_cubit.dart';
+import 'package:motrive/core/theme/app_settings_state.dart';
+import 'package:motrive/features/profile/presentation/widgets/agreement_screen.dart';
 import 'package:motrive/features/profile/presentation/widgets/divder.dart';
 import 'package:motrive/features/profile/presentation/widgets/toggle_widget.dart';
 import 'package:motrive/features/profile/sub/emergency_contact/presentation/cubit/emergency_contact_cubit.dart';
@@ -28,7 +30,7 @@ class ProfileFeatureScreen extends StatelessWidget {
         titleSpacing: 20,
 
         title: Text(
-          'Settings',
+          'settings'.tr(),
           style: TextStyle(
             fontSize: 34,
             fontWeight: FontWeight.bold,
@@ -98,8 +100,8 @@ class ProfileFeatureScreen extends StatelessWidget {
                     settingsTile(
                       context,
                       icon: Icons.person_outline_rounded,
-                      title: 'Profile',
-                      subtitle: 'Personal information',
+                      title: 'profile'.tr(),
+                      subtitle: 'personal_information'.tr(),
 
                       onTap: () {
                         showModalBottomSheet(
@@ -132,8 +134,8 @@ class ProfileFeatureScreen extends StatelessWidget {
                     settingsTile(
                       context,
                       icon: Icons.shield_outlined,
-                      title: 'Emergency Contacts',
-                      subtitle: 'Manage trusted contacts',
+                      title: 'emergency_contacts'.tr(),
+                      subtitle: 'manage_trusted_contacts'.tr(),
 
                       onTap: () {
                         showModalBottomSheet(
@@ -178,14 +180,17 @@ class ProfileFeatureScreen extends StatelessWidget {
                     settingsTile(
                       context,
                       icon: Icons.dark_mode_outlined,
-                      title: 'Display Theme',
+                      title: 'display_theme'.tr(),
 
                       subtitle: Theme.of(context).brightness == Brightness.dark
-                          ? 'Dark Mode'
-                          : 'Light Mode',
+                          ? 'dark_mode'.tr()
+                          : 'light_mode'.tr(),
 
-                      trailing: ThemeToggle(
-                        isDark: Theme.of(context).brightness == Brightness.dark,
+                      trailing: CustomToggle(
+                        value: Theme.of(context).brightness == Brightness.dark,
+
+                        activeIcon: Icons.dark_mode_rounded,
+                        inactiveIcon: Icons.light_mode_rounded,
 
                         onChanged: (value) {
                           context.read<ThemeCubit>().changeTheme(
@@ -201,20 +206,57 @@ class ProfileFeatureScreen extends StatelessWidget {
                     settingsTile(
                       context,
                       icon: Icons.language_rounded,
-                      title: 'Language',
-                      subtitle: 'English',
-                      onTap: () {},
-                    ),
+                      title: "language".tr(),
 
+                      subtitle:
+                          context
+                                  .watch<ThemeCubit>()
+                                  .state
+                                  .locale
+                                  .languageCode ==
+                              'ar'
+                          ? 'arabic'.tr()
+                          : 'english'.tr(),
+
+                      trailing: CustomToggle(
+                        value:
+                            context
+                                .watch<ThemeCubit>()
+                                .state
+                                .locale
+                                .languageCode ==
+                            'ar',
+
+                        activeIcon: Icons.language_rounded,
+                        inactiveIcon: Icons.translate_rounded,
+
+                        onChanged: (value) async {
+                          final locale = Locale(value ? 'ar' : 'en');
+
+                          await context.read<ThemeCubit>().changeLanguage(
+                            locale,
+                          );
+
+                          if (context.mounted) {
+                            context.setLocale(locale);
+                          }
+                        },
+                      ),
+                    ),
                     divider(context),
 
                     /// AGREEMENT
                     settingsTile(
                       context,
                       icon: Icons.assignment_returned_outlined,
-                      title: 'Agreement',
-                      subtitle: 'Agreed upon terms',
-                      onTap: () {},
+                      title: 'agreement'.tr(),
+                      subtitle: 'agreed_upon_terms'.tr(),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AgreementScreen(),
+                        ),
+                      ),
                     ),
 
                     divider(context),

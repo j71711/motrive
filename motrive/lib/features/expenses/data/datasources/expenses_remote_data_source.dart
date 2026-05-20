@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:motrive/core/errors/network_exceptions.dart';
-import 'package:motrive/core/services/local_keys_service.dart';
+import 'package:motrive/core/services/user_services.dart';
 import 'package:motrive/features/expenses/data/models/expenses_model.dart';
 import 'package:motrive/features/expenses/domain/entities/add_expense_entity.dart';
 import 'package:motrive/features/expenses/domain/entities/expense_stats_entity.dart';
@@ -10,17 +10,17 @@ abstract class BaseExpensesRemoteDataSource {
   Future<void> addExpense(AddExpenseModel model);
   Future<void> updateExpense(AddExpenseModel model);
   Future<void> deleteExpense(String expenseId);
-  Future<AddExpenseModel> getExpenseDetails(String expenseId);
-  Future<List<ExpensesModel>> getExpenses(String vehicleId);
-  Future<ExpenseStatsEntity> getExpenseStats(String vehicleId);
+  Future<AddExpenseModel> getExpenseDetails(String vehicleId);
+  Future<List<ExpensesModel>> getExpenses();
+  Future<ExpenseStatsEntity> getExpenseStats();
 }
 
 @LazySingleton(as: BaseExpensesRemoteDataSource)
 class ExpensesRemoteDataSource implements BaseExpensesRemoteDataSource {
   final SupabaseClient _supabase;
-  final LocalKeysService _localKeysService;
+  final UserService _userService;
 
-  ExpensesRemoteDataSource(this._localKeysService, this._supabase);
+  ExpensesRemoteDataSource(this._userService, this._supabase);
 
   @override
   Future<void> updateExpense(AddExpenseModel model) async {
@@ -39,26 +39,22 @@ class ExpensesRemoteDataSource implements BaseExpensesRemoteDataSource {
     }
   }
 
-@override
-Future<void> deleteExpense(
-  String expenseId,
-) async {
-  try {
-      await _supabase
-          .from('expense_records')
-          .delete()
-          .eq('id', expenseId);
+  @override
+  Future<void> deleteExpense(String expenseId) async {
+    try {
+      await _supabase.from('expense_records').delete().eq('id', expenseId);
     } catch (error) {
       throw FailureExceptions.getException(error);
     }
-}
+  }
+
   @override
-  Future<List<ExpensesModel>> getExpenses(String vehicleId) async {
+  Future<List<ExpensesModel>> getExpenses() async {
     try {
       final response = await _supabase
           .from('expense_records')
           .select()
-          .eq('vehicle_id', vehicleId) 
+          .eq('vehicle_id', _userService.currentVehicle!.id)
           .order('expense_date', ascending: false);
       return response
           .map<ExpensesModel>((e) => ExpensesModel.fromJson(e))
@@ -68,15 +64,13 @@ Future<void> deleteExpense(
     }
   }
 
-    @override
-  Future<AddExpenseModel> getExpenseDetails(
-    String expenseId,
-  ) async {
+  @override
+  Future<AddExpenseModel> getExpenseDetails(String vehicleId) async {
     try {
       final response = await _supabase
           .from('expense_records')
           .select()
-          .eq('id', expenseId)
+          .eq('id', _userService.currentVehicle!.id)
           .single();
       return AddExpenseModel.fromJson(response);
     } catch (error) {
@@ -85,23 +79,24 @@ Future<void> deleteExpense(
   }
 
   @override
-  Future<ExpenseStatsEntity> getExpenseStats(String vehicleId) async {
+  Future<ExpenseStatsEntity> getExpenseStats() async {
     final response = await _supabase
         .from('expense_records')
         .select()
-        .eq('vehicle_id', vehicleId);
+        .eq('vehicle_id', _userService.currentVehicle!.id);
 
-      double total = 0;
+    // ignore: unused_local_variable
+    double total = 0;
 
     double monthly = 0;
     double yearly = 0;
     double fuel = 0;
     double maintenance = 0;
 
-  double insurance = 0;
-  double oil = 0;
-  double violation = 0;
-  double other = 0;
+    double insurance = 0;
+    double oil = 0;
+    double violation = 0;
+    double other = 0;
 
     final now = DateTime.now();
 
@@ -131,24 +126,23 @@ Future<void> deleteExpense(
       if (item['category'] == 'Maintenance') {
         maintenance += amount;
       }
-      
+
       if (item['category'] == 'Other') {
         other += amount;
       }
-
     }
     return ExpenseStatsEntity(
       monthlyTotal: monthly,
       yearlyTotal: yearly,
       fuelTotal: fuel,
-      maintenanceTotal: maintenance, 
-      insuranceTotal: insurance, 
-      oilTotal: oil, 
-      violationTotal: violation, 
+      maintenanceTotal: maintenance,
+      insuranceTotal: insurance,
+      oilTotal: oil,
+      violationTotal: violation,
       otherTotal: other,
     );
   }
-  
+
   @override
   Future<void> addExpense(AddExpenseModel model) async {
     try {

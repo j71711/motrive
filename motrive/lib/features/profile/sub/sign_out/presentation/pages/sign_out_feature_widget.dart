@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -33,10 +34,7 @@ class SignOutFeatureWidget extends StatelessWidget {
               }
 
               if (state is SignOutErrorState) {
-                context.showSnackBar(
-                  state.message,
-                  isError: true,
-                );
+                context.showSnackBar(state.message, isError: true);
               }
             },
             child: Material(
@@ -45,11 +43,11 @@ class SignOutFeatureWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(24),
                 onTap: () async {
                   final value = await context.showMyDialog(
-                    title: 'Sign Out',
-                    content:
-                        "You're about to sign out of your account. Are you sure?",
+                    title: 'sign_out'.tr(),
+                    content: "sign_out_message".tr(),
                     onConfirm: true,
-                    confirmButton: 'Sign Out',
+                    confirmButton: 'sign_out'.tr(),
+                    cancelButton: 'cancel'.tr(),
                   );
 
                   if (value == true) {
@@ -88,7 +86,7 @@ class SignOutFeatureWidget extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Sign Out',
+                              'sign_out'.tr(),
                               style: theme.textTheme.titleMedium?.copyWith(
                                 fontWeight: FontWeight.w700,
                                 color: theme.colorScheme.error,
@@ -98,10 +96,11 @@ class SignOutFeatureWidget extends StatelessWidget {
                             const SizedBox(height: 4),
 
                             Text(
-                              'Logout from your account',
+                              'logout_from_your_account'.tr(),
                               style: theme.textTheme.bodyMedium?.copyWith(
-                                color: theme.colorScheme.onSurface
-                                    .withValues(alpha: .55),
+                                color: theme.colorScheme.onSurface.withValues(
+                                  alpha: .55,
+                                ),
                               ),
                             ),
                           ],
@@ -111,8 +110,9 @@ class SignOutFeatureWidget extends StatelessWidget {
                       Icon(
                         Icons.chevron_right_rounded,
                         size: 28,
-                        color: theme.colorScheme.onSurface
-                            .withValues(alpha: .25),
+                        color: theme.colorScheme.onSurface.withValues(
+                          alpha: .25,
+                        ),
                       ),
                     ],
                   ),

@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class AddReminderEntity extends Equatable {
+  final String? id;
   final String title;
   final String category;
   final String triggerType;
@@ -14,6 +15,7 @@ class AddReminderEntity extends Equatable {
   final int? recurrenceValue;
 
   const AddReminderEntity({
+    this.id,
     required this.title,
     required this.category,
     required this.triggerType,
@@ -23,11 +25,13 @@ class AddReminderEntity extends Equatable {
     this.dateAdvanceDays,
     required this.isRecurring,
     this.recurrenceUnit,
-    this.recurrenceValue, this.notes,
+    this.recurrenceValue,
+    this.notes,
   });
 
   @override
   List<Object?> get props => [
+    id,
     title,
     category,
     triggerType,
@@ -38,6 +42,6 @@ class AddReminderEntity extends Equatable {
     isRecurring,
     recurrenceUnit,
     recurrenceValue,
-    notes
+    notes,
   ];
 }

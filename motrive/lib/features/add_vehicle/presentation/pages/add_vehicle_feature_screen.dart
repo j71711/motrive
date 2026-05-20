@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -82,7 +83,7 @@ class AddVehicleFeatureScreen extends HookWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Vehicle Info'),
+        title: Text('vehicle_info'.tr()),
         actions: [
           if (vehicle != null)
             IconButton(
@@ -90,18 +91,16 @@ class AddVehicleFeatureScreen extends HookWidget {
                   showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
-                      content: Text(
-                        'You are about to delete your car permanently!',
-                      ),
-                      title: Text('Car Deletion'),
+                      content: Text('delete_car_message'.tr()),
+                      title: Text('delete_car_message'.tr()),
                       actions: [
                         TextButton(
                           onPressed: () => context.pop(),
-                          child: Text('Cancel'),
+                          child: Text('cancel'.tr()),
                         ),
                         FilledButton(
                           onPressed: () => context.pop(true),
-                          child: Text('Delete'),
+                          child: Text('delete'.tr()),
                         ),
                       ],
                     ),
@@ -116,12 +115,16 @@ class AddVehicleFeatureScreen extends HookWidget {
       ),
       body: BlocConsumer<AddVehicleCubit, AddVehicleState>(
         listener: (context, state) async {
+          context.hideLoading();
           if (state is AddVehicleInitialState) {
             dragController.animateTo(
               state.isScanning == true ? 0.45 : 1,
               duration: const Duration(milliseconds: 400),
               curve: Curves.easeInOut,
             );
+            if (state.isLoading == true) {
+              context.showLoading();
+            }
           }
 
           if (state is AddVehicleSuccessState && context.mounted) {
@@ -176,13 +179,13 @@ class AddVehicleFeatureScreen extends HookWidget {
                               ),
                             ),
                           ),
-                        
+
                           const Gap(8),
                           VehicleField(
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                             controller: vinController,
-                            label: 'VIN *',
+                            label: 'vin_required'.tr(),
                             maxLength: 17,
                             suffix: IconButton(
                               onPressed: () => cubit.toggleCamera(
@@ -196,7 +199,7 @@ class AddVehicleFeatureScreen extends HookWidget {
                             validator: (value) {
                               if (value!.isNotEmpty &&
                                   value.trim().length != 17) {
-                                return 'VIN must be exactly 17 characters';
+                                return 'vin_must_be_17_characters'.tr();
                               }
                               return null;
                             },
@@ -206,7 +209,7 @@ class AddVehicleFeatureScreen extends HookWidget {
 
                           VehicleField(
                             controller: makeController,
-                            label: 'Make',
+                            label: 'make'.tr(),
                             readOnly: vehicle != null,
                             validator: Validators.validateRequired,
                             icon: Icons.car_rental_outlined,
@@ -215,7 +218,7 @@ class AddVehicleFeatureScreen extends HookWidget {
 
                           VehicleField(
                             controller: modelController,
-                            label: 'Model',
+                            label: 'model'.tr(),
                             readOnly: vehicle != null,
                             validator: Validators.validateRequired,
                             icon: Icons.car_rental_outlined,
@@ -224,7 +227,7 @@ class AddVehicleFeatureScreen extends HookWidget {
 
                           VehicleField(
                             controller: yearController,
-                            label: 'Year',
+                            label: 'year'.tr(),
                             readOnly: vehicle != null,
                             icon: Icons.calendar_month_outlined,
                             validator: Validators.validateRequired,
@@ -235,7 +238,7 @@ class AddVehicleFeatureScreen extends HookWidget {
                           if (vehicle == null)
                             VehicleField(
                               controller: odometerController,
-                              label: 'Current Odometer',
+                              label: 'current_odometer'.tr(),
                               icon: Icons.numbers,
                               validator: Validators.validateRequired,
                               keyboardType: TextInputType.number,
@@ -244,14 +247,14 @@ class AddVehicleFeatureScreen extends HookWidget {
 
                           VehicleField(
                             controller: colorController,
-                            label: 'Color',
+                            label: 'color'.tr(),
                             icon: Icons.color_lens_outlined,
                           ),
                           const Gap(16),
 
                           VehicleField(
                             controller: licensePlateController,
-                            label: 'License Plate',
+                            label: 'license_plate'.tr(),
                             icon: Icons.padding_outlined,
                           ),
                           const Gap(32),
@@ -281,7 +284,7 @@ class AddVehicleFeatureScreen extends HookWidget {
                                       : vehicle != newVehicle
                                       ? cubit.updateVehicle(newVehicle)
                                       : context.showSnackBar(
-                                          'No data changes',
+                                          'no_data_changes'.tr(),
                                           isError: true,
                                         );
                                 }
@@ -289,8 +292,8 @@ class AddVehicleFeatureScreen extends HookWidget {
                               icon: const Icon(Icons.save_outlined),
                               label: Text(
                                 vehicle == null
-                                    ? 'Save Vehicle'
-                                    : 'Update Vehicle',
+                                    ? 'save_vehicle'.tr()
+                                    : 'update_vehicle'.tr(),
                               ),
                             ),
                           ),

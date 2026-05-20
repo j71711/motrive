@@ -1,4 +1,5 @@
 import 'package:any_image_view/any_image_view.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -6,11 +7,14 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:motrive/core/constants/app_icons.dart';
 import 'package:motrive/core/navigation/routers.dart';
+import 'package:motrive/core/theme/app_settings_state.dart';
+import 'package:motrive/core/utils/validators.dart';
 import 'package:motrive/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:motrive/features/auth/presentation/cubit/auth_state.dart';
 import 'package:motrive/core/widgets/cirle_widget.dart';
 import 'package:motrive/features/auth/presentation/widgets/otp_widget.dart';
 import 'package:motrive/features/auth/presentation/widgets/textfileild.dart';
+import 'package:motrive/features/profile/presentation/widgets/toggle_widget.dart';
 
 class AuthFeatureScreen extends HookWidget {
   const AuthFeatureScreen({super.key});
@@ -79,19 +83,55 @@ class AuthFeatureScreen extends HookWidget {
                 color: Theme.of(context).colorScheme.primary,
                 child: Stack(
                   children: [
-                    Positioned(left: -85, top: 38, child: Circle(size: 185, opacity: .04,)),
+                    Positioned(
+                      left: -85,
+                      top: 38,
+                      child: Circle(size: 185, opacity: .1),
+                    ),
 
-                    Positioned(right: -35, top: 100, child: Circle(size: 110, opacity: .4,)),
+                    Positioned(
+                      right: -35,
+                      top: 100,
+                      child: Circle(size: 110, opacity: .1),
+                    ),
 
                     Positioned(
                       right: 100,
                       bottom: -40,
-                      child: Circle(size: 125, opacity: .4,),
+                      child: Circle(size: 125, opacity: .1),
                     ),
+                    Positioned(
+                      top: 55,
+                      right: 24,
 
+                      child: CustomToggle(
+                        value:
+                            context
+                                .watch<ThemeCubit>()
+                                .state
+                                .locale
+                                .languageCode ==
+                            'ar',
+                      
+                        activeIcon: Icons.language_rounded,
+                        inactiveIcon: Icons.translate_rounded,
+                      
+                        onChanged: (value) async {
+                          final locale = Locale(value ? 'ar' : 'en');
+                      
+                          await context.read<ThemeCubit>().changeLanguage(
+                            locale,
+                          );
+                      
+                          if (context.mounted) {
+                            context.setLocale(locale);
+                          }
+                        },
+                      ),
+                    ),
                     Center(
                       child: Text(
-                        isLogin ? 'Welcome Back' : 'Welcome',
+                        isLogin ? 'welcome_back'.tr() : 'welcome'.tr(),
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.onPrimary,
                           fontSize: 34,
@@ -128,7 +168,7 @@ class AuthFeatureScreen extends HookWidget {
                             Padding(
                               padding: EdgeInsets.only(left: 6, bottom: 8),
                               child: Text(
-                                'Name',
+                                'name'.tr(),
                                 style: TextStyle(
                                   color: Theme.of(context).colorScheme.primary,
                                   fontSize: 16,
@@ -138,15 +178,18 @@ class AuthFeatureScreen extends HookWidget {
                             ),
 
                             CustomTextField(
-                              label: 'name',
+                              label: 'name'.tr(),
                               controller: nameController,
+                              validator: isLogin
+                                  ? null
+                                  : Validators.validateFullName,
                             ),
                           ],
 
                           Padding(
                             padding: EdgeInsets.only(left: 6, bottom: 8),
                             child: Text(
-                              'Email',
+                              'email'.tr(),
                               style: TextStyle(
                                 color: Theme.of(context).colorScheme.primary,
                                 fontSize: 16,
@@ -156,9 +199,10 @@ class AuthFeatureScreen extends HookWidget {
                           ),
 
                           CustomTextField(
-                            label: 'email',
+                            label: 'email'.tr(),
                             controller: emailController,
                             textInputType: TextInputType.emailAddress,
+                            validator: Validators.validateEmail,
                           ),
                           SizedBox(
                             height: 56,
@@ -201,7 +245,9 @@ class AuthFeatureScreen extends HookWidget {
                                         fontWeight: FontWeight.w500,
                                       ),
                                       child: Text(
-                                        isLogin ? 'Send OTP' : 'Sign Up',
+                                        isLogin
+                                            ? 'send_otp'.tr()
+                                            : 'sign_up'.tr(),
                                       ),
                                     ),
                             ),
@@ -238,7 +284,7 @@ class AuthFeatureScreen extends HookWidget {
                                   const Gap(24),
 
                                   Text(
-                                    'Login With Google',
+                                    'login_with_google'.tr(),
                                     style: TextStyle(
                                       color: Theme.of(
                                         context,
@@ -264,8 +310,8 @@ class AuthFeatureScreen extends HookWidget {
                                   children: [
                                     TextSpan(
                                       text: isLogin
-                                          ? "Don’t Have Account? "
-                                          : "Already Have Account? ",
+                                          ? 'dont_have_account'.tr()
+                                          : 'already_have_account'.tr(),
                                       style: TextStyle(
                                         color: Theme.of(context)
                                             .colorScheme
@@ -276,7 +322,9 @@ class AuthFeatureScreen extends HookWidget {
                                       ),
                                     ),
                                     TextSpan(
-                                      text: isLogin ? 'Sign Up' : 'Sign In',
+                                      text: isLogin
+                                          ? 'sign_up'.tr()
+                                          : 'sign_in'.tr(),
                                       style: TextStyle(
                                         color: Theme.of(
                                           context,

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -8,14 +9,13 @@ import 'package:motrive/features/profile/sub/emergency_contact/presentation/page
 import 'package:motrive/features/profile/sub/emergency_contact/presentation/pages/show_delete_dialog.dart';
 
 class EmergencyContactFeatureWidget extends StatelessWidget {
-  EmergencyContactFeatureWidget({super.key});
-
-  final nameController = TextEditingController();
-  final emailController = TextEditingController();
-  final relationController = TextEditingController();
+  const EmergencyContactFeatureWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final nameController = TextEditingController();
+    final emailController = TextEditingController();
+    String relation = '';
     final cubit = context.read<EmergencyContactCubit>();
 
     return BlocConsumer<EmergencyContactCubit, EmergencyContactState>(
@@ -29,7 +29,7 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
         if (state is EmergencyContactActionSuccessState) {
           nameController.clear();
           emailController.clear();
-          relationController.clear();
+          relation = '';
         }
       },
       builder: (context, state) {
@@ -61,7 +61,7 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          'Emergency Contacts',
+                          "emergency_contacts".tr(),
                           style: Theme.of(context).textTheme.titleLarge
                               ?.copyWith(
                                 color: Theme.of(context).colorScheme.primary,
@@ -86,7 +86,7 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                '${contact.name} - ${contact.relation}',
+                                '${contact.name} - ${contact.relation.toLowerCase().tr()}',
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
 
@@ -122,32 +122,28 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
 
                                           emailController.text = contact.email;
 
-                                          relationController.text =
-                                              contact.relation;
+                                          relation = contact.relation;
 
                                           showContactDialog(
                                             context: context,
-                                            title: 'Edit Contact',
-                                            buttonText: 'Update',
+                                            title: 'edit_contact'.tr(),
+                                            buttonText: "update".tr(),
                                             nameController: nameController,
                                             emailController: emailController,
-
-                                            relationController:
-                                                relationController,
-                                            onPressed: () {
+                                            relation: relation,
+                                            onPressed: (relation) {
                                               cubit
                                                   .updateEmergencyContactMethod(
                                                     id: contact.id,
                                                     name: nameController.text,
                                                     email: emailController.text,
-                                                    relation:
-                                                        relationController.text,
+                                                    relation: relation,
                                                     notifyEmergency: false,
                                                   );
                                             },
                                           );
                                         },
-                                        child: const Text('Edit'),
+                                        child: Text('edit'.tr()),
                                       ),
                                     ),
                                   ),
@@ -181,7 +177,7 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                                             },
                                           );
                                         },
-                                        child: const Text('Delete'),
+                                        child: Text('delete'.tr()),
                                       ),
                                     ),
                                   ),
@@ -210,20 +206,20 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                           onPressed: () {
                             nameController.clear();
                             emailController.clear();
-                            relationController.clear();
+                            relation = '';
 
                             showContactDialog(
                               context: context,
-                              title: 'Add Contact',
-                              buttonText: 'Add',
+                              title: 'add_contact'.tr(),
+                              buttonText: 'add'.tr(),
                               nameController: nameController,
                               emailController: emailController,
-                              relationController: relationController,
-                              onPressed: () {
+                              relation: relation,
+                              onPressed: (relation) {
                                 cubit.addEmergencyContactMethod(
                                   name: nameController.text,
                                   email: emailController.text,
-                                  relation: relationController.text,
+                                  relation: relation,
                                   notifyEmergency: false,
                                 );
                               },
@@ -231,7 +227,7 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                           },
 
                           child: Text(
-                            '+ Add Contact',
+                            '+ ${'add_contact'.tr()}',
                             style: Theme.of(context).textTheme.titleMedium
                                 ?.copyWith(
                                   color: Theme.of(context).colorScheme.primary,

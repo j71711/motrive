@@ -18,9 +18,9 @@ class ExpensesRepositoryData implements ExpensesRepositoryDomain{
   ExpensesRepositoryData(this.remoteDataSource);
 
   @override
-  Future<Result<ExpenseStatsEntity, Failure>> getExpenseStats(String vehicleId) async {
+  Future<Result<ExpenseStatsEntity, Failure>> getExpenseStats() async {
    try{
-    final response = await remoteDataSource.getExpenseStats(vehicleId);
+    final response = await remoteDataSource.getExpenseStats();
     
       return Success(response);
    }
@@ -30,9 +30,9 @@ class ExpensesRepositoryData implements ExpensesRepositoryDomain{
   }
 
   @override
-  Future<Result<List<ExpensesEntity>, Failure>> getExpenses(String vehicleId) async{
+  Future<Result<List<ExpensesEntity>, Failure>> getExpenses() async{
     try{
-      final response = await remoteDataSource.getExpenses(vehicleId);
+      final response = await remoteDataSource.getExpenses();
       final entities = response.map((item) => item.toEntity()).toList();
 print('😏$response');
 print('😏$entities');

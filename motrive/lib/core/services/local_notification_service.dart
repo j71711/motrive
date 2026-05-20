@@ -349,7 +349,7 @@ class LocalNotificationService {
       id: 1000 + id,
       title: '🔧 Service Due in $daysBefore Days',
       body:
-          '$carName — $serviceType due on '
+          '$carName — $serviceType service due on '
           '${_formatDate(dueDate)}.',
       scheduledDate: scheduleDate,
       android: _maintenanceChannel,

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -107,11 +108,11 @@ class OtpBottomSheetWidget extends HookWidget {
             spacing: 20,
             children: [
               Text(
-                'Email Verification',
+               'email_verification'.tr(),
                 style: TextStyle(fontSize: 20.sp, fontWeight: .bold),
               ),
 
-              Text('Enter the pin sent to this email:'),
+              Text('enter_pin_sent_to_email'.tr()),
               Text(sentTo),
 
               Pinput(
@@ -131,7 +132,7 @@ class OtpBottomSheetWidget extends HookWidget {
               if (state is AuthErrorState &&
                   state.message.contains('over_email_send_rate_limit'))
                 Text(
-                  'OTP is incorrect',
+                  'otp_is_incorrect'.tr(),
                   style: TextStyle(color: Colors.redAccent),
                 ),
               TextButton(
@@ -149,10 +150,10 @@ class OtpBottomSheetWidget extends HookWidget {
                     }
                   }
                 },
-                child: Text("Didn't get a code? Resend OTP"),
+                child: Text('didnt_get_code_resend_otp'.tr()),
               ),
               if (!canResend.value)
-                Text('Until next try: ${timerText.value} seconds'),
+                Text('${'until_next_try'.tr()}: ${timerText.value} ${'seconds'.tr()}'),
             ],
           ),
         );

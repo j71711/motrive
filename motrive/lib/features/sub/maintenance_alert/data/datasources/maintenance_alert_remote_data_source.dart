@@ -33,23 +33,23 @@ class MaintenanceAlertRemoteDataSource
         .from('services_info')
         .select()
         .eq('car_id', carInfo.carInfoId ?? '')
-        .order('service_odometer')
-        .then(
-          (value) => value
-              .takeWhile(
-                (maintenance) => maintenanceLogs.any(
-                  (log) => log['service_id'] != maintenance['id'],
-                ),
-              )
-              .toList(),
-        );
+        .order('service_odometer');
 
-    final nextMaintenance = maintenance.firstWhere(
-      (element) =>
-          element['service_odometer'] - carInfo.currentOdometer <
-          2000,
-      orElse: () => {},
-    );
+    final doneMaintenance = maintenance
+        .takeWhile(
+          (maintenance) => maintenanceLogs.any(
+            (log) => log['service_id'] != maintenance['id'],
+          ),
+        )
+        .toList();
+
+    final nextMaintenance = doneMaintenance.isEmpty
+        ? maintenance.last
+        : doneMaintenance.firstWhere(
+            (element) =>
+                element['service_odometer'] - carInfo.currentOdometer < 2000,
+            orElse: () => {},
+          );
 
     if (nextMaintenance.isEmpty) {
       return null;
@@ -70,13 +70,16 @@ class MaintenanceAlertRemoteDataSource
         serviceType: nextMaintenance['severity'],
       );
     }
-
-    await _localNotificationService.scheduleMaintenanceDueSoon(
-      id: 10,
-      carName: carInfo.make,
-      serviceType: nextMaintenance['severity'],
-      dueDate: DateTime.now().add(Duration(days: 14)),
-    );
+    final pendingNotification = await _localNotificationService
+        .getPendingNotifications();
+    if (!pendingNotification.any((element) => element.id == 10)) {
+      await _localNotificationService.scheduleMaintenanceDueSoon(
+        id: 10,
+        carName: carInfo.make,
+        serviceType: nextMaintenance['severity'],
+        dueDate: DateTime.now().add(Duration(minutes: 14)),
+      );
+    }
 
     return MaintenanceModel(
       vehicle: carInfo,

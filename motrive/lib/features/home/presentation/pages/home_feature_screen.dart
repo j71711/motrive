@@ -1,22 +1,23 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:motrive/core/extensions/context_extensions.dart';
+import 'package:motrive/core/extensions/string_extensions.dart';
 import 'package:motrive/core/navigation/routers.dart';
 import 'package:motrive/features/home/presentation/cubit/home_cubit.dart';
+import 'package:motrive/features/home/presentation/cubit/home_state.dart';
 import 'package:motrive/features/home/presentation/widgets/circle_Button.dart';
 import 'package:motrive/features/home/presentation/widgets/action_card.dart';
 import 'package:motrive/features/home/presentation/widgets/section_title.dart';
 import 'package:motrive/features/home/sub/add_expense/presentation/pages/add_expense_feature_widget.dart';
-import 'package:motrive/features/home/sub/chat_bot/presentation/pages/chat_bot_feature_widget.dart';
 import 'package:motrive/features/home/sub/sos/presentation/pages/sos_feature_widget.dart';
 import 'package:motrive/features/parking/presentation/cubit/parking_cubit.dart';
 import 'package:motrive/features/sub/add_reminder/presentation/pages/add_reminder_feature_widget.dart';
 import 'package:motrive/features/sub/maintenance_alert/presentation/pages/maintenance_alert_feature_widget.dart';
 import 'package:motrive/features/sub/vehicle_card/presentation/pages/vehicle_card_feature_widget.dart';
-import 'package:sizer/sizer.dart';
 
 class HomeFeatureScreen extends StatelessWidget {
   const HomeFeatureScreen({super.key});
@@ -26,23 +27,6 @@ class HomeFeatureScreen extends StatelessWidget {
     final _ = context.read<HomeCubit>();
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        elevation: 0,
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        shape: const CircleBorder(),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => const ChatBotFeatureWidget()),
-          );
-        },
-        child: Icon(
-          Icons.chat_bubble_outline_rounded,
-          color: Theme.of(context).colorScheme.onPrimary,
-          size: 26,
-        ),
-      ),
-
       body: SafeArea(
         bottom: false,
         child: SingleChildScrollView(
@@ -66,20 +50,24 @@ class HomeFeatureScreen extends StatelessWidget {
 
               const Gap(24),
 
-              Text(
-                'Good morning',
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Theme.of(context).colorScheme.primary,
-                  fontSize: 13,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: -.2,
-                ),
+              BlocBuilder<HomeCubit, HomeState>(
+                builder: (context, state) {
+                  return Text(
+                    '${'good_morning'.tr()}, ${state is HomeSuccessState ? state.user.fullName?.capitalizeEachWord : ''}',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: -.2,
+                    ),
+                  );
+                },
               ),
 
               const Gap(4),
 
               Text(
-                'Your car assistant',
+                'your_car_assistant'.tr(),
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   color: Theme.of(context).colorScheme.primary,
                   fontSize: 24,
@@ -125,7 +113,7 @@ class HomeFeatureScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Vehicle Status',
+                              'vehicle_status'.tr(),
                               style: Theme.of(context).textTheme.titleLarge
                                   ?.copyWith(
                                     color: Colors.white,
@@ -137,7 +125,7 @@ class HomeFeatureScreen extends StatelessWidget {
                             const SizedBox(height: 2),
 
                             Text(
-                              'Everything looks ready',
+                              'everything_looks_ready'.tr(),
                               style: Theme.of(context).textTheme.bodySmall
                                   ?.copyWith(
                                     color: Colors.white70,
@@ -158,7 +146,7 @@ class HomeFeatureScreen extends StatelessWidget {
 
               const Gap(28),
 
-              SectionTitle(title: 'Emergency'),
+              SectionTitle(title: 'emergency'.tr()),
 
               const Gap(12),
 
@@ -166,7 +154,7 @@ class HomeFeatureScreen extends StatelessWidget {
 
               const Gap(28),
 
-              SectionTitle(title: 'Quick Actions'),
+              SectionTitle(title: 'quick_actions'.tr()),
               const Gap(14),
 
               GridView(
@@ -179,34 +167,11 @@ class HomeFeatureScreen extends StatelessWidget {
                   childAspectRatio: 1,
                 ),
                 children: [
-                  ActionCard(
-                    title: 'Maintenance',
-                    subtitle: 'Check alerts',
-                    icon: Icons.car_repair_rounded,
-                    iconColor: Theme.of(context).colorScheme.primary,
-                    onTap: () {
-                      showModalBottomSheet(
-                        context: context,
-                        isScrollControlled: true,
-                        backgroundColor: Theme.of(context).colorScheme.surface,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.vertical(
-                            top: Radius.circular(28),
-                          ),
-                        ),
-                        builder: (_) {
-                          return const Padding(
-                            padding: EdgeInsets.all(18),
-                            child: MaintenanceAlertFeatureWidget(),
-                          );
-                        },
-                      );
-                    },
-                  ),
+                  MaintenanceAlertFeatureWidget(),
 
                   ActionCard(
-                    title: 'Location',
-                    subtitle: 'Save parking',
+                    title: 'location'.tr(),
+                    subtitle: 'save_parking'.tr(),
                     icon: Icons.location_on_rounded,
                     iconColor: Theme.of(context).colorScheme.secondary,
                     onTap: () async {
@@ -216,9 +181,13 @@ class HomeFeatureScreen extends StatelessWidget {
 
                       if (!context.mounted) return;
 
+                      context.go(Routes.parking, extra: true);
+
+                      if (!context.mounted) return;
+
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Parking location saved'),
+                        SnackBar(
+                          content: Text('parking_location_saved'.tr()),
                           behavior: SnackBarBehavior.floating,
                         ),
                       );
@@ -226,36 +195,23 @@ class HomeFeatureScreen extends StatelessWidget {
                   ),
 
                   ActionCard(
-                    title: 'Expenses',
-                    subtitle: 'Track costs',
+                    title: 'expenses'.tr(),
+                    subtitle: 'track_costs'.tr(),
                     icon: Icons.payments_rounded,
                     iconColor: Theme.of(context).colorScheme.tertiary,
                     onTap: () {
-                      showModalBottomSheet(
-                        context: context,
-                        isScrollControlled: true,
-                        backgroundColor: Theme.of(context).colorScheme.surface,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.vertical(
-                            top: Radius.circular(28),
-                          ),
-                        ),
-                        builder: (_) {
-                          return SizedBox(
-                            height: 70.sh,
-                            child: const AddExpenseFeatureWidget(),
-                          );
-                        },
+                      context.showBottomSheet(
+                        widget: const AddExpenseFeatureWidget(),
                       );
                     },
                   ),
                   ActionCard(
-                    title: 'Notifications',
-                    subtitle: 'custom',
+                    title: 'notifications'.tr(),
+                    subtitle: 'custom'.tr(),
                     icon: Icons.notifications_active_rounded,
                     iconColor: Theme.of(context).colorScheme.error,
                     onTap: () async => context.showBottomSheet(
-                      widget: AddReminderFeatureWidget(),
+                      widget: const AddReminderFeatureWidget(),
                     ),
                   ),
                 ],

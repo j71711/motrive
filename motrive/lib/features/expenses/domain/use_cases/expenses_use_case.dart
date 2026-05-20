@@ -12,12 +12,12 @@ class ExpensesUseCase {
 
   ExpensesUseCase(this._repositoryData);
 
-    Future<Result<List<ExpensesEntity>, Failure>> getExpenses(String vehicleId) async {
-    return _repositoryData.getExpenses(vehicleId);
+    Future<Result<List<ExpensesEntity>, Failure>> getExpenses() async {
+    return _repositoryData.getExpenses();
   }
 
-   Future<Result<ExpenseStatsEntity, Failure>> getExpenseStats(String vehicleId) async {
-    return _repositoryData.getExpenseStats(vehicleId);
+   Future<Result<ExpenseStatsEntity, Failure>> getExpenseStats() async {
+    return _repositoryData.getExpenseStats();
   }
 
   Future<Result<void, Failure>> addExpense(

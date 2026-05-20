@@ -9,6 +9,7 @@ class AddVehicleCubit extends Cubit<AddVehicleState> {
   AddVehicleCubit(this._addVehicleUseCase) : super(AddVehicleInitialState());
 
   Future<void> getAddVehicleMethod(UserVehicleEntity vehicle) async {
+    emit(AddVehicleInitialState(isLoading: true));
     final result = await _addVehicleUseCase.getAddVehicle(vehicle);
     result.when(
       (success) {
@@ -21,6 +22,7 @@ class AddVehicleCubit extends Cubit<AddVehicleState> {
   }
 
   Future<void> updateVehicle(UserVehicleEntity vehicle) async {
+    emit(AddVehicleInitialState(isLoading: true));
     final result = await _addVehicleUseCase.updateVehicle(vehicle);
     result.when(
       (success) {
@@ -33,6 +35,7 @@ class AddVehicleCubit extends Cubit<AddVehicleState> {
   }
 
   Future<void> deleteVehicle(UserVehicleEntity vehicle) async {
+    emit(AddVehicleInitialState(isLoading: true));
     final result = await _addVehicleUseCase.deleteVehicle(vehicle);
     result.when(
       (success) {

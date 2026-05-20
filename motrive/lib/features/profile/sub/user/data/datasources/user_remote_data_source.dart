@@ -58,7 +58,12 @@ class UserRemoteDataSource implements BaseUserRemoteDataSource {
 
       final response = await _supabase
           .from('users')
-          .update({'full_name': fullName, 'phone': phone, 'gender': gender,'date_of_birth':  dateOfBirth?.toIso8601String(),})
+          .update({
+            'full_name': fullName,
+            if (phone.isNotEmpty) 'phone': phone,
+            'gender': gender,
+            'date_of_birth': dateOfBirth?.toIso8601String(),
+          })
           .eq('id', user)
           .select()
           .single();

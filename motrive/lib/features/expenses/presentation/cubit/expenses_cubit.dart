@@ -9,156 +9,125 @@ import 'package:multiple_result/multiple_result.dart';
 
 class ExpensesCubit extends Cubit<ExpensesState> {
   final ExpensesUseCase expensesUseCase;
-  ExpensesCubit(this.expensesUseCase) : super(ExpensesInitialState());
+  ExpensesCubit(this.expensesUseCase) : super(ExpensesInitialState()) {
+    getExpensesMethod();
+  }
 
-Future<void> addExpenseMethod(
-  AddExpenseEntity entity,
-) async {
+  Future<void> addExpenseMethod(AddExpenseEntity entity) async {
+    emit(AddExpensesLoadingState());
 
-  emit(AddExpensesLoadingState());
+    final result = await expensesUseCase.addExpense(entity);
 
-  final result =
-      await expensesUseCase.addExpense(
-    entity,
-  );
-
-  result.when(
-
-    (success) async {
-
-      await getExpensesMethod(
-        entity.vehicleId!,
-      );
-    },
-
-    (error) {
-
-      emit(
-        AddExpenseErrorState(
-          error.message,
-        ),
-      );
-    },
-  );
-}
-
-
-Future<void> getExpensesMethod(String vehicleId) async {
-    emit(ExpensesLoadingState());
-    final results = await Future.wait([
-      expensesUseCase.getExpenses(vehicleId),
-      expensesUseCase.getExpenseStats(vehicleId),
-    ]);
-  
-    final expensesResult = results[0] as Result<List<ExpensesEntity>, Failure>;
-    final statsResult = results[1] as Result<ExpenseStatsEntity, Failure>;
-    expensesResult.when(
-      (expensesList) {
-        statsResult.when(
-          (statsData) {
-            emit(ExpensesSuccessState(expenses: expensesList, stats: statsData));
-          },
-          (statsError) => emit(ExpensesErrorState(statsError.message)),
-        );
+    result.when(
+      (success) async {
+        await getExpensesMethod();
       },
-      (expensesError) => emit(ExpensesErrorState(expensesError.message)),
+
+      (error) {
+        emit(AddExpenseErrorState(error.message));
+      },
     );
   }
 
+  Future<void> getExpensesMethod() async {
+    emit(ExpensesLoadingState());
+    final results = await Future.wait([
+      expensesUseCase.getExpenses(),
+      expensesUseCase.getExpenseStats(),
+    ]);
 
-
-Future<void> deleteExpenseMethod(
-  String expenseId,
-) async {
-  emit(AddExpensesLoadingState());
-
-  final result = await expensesUseCase.deleteExpense(expenseId);
-
-  result.when(
-    (success) => emit(AddExpenseSuccessState()),  
-    (error) => emit(AddExpenseErrorState(error.message)),
-  );
-}
-
-Future<void> updateExpenseMethod(
-  AddExpenseEntity entity,
-) async {
-  emit(AddExpensesLoadingState());
-  final result = await expensesUseCase.updateExpense(entity);
-  result.when(
-    (success) async => await getExpensesMethod(entity.vehicleId!), 
-    (error) => emit(AddExpenseErrorState(error.message)),
-  );
-}
-
-
-void filterByCategory(String category) {
-  if (state is! ExpensesSuccessState) {
-    return;
+    final expensesResult = results[0] as Result<List<ExpensesEntity>, Failure>;
+    final statsResult = results[1] as Result<ExpenseStatsEntity, Failure>;
+    expensesResult.when((expensesList) {
+      statsResult.when((statsData) {
+        emit(ExpensesSuccessState(expenses: expensesList, stats: statsData));
+      }, (statsError) => emit(ExpensesErrorState(statsError.message)));
+    }, (expensesError) => emit(ExpensesErrorState(expensesError.message)));
   }
 
-  final current = state as ExpensesSuccessState;
-  final filtered = category == 'All'
-      ? current.expenses
-      : current.expenses.where((e) => e.category == category,).toList();
+  Future<void> deleteExpenseMethod(String expenseId) async {
+    emit(AddExpensesLoadingState());
 
+    final result = await expensesUseCase.deleteExpense(expenseId);
 
-  double total = 0;
-  double fuel = 0;
-  double insurance = 0;
-  double maintenance = 0;
-  double oil = 0;
-  double violation = 0;
-  double other = 0;
+    result.when(
+      (success) => emit(AddExpenseSuccessState()),
+      (error) => emit(AddExpenseErrorState(error.message)),
+    );
+  }
 
-  for (final item in filtered) {
+  Future<void> updateExpenseMethod(AddExpenseEntity entity) async {
+    emit(AddExpensesLoadingState());
+    final result = await expensesUseCase.updateExpense(entity);
+    result.when(
+      (success) async => await getExpensesMethod(),
+      (error) => emit(AddExpenseErrorState(error.message)),
+    );
+  }
 
-    final amount = item.cost ?? 0;
-
-    total += amount;
-
-    switch (item.category) {
-      case 'Fuel':
-        fuel += amount;
-        break;
-      case 'Vehicle insurance':
-        insurance += amount;
-        break;
-      case 'Maintenance':
-        maintenance += amount;
-        break;
-      case 'Oil':
-        oil += amount;
-        break;
-      case 'Traffic violation':
-        violation += amount;
-        break;
-      case 'Other':
-        other += amount;
-        break;
+  void filterByCategory(String category) {
+    if (state is! ExpensesSuccessState) {
+      return;
     }
-  }
 
-  emit(
-    ExpensesSuccessState(
-      expenses: current.expenses,
-       stats: ExpenseStatsEntity(
-        monthlyTotal: total,
-        yearlyTotal: total,
-        fuelTotal: fuel,
-        insuranceTotal: insurance,
-        maintenanceTotal: maintenance,
-        oilTotal: oil,
-        violationTotal: violation,
-        otherTotal: other,
+    final current = state as ExpensesSuccessState;
+    final filtered = category == 'All'
+        ? current.expenses
+        : current.expenses.where((e) => e.category == category).toList();
+
+    double total = 0;
+    double fuel = 0;
+    double insurance = 0;
+    double maintenance = 0;
+    double oil = 0;
+    double violation = 0;
+    double other = 0;
+
+    for (final item in filtered) {
+      final amount = item.cost ?? 0;
+
+      total += amount;
+
+      switch (item.category) {
+        case 'Fuel':
+          fuel += amount;
+          break;
+        case 'Vehicle insurance':
+          insurance += amount;
+          break;
+        case 'Maintenance':
+          maintenance += amount;
+          break;
+        case 'Oil':
+          oil += amount;
+          break;
+        case 'Traffic violation':
+          violation += amount;
+          break;
+        case 'Other':
+          other += amount;
+          break;
+      }
+    }
+
+    emit(
+      ExpensesSuccessState(
+        expenses: current.expenses,
+        stats: ExpenseStatsEntity(
+          monthlyTotal: total,
+          yearlyTotal: total,
+          fuelTotal: fuel,
+          insuranceTotal: insurance,
+          maintenanceTotal: maintenance,
+          oilTotal: oil,
+          violationTotal: violation,
+          otherTotal: other,
+        ),
+        filteredExpenses: filtered,
+        selectedCategory: category,
       ),
-      filteredExpenses: filtered,
-      selectedCategory: category,
-    ),
-  );
-}
-
-
+    );
+  }
 
   @override
   Future<void> close() {

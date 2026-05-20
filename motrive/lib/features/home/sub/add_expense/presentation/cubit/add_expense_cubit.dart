@@ -7,7 +7,9 @@ import 'package:motrive/features/home/sub/add_expense/presentation/cubit/add_exp
 class AddExpenseCubit extends Cubit<AddExpenseState> {
   final AddExpenseUseCase _addExpenseUseCase;
 
-  AddExpenseCubit(this._addExpenseUseCase) : super(AddExpenseInitialState());
+  AddExpenseCubit(this._addExpenseUseCase) : super(AddExpenseInitialState()) {
+    getUserVehicle();
+  }
 
   final costController = TextEditingController();
   final kmController = TextEditingController();
@@ -27,7 +29,7 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
       vehicleId: 'vehicleId',
       category: selectedCategory!,
       cost: double.tryParse(costController.text) ?? 0.0,
-      odometer: int.tryParse(kmController.text) ?? 0, 
+      odometer: int.tryParse(kmController.text) ?? 0,
       id: '',
     );
 
@@ -45,45 +47,38 @@ class AddExpenseCubit extends Cubit<AddExpenseState> {
     selectedCategory = null;
   }
 
-  Future<void> deleteExpenseMethod(
-  String expenseId,
-) async {
-  emit(AddExpensesLoadingState());
+  Future<void> deleteExpenseMethod(String expenseId) async {
+    emit(AddExpensesLoadingState());
 
-  final result =
-      await _addExpenseUseCase.deleteExpense(
-    expenseId,
-  );
+    final result = await _addExpenseUseCase.deleteExpense(expenseId);
 
-  result.when(
-    (success) => emit(AddExpenseSuccessState()),
-    (error) => emit(
-      AddExpenseErrorState(
-        message: error.message,
-      ),
-    ),
-  );
-}
+    result.when(
+      (success) => emit(AddExpenseSuccessState()),
+      (error) => emit(AddExpenseErrorState(message: error.message)),
+    );
+  }
 
-Future<void> updateExpenseMethod(
-  AddExpenseEntity entity,
-) async {
-  emit(AddExpensesLoadingState());
+  void getUserVehicle() async {
+    emit(AddExpensesLoadingState());
 
-  final result =
-      await _addExpenseUseCase.updateExpense(
-    entity,
-  );
+    final result = _addExpenseUseCase.getUserVehicle();
 
-  result.when(
-    (success) => emit(AddExpenseSuccessState()),
-    (error) => emit(
-      AddExpenseErrorState(
-        message: error.message,
-      ),
-    ),
-  );
-}
+    result.when(
+      (success) => emit(AddExpenseSuccessState(vehicle: success)),
+      (error) => emit(AddExpenseErrorState(message: error.message)),
+    );
+  }
+
+  Future<void> updateExpenseMethod(AddExpenseEntity entity) async {
+    emit(AddExpensesLoadingState());
+
+    final result = await _addExpenseUseCase.updateExpense(entity);
+
+    result.when(
+      (success) => emit(AddExpenseSuccessState()),
+      (error) => emit(AddExpenseErrorState(message: error.message)),
+    );
+  }
 
   @override
   Future<void> close() {

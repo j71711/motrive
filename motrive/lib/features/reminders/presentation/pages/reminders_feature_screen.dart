@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:motrive/core/extensions/context_extensions.dart';
@@ -18,11 +19,11 @@ class RemindersFeatureScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Reminders'),
+        title: Text('reminders'.tr()),
         actions: [
           IconButton(
             onPressed: () async => context
-                .showBottomSheet(widget: AddReminderFeatureWidget())
+                .showBottomSheet(widget: const AddReminderFeatureWidget())
                 .then((value) {
                   if (value == true) {
                     cubit.getRemindersMethod();
@@ -42,7 +43,7 @@ class RemindersFeatureScreen extends StatelessWidget {
             RemindersInitialState _ => LoadingWidget(),
             RemindersSuccessState _ =>
               state.reminders.isEmpty
-                  ? Center(child: Text('No Reminders Yet'))
+                  ? Center(child: Center(child: Text('no_reminders_yet'.tr())))
                   : ListView.separated(
                       itemBuilder: (context, index) {
                         final RemindersEntity reminder = state.reminders[index];
@@ -68,7 +69,13 @@ class RemindersFeatureScreen extends StatelessWidget {
                                     reminder.triggerDate ?? DateTime.now(),
                                   ),
                           ),
-                          trailing: Text(reminder.triggerOdometer.toString()),
+                          trailing: Text(
+                            reminder.triggerOdometer != null
+                                ? Formatters.formatOdometer(
+                                    reminder.triggerOdometer ?? 0,
+                                  )
+                                : '${'in'.tr()} ${DateTime.now().difference(reminder.triggerDate!).inDays} ${'days'.tr()}',
+                          ),
                           leading: SeverityWidget(
                             severity: reminder.category,
                             widthWithText: true,

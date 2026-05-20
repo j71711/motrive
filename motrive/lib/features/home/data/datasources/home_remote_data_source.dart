@@ -1,34 +1,19 @@
 import 'package:injectable/injectable.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:motrive/core/services/local_keys_service.dart';
-import 'package:motrive/features/home/data/models/home_model.dart';
-import 'package:motrive/core/errors/network_exceptions.dart';
-
+import 'package:motrive/core/common/auth_entity.dart';
+import 'package:motrive/core/services/user_services.dart';
 
 abstract class BaseHomeRemoteDataSource {
-  Future<HomeModel> getHome();
+  Future<AuthEntity> getHome();
 }
-
 
 @LazySingleton(as: BaseHomeRemoteDataSource)
 class HomeRemoteDataSource implements BaseHomeRemoteDataSource {
- 
-  final SupabaseClient _supabase;
-  final LocalKeysService _localKeysService;
-  
-  
-  
+  final UserService _userService;
 
-   HomeRemoteDataSource(this._localKeysService, this._supabase,);
+  HomeRemoteDataSource(this._userService);
 
-
-
-    @override
-  Future<HomeModel> getHome() async {
-    try {
-      return HomeModel(id: 1, firstName: "Last Name", lastName: "First Name");
-    } catch (error) {
-     throw FailureExceptions.getException(error);
-    }
+  @override
+  Future<AuthEntity> getHome() async {
+    return _userService.currentUser!;
   }
 }

@@ -32,36 +32,41 @@ class SaveServiceRemoteDataSource implements BaseSaveServiceRemoteDataSource {
     MaintenanceSaveInfo maintenanceSaveInfo,
     UserVehicleEntity vehicle,
   ) async {
-    await _supabase.from('maintenance_logs').insert({
-      'user_id': _userService.currentUser!.id,
-      'vehicle_id': vehicle.id,
-      'service_id': serviceInfo.id,
-      'service_type': serviceInfo.severity,
-      'odometer_at_service': maintenanceSaveInfo.odometerAtService,
-      'cost': maintenanceSaveInfo.cost,
-      'provider_name': maintenanceSaveInfo.providerName,
-      'notes': maintenanceSaveInfo.note,
-      'service_date': maintenanceSaveInfo.serviceDate.toIso8601String(),
-    });
+    final calls = Future.wait([
+      _supabase.from('maintenance_logs').insert({
+        'user_id': _userService.currentUser!.id,
+        'vehicle_id': vehicle.id,
+        'service_id': serviceInfo.id,
+        'service_type': serviceInfo.severity,
+        'odometer_at_service': maintenanceSaveInfo.odometerAtService,
+        'cost': maintenanceSaveInfo.cost,
+        'provider_name': maintenanceSaveInfo.providerName,
+        'notes': maintenanceSaveInfo.note,
+        'service_date': maintenanceSaveInfo.serviceDate.toIso8601String(),
+      }),
 
-    await _supabase.from('expense_records').insert({
-      'user_id': '4fef5d57-eeb4-4bd7-aae0-eaf4dee00b1f',
-      'vehicle_id': vehicle.id,
-      'category': 'service',
-      'odometer_at_expense': maintenanceSaveInfo.odometerAtService,
-      'cost': maintenanceSaveInfo.cost,
-      'notes': maintenanceSaveInfo.note,
-      'expense_date': maintenanceSaveInfo.serviceDate.toIso8601String(),
-    });
+      _supabase.from('expense_records').insert({
+        'user_id': '4fef5d57-eeb4-4bd7-aae0-eaf4dee00b1f',
+        'vehicle_id': vehicle.id,
+        'category': 'Maintenance',
+        'odometer_at_expense': maintenanceSaveInfo.odometerAtService,
+        'cost': maintenanceSaveInfo.cost,
+        'notes': maintenanceSaveInfo.note,
+        'expense_date': maintenanceSaveInfo.serviceDate.toIso8601String(),
+      }),
 
-    await _supabase
-        .from('vehicles')
-        .update({'current_odometer': maintenanceSaveInfo.odometerAtService})
-        .eq('user_id', _userService.currentUser!.id);
+      _supabase
+          .from('vehicles')
+          .update({'current_odometer': maintenanceSaveInfo.odometerAtService})
+          .eq('user_id', _userService.currentUser!.id),
 
-    await _localNotificationService.maintenanceCompletedNotification(
-      carName: vehicle.model,
-      serviceType: serviceInfo.severity,
-    );
+      _localNotificationService.maintenanceCompletedNotification(
+        carName: vehicle.model,
+        serviceType: serviceInfo.severity,
+      ),
+
+      _localNotificationService.cancelMaintenanceSchedule(10),
+    ], eagerError: true);
+    await calls;
   }
 }

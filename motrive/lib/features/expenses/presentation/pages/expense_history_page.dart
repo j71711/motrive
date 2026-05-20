@@ -1,24 +1,24 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:motrive/core/extensions/context_extensions.dart';
+import 'package:motrive/core/extensions/string_extensions.dart';
+import 'package:motrive/core/utils/formatters.dart';
 import 'package:motrive/core/widgets/timeline_widget.dart';
 import 'package:motrive/features/expenses/domain/entities/expenses_entity.dart';
 import 'package:motrive/features/expenses/presentation/cubit/expenses_cubit.dart';
 import 'package:motrive/features/expenses/presentation/cubit/expenses_state.dart';
 import 'package:motrive/features/expenses/presentation/widgets/icons.dart';
-import 'package:motrive/features/home/sub/add_expense/domain/entities/add_expense_entity.dart';
+import 'package:motrive/features/home/sub/add_expense/presentation/pages/add_expense_feature_widget.dart';
+import 'package:sizer/sizer.dart';
 
 class ExpenseHistoryPage extends StatelessWidget {
   final List<ExpensesEntity> expenses;
 
-  const ExpenseHistoryPage({
-    super.key,
-    required this.expenses,
-  });
+  const ExpenseHistoryPage({super.key, required this.expenses});
 
   @override
   Widget build(BuildContext context) {
@@ -30,125 +30,111 @@ class ExpenseHistoryPage extends StatelessWidget {
     return BlocConsumer<ExpensesCubit, ExpensesState>(
       listener: (context, state) {
         if (state is AddExpenseErrorState) {
-          context.showSnackBar(state.message);
+          context.showSnackBar(state.message, isError: true);
         }
       },
 
       builder: (context, state) {
-        final isLoading = state is AddExpensesLoadingState;
         return Stack(
           children: [
             TimelineWidget(
               onRefresh: () async {
-                await cubit.getExpensesMethod('9ebf96bd-fc6a-42c6-9a42-f9bebfa59b1c');
+                await cubit.getExpensesMethod();
               },
               itemCount: expenses.length,
               dashedOrSolid: (index) {
-                return index.isEven;
+                return expenses.length - 1 != index;
               },
-              indicatorBuilder:
-                  (context, index) {
+              indicatorBuilder: (context, index) {
                 final item = expenses[index];
                 return CircleAvatar(
                   radius: 18,
-                  child: Icon(getExpenseIcon(item.category),
-                  ),
+                  child: Icon(getExpenseIcon(item.category)),
                 );
               },
 
               oppositeContentsBuilder: (context, index) {
                 final item = expenses[index];
-                return Padding(
-                  padding: const EdgeInsets.only(
-                    top: 16,
-                  ),
-                  child: Text(
-                    DateFormat('dd MMM').format(item.expenseDate!),
-                  ),
+                return Center(
+                  child: Text(DateFormat('dd MMM').format(item.expenseDate!)),
                 );
               },
 
               contentsBuilder: (context, index) {
                 final item = expenses[index];
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: Slidable(
-                    endActionPane: ActionPane(
-                      motion: const StretchMotion(),
-                      children: [
-                        SlidableAction(
-                          backgroundColor: Colors.blue,
-                          onPressed: (_) {
-                            showEditExpenseBottomSheet(context, item);
-                            },
-
-                          icon: Icons.edit,
-                        ),
-
-                        SlidableAction(
-                          backgroundColor: Colors.red,
-                          onPressed: (_) {
-                            showDeleteDialog(context, item.id);
-                          },
-                          icon: Icons.delete,
-                        ),
-                      ],
-                    ),
-                    child: Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20,
-                        ),
+                return Slidable(
+                  endActionPane: ActionPane(
+                    motion: const StretchMotion(),
+                    children: [
+                      SlidableAction(
+                        onPressed: (_) {
+                          showEditExpenseBottomSheet(context, item);
+                        },
+                        icon: Icons.edit,
                       ),
 
-                      child: Column(
-                        crossAxisAlignment: .start,
-                        children: [
-                          Text(item.category,
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: .bold,
-                            ),
+                      SlidableAction(
+                        backgroundColor: Colors.redAccent,
+                        onPressed: (_) {
+                          showDeleteDialog(context, item.id);
+                        },
+                        icon: Icons.delete,
+                      ),
+                    ],
+                  ),
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+
+                    child: Column(
+                      crossAxisAlignment: .start,
+                      children: [
+                        Text(
+                          item.category.capitalizeWords,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: .bold,
                           ),
+                        ),
 
-                          const Gap(12),
-                          Text('${item.cost} SAR'),
-                          const Gap(8),
-                          Text('${item.odometer} KM'),
-
-                          if (item.notes != null && item.notes!.isNotEmpty)
-
-                            Padding(
-                              padding: .only(top: 8),
-                              child: Text(item.notes!),
-                            ),
-                          const Gap(12),
-                          Align(
-                            alignment: .centerRight,
-                            child: TextButton(
+                        const Gap(12),
+                        Text('${item.cost} SAR'),
+                        const Gap(8),
+                        Row(
+                          mainAxisAlignment: .spaceBetween,
+                          children: [
+                            Text(Formatters.formatOdometer(item.odometer)),
+                            FilledButton(
                               onPressed: () {
-                                showExpenseDetailsBottomSheet(context,item);
+                                showExpenseDetailsBottomSheet(context, item);
                               },
+                              style: ButtonStyle(
+                                padding: .all(.symmetric(horizontal: 15)),
+                                tapTargetSize: .shrinkWrap,
+                              ),
                               child: const Text('Details'),
                             ),
+                          ],
+                        ),
+
+                        if (item.notes != null && item.notes!.isNotEmpty)
+                          Padding(
+                            padding: .only(top: 8),
+                            child: Text(item.notes!),
                           ),
-                        ],
-                      ),
+                      ],
                     ),
                   ),
                 );
               },
             ),
-            if (isLoading)
-              Container(
-                child: const Center( child: CircularProgressIndicator(),),
-              ),
           ],
         );
       },
     );
   }
-
 
   double getMaxY(dynamic stats) {
     final values = [
@@ -162,16 +148,14 @@ class ExpenseHistoryPage extends StatelessWidget {
     values.sort();
     return values.last + 100;
   }
-} 
-
+}
 
 void showDeleteDialog(BuildContext context, String expenseId) {
-  showDialog(context: context,
+  showDialog(
+    context: context,
     builder: (_) {
       return AlertDialog(
-        title: const Text(
-          'Delete Expense',
-        ),
+        title: const Text('Delete Expense'),
         content: const Text('Are you sure?'),
         actions: [
           TextButton(
@@ -180,10 +164,14 @@ void showDeleteDialog(BuildContext context, String expenseId) {
             },
             child: const Text('Cancel'),
           ),
-          ElevatedButton(
+          FilledButton(
             onPressed: () async {
-              await context.read<ExpensesCubit>().deleteExpenseMethod(expenseId);
-              Navigator.pop(context);
+              await context.read<ExpensesCubit>().deleteExpenseMethod(
+                expenseId,
+              );
+              if (context.mounted) {
+                context.pop();
+              }
             },
             child: const Text('Delete'),
           ),
@@ -194,16 +182,14 @@ void showDeleteDialog(BuildContext context, String expenseId) {
 }
 
 void showEditExpenseBottomSheet(BuildContext context, ExpensesEntity item) {
-  final amountController = TextEditingController(text: item.cost.toString());
+  /*  final amountController = TextEditingController(text: item.cost.toString());
   final kmController = TextEditingController(text: item.odometer.toString());
   final notesController = TextEditingController(text: item.notes);
 
-  String category = item.category;
-  showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
-    builder: (_) {
-      return StatefulBuilder(
+  String category = item.category; */
+  context.showBottomSheet(
+    widget: AddExpenseFeatureWidget(expense: item),
+    /* return StatefulBuilder(
         builder: (context, setState) {
           return Padding(
             padding: EdgeInsets.only(
@@ -216,20 +202,19 @@ void showEditExpenseBottomSheet(BuildContext context, ExpensesEntity item) {
             child: Column(
               mainAxisSize: .min,
               children: [
-                DropdownButtonFormField(initialValue: category,
-                  items: [
-                    'Fuel',
-                    'Vehicle insurance',
-                    'Maintenance',
-                    'Oil',
-                    'Traffic violation',
-                    'Other',
-                  ].map((e) {
-                    return DropdownMenuItem(
-                      value: e,
-                      child: Text(e),
-                    );
-                  }).toList(),
+                DropdownButtonFormField(
+                  initialValue: category,
+                  items:
+                      [
+                        'Fuel',
+                        'Vehicle insurance',
+                        'Maintenance',
+                        'Oil',
+                        'Traffic violation',
+                        'Other',
+                      ].map((e) {
+                        return DropdownMenuItem(value: e, child: Text(e));
+                      }).toList(),
                   onChanged: (val) {
                     setState(() {
                       category = val!;
@@ -239,22 +224,17 @@ void showEditExpenseBottomSheet(BuildContext context, ExpensesEntity item) {
 
                 TextField(
                   controller: amountController,
-                  decoration: const InputDecoration(
-                    labelText: 'Amount',
-                  ),
+                  decoration: const InputDecoration(labelText: 'Amount'),
                 ),
 
                 TextField(
                   controller: kmController,
-                  decoration: const InputDecoration(
-                    labelText: 'KM',
-                  ),
+                  decoration: const InputDecoration(labelText: 'KM'),
                 ),
 
                 TextField(
                   controller: notesController,
-                  decoration:
-                      const InputDecoration(labelText: 'Notes'),
+                  decoration: const InputDecoration(labelText: 'Notes'),
                 ),
                 const Gap(20),
                 SizedBox(
@@ -267,9 +247,12 @@ void showEditExpenseBottomSheet(BuildContext context, ExpensesEntity item) {
                         category: category,
                         cost: double.parse(amountController.text),
                         odometer: int.parse(kmController.text),
-                        notes: notesController.text);
+                        notes: notesController.text,
+                      );
 
-                      await context.read<ExpensesCubit>().updateExpenseMethod(entity);
+                      await context.read<ExpensesCubit>().updateExpenseMethod(
+                        entity,
+                      );
                       Navigator.pop(context);
                     },
                     child: const Text('Update'),
@@ -280,82 +263,56 @@ void showEditExpenseBottomSheet(BuildContext context, ExpensesEntity item) {
             ),
           );
         },
-      );
-    },
+      ); */
   );
 }
 
-
-
-
-void showExpenseDetailsBottomSheet(BuildContext context, ExpensesEntity expense) {
-  showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
-    builder: (_) {
-      return Container(
-        padding: const EdgeInsets.all(20),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(24),
+void showExpenseDetailsBottomSheet(
+  BuildContext context,
+  ExpensesEntity expense,
+) {
+  context.showBottomSheet(
+    height: 45.sh,
+    widget: SafeArea(
+      child: Column(
+        mainAxisSize: .min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            expense.category,
+            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
-        ),
-
-        child: SafeArea(
-          child: Column(
-            mainAxisSize: .min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: Container(
-                  width: 50,
-                  height: 5,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                ),
-              ),
-              const Gap(24),
-              Text(
-                expense.category,
-                style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const Gap(24),
-              ListTile(
-                leading: const Icon(Icons.payments),
-                title: const Text('Amount'),
-                trailing: Text('${expense.cost} SAR'),
-              ),
-
-              ListTile(
-                leading: const Icon(Icons.speed),
-                title: const Text('Odometer'),
-                trailing: Text('${expense.odometer} KM'),),
-
-              ListTile(
-                leading: const Icon(Icons.calendar_month),
-                title: const Text('Date'),
-                trailing: Text(DateFormat('dd MMM yyyy').format(expense.expenseDate!)),
-              ),
-
-              if (expense.notes != null &&
-                  expense.notes!.isNotEmpty)
-                ListTile(
-                  leading: const Icon(Icons.notes),
-                  title: const Text('Notes'),
-                  subtitle: Text(expense.notes!),
-                ),
-
-              const Gap(20),
-            ],
+          const Gap(24),
+          ListTile(
+            leading: const Icon(Icons.payments),
+            title: const Text('Amount'),
+            trailing: Text('${expense.cost} SAR'),
           ),
-        ),
-      );
-    },
+
+          ListTile(
+            leading: const Icon(Icons.speed),
+            title: const Text('Odometer'),
+            trailing: Text('${expense.odometer} KM'),
+          ),
+
+          ListTile(
+            leading: const Icon(Icons.calendar_month),
+            title: const Text('Date'),
+            trailing: Text(
+              DateFormat('dd MMM yyyy').format(expense.expenseDate!),
+            ),
+          ),
+
+          if (expense.notes != null && expense.notes!.isNotEmpty)
+            ListTile(
+              leading: const Icon(Icons.notes),
+              title: const Text('Notes'),
+              subtitle: Text(expense.notes!),
+            ),
+
+          const Gap(20),
+        ],
+      ),
+    ),
   );
 }
-

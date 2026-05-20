@@ -23,7 +23,8 @@ class AddReminderRemoteDataSource implements BaseAddReminderRemoteDataSource {
 
   @override
   Future<void> getAddReminder(AddReminderEntity newReminder) async {
-    await _supabase.from('custom_reminders').insert({
+    await _supabase.from('custom_reminders').upsert({
+      if (newReminder.id != null) 'id': newReminder.id,
       'user_id': _userService.currentUser!.id,
       'vehicle_id': _userService.currentVehicle!.id,
       'title': newReminder.title,

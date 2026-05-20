@@ -1,20 +1,25 @@
-
 import 'package:flutter/material.dart';
 
-class ThemeToggle extends StatelessWidget {
-  final bool isDark;
+class CustomToggle extends StatelessWidget {
+  final bool value;
+
   final Function(bool) onChanged;
 
-  const ThemeToggle({
+  final IconData activeIcon;
+  final IconData inactiveIcon;
+
+  const CustomToggle({
     super.key,
-    required this.isDark,
+    required this.value,
     required this.onChanged,
+    required this.activeIcon,
+    required this.inactiveIcon,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => onChanged(!isDark),
+      onTap: () => onChanged(!value),
 
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 250),
@@ -27,19 +32,27 @@ class ThemeToggle extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
 
-          color: isDark
+          color: value
               ? Theme.of(context).colorScheme.primary
-              : Theme.of(context).colorScheme.surfaceContainerHighest,
+              : Theme.of(context)
+                  .colorScheme
+                  .surfaceContainerHighest,
 
           border: Border.all(
-            color: Theme.of(context).colorScheme.outline.withValues(alpha: .15),
+            color: Theme.of(context)
+                .colorScheme
+                .outline
+                .withValues(alpha: .15),
           ),
-        ),
+        ), 
 
         child: AnimatedAlign(
           duration: const Duration(milliseconds: 250),
 
-          alignment: isDark ? Alignment.centerRight : Alignment.centerLeft,
+          alignment:
+              value
+                  ? Alignment.centerRight
+                  : Alignment.centerLeft,
 
           child: Container(
             height: 32,
@@ -61,11 +74,13 @@ class ThemeToggle extends StatelessWidget {
             ),
 
             child: Icon(
-              isDark ? Icons.dark_mode_rounded : Icons.light_mode_rounded,
+              value
+                  ? activeIcon
+                  : inactiveIcon,
 
               size: 18,
 
-              color: isDark
+              color: value
                   ? Theme.of(context).colorScheme.primary
                   : Theme.of(context).colorScheme.onSurface,
             ),

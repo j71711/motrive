@@ -5,16 +5,18 @@ import 'package:motrive/features/home/presentation/cubit/home_state.dart';
 class HomeCubit extends Cubit<HomeState> {
   final HomeUseCase _homeUseCase;
 
-  HomeCubit(this._homeUseCase) : super(HomeInitialState());
+  HomeCubit(this._homeUseCase) : super(HomeInitialState()) {
+    getHomeMethod();
+  }
 
   Future<void> getHomeMethod() async {
     final result = await _homeUseCase.getHome();
     result.when(
       (success) {
-        //here is when success result
+        emit(HomeSuccessState(user: success));
       },
       (whenError) {
-       //here is when error result
+        emit(HomeErrorState(message: whenError.message));
       },
     );
   }

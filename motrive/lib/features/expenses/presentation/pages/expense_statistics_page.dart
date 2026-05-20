@@ -27,7 +27,7 @@ class ExpenseStatisticsPage extends StatelessWidget {
           double displayTotal = _calculateDisplayTotal(state);
 
           return RefreshIndicator(
-            onRefresh: () => context.read<ExpensesCubit>().getExpensesMethod('9ebf96bd-fc6a-42c6-9a42-f9bebfa59b1c'),
+            onRefresh: () => context.read<ExpensesCubit>().getExpensesMethod(),
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(), 
               padding: const EdgeInsets.all(16),

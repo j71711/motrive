@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -22,12 +23,12 @@ class AddCarCardFeatureWidget extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.all(16),
-                child: TextField( 
+                child: TextField(
                   onChanged: (value) {
                     cubit.search(value);
                   },
-                  decoration: const InputDecoration(
-                    hintText: 'Search vehicle',
+                  decoration: InputDecoration(
+                    hintText: 'search_vehicle'.tr(),
                     prefixIcon: Icon(Icons.search),
                   ),
                 ),
@@ -80,21 +81,21 @@ class AddCarCardFeatureWidget extends StatelessWidget {
                                 return await showDialog(
                                   context: context,
                                   builder: (context) => AlertDialog(
-                                    title: const Text('confirmation'),
+                                    title: Text('confirmation'.tr()),
                                     content: Text(
-                                      'do you want deletit ${vehicle.make} ${vehicle.model} ? ',
+                                      '${'do_you_want_delete'.tr()} ${vehicle.make} ${vehicle.model}?',
                                     ),
                                     actions: [
                                       TextButton(
                                         onPressed: () =>
                                             Navigator.of(context).pop(false),
-                                        child: const Text('cancel'),
+                                        child: Text('cancel'.tr()),
                                       ),
                                       TextButton(
                                         onPressed: () =>
                                             Navigator.of(context).pop(true),
-                                        child: const Text(
-                                          'delete',
+                                        child: Text(
+                                          'delete'.tr(),
                                           style: TextStyle(color: Colors.red),
                                         ),
                                       ),
@@ -107,7 +108,7 @@ class AddCarCardFeatureWidget extends StatelessWidget {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text(
-                                      'Deleted ${vehicle.make} successfully',
+                                      '${'deleted'.tr()} ${vehicle.make} ${'successfully'.tr()}',
                                     ),
                                   ),
                                 );
@@ -126,7 +127,7 @@ class AddCarCardFeatureWidget extends StatelessWidget {
                                 onTap: () => context.pop(vehicle),
                                 leading: const Icon(Icons.drive_eta),
                                 trailing: Text(
-                                  'Year: ${vehicle.year.toString()}',
+                                  '${'year'.tr()}: ${vehicle.year.toString()}',
                                 ),
                                 title: Text(
                                   ' ${vehicle.make}',
@@ -163,7 +164,7 @@ class AddCarCardFeatureWidget extends StatelessWidget {
                     );
                     cubit.getAddCarCardMethod();
                   },
-                  label: const Text('add Vehicle'),
+                  label: Text('add_vehicle'.tr()),
                 ),
               ),
             ],

@@ -5,8 +5,8 @@ import 'package:motrive/features/home/sub/add_expense/domain/entities/add_expens
 import 'package:multiple_result/multiple_result.dart';
 
 abstract class ExpensesRepositoryDomain {
-    Future<Result<List<ExpensesEntity>, Failure>> getExpenses(String vehicleId);
-    Future<Result<ExpenseStatsEntity, Failure>> getExpenseStats(String vehicleId);
+    Future<Result<List<ExpensesEntity>, Failure>> getExpenses();
+    Future<Result<ExpenseStatsEntity, Failure>> getExpenseStats();
     Future<Result<void, Failure>> addExpense(AddExpenseEntity entity);
     Future<Result<void, Failure>> updateExpense(AddExpenseEntity entity);
     Future<Result<void, Failure>> deleteExpense(String expenseId);

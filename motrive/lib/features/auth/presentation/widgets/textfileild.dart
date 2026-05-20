@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
@@ -42,7 +43,7 @@ class CustomTextField extends StatelessWidget {
                 FocusScope.of(context).unfocus();
               },
               decoration: InputDecoration(
-                hintText: 'Enter your $label',
+               hintText: '${'enter_your'.tr()} $label',
                 hintStyle: TextStyle(
                   color: Theme.of(
                     context,

@@ -28,9 +28,12 @@ class MaintenanceCard extends StatelessWidget {
     return ListTile(
       onTap: onTab,
       title: Text(Formatters.formatOdometer(service?.serviceOdometer ?? 0)),
-      subtitle: (service?.recommendation ?? '') == 'no data'
+      subtitle: (service?.recommendation ?? '') == 'no_data'
           ? null
-          : Text(service?.recommendation ?? '', overflow: .ellipsis),
+          : Text(
+              (service?.recommendation ?? ''),
+              overflow: TextOverflow.ellipsis,
+            ),
       trailing: hasCheckBox
           ? Checkbox(
               shape: CircleBorder(),

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -21,7 +22,6 @@ class MaintenanceDetailsFeatureScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-     
         actionsPadding: .symmetric(horizontal: 8),
         actions: [
           BlocBuilder<MaintenanceDetailsCubit, MaintenanceDetailsState>(
@@ -44,7 +44,10 @@ class MaintenanceDetailsFeatureScreen extends StatelessWidget {
                       }
                     });
                   },
-                  icon: Icon(Icons.done,color: Theme.of(context).colorScheme.onSecondary),
+                  icon: Icon(
+                    Icons.done,
+                    color: Theme.of(context).colorScheme.onSecondary,
+                  ),
                 );
               } else {
                 return Container(
@@ -54,7 +57,7 @@ class MaintenanceDetailsFeatureScreen extends StatelessWidget {
                     color: Theme.of(context).colorScheme.primary,
                   ),
 
-                  child: Text('Done'),
+                  child: Text('done'.tr()),
                 );
               }
             },
@@ -67,97 +70,93 @@ class MaintenanceDetailsFeatureScreen extends StatelessWidget {
             context.showSnackBar(state.message, isError: true);
           }
         },
-    child: SafeArea(
-  child: Padding(
-    padding: const EdgeInsets.all(16),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ServiceInfoCard(serviceInfo: serviceInfo),
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ServiceInfoCard(serviceInfo: serviceInfo),
 
-        const SizedBox(height: 16),
+                const SizedBox(height: 16),
 
-        BlocBuilder<MaintenanceDetailsCubit, MaintenanceDetailsState>(
-          builder: (context, state) {
-            switch (state) {
-              case MaintenanceDetailsErrorState _:
-                return const Expanded(
-                  child: Center(
-                    child: Text('No services available'),
-                  ),
-                );
+                BlocBuilder<MaintenanceDetailsCubit, MaintenanceDetailsState>(
+                  builder: (context, state) {
+                    switch (state) {
+                      case MaintenanceDetailsErrorState _:
+                        return Expanded(
+                         child: Center(child: Text('no_services_available'.tr())),
+                        );
 
-              case MaintenanceDetailsSuccessState _:
-                final parts = state.maintenanceDetails.parts;
+                      case MaintenanceDetailsSuccessState _:
+                        final parts = state.maintenanceDetails.parts;
 
-                if (parts.isEmpty) {
-                  return const Expanded(
-                    child: Center(
-                      child: Text('No services available'),
-                    ),
-                  );
-                }
+                        if (parts.isEmpty) {
+                          return Expanded(
+                                   child: Center(child: Text('no_services_available'.tr())),
+                          );
+                        }
 
-                return Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 14,
-                            vertical: 8,
+                        return Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 14,
+                                    vertical: 8,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context).colorScheme.primary
+                                        .withValues(alpha: .08),
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                  child: Text(
+                         '${'last_odometer'.tr()}: ${Formatters.formatOdometer(state.maintenanceDetails.vehicle.currentOdometer ?? 0)}',
+                                    style: TextStyle(
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.primary,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ),
+                              ),
+
+                              const SizedBox(height: 14),
+
+                              Expanded(
+                                child: ListView.separated(
+                                  itemBuilder: (context, index) =>
+                                      PartCard(part: parts[index]),
+                                  separatorBuilder: (context, index) =>
+                                      const SizedBox(height: 10),
+                                  itemCount: parts.length,
+                                ),
+                              ),
+                            ],
                           ),
-                          decoration: BoxDecoration(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .primary
-                                .withValues(alpha: .08),
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          child: Text(
-                            'Last odometer: ${Formatters.formatOdometer(state.maintenanceDetails.vehicle.currentOdometer ?? 0)}',
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ),
-                      ),
+                        );
+                    }
 
-                      const SizedBox(height: 14),
-
-                      Expanded(
+                    return Expanded(
+                      child: Skeletonizer(
                         child: ListView.separated(
-                          itemBuilder: (context, index) =>
-                              PartCard(part: parts[index]),
+                          itemBuilder: (context, index) => PartCard(),
                           separatorBuilder: (context, index) =>
                               const SizedBox(height: 10),
-                          itemCount: parts.length,
+                          itemCount: 5,
                         ),
                       ),
-                    ],
-                  ),
-                );
-            }
-
-            return Expanded(
-              child: Skeletonizer(
-                child: ListView.separated(
-                  itemBuilder: (context, index) => PartCard(),
-                  separatorBuilder: (context, index) =>
-                      const SizedBox(height: 10),
-                  itemCount: 5,
+                    );
+                  },
                 ),
-              ),
-            );
-          },
+              ],
+            ),
+          ),
         ),
-      ],
-    ),
-  ),
-),
       ),
     );
   }

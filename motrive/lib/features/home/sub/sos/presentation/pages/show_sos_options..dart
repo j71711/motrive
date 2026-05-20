@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -59,7 +60,7 @@ void showSosOptions(BuildContext context, SosCubit sosCubit) {
                                 const Gap(18),
 
                                 Text(
-                                  'Emergency Help',
+                                  'emergency_help'.tr(),
                                   style: Theme.of(context).textTheme.titleLarge
                                       ?.copyWith(
                                         color: Theme.of(
@@ -74,8 +75,8 @@ void showSosOptions(BuildContext context, SosCubit sosCubit) {
                                 sosTile(
                                   context,
                                   Icons.local_police_rounded,
-                                  'Police',
-                                  'Call 999',
+                                 'police'.tr(),
+                                 'call_999'.tr(),
                                   () {
                                     Navigator.pop(context);
                                     sosCubit.callPoliceMethod();
@@ -85,8 +86,8 @@ void showSosOptions(BuildContext context, SosCubit sosCubit) {
                                 sosTile(
                                   context,
                                   Icons.medical_services_rounded,
-                                  'Ambulance',
-                                  'Call 997',
+                                 'ambulance'.tr(),
+                                  'call_997'.tr(),
                                   () {
                                     Navigator.pop(context);
                                     sosCubit.callAmbulanceMethod();
@@ -97,7 +98,7 @@ void showSosOptions(BuildContext context, SosCubit sosCubit) {
 
                                 Text(
                                   textAlign: .start,
-                                  'Emergency Contact',
+                               'emergency_contact'.tr(),
                                   style: Theme.of(context).textTheme.titleLarge
                                       ?.copyWith(
                                         color: Theme.of(
@@ -111,9 +112,9 @@ void showSosOptions(BuildContext context, SosCubit sosCubit) {
                                 sosTile(
                                   context,
                                   Icons.email_rounded,
-                                  'Contact',
+                                'contact'.tr(),
                                   contacts.isEmpty
-                                      ? 'No contacts'
+                                      ?'no_contacts'.tr()
                                       : contacts
                                             .map((contact) => contact.name)
                                             .join(', '),

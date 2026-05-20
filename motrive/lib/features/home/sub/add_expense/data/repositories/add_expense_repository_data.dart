@@ -1,8 +1,9 @@
 import 'package:injectable/injectable.dart';
 import 'package:motrive/core/errors/network_exceptions.dart';
-import 'package:motrive/features/add_vehicle/sub/add_car_card/data/datasources/add_car_card_remote_data_source.dart';
 import 'package:motrive/features/home/sub/add_expense/data/models/add_expense_model.dart';
 import 'package:motrive/features/home/sub/add_expense/domain/entities/add_expense_entity.dart';
+import 'package:motrive/features/maintenance/data/models/vehicle/vehicle_model.dart';
+import 'package:motrive/features/maintenance/domain/entities/vehicle_entity.dart';
 import 'package:multiple_result/multiple_result.dart';
 import 'package:motrive/core/errors/failure.dart';
 import 'package:motrive/features/home/sub/add_expense/data/datasources/add_expense_remote_data_source.dart';
@@ -11,15 +12,25 @@ import 'package:motrive/features/home/sub/add_expense/domain/repositories/add_ex
 @LazySingleton(as: AddExpenseRepositoryDomain)
 class AddExpenseRepositoryData implements AddExpenseRepositoryDomain{
   final BaseAddExpenseRemoteDataSource remoteDataSource;
-   final VehicleLocalDataSourceImpl localDataSource;
-  AddExpenseRepositoryData(this.remoteDataSource, this.localDataSource);
+  AddExpenseRepositoryData(this.remoteDataSource,);
   
   @override
   Future<Result<void, Failure>> addExpense(AddExpenseEntity entity) async {
     try {
       await remoteDataSource.addExpense(entity.toModel());
 
-      return Success(unit);
+      return Success(null);
+    } catch (error) {
+      return Error(FailureExceptions.getException(error));
+    }
+  }
+
+  @override
+  Result<UserVehicleEntity, Failure> getUserVehicle() {
+    try {
+       final vehicle = remoteDataSource.getUserVehicle();
+
+      return Success(vehicle.toEntity());
     } catch (error) {
       return Error(FailureExceptions.getException(error));
     }
@@ -32,7 +43,7 @@ class AddExpenseRepositoryData implements AddExpenseRepositoryDomain{
     try {
       await remoteDataSource.updateExpense(entity.toModel());
 
-      return const Success(unit);
+      return const Success(null);
     } catch (error) {
       return Error(
         FailureExceptions.getException(error),
@@ -47,7 +58,7 @@ class AddExpenseRepositoryData implements AddExpenseRepositoryDomain{
     try {
       await remoteDataSource.deleteExpense(expenseId);
 
-      return const Success(unit);
+      return const Success(null);
     } catch (error) {
       return Error(
         FailureExceptions.getException(error),
