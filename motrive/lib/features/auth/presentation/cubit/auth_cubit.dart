@@ -2,13 +2,22 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:motrive/features/auth/domain/use_cases/auth_use_case.dart';
 import 'package:motrive/features/auth/presentation/cubit/auth_state.dart';
 
-
 class AuthCubit extends Cubit<AuthState> {
   final AuthUseCase _authUseCase;
+  bool acceptedAgreement = false;
+
+  void toggleAgreement(bool value) {
+    acceptedAgreement = value;
+  }
 
   AuthCubit(this._authUseCase) : super(AuthInitialState(isLogin: true));
 
   Future<void> googleSignIn() async {
+    if (!acceptedAgreement && state.isLogin == false) {
+      emit(AuthErrorState(message: 'please_accept_user_agreement'));
+      return;
+    }
+
     emit(AuthLoadingState());
     final result = await _authUseCase.googleSignIn();
     result.when(
@@ -25,8 +34,14 @@ class AuthCubit extends Cubit<AuthState> {
     required String email,
     required String name,
   }) async {
+    if (!acceptedAgreement && state.isLogin == false) {
+      emit(AuthErrorState(message: 'please_accept_user_agreement'));
+      return;
+    }
+
     emit(AuthLoadingState());
     final result = await _authUseCase.emailSignIn(email: email, name: name);
+
     result.when(
       (success) {
         emit(AuthEmailSuccessState(email: email, name: name));
@@ -53,6 +68,8 @@ class AuthCubit extends Cubit<AuthState> {
   void toggleSignIn() {
     emit(AuthInitialState(isLogin: !(state.isLogin ?? true)));
   }
+
+  
 
   @override
   Future<void> close() {

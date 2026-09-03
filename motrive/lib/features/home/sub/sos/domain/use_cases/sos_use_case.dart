@@ -9,8 +9,8 @@ class SosUseCase {
 
   SosUseCase(this.repository);
 
-  Future<Result<void, Failure>> sendSosEmail() {
-    return repository.sendSosEmail();
+  Future<Result<void, Failure>> sendSosAlert() {
+    return repository.sendSosAlert();
   }
 
   Future<Result<void, Failure>> callPolice() {

@@ -7,7 +7,7 @@ abstract class EmergencyContactRepositoryDomain {
 
   Future<Result<void, Failure>> addEmergencyContact({
     required String name,
-    required String email,
+    required String phoneNumber,
     required String relation,
     required bool notifyEmergency,
   });
@@ -15,7 +15,7 @@ abstract class EmergencyContactRepositoryDomain {
   Future<Result<void, Failure>> updateEmergencyContact({
     required String id,
     required String name,
-    required String email,
+    required String phoneNumber,
     required String relation,
     required bool notifyEmergency,
   });

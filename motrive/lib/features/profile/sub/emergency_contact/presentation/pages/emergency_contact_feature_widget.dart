@@ -14,7 +14,7 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final nameController = TextEditingController();
-    final emailController = TextEditingController();
+    final phoneController = TextEditingController();
     String relation = '';
     final cubit = context.read<EmergencyContactCubit>();
 
@@ -28,7 +28,7 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
 
         if (state is EmergencyContactActionSuccessState) {
           nameController.clear();
-          emailController.clear();
+          phoneController.clear();
           relation = '';
         }
       },
@@ -93,7 +93,7 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                               const Gap(5),
 
                               Text(
-                                contact.email,
+                                contact.phoneNumber,
                                 style: Theme.of(context).textTheme.bodyMedium
                                     ?.copyWith(color: Colors.grey.shade600),
                               ),
@@ -120,7 +120,7 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                                         onPressed: () {
                                           nameController.text = contact.name;
 
-                                          emailController.text = contact.email;
+                                          phoneController.text = contact.phoneNumber;
 
                                           relation = contact.relation;
 
@@ -129,14 +129,14 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                                             title: 'edit_contact'.tr(),
                                             buttonText: "update".tr(),
                                             nameController: nameController,
-                                            emailController: emailController,
+                                            phoneController: phoneController,
                                             relation: relation,
                                             onPressed: (relation) {
                                               cubit
                                                   .updateEmergencyContactMethod(
                                                     id: contact.id,
                                                     name: nameController.text,
-                                                    email: emailController.text,
+                                                    phoneNumber: phoneController.text,
                                                     relation: relation,
                                                     notifyEmergency: false,
                                                   );
@@ -205,7 +205,7 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                           ),
                           onPressed: () {
                             nameController.clear();
-                            emailController.clear();
+                            phoneController.clear();
                             relation = '';
 
                             showContactDialog(
@@ -213,12 +213,12 @@ class EmergencyContactFeatureWidget extends StatelessWidget {
                               title: 'add_contact'.tr(),
                               buttonText: 'add'.tr(),
                               nameController: nameController,
-                              emailController: emailController,
+                              phoneController: phoneController,
                               relation: relation,
                               onPressed: (relation) {
                                 cubit.addEmergencyContactMethod(
                                   name: nameController.text,
-                                  email: emailController.text,
+                                  phoneNumber: phoneController.text,
                                   relation: relation,
                                   notifyEmergency: false,
                                 );

@@ -46,98 +46,82 @@ class SosFeatureWidget extends StatelessWidget {
               onTap: () {
                 showSosOptions(context, sosCubit);
               },
-
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(34),
-
+                borderRadius: BorderRadius.circular(28),
                 child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
-
+                  filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                   child: Container(
-                    height: 88,
+                    height: 84,
                     width: double.infinity,
-
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-
+                    padding: const EdgeInsets.symmetric(horizontal: 18),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(34),
-
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-
-                        colors: [
-                          Theme.of(
-                            context,
-                          ).colorScheme.error.withValues(alpha: .95),
-
-                          Theme.of(
-                            context,
-                          ).colorScheme.errorContainer.withValues(alpha: .85),
-                        ],
-                      ),
-
+                      borderRadius: BorderRadius.circular(28),
+                      color: Theme.of(context).colorScheme.error,
                       boxShadow: [
                         BoxShadow(
                           color: Theme.of(
                             context,
-                          ).colorScheme.error.withValues(alpha: .35),
-
-                          blurRadius: 24,
-                          offset: const Offset(0, 10),
+                          ).colorScheme.error.withValues(alpha: .25),
+                          blurRadius: 18,
+                          offset: const Offset(0, 8),
                         ),
                       ],
                     ),
-
                     child: Row(
                       children: [
                         Container(
-                          height: 58,
-                          width: 58,
-
+                          width: 54,
+                          height: 54,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-
-                            color: Colors.white.withValues(alpha: .18),
+                            color:  Theme.of(context).colorScheme.primary,
                           ),
-
-                          child: const Icon(
-                            Icons.warning_rounded,
-                            color: Colors.white,
-                            size: 32,
+                          child: Icon(
+                            Icons.warning_amber_rounded,
+                            color: Theme.of(context).colorScheme.onError,
+                            size: 30,
                           ),
                         ),
 
-                        const SizedBox(width: 18),
+                        const SizedBox(width: 16),
 
                         Expanded(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
-
                             crossAxisAlignment: CrossAxisAlignment.start,
-
                             children: [
                               Text(
                                 'sos_emergency'.tr(),
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                style: Theme.of(context).textTheme.titleLarge
+                                    ?.copyWith(
+                                      color:  Theme.of(context).colorScheme.primary,
+                                      fontWeight: FontWeight.w800,
+                                    ),
                               ),
-
-                              SizedBox(height: 4),
-
+                              const SizedBox(height: 2),
                               Text(
                                 'tap_to_send_emergency_alert'.tr(),
-
-                                style: TextStyle(
-                                  color: Colors.white70,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.normal,
-                                ),
+                                style: Theme.of(context).textTheme.bodyMedium
+                                    ?.copyWith(
+                                      color: Theme.of(context).colorScheme.primary
+                                          .withValues(alpha: .85),
+                                    ),
                               ),
                             ],
+                          ),
+                        ),
+
+                        Container(
+                          width: 38,
+                          height: 38,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white.withValues(alpha: .18),
+                          ),
+                          child: Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            color: Theme.of(context).colorScheme.primary,
+                            size: 16,
                           ),
                         ),
                       ],

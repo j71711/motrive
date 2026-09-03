@@ -14,6 +14,7 @@ import 'package:motrive/features/auth/presentation/cubit/auth_state.dart';
 import 'package:motrive/core/widgets/cirle_widget.dart';
 import 'package:motrive/features/auth/presentation/widgets/otp_widget.dart';
 import 'package:motrive/features/auth/presentation/widgets/textfileild.dart';
+import 'package:motrive/features/profile/presentation/widgets/agreement_screen.dart';
 import 'package:motrive/features/profile/presentation/widgets/toggle_widget.dart';
 
 class AuthFeatureScreen extends HookWidget {
@@ -38,7 +39,7 @@ class AuthFeatureScreen extends HookWidget {
           if (state is AuthErrorState) {
             ScaffoldMessenger.of(
               context,
-            ).showSnackBar(SnackBar(content: Text(state.message)));
+            ).showSnackBar(SnackBar(content: Text(state.message.tr())));
           }
 
           if (state is AuthEmailSuccessState) {
@@ -72,7 +73,6 @@ class AuthFeatureScreen extends HookWidget {
         },
         builder: (context, state) {
           final isLogin = state.isLogin ?? true;
-
           final size = MediaQuery.of(context).size;
 
           return Stack(
@@ -88,13 +88,11 @@ class AuthFeatureScreen extends HookWidget {
                       top: 38,
                       child: Circle(size: 185, opacity: .1),
                     ),
-
                     Positioned(
                       right: -35,
                       top: 100,
                       child: Circle(size: 110, opacity: .1),
                     ),
-
                     Positioned(
                       right: 100,
                       bottom: -40,
@@ -103,24 +101,18 @@ class AuthFeatureScreen extends HookWidget {
                     Positioned(
                       top: 55,
                       right: 24,
-
                       child: CustomToggle(
                         value: context.locale.languageCode == 'en',
-
                         activeIcon: Icons.language,
                         inactiveIcon: Icons.language,
-
                         onChanged: (value) async {
-                          print('FFFFFFF');
                           final locale = value
                               ? const Locale('en')
                               : const Locale('ar');
-                         context.setLocale(locale);
-                      context.read<ThemeCubit>().changeLanguage(locale);
 
-
+                          context.setLocale(locale);
+                          context.read<ThemeCubit>().changeLanguage(locale);
                         },
-                        
                       ),
                     ),
                     Center(
@@ -140,12 +132,12 @@ class AuthFeatureScreen extends HookWidget {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
-                  height: size.height * .69,
+                  constraints: BoxConstraints(minHeight: size.height * .69),
                   width: double.infinity,
-                  padding: const EdgeInsets.symmetric(horizontal: 34),
+                  padding: const EdgeInsets.symmetric(horizontal: 28),
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.surface,
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(38),
                       topRight: Radius.circular(38),
                     ),
@@ -153,14 +145,18 @@ class AuthFeatureScreen extends HookWidget {
                   child: Form(
                     key: formKey,
                     child: SingleChildScrollView(
+                      padding: const EdgeInsets.only(bottom: 24),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(height: isLogin ? 78 : 52),
+                          SizedBox(height: isLogin ? 64 : 36),
 
                           if (!isLogin) ...[
                             Padding(
-                              padding: EdgeInsets.only(left: 6, bottom: 8),
+                              padding: const EdgeInsets.only(
+                                left: 6,
+                                bottom: 8,
+                              ),
                               child: Text(
                                 'name'.tr(),
                                 style: TextStyle(
@@ -170,18 +166,16 @@ class AuthFeatureScreen extends HookWidget {
                                 ),
                               ),
                             ),
-
                             CustomTextField(
                               label: 'name'.tr(),
                               controller: nameController,
-                              validator: isLogin
-                                  ? null
-                                  : Validators.validateFullName,
+                              validator: Validators.validateFullName,
                             ),
+                            const Gap(16),
                           ],
 
                           Padding(
-                            padding: EdgeInsets.only(left: 6, bottom: 8),
+                            padding: const EdgeInsets.only(left: 6, bottom: 8),
                             child: Text(
                               'email'.tr(),
                               style: TextStyle(
@@ -198,6 +192,79 @@ class AuthFeatureScreen extends HookWidget {
                             textInputType: TextInputType.emailAddress,
                             validator: Validators.validateEmail,
                           ),
+
+                          const Gap(16),
+
+                          if (!isLogin)
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 16),
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                  vertical: 8,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .surfaceContainerHighest
+                                      .withValues(alpha: .4),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Checkbox(
+                                      value: cubit.acceptedAgreement,
+                                      onChanged: (value) {
+                                        cubit.toggleAgreement(value ?? false);
+                                        cubit.toggleSignIn();
+                                        cubit.toggleSignIn();
+                                      },
+                                    ),
+                                    Expanded(
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (_) =>
+                                                  const AgreementScreen(),
+                                            ),
+                                          );
+                                        },
+                                        child: RichText(
+                                          text: TextSpan(
+                                            children: [
+                                              TextSpan(
+                                                text: '${'i_agree_to'.tr()} ',
+                                                style: TextStyle(
+                                                  color: Theme.of(
+                                                    context,
+                                                  ).colorScheme.onSurface,
+                                                  fontSize: 14,
+                                                ),
+                                              ),
+                                              TextSpan(
+                                                text: 'user_agreement'.tr(),
+                                                style: TextStyle(
+                                                  color: Theme.of(
+                                                    context,
+                                                  ).colorScheme.primary,
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w700,
+                                                  decoration:
+                                                      TextDecoration.underline,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+
                           SizedBox(
                             height: 56,
                             width: double.infinity,
@@ -206,6 +273,21 @@ class AuthFeatureScreen extends HookWidget {
                                   ? null
                                   : () {
                                       if (formKey.currentState!.validate()) {
+                                        if (!isLogin &&
+                                            !cubit.acceptedAgreement) {
+                                          ScaffoldMessenger.of(
+                                            context,
+                                          ).showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                'please_accept_user_agreement'
+                                                    .tr(),
+                                              ),
+                                            ),
+                                          );
+                                          return;
+                                        }
+
                                         cubit.emailSignIn(
                                           email: emailController.text.trim(),
                                           name: isLogin
@@ -223,14 +305,16 @@ class AuthFeatureScreen extends HookWidget {
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                               ),
-
                               child: state is AuthLoadingState
                                   ? CircularProgressIndicator(
                                       color: Theme.of(
                                         context,
                                       ).colorScheme.onPrimary,
                                     )
-                                  : DefaultTextStyle(
+                                  : Text(
+                                      isLogin
+                                          ? 'send_otp'.tr()
+                                          : 'sign_up'.tr(),
                                       style: TextStyle(
                                         color: Theme.of(
                                           context,
@@ -238,15 +322,11 @@ class AuthFeatureScreen extends HookWidget {
                                         fontSize: 20,
                                         fontWeight: FontWeight.w500,
                                       ),
-                                      child: Text(
-                                        isLogin
-                                            ? 'send_otp'.tr()
-                                            : 'sign_up'.tr(),
-                                      ),
                                     ),
                             ),
                           ),
-                          const Gap(24),
+
+                          const Gap(20),
 
                           SizedBox(
                             height: 54,
@@ -274,9 +354,7 @@ class AuthFeatureScreen extends HookWidget {
                                     height: 28,
                                     width: 28,
                                   ),
-
-                                  const Gap(24),
-
+                                  const Gap(18),
                                   Text(
                                     'login_with_google'.tr(),
                                     style: TextStyle(
@@ -292,7 +370,7 @@ class AuthFeatureScreen extends HookWidget {
                             ),
                           ),
 
-                          Gap(size.height * .14),
+                          const Gap(32),
 
                           Center(
                             child: GestureDetector(
@@ -317,8 +395,8 @@ class AuthFeatureScreen extends HookWidget {
                                     ),
                                     TextSpan(
                                       text: isLogin
-                                          ? 'sign_up'.tr()
-                                          : 'sign_in'.tr(),
+                                          ? ' sign_up'.tr()
+                                          : ' sign_in'.tr(),
                                       style: TextStyle(
                                         color: Theme.of(
                                           context,
@@ -332,6 +410,7 @@ class AuthFeatureScreen extends HookWidget {
                               ),
                             ),
                           ),
+
                           const Gap(30),
                         ],
                       ),

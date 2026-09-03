@@ -5,8 +5,7 @@ import 'package:motrive/features/profile/sub/emergency_contact/presentation/cubi
 class EmergencyContactCubit extends Cubit<EmergencyContactState> {
   final EmergencyContactUseCase useCase;
 
-  EmergencyContactCubit(this.useCase)
-      : super(EmergencyContactInitialState());
+  EmergencyContactCubit(this.useCase) : super(EmergencyContactInitialState());
 
   Future<void> getEmergencyContactMethod() async {
     emit(EmergencyContactLoadingState());
@@ -25,7 +24,7 @@ class EmergencyContactCubit extends Cubit<EmergencyContactState> {
 
   Future<void> addEmergencyContactMethod({
     required String name,
-    required String email,
+    required String phoneNumber,
     required String relation,
     required bool notifyEmergency,
   }) async {
@@ -33,7 +32,7 @@ class EmergencyContactCubit extends Cubit<EmergencyContactState> {
 
     final result = await useCase.addEmergencyContact(
       name: name,
-      email: email,
+      phoneNumber: phoneNumber,
       relation: relation,
       notifyEmergency: notifyEmergency,
     );
@@ -52,7 +51,7 @@ class EmergencyContactCubit extends Cubit<EmergencyContactState> {
   Future<void> updateEmergencyContactMethod({
     required String id,
     required String name,
-    required String email,
+    required String phoneNumber,
     required String relation,
     required bool notifyEmergency,
   }) async {
@@ -61,7 +60,7 @@ class EmergencyContactCubit extends Cubit<EmergencyContactState> {
     final result = await useCase.updateEmergencyContact(
       id: id,
       name: name,
-      email: email,
+      phoneNumber: phoneNumber,
       relation: relation,
       notifyEmergency: notifyEmergency,
     );
@@ -77,9 +76,7 @@ class EmergencyContactCubit extends Cubit<EmergencyContactState> {
     );
   }
 
-  Future<void> deleteEmergencyContactMethod({
-    required String id,
-  }) async {
+  Future<void> deleteEmergencyContactMethod({required String id}) async {
     emit(EmergencyContactLoadingState());
 
     final result = await useCase.deleteEmergencyContact(id: id);
@@ -94,5 +91,4 @@ class EmergencyContactCubit extends Cubit<EmergencyContactState> {
       },
     );
   }
-
 }

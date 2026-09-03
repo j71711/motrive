@@ -16,24 +16,32 @@ Widget sosTile(
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
         child: SlideAction(
-          height: 76,
-          borderRadius: 30,
+          height: 72,
+          borderRadius: 28,
           elevation: 0,
           innerColor: Theme.of(context).colorScheme.error,
-          outerColor: Theme.of(context).colorScheme.surface.withValues(alpha: .35),
+          outerColor: Theme.of(
+            context,
+          ).colorScheme.error.withValues(alpha: .18),
+
           sliderButtonIcon: Icon(
-            icon,
+            Icons.keyboard_double_arrow_right_rounded,
             color: Theme.of(context).colorScheme.onError,
-            size: 24,
+            size: 28,
           ),
-          text: '$title . $subtitle ',
-          textStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+
+          text: 'Swipe to call $title',
+          textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
+            color: Theme.of(context).colorScheme.onSurface,
+          ),
+
           submittedIcon: Icon(
             Icons.check_rounded,
             color: Theme.of(context).colorScheme.onError,
           ),
+
           onSubmit: () {
             onSwipe();
             return null;

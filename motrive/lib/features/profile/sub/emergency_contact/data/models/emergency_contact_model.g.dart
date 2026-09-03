@@ -12,9 +12,9 @@ _EmergencyContactModel _$EmergencyContactModelFromJson(
   id: json['id'] as String,
   userId: json['user_id'] as String,
   name: json['name'] as String,
-  email: json['email'] as String,
+  phoneNumber: json['phone_number'] as String,
   relation: json['relation'] as String,
-  notifyEmergency: json['notify_emergency'] as bool,
+  notifyEmergency: json['notify_emergency'] as bool? ?? false,
   createdAt: json['created_at'] == null
       ? null
       : DateTime.parse(json['created_at'] as String),
@@ -26,7 +26,7 @@ Map<String, dynamic> _$EmergencyContactModelToJson(
   'id': instance.id,
   'user_id': instance.userId,
   'name': instance.name,
-  'email': instance.email,
+  'phone_number': instance.phoneNumber,
   'relation': instance.relation,
   'notify_emergency': instance.notifyEmergency,
   'created_at': instance.createdAt?.toIso8601String(),

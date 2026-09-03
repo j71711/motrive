@@ -8,18 +8,19 @@ abstract class EmergencyContactModel with _$EmergencyContactModel {
   const factory EmergencyContactModel({
     required String id,
 
-    @JsonKey(name: 'user_id')
-    required String userId,
+    @JsonKey(name: 'user_id') required String userId,
 
     required String name,
-    required String email,
+
+    @JsonKey(name: 'phone_number') required String phoneNumber,
+
     required String relation,
 
     @JsonKey(name: 'notify_emergency')
-    required bool notifyEmergency,
+    @Default(false)
+    bool notifyEmergency,
 
-    @JsonKey(name: 'created_at')
-    DateTime? createdAt,
+    @JsonKey(name: 'created_at') DateTime? createdAt,
   }) = _EmergencyContactModel;
 
   factory EmergencyContactModel.fromJson(Map<String, Object?> json) =>
@@ -32,7 +33,7 @@ extension EmergencyContactModelMapper on EmergencyContactModel {
       id: id,
       userId: userId,
       name: name,
-      email: email,
+      phoneNumber: phoneNumber,
       relation: relation,
       notifyEmergency: notifyEmergency,
       createdAt: createdAt,

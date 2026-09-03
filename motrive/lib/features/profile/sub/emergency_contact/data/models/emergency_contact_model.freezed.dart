@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$EmergencyContactModel {
 
- String get id;@JsonKey(name: 'user_id') String get userId; String get name; String get email; String get relation;@JsonKey(name: 'notify_emergency') bool get notifyEmergency;@JsonKey(name: 'created_at') DateTime? get createdAt;
+ String get id;@JsonKey(name: 'user_id') String get userId; String get name;@JsonKey(name: 'phone_number') String get phoneNumber; String get relation;@JsonKey(name: 'notify_emergency') bool get notifyEmergency;@JsonKey(name: 'created_at') DateTime? get createdAt;
 /// Create a copy of EmergencyContactModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $EmergencyContactModelCopyWith<EmergencyContactModel> get copyWith => _$Emergenc
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is EmergencyContactModel&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.relation, relation) || other.relation == relation)&&(identical(other.notifyEmergency, notifyEmergency) || other.notifyEmergency == notifyEmergency)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is EmergencyContactModel&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.name, name) || other.name == name)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.relation, relation) || other.relation == relation)&&(identical(other.notifyEmergency, notifyEmergency) || other.notifyEmergency == notifyEmergency)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,userId,name,email,relation,notifyEmergency,createdAt);
+int get hashCode => Object.hash(runtimeType,id,userId,name,phoneNumber,relation,notifyEmergency,createdAt);
 
 @override
 String toString() {
-  return 'EmergencyContactModel(id: $id, userId: $userId, name: $name, email: $email, relation: $relation, notifyEmergency: $notifyEmergency, createdAt: $createdAt)';
+  return 'EmergencyContactModel(id: $id, userId: $userId, name: $name, phoneNumber: $phoneNumber, relation: $relation, notifyEmergency: $notifyEmergency, createdAt: $createdAt)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $EmergencyContactModelCopyWith<$Res>  {
   factory $EmergencyContactModelCopyWith(EmergencyContactModel value, $Res Function(EmergencyContactModel) _then) = _$EmergencyContactModelCopyWithImpl;
 @useResult
 $Res call({
- String id,@JsonKey(name: 'user_id') String userId, String name, String email, String relation,@JsonKey(name: 'notify_emergency') bool notifyEmergency,@JsonKey(name: 'created_at') DateTime? createdAt
+ String id,@JsonKey(name: 'user_id') String userId, String name,@JsonKey(name: 'phone_number') String phoneNumber, String relation,@JsonKey(name: 'notify_emergency') bool notifyEmergency,@JsonKey(name: 'created_at') DateTime? createdAt
 });
 
 
@@ -65,12 +65,12 @@ class _$EmergencyContactModelCopyWithImpl<$Res>
 
 /// Create a copy of EmergencyContactModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? userId = null,Object? name = null,Object? email = null,Object? relation = null,Object? notifyEmergency = null,Object? createdAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? userId = null,Object? name = null,Object? phoneNumber = null,Object? relation = null,Object? notifyEmergency = null,Object? createdAt = freezed,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as String,phoneNumber: null == phoneNumber ? _self.phoneNumber : phoneNumber // ignore: cast_nullable_to_non_nullable
 as String,relation: null == relation ? _self.relation : relation // ignore: cast_nullable_to_non_nullable
 as String,notifyEmergency: null == notifyEmergency ? _self.notifyEmergency : notifyEmergency // ignore: cast_nullable_to_non_nullable
 as bool,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
@@ -159,10 +159,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'user_id')  String userId,  String name,  String email,  String relation, @JsonKey(name: 'notify_emergency')  bool notifyEmergency, @JsonKey(name: 'created_at')  DateTime? createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'user_id')  String userId,  String name, @JsonKey(name: 'phone_number')  String phoneNumber,  String relation, @JsonKey(name: 'notify_emergency')  bool notifyEmergency, @JsonKey(name: 'created_at')  DateTime? createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _EmergencyContactModel() when $default != null:
-return $default(_that.id,_that.userId,_that.name,_that.email,_that.relation,_that.notifyEmergency,_that.createdAt);case _:
+return $default(_that.id,_that.userId,_that.name,_that.phoneNumber,_that.relation,_that.notifyEmergency,_that.createdAt);case _:
   return orElse();
 
 }
@@ -180,10 +180,10 @@ return $default(_that.id,_that.userId,_that.name,_that.email,_that.relation,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'user_id')  String userId,  String name,  String email,  String relation, @JsonKey(name: 'notify_emergency')  bool notifyEmergency, @JsonKey(name: 'created_at')  DateTime? createdAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id, @JsonKey(name: 'user_id')  String userId,  String name, @JsonKey(name: 'phone_number')  String phoneNumber,  String relation, @JsonKey(name: 'notify_emergency')  bool notifyEmergency, @JsonKey(name: 'created_at')  DateTime? createdAt)  $default,) {final _that = this;
 switch (_that) {
 case _EmergencyContactModel():
-return $default(_that.id,_that.userId,_that.name,_that.email,_that.relation,_that.notifyEmergency,_that.createdAt);case _:
+return $default(_that.id,_that.userId,_that.name,_that.phoneNumber,_that.relation,_that.notifyEmergency,_that.createdAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -200,10 +200,10 @@ return $default(_that.id,_that.userId,_that.name,_that.email,_that.relation,_tha
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id, @JsonKey(name: 'user_id')  String userId,  String name,  String email,  String relation, @JsonKey(name: 'notify_emergency')  bool notifyEmergency, @JsonKey(name: 'created_at')  DateTime? createdAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id, @JsonKey(name: 'user_id')  String userId,  String name, @JsonKey(name: 'phone_number')  String phoneNumber,  String relation, @JsonKey(name: 'notify_emergency')  bool notifyEmergency, @JsonKey(name: 'created_at')  DateTime? createdAt)?  $default,) {final _that = this;
 switch (_that) {
 case _EmergencyContactModel() when $default != null:
-return $default(_that.id,_that.userId,_that.name,_that.email,_that.relation,_that.notifyEmergency,_that.createdAt);case _:
+return $default(_that.id,_that.userId,_that.name,_that.phoneNumber,_that.relation,_that.notifyEmergency,_that.createdAt);case _:
   return null;
 
 }
@@ -215,13 +215,13 @@ return $default(_that.id,_that.userId,_that.name,_that.email,_that.relation,_tha
 @JsonSerializable()
 
 class _EmergencyContactModel implements EmergencyContactModel {
-  const _EmergencyContactModel({required this.id, @JsonKey(name: 'user_id') required this.userId, required this.name, required this.email, required this.relation, @JsonKey(name: 'notify_emergency') required this.notifyEmergency, @JsonKey(name: 'created_at') this.createdAt});
+  const _EmergencyContactModel({required this.id, @JsonKey(name: 'user_id') required this.userId, required this.name, @JsonKey(name: 'phone_number') required this.phoneNumber, required this.relation, @JsonKey(name: 'notify_emergency') this.notifyEmergency = false, @JsonKey(name: 'created_at') this.createdAt});
   factory _EmergencyContactModel.fromJson(Map<String, dynamic> json) => _$EmergencyContactModelFromJson(json);
 
 @override final  String id;
 @override@JsonKey(name: 'user_id') final  String userId;
 @override final  String name;
-@override final  String email;
+@override@JsonKey(name: 'phone_number') final  String phoneNumber;
 @override final  String relation;
 @override@JsonKey(name: 'notify_emergency') final  bool notifyEmergency;
 @override@JsonKey(name: 'created_at') final  DateTime? createdAt;
@@ -239,16 +239,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _EmergencyContactModel&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.relation, relation) || other.relation == relation)&&(identical(other.notifyEmergency, notifyEmergency) || other.notifyEmergency == notifyEmergency)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _EmergencyContactModel&&(identical(other.id, id) || other.id == id)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.name, name) || other.name == name)&&(identical(other.phoneNumber, phoneNumber) || other.phoneNumber == phoneNumber)&&(identical(other.relation, relation) || other.relation == relation)&&(identical(other.notifyEmergency, notifyEmergency) || other.notifyEmergency == notifyEmergency)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,userId,name,email,relation,notifyEmergency,createdAt);
+int get hashCode => Object.hash(runtimeType,id,userId,name,phoneNumber,relation,notifyEmergency,createdAt);
 
 @override
 String toString() {
-  return 'EmergencyContactModel(id: $id, userId: $userId, name: $name, email: $email, relation: $relation, notifyEmergency: $notifyEmergency, createdAt: $createdAt)';
+  return 'EmergencyContactModel(id: $id, userId: $userId, name: $name, phoneNumber: $phoneNumber, relation: $relation, notifyEmergency: $notifyEmergency, createdAt: $createdAt)';
 }
 
 
@@ -259,7 +259,7 @@ abstract mixin class _$EmergencyContactModelCopyWith<$Res> implements $Emergency
   factory _$EmergencyContactModelCopyWith(_EmergencyContactModel value, $Res Function(_EmergencyContactModel) _then) = __$EmergencyContactModelCopyWithImpl;
 @override @useResult
 $Res call({
- String id,@JsonKey(name: 'user_id') String userId, String name, String email, String relation,@JsonKey(name: 'notify_emergency') bool notifyEmergency,@JsonKey(name: 'created_at') DateTime? createdAt
+ String id,@JsonKey(name: 'user_id') String userId, String name,@JsonKey(name: 'phone_number') String phoneNumber, String relation,@JsonKey(name: 'notify_emergency') bool notifyEmergency,@JsonKey(name: 'created_at') DateTime? createdAt
 });
 
 
@@ -276,12 +276,12 @@ class __$EmergencyContactModelCopyWithImpl<$Res>
 
 /// Create a copy of EmergencyContactModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? userId = null,Object? name = null,Object? email = null,Object? relation = null,Object? notifyEmergency = null,Object? createdAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? userId = null,Object? name = null,Object? phoneNumber = null,Object? relation = null,Object? notifyEmergency = null,Object? createdAt = freezed,}) {
   return _then(_EmergencyContactModel(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as String,phoneNumber: null == phoneNumber ? _self.phoneNumber : phoneNumber // ignore: cast_nullable_to_non_nullable
 as String,relation: null == relation ? _self.relation : relation // ignore: cast_nullable_to_non_nullable
 as String,notifyEmergency: null == notifyEmergency ? _self.notifyEmergency : notifyEmergency // ignore: cast_nullable_to_non_nullable
 as bool,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable

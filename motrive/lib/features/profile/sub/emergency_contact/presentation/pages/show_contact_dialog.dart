@@ -9,7 +9,7 @@ void showContactDialog({
   required String title,
   required String buttonText,
   required TextEditingController nameController,
-  required TextEditingController emailController,
+  required TextEditingController phoneController,
   required String relation,
   required Function(String) onPressed,
 }) {
@@ -41,12 +41,13 @@ void showContactDialog({
                 const Gap(14),
 
                 TextFormField(
-                  controller: emailController,
-                  validator: Validators.validateEmail,
+                  controller: phoneController,
+                   keyboardType: TextInputType.phone,
+                 validator: (value) => Validators.validatePhone(value),
                   decoration: InputDecoration(
-                    hintText: 'email'.tr(),
-                    labelText: 'email'.tr(),
-                    prefixIcon: Icon(Icons.email_outlined),
+                    hintText: 'phone number'.tr(),
+                    labelText: 'phone number'.tr(),
+                    prefixIcon: Icon(Icons.phone_android_outlined),
                   ),
                 ),
 

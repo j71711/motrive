@@ -17,13 +17,13 @@ class EmergencyContactUseCase {
 
   Future<Result<void, Failure>> addEmergencyContact({
     required String name,
-    required String email,
+    required String phoneNumber,
     required String relation,
     required bool notifyEmergency,
   }) {
     return repository.addEmergencyContact(
       name: name,
-      email: email,
+      phoneNumber: phoneNumber,
       relation: relation,
       notifyEmergency: notifyEmergency,
     );
@@ -32,14 +32,14 @@ class EmergencyContactUseCase {
   Future<Result<void, Failure>> updateEmergencyContact({
     required String id,
     required String name,
-    required String email,
+    required String phoneNumber,
     required String relation,
     required bool notifyEmergency,
   }) {
     return repository.updateEmergencyContact(
       id: id,
       name: name,
-      email: email,
+      phoneNumber: phoneNumber,
       relation: relation,
       notifyEmergency: notifyEmergency,
     );
@@ -51,3 +51,5 @@ class EmergencyContactUseCase {
     return repository.deleteEmergencyContact(id: id);
   }
 }
+
+

@@ -3,7 +3,7 @@ import 'package:motrive/core/errors/network_exceptions.dart';
 import 'package:motrive/core/services/emergency_service.dart';
 
 abstract class BaseSosRemoteDataSource {
-  Future<void> sendSosEmail();
+  Future<void> sendSosAlert();
 
   Future<void> callPolice();
 
@@ -18,9 +18,9 @@ class SosRemoteDataSource
   SosRemoteDataSource(this.emergencyService);
 
   @override
-  Future<void> sendSosEmail() async {
+  Future<void> sendSosAlert() async {
     try {
-      await emergencyService.sendSosEmail();
+      await emergencyService.sendSosAlert();
     } catch (error) {
       throw FailureExceptions.getException(error);
     }

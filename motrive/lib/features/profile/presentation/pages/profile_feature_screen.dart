@@ -138,35 +138,38 @@ class ProfileFeatureScreen extends StatelessWidget {
                       subtitle: 'manage_trusted_contacts'.tr(),
 
                       onTap: () {
-                        showModalBottomSheet(
+                        showDialog(
                           context: context,
-                          isScrollControlled: true,
-                          backgroundColor: Colors.transparent,
-
+                          barrierDismissible: true,
                           builder: (_) {
                             return BlocProvider(
                               create: (_) =>
                                   EmergencyContactCubit(GetIt.I.get())
                                     ..getEmergencyContactMethod(),
-
-                              child: Wrap(
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.all(20),
-
+                              child: Dialog(
+                                backgroundColor: Colors.transparent,
+                                insetPadding: const EdgeInsets.symmetric(
+                                  horizontal: 20,
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(24),
+                                  child: Container(
+                                    constraints: BoxConstraints(
+                                      maxHeight:
+                                          MediaQuery.of(context).size.height *
+                                          0.75,
+                                    ),
                                     decoration: BoxDecoration(
                                       color: Theme.of(
                                         context,
-                                      ).colorScheme.surface,
-
-                                      borderRadius: const BorderRadius.vertical(
-                                        top: Radius.circular(34),
-                                      ),
+                                      ).scaffoldBackgroundColor,
+                                      borderRadius: BorderRadius.circular(24),
                                     ),
-
-                                    child: EmergencyContactFeatureWidget(),
+                                    child: const SingleChildScrollView(
+                                      child: EmergencyContactFeatureWidget(),
+                                    ),
                                   ),
-                                ],
+                                ),
                               ),
                             );
                           },
@@ -195,14 +198,10 @@ class ProfileFeatureScreen extends StatelessWidget {
                         onChanged: (value) {
                           context.read<ThemeCubit>().changeTheme(
                             value ? ThemeMode.dark : ThemeMode.light,
-                            
-
                           );
-                             print("---------------------------------");
+                          print("---------------------------------");
                         },
-                     
                       ),
-                      
                     ),
 
                     divider(context),
@@ -230,11 +229,7 @@ class ProfileFeatureScreen extends StatelessWidget {
                         inactiveIcon: Icons.language,
 
                         onChanged: (value) async {
-                        
-                          final locale = value
-
-                              ?  Locale('en')
-                              :  Locale('ar');
+                          final locale = value ? Locale('en') : Locale('ar');
 
                           await context.setLocale(locale);
 

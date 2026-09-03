@@ -7,7 +7,7 @@ abstract class BaseEmergencyContactRemoteDataSource {
 
   Future<void> addEmergencyContact({
     required String name,
-    required String email,
+    required String phoneNumber,
     required String relation,
     required bool notifyEmergency,
   });
@@ -15,14 +15,12 @@ abstract class BaseEmergencyContactRemoteDataSource {
   Future<void> updateEmergencyContact({
     required String id,
     required String name,
-    required String email,
+    required String phoneNumber,
     required String relation,
     required bool notifyEmergency,
   });
 
-  Future<void> deleteEmergencyContact({
-    required String id,
-  });
+  Future<void> deleteEmergencyContact({required String id});
 }
 
 @LazySingleton(as: BaseEmergencyContactRemoteDataSource)
@@ -64,7 +62,7 @@ class EmergencyContactRemoteDataSource
   @override
   Future<void> addEmergencyContact({
     required String name,
-    required String email,
+    required String phoneNumber,
     required String relation,
     required bool notifyEmergency,
   }) async {
@@ -73,7 +71,7 @@ class EmergencyContactRemoteDataSource
     await _supabase.from('trusted_contacts').insert({
       'user_id': userId,
       'name': name,
-      'email': email,
+      'phone_number': phoneNumber,
       'relation': relation,
       'notify_emergency': notifyEmergency,
     });
@@ -83,22 +81,23 @@ class EmergencyContactRemoteDataSource
   Future<void> updateEmergencyContact({
     required String id,
     required String name,
-    required String email,
+    required String phoneNumber,
     required String relation,
     required bool notifyEmergency,
   }) async {
-    await _supabase.from('trusted_contacts').update({
-      'name': name,
-      'email': email,
-      'relation': relation,
-      'notify_emergency': notifyEmergency,
-    }).eq('id', id);
+    await _supabase
+        .from('trusted_contacts')
+        .update({
+          'name': name,
+          'phone_number': phoneNumber,
+          'relation': relation,
+          'notify_emergency': notifyEmergency,
+        })
+        .eq('id', id);
   }
 
   @override
-  Future<void> deleteEmergencyContact({
-    required String id,
-  }) async {
+  Future<void> deleteEmergencyContact({required String id}) async {
     await _supabase.from('trusted_contacts').delete().eq('id', id);
   }
 }

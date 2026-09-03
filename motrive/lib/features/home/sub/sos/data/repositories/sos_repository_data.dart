@@ -12,9 +12,9 @@ class SosRepositoryData implements SosRepositoryDomain {
   SosRepositoryData(this.remoteDataSource);
 
   @override
-  Future<Result<void, Failure>> sendSosEmail() async {
+  Future<Result<void, Failure>> sendSosAlert() async {
     try {
-      await remoteDataSource.sendSosEmail();
+      await remoteDataSource.sendSosAlert();
 
       return const Success(null);
     } on Failure catch (error) {

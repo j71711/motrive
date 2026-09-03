@@ -49,3 +49,4 @@ app.*.map.json
 /android/app/release
 
 sentry.properties
+lib/core/config/env.g.dart

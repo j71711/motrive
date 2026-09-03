@@ -23,11 +23,11 @@ class EmergencyService {
     }
   }
 
-  Future<void> sendSosEmail() async {
+  Future<void> sendSosAlert() async {
     final position = await _getLocation();
 
     final response = await _supabase.functions.invoke(
-      'send-sos-email',
+      'send-sos-alert', // <-- Your new Edge Function
       body: {
         'latitude': position.latitude,
         'longitude': position.longitude,
@@ -62,6 +62,5 @@ class EmergencyService {
     return Geolocator.getCurrentPosition(
       desiredAccuracy: LocationAccuracy.high,
     );
-    
   }
 }

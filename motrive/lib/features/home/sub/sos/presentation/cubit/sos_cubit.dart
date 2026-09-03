@@ -11,7 +11,7 @@ class SosCubit extends Cubit<SosState> {
     emit(SosLoadingState());
 
     try {
-      await emergencyService.sendSosEmail();
+      await emergencyService.sendSosAlert();
 
       emit(SosSendEmailSuccessState());
     } catch (error) {

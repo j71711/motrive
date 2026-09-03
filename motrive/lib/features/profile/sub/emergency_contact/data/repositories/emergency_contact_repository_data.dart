@@ -16,7 +16,7 @@ class EmergencyContactRepositoryData
 
   @override
   Future<Result<List<EmergencyContactEntity>, Failure>>
-      getEmergencyContact() async {
+  getEmergencyContact() async {
     try {
       final result = await remoteDataSource.getEmergencyContact();
       return Success(result.map((e) => e.toEntity()).toList());
@@ -28,14 +28,14 @@ class EmergencyContactRepositoryData
   @override
   Future<Result<void, Failure>> addEmergencyContact({
     required String name,
-    required String email,
+    required String phoneNumber,
     required String relation,
     required bool notifyEmergency,
   }) async {
     try {
       await remoteDataSource.addEmergencyContact(
         name: name,
-        email: email,
+        phoneNumber: phoneNumber,
         relation: relation,
         notifyEmergency: notifyEmergency,
       );
@@ -50,7 +50,7 @@ class EmergencyContactRepositoryData
   Future<Result<void, Failure>> updateEmergencyContact({
     required String id,
     required String name,
-    required String email,
+    required String phoneNumber,
     required String relation,
     required bool notifyEmergency,
   }) async {
@@ -58,7 +58,7 @@ class EmergencyContactRepositoryData
       await remoteDataSource.updateEmergencyContact(
         id: id,
         name: name,
-        email: email,
+        phoneNumber: phoneNumber,
         relation: relation,
         notifyEmergency: notifyEmergency,
       );
